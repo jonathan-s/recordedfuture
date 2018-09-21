@@ -97,48 +97,7 @@
                     "order": 0
                 }
             },
-            "output": [
-                {
-                    "data_path": "action_result.parameter.email",
-                    "data_type": "string",
-                    "contains": [
-                        "email"
-                    ],
-                    "column_name": "email",
-                    "column_order": 0
-                },
-                {
-                    "data_path": "action_result.parameter.credential",
-                    "data_type": "string",
-                    "contains": [
-                        "password",
-                        "hashed_password"
-                    ],
-                    "column_name": "credential",
-                    "column_order": 1
-                },
-                {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "column_name": "status",
-                    "column_order": 2
-                },
-                {
-                    "data_path": "action_result.message",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "summary.total_objects",
-                    "data_type": "numeric"
-                },
-                {
-                    "data_path": "summary.total_objects_successful",
-                    "data_type": "numeric"
-                }
-            ],
-            "render": {
-                "type": "table"
-            },
+            "output": [],
             "versions": "EQ(*)"
         }
     ]

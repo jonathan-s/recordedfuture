@@ -203,15 +203,15 @@ class LdapConnector(BaseConnector):
         # potential password and/or hashes.
         fragments = email.split(':')
         self.save_progress('Fragments: %s' % fragments)
-        email_pattern = re.compile(r'^[a-z0-9]+@[a-z0-9.]+$')
+        email_pattern = re.compile(r'^[a-z0-9_]+@[a-z0-9_.]+$')
         email_address = ''
         creds = []
         for fragment in fragments:
             self.save_progress('Looking at fragment: %s' % fragment)
-            if __name__ == '__main__':
-                if email_pattern.match(fragment):
-                    email_address = fragment
-                else:
+            if email_pattern.match(fragment):
+                email_address = fragment
+            else:
+                if len(fragment) > 0:
                     creds.append(fragment)
         self.save_progress('Extracted email %s from fragment.' % email_address)
         self.save_progress('Extracted potential creds: %s' % creds)
@@ -246,24 +246,27 @@ class LdapConnector(BaseConnector):
 
         # Check if there were no matches and handle that case.
         if len(self.connection.response) == 0:
-            action_result.add_data(email_check_result='no_match')
+            action_result.add_data(dict(email_check_result='no_match'))
             summary['email_check_result'] = 'no_match'
             self.save_progress('No matching user')
+            self.save_progress('Debug: %s' % action_result.get_data())
             summary = action_result.update_summary(summary)
             return action_result.set_status(phantom.APP_SUCCESS)
 
         # Check if there was a match but no credentials were supplied.
-        if len(credential) == 0:
-            action_result.add_data(email_check_result='match')
+        if len(creds) == 0:
+            action_result.add_data(dict(email_check_result='match'))
             summary['email_check_result'] = 'match'
+            summary['email_check_email'] = email_address
             self.save_progress('Matching user')
             summary = action_result.update_summary(summary)
             return action_result.set_status(phantom.APP_SUCCESS)
 
         # Try to match the supplied credentials
-        self.save_progress('Would test these credential: %s' % credential)
-        action_result.add_data(email_check_result='compromized')
+        self.save_progress('Would test these credential: %s' % creds)
+        action_result.add_data(dict(email_check_result='compromized'))
         summary['email_check_result'] = 'compromized'
+        summary['email_check_email'] = email_address
         self.save_progress('Matching user')
         summary = action_result.update_summary(summary)
         return action_result.set_status(phantom.APP_SUCCESS)
