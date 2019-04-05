@@ -70,10 +70,9 @@ def Send_Very_Malicious_IP_Email(action=None, success=None, container=None, resu
     # build parameters list for 'Send_Very_Malicious_IP_Email' call
     parameters.append({
         'body': formatted_data_1,
-        'from': "phantom@recfut.com",
+        'from': "sender@example.com",
         'attachments': "",
-        'to': "reddy@recordedfuture.com",
-        'cc': "hovanic@recordedfuture.com",
+        'to': "recipient@example.com",
         'bcc': "",
         'headers': "",
         'subject': "Very Malicious IP ",

@@ -1809,11 +1809,10 @@
                             "attachments": "",
                             "bcc": "",
                             "body": "Format_High_Threat_Email:formatted_data",
-                            "cc": "hovanic@recordedfuture.com",
-                            "from": "phantom@recfut.com",
+                            "from": "sender@example.com",
                             "headers": "",
                             "subject": "Very Malicious IP ",
-                            "to": "reddy@recordedfuture.com"
+                            "to": "recipient@example.com"
                         },
                         "angle": 0,
                         "app": "SMTP",
@@ -1837,11 +1836,10 @@
                                     "attachments": "",
                                     "bcc": "",
                                     "body": "Format_High_Threat_Email:formatted_data",
-                                    "cc": "hovanic@recordedfuture.com",
-                                    "from": "phantom@recfut.com",
+                                    "from": "sender@example.com",
                                     "headers": "",
                                     "subject": "Very Malicious IP ",
-                                    "to": "reddy@recordedfuture.com"
+                                    "to": "recipient@example.com"
                                 },
                                 "has_app": true,
                                 "id": 10,
@@ -2086,7 +2084,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Send_Very_Malicious_IP_Email(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Send_Very_Malicious_IP_Email() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Send_Very_Malicious_IP_Email' call\n    formatted_data_1 = phantom.get_format_data(name='Format_High_Threat_Email')\n\n    parameters = []\n    \n    # build parameters list for 'Send_Very_Malicious_IP_Email' call\n    parameters.append({\n        'body': formatted_data_1,\n        'from': \"phantom@recfut.com\",\n        'attachments': \"\",\n        'to': \"reddy@recordedfuture.com\",\n        'cc': \"hovanic@recordedfuture.com\",\n        'bcc': \"\",\n        'headers': \"\",\n        'subject': \"Very Malicious IP \",\n    })\n\n    phantom.act(\"send email\", parameters=parameters, assets=['defaultmail'], callback=Add_to_Bad_IP_List, name=\"Send_Very_Malicious_IP_Email\")\n\n    return",
+                        "block_code": "def Send_Very_Malicious_IP_Email(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Send_Very_Malicious_IP_Email() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Send_Very_Malicious_IP_Email' call\n    formatted_data_1 = phantom.get_format_data(name='Format_High_Threat_Email')\n\n    parameters = []\n    \n    # build parameters list for 'Send_Very_Malicious_IP_Email' call\n    parameters.append({\n        'body': formatted_data_1,\n        'from': \"sender@example.com\",\n        'attachments': \"\",\n        'to': \"recipient@example.com\",\n        'bcc': \"\",\n        'headers': \"\",\n        'subject': \"Very Malicious IP \",\n    })\n\n    phantom.act(\"send email\", parameters=parameters, assets=['defaultmail'], callback=Add_to_Bad_IP_List, name=\"Send_Very_Malicious_IP_Email\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 84,
                         "callsback": true,

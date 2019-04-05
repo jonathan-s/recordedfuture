@@ -123,9 +123,9 @@ def Email_notification(action=None, success=None, container=None, results=None, 
     # build parameters list for 'Email_notification' call
     parameters.append({
         'body': formatted_data_1,
-        'from': "phantom@recfut.com",
+        'from': "sender@example.com",
         'attachments': "",
-        'to': "rich@recordedfuture.com",
+        'to': "recipient@example.com",
         'cc': "",
         'bcc': "",
         'headers': "",
@@ -155,7 +155,7 @@ def Post_back_to_Splunk_SOAR_info(action=None, success=None, container=None, res
         'source_type': "Automation/Orchestration Platform",
     })
 
-    phantom.act("post data", parameters=parameters, assets=['splunk-ps.recfut.com'], name="Post_back_to_Splunk_SOAR_info")
+    phantom.act("post data", parameters=parameters, assets=['splunk.example.com'], name="Post_back_to_Splunk_SOAR_info")
 
     return
 
