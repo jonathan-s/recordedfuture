@@ -1,6 +1,7 @@
 RELEASE := 2.0.0
 BUILDID := $(shell svn info --show-item revision)
 BUILD_DIR := pkg_build
+SRC_DIR := recordedfuture
 PACKAGE := recordedfuture-$(RELEASE).tgz
 
 RSYNC := env RSYNC_RSH=ssh rsync -rav
@@ -11,7 +12,8 @@ MKDIR_P = mkdir -p
 
 all:
 	@echo Targets for make:
-	@echo   package       - will build the package on a Phantom server and retreive it.
+	@echo "  build         - will build a ready-for-import set of files in $(BUILD_DIR)."
+	@echo "  package       - will build the package on a Phantom server and retreive it."
 
 ##########################################
 #
@@ -27,29 +29,26 @@ build_rsync: build_dirs
 		--exclude=readme.html \
 		--exclude=*.pyc
 
-build_json: $(BUILD_DIR)/recordedfuture.json
+build_json: $(BUILD_DIR)/recordedfuture.json build_dirs
 
-$(BUILD_DIR)/recordedfuture.json: build_dirs
+$(BUILD_DIR)/recordedfuture.json: $(SRC_DIR)/recordedfuture.json
 	$(SED) -e "s/%RELEASE%/$(RELEASE)/" \
            -e "s/%BUILDID%/$(BUILDID)/" \
-           < recordedfuture/recordedfuture.json \
-           > $(BUILD_DIR)/recordedfuture.json
+           < $^ > $@
 
-build_consts: $(BUILD_DIR)/recordedfuture_consts.py
+build_consts: $(BUILD_DIR)/recordedfuture_consts.py build_dirs
 
-$(BUILD_DIR)/recordedfuture_consts.py: build_dirs
+$(BUILD_DIR)/recordedfuture_consts.py: $(SRC_DIR)/recordedfuture_consts.py
 	$(SED) -e "s/%RELEASE%/$(RELEASE)/" \
            -e "s/%BUILDID%/$(BUILDID)/" \
-           < recordedfuture/recordedfuture_consts.py \
-           > $(BUILD_DIR)/recordedfuture_consts.py
+           < $^ > $@
 
-build_readme: $(BUILD_DIR)/readme.html
+build_readme: $(BUILD_DIR)/readme.html build_dirs
 
-$(BUILD_DIR)/readme.html: build_dirs
+$(BUILD_DIR)/readme.html: $(SRC_DIR)/readme.html
 	$(SED) -e "s/%RELEASE%/$(RELEASE)/" \
            -e "s/%BUILDID%/$(BUILDID)/" \
-           < recordedfuture/readme.html \
-           > $(BUILD_DIR)/readme.html
+           < $^ > $@
 
 build_dirs: $(BUILD_DIR)
 
@@ -72,7 +71,7 @@ $(PACKAGE): build
 	$(SSH) $(PH) "mkdir -p /tmp/recordedfuture"
 	$(RSYNC) $(BUILD_DIR)/* $(PH):/tmp/recordedfuture
 	$(SSH) $(PH) "cd /tmp; chmod a+w recordedfuture; (cd recordedfuture/; sudo -u phantom phenv python2.7 /opt/phantom/bin/compile_app.pyc -i)"
-	$(RSYNC) $(PH):/tmp/recordedfuture.tgz $(PACKAGE)
+	$(RSYNC) $(PH):/tmp/recordedfuture.tgz $@
 
 ##########################################
 #
