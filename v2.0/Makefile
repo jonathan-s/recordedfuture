@@ -24,8 +24,8 @@ build: build_rsync build_json build_readme build_consts
 
 build_rsync: build_dirs
 	$(LOCAL_RSYNC) -ra recordedfuture/ $(BUILD_DIR)/ \
-		--exclude=recordedfuture/recordedfuture.json \
-		--exclude=recordedfuture/recordedfuture_consts.py \
+		--exclude=recordedfuture.json \
+		--exclude=recordedfuture_consts.py \
 		--exclude=readme.html \
 		--exclude=*.pyc
 
