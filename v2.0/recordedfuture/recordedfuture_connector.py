@@ -100,6 +100,9 @@ class RecordedfutureConnector(BaseConnector):
         if 200 <= resp.status_code < 399:
             return RetVal(phantom.APP_SUCCESS, resp_json)
 
+        if resp.status_code == 404:
+            return RetVal(phantom.APP_SUCCESS, {})
+
         # You should process the error returned in the json
         message = "Error from server. Status Code: {0} " \
                   "Data from server: {1}".format(resp.status_code,
@@ -246,6 +249,9 @@ class RecordedfutureConnector(BaseConnector):
 
         if phantom.is_fail(my_ret_val):
             return action_result.get_status()
+
+        if response == {}:
+            return action_result.set_status(phantom.APP_SUCCESS)
 
         # Now post process the data,  uncomment code as you deem fit
         res = response['data']
