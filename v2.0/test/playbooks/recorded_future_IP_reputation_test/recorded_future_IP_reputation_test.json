@@ -7,6 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "Playbook created to test IP reputation action as defined in the Recorded Future app.",
+            "hash": "c2523edb33286b368fbbaec23e20b3a6fc577efb",
             "joint": {
                 "cells": [
                     {
@@ -216,8 +217,8 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 46,
-                        "line_start": 33,
+                        "line_end": 51,
+                        "line_start": 38,
                         "name": "",
                         "notes": "",
                         "number": 0,
@@ -748,7 +749,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_reputation_1() called')\n\n    # collect data for 'ip_reputation_1' call\n\n    parameters = []\n    \n    # build parameters list for 'ip_reputation_1' call\n    parameters.append({\n        'ip': \"artifact:*.cef.destinationAddress\",\n    })\n\n    phantom.act(\"ip reputation\", parameters=parameters, assets=['recordedfuture'], name=\"ip_reputation_1\")\n\n    return",
+                        "block_code": "def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_reputation_1() called')\n\n    # collect data for 'ip_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip reputation\", parameters=parameters, assets=['recordedfuture'], name=\"ip_reputation_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -773,7 +774,7 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 33,
+                        "line_end": 38,
                         "line_start": 17,
                         "message": "Configuring now",
                         "name": "ip reputation",
@@ -854,8 +855,8 @@
                         "status": "",
                         "title": "Investigate",
                         "type": "coa.Action",
-                        "warn": false,
-                        "z": 9
+                        "warn": "",
+                        "z": 10
                     }
                 ]
             },
@@ -864,7 +865,7 @@
         "schema": 3,
         "version": "4.2.7532"
     },
-    "create_time": "2019-05-08T14:29:35.758061+00:00",
+    "create_time": "2019-05-09T15:24:15.942718+00:00",
     "draft_mode": false,
     "labels": [
         "events"

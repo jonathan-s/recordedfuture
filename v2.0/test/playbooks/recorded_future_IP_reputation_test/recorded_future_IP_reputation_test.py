@@ -18,13 +18,18 @@ def ip_reputation_1(action=None, success=None, container=None, results=None, han
     phantom.debug('ip_reputation_1() called')
 
     # collect data for 'ip_reputation_1' call
+    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])
 
     parameters = []
     
     # build parameters list for 'ip_reputation_1' call
-    parameters.append({
-        'ip': "8.8.8.8",
-    })
+    for container_item in container_data:
+        if container_item[0]:
+            parameters.append({
+                'ip': container_item[0],
+                # context (artifact id) is added to associate results with the artifact
+                'context': {'artifact_id': container_item[1]},
+            })
 
     phantom.act("ip reputation", parameters=parameters, assets=['recordedfuture'], name="ip_reputation_1")
 
