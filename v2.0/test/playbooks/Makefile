@@ -13,7 +13,7 @@ COPYFILE := $(shell if [ "x`tar --version | cut -d' ' -f1`" = "xbsdtar" -a "x`un
 PRIVATE_KEYWORDS := 'recfut|@recordedfuture'
 
 all:
-	@echo "Handle Phantom playbook packages"
+	@echo "Handle Phantom TEST playbook packages"
 	@echo "Targets:"
 	@echo "  packages      - make packages"
 
@@ -24,14 +24,13 @@ dist_dirs: $(DIST_DIR)
 $(DIST_DIR):
 	mkdir $(DIST_DIR)
 
-info_security:
-
 $(DIST_DIR)/%.tgz: dist_dirs
 	@if [ "x`egrep -rl $(PRIVATE_KEYWORDS) $(@F:.tgz=)`" != "x" ]; then \
 		echo The playbook $(@F:.tgz=) contains internal emails or hosts.; \
 		echo `egrep -r $(PRIVATE_KEYWORDS) $(@F:.tgz=)`; \
 		exit 1; \
 	fi
-	tar zcvf $@ $(COPYFILE) \
-		$(@F:.tgz=)/$(@F:.tgz=).json \
-		$(@F:.tgz=)/$(@F:.tgz=).py
+	(cd $(@F:.tgz=); \
+	 tar zcvf ../$@ $(COPYFILE) \
+		$(@F:.tgz=).json \
+		$(@F:.tgz=).py)
