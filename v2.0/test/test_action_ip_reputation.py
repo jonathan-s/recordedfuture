@@ -37,7 +37,7 @@ class RfIpReputationTests(unittest.TestCase):
         # Ensure the test_ip_reputation playbook is installed
         res = self._rest_get('playbook')
         self.pbid = [pbook['id'] for pbook in res
-                     if pbook['name'] == 'test_ip_reputation'][0]
+                     if pbook['name'] == 'recorded_future_IP_reputation_test'][0]
 
     def _rest_call(self, method, path_info, payload=None):
         """Abstract REST call."""

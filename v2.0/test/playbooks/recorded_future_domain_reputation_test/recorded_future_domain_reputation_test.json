@@ -6,7 +6,8 @@
         "data": {
             "clean": true,
             "code_block": "",
-            "description": "Playbook created to test IP reputation action as defined in the Recorded Future app.",
+            "description": "Playbook created to test domain reputation action as defined in the Recorded Future app.",
+            "hash": "79eb92d26fa6b89b326369164e7332cb3a1c4732",
             "joint": {
                 "cells": [
                     {
@@ -54,7 +55,7 @@
                                 "display": "block"
                             }
                         },
-                        "block_code": "def on_start(container):\n    phantom.debug('on_start() called')\n    \n    # call 'ip_reputation_1' block\n    ip_reputation_1(container=container)\n\n    return",
+                        "block_code": "def on_start(container):\n    phantom.debug('on_start() called')\n    \n    # call 'domain_reputation_1' block\n    domain_reputation_1(container=container)\n\n    return",
                         "callback_code": "# read-only block view not available",
                         "callback_start": 1,
                         "callsback": false,
@@ -198,7 +199,7 @@
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "ip reputation",
+                        "connection_name": "domain reputation",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -216,8 +217,8 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 46,
-                        "line_start": 33,
+                        "line_end": 51,
+                        "line_start": 38,
                         "name": "",
                         "notes": "",
                         "number": 0,
@@ -374,7 +375,7 @@
                         "z": 7
                     },
                     {
-                        "action": "ip reputation",
+                        "action": "domain reputation",
                         "action_type": "investigate",
                         "active": false,
                         "active_keys": {},
@@ -389,7 +390,7 @@
                         "approver": "",
                         "assets": [
                             {
-                                "action": "ip reputation",
+                                "action": "domain reputation",
                                 "actions": [
                                     "alert data lookup",
                                     "rule id lookup",
@@ -408,7 +409,7 @@
                                 "config_type": "asset",
                                 "count": 0,
                                 "fields": {
-                                    "ip": "8.8.8.8"
+                                    "domain": "artifact:*.cef.destinationDnsDomain"
                                 },
                                 "has_app": true,
                                 "id": 13,
@@ -417,22 +418,12 @@
                                 "name": "recordedfuture",
                                 "output": [
                                     {
-                                        "column_name": "ip",
+                                        "column_name": "domain",
                                         "column_order": 0,
                                         "contains": [
-                                            "ip"
+                                            "domain"
                                         ],
-                                        "data_path": "action_result.parameter.ip",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "column_name": "status",
-                                        "column_order": 1,
-                                        "data_path": "action_result.status",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.message",
+                                        "data_path": "action_result.parameter.domain",
                                         "data_type": "string"
                                     },
                                     {
@@ -445,26 +436,6 @@
                                     },
                                     {
                                         "data_path": "action_result.data.*.intelCard",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.asn",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.cidr.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.organization",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.location.country",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.location.city",
                                         "data_type": "string"
                                     },
                                     {
@@ -663,14 +634,14 @@
                                     }
                                 ],
                                 "parameters": {
-                                    "ip": {
+                                    "domain": {
                                         "contains": [
-                                            "ip"
+                                            "domain"
                                         ],
                                         "data_type": "string",
                                         "default": "",
-                                        "description": "IP to query",
-                                        "key": "ip",
+                                        "description": "Domain to query",
+                                        "key": "domain",
                                         "order": 0,
                                         "primary": true,
                                         "required": true,
@@ -685,7 +656,7 @@
                         ],
                         "attrs": {
                             ".action": {
-                                "text": "ip reputation"
+                                "text": "domain reputation"
                             },
                             ".background": {
                                 "fill": "#FFFFFF",
@@ -735,6 +706,9 @@
                             "g.error": {
                                 "opacity": 0
                             },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
                             "g.icon image": {
                                 "xlink:href": "/inc/coa/img/block_icon_investigate.svg"
                             },
@@ -748,7 +722,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_reputation_1() called')\n\n    # collect data for 'ip_reputation_1' call\n\n    parameters = []\n    \n    # build parameters list for 'ip_reputation_1' call\n    parameters.append({\n        'ip': \"8.8.8.8\",\n    })\n\n    phantom.act(\"ip reputation\", parameters=parameters, assets=['recordedfuture'], name=\"ip_reputation_1\")\n\n    return",
+                        "block_code": "def domain_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('domain_reputation_1() called')\n\n    # collect data for 'domain_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationDnsDomain', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'domain_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'domain': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"domain reputation\", parameters=parameters, assets=['recordedfuture'], name=\"domain_reputation_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -773,10 +747,10 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 33,
+                        "line_end": 38,
                         "line_start": 17,
                         "message": "Configuring now",
-                        "name": "ip reputation",
+                        "name": "domain reputation",
                         "notes": "",
                         "number": 1,
                         "order": 2,
@@ -842,7 +816,7 @@
                         "previous_function": "",
                         "previous_name": "ip_reputation_1",
                         "required_params": {
-                            "ip": true
+                            "domain": true
                         },
                         "reviewer": "",
                         "show_number": false,
@@ -854,8 +828,8 @@
                         "status": "",
                         "title": "Investigate",
                         "type": "coa.Action",
-                        "warn": false,
-                        "z": 9
+                        "warn": "",
+                        "z": 12
                     }
                 ]
             },
@@ -864,7 +838,7 @@
         "schema": 3,
         "version": "4.2.7532"
     },
-    "create_time": "2019-05-08T14:29:35.758061+00:00",
+    "create_time": "2019-05-09T07:08:47.174450+00:00",
     "draft_mode": false,
     "labels": [
         "events"
