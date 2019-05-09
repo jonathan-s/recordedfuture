@@ -1,12 +1,16 @@
-PACKAGES := recorded_future_correlation.tgz \
-			recorded_future_enrichment.tgz \
-			recorded_future_threat_hunting.tgz
+PACKAGES := recorded_future_IP_reputation_test.tgz  \
+		recorded_future_domain_reputation_test.tgz  \
+		recorded_future_rule_id_lookup_test.tgz  \
+		recorded_future_vulnerability_lookup_test.tgz  \
+		recorded_future_alert_data_lookup.tgz  \
+		recorded_future_file_reputation_test.tgz  \
+		recorded_future_url_reputation_test.tgz
 DIST_DIR := pkg_build
 PKG_TARGETS := $(addprefix $(DIST_DIR)/,$(PACKAGES))
 # COPYFILE prevents tar on Macos to add virtual files for file permissions to archive.
 # Phantom can't deal with those files.
 COPYFILE := $(shell if [ "x`tar --version | cut -d' ' -f1`" = "xbsdtar" -a "x`uname`" = "xDarwin" ]; then echo --disable-copyfile; fi)
-PRIVATE_KEYWORDS := 'recfut|recordedfuture'
+PRIVATE_KEYWORDS := 'recfut|@recordedfuture'
 
 all:
 	@echo "Handle Phantom playbook packages"
