@@ -36,8 +36,11 @@ class RfIpReputationTests(unittest.TestCase):
 
         # Ensure the test_ip_reputation playbook is installed
         res = self._rest_get('playbook')
-        self.pbid = [pbook['id'] for pbook in res
-                     if pbook['name'] == 'recorded_future_IP_reputation_test'][0]
+        self.pbid, self.pbactive = [(pbook['id'], pbook['active'])
+                                    for pbook in res
+                                    if pbook['name'] == 'recorded_future_IP_reputation_test'][0]
+        self.assertTrue(self.pbactive, 'The Playbook test_ip_reputation is '
+                                       'not active. Activate the Playbook.')
 
     def _rest_call(self, method, path_info, payload=None):
         """Abstract REST call."""
@@ -59,7 +62,7 @@ class RfIpReputationTests(unittest.TestCase):
         res = self._rest_call('get', path_info, payload)
         jres = res.json()
         result = jres['data']
-        for page in range(2,jres['num_pages']):
+        for page in range(2, jres['num_pages']):
             res = self._rest_call('get', path_info, payload={'page': page})
             result.extend(res.json()['data'])
         return result
