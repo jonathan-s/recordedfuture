@@ -377,7 +377,7 @@
                         "attrs": {
                             ".connection": {
                                 "stroke": "#6C7A89",
-                                "stroke-width": 2
+                                "stroke-widt
                             },
                             ".marker-target": {
                                 "d": "M 10 0 L 0 5 L 10 10 z",

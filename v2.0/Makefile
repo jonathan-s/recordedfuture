@@ -6,7 +6,7 @@ PACKAGE := recordedfuture-$(RELEASE).tgz
 
 RSYNC := env RSYNC_RSH=ssh rsync -rav
 LOCAL_RSYNC := rsync
-SSH := ssh -t
+SSH := ssh -v -t
 SED := sed
 MKDIR_P = mkdir -p
 
