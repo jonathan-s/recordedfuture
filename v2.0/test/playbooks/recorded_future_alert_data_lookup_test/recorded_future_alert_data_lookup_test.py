@@ -1,5 +1,5 @@
 """
-Playbook created to test IP reputation action as defined in the Recorded Future app.
+Playbook created to test data alert lookup as defined in the Recorded Future app.
 """
 
 import phantom.rules as phantom
@@ -36,7 +36,7 @@ def alert_data_lookup_1(action=None, success=None, container=None, results=None,
 def on_finish(container, summary):
     phantom.debug('on_finish() called')
     # This function is called after all actions are completed.
-    # summary of all the action and/or all detals of actions 
+    # summary of all the action and/or all details of actions
     # can be collected here.
 
     # summary_json = phantom.get_summary()

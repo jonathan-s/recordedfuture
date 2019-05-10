@@ -6,7 +6,7 @@
         "data": {
             "clean": true,
             "code_block": "",
-            "description": "Playbook created to test alert data lookup action as defined in the Recorded Future app.",
+            "description": "Playbook created to test alert data lookup as defined in the Recorded Future app.",
             "hash": "5ed06dd526f347b332be912fefe046e380622134",
             "joint": {
                 "cells": [

@@ -1,5 +1,5 @@
 """
-Playbook created to test IP reputation action as defined in the Recorded Future app.
+Playbook created to test rule id lookup as defined in the Recorded Future app.
 """
 
 import phantom.rules as phantom

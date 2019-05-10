@@ -6,7 +6,7 @@
         "data": {
             "clean": true,
             "code_block": "",
-            "description": "Playbook created to test rule ud lookup action as defined in the Recorded Future app.",
+            "description": "Playbook created to test rule id lookup as defined in the Recorded Future app.",
             "hash": "6a7d3e8ad8fb4bd3994a62fa39f9184b44564f9c",
             "joint": {
                 "cells": [
