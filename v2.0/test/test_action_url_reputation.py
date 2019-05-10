@@ -1,4 +1,4 @@
-"""Test suite for domain reputation action"""
+"""Test suite for url reputation action"""
 import logging
 import requests
 from phantom_ops import *
@@ -10,11 +10,11 @@ requests.packages.urllib3.disable_warnings()
 # Logger
 LOGGER = logging.getLogger(__name__)
 
-PBOOK = 'recorded_future_domain_reputation_test'
+PBOOK = 'recorded_future_url_reputation_test'
 
 
-class RfDomainReputationTests(RfTests):
-    """Test cases for domain reputation action."""
+class RfUrlReputationTests(RfTests):
+    """Test cases for url reputation action."""
 
     def setUp(self):
         """Setup test environment."""
@@ -22,7 +22,7 @@ class RfDomainReputationTests(RfTests):
 
     def test_domain_reputation(self):
         """Test behavior when a domain is supplied."""
-        artifact = ph_artifact(destinationDnsDomain="www.google.com")
+        artifact = ph_artifact(requestURL="https://www.google.com")
         container = ph_container([artifact])
         res = self._rest_call('post', 'container', container)
 

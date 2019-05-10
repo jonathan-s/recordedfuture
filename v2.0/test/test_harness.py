@@ -4,7 +4,7 @@ import json
 import requests
 
 class RfTests(unittest.TestCase):
-    """Test cases for ip reputation action."""
+    """Test cases for all reputation actions."""
 
     @classmethod
     def setUpClass(cls):
