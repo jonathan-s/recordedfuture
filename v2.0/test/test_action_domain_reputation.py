@@ -23,7 +23,7 @@ class RfDomainReputationTests(RfTests):
     def test_domain_reputation(self):
         """Test behavior when a domain is supplied."""
         artifact = ph_artifact(destinationDnsDomain="www.google.com")
-        container = ph_container([artifact])
+        container = ph_container("Domain Reputation event", [artifact])
         res = self._rest_call('post', 'container', container)
 
         # Check that it was a success.

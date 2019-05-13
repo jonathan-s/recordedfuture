@@ -23,7 +23,7 @@ class RfIpReputationTests(RfTests):
     def test_ip_reputation(self):
         """Test behavior when an ip is supplied."""
         artifact = ph_artifact(destinationAddress="129.16.1.4")
-        container = ph_container([artifact])
+        container = ph_container("IP Reputation event", [artifact])
         res = self._rest_call('post', 'container', container)
 
         # Check that it was a success.

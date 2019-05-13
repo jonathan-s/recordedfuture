@@ -20,10 +20,10 @@ class RfFileReputationTests(RfTests):
         """Setup test environment."""
         RfTests.setUp(self, PBOOK)
 
-    def test_domain_reputation(self):
+    def test_file_reputation(self):
         """Test behavior when a domain is supplied."""
         artifact = ph_artifact(fileHash="394bed68bb412f26f8df71874d346b9b")
-        container = ph_container([artifact])
+        container = ph_container("File Reputation event", [artifact])
         res = self._rest_call('post', 'container', container)
 
         # Check that it was a success.

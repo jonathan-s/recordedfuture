@@ -20,10 +20,10 @@ class RfUrlReputationTests(RfTests):
         """Setup test environment."""
         RfTests.setUp(self, PBOOK)
 
-    def test_domain_reputation(self):
+    def test_url_reputation(self):
         """Test behavior when a domain is supplied."""
         artifact = ph_artifact(requestURL="https://www.google.com")
-        container = ph_container([artifact])
+        container = ph_container("url Reputation event", [artifact])
         res = self._rest_call('post', 'container', container)
 
         # Check that it was a success.

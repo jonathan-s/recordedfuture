@@ -24,7 +24,7 @@ def ph_artifact(**kwargs):
     return artifact
 
 
-def ph_container(artifacts=[]):
+def ph_container(event_name="Test event", artifacts=[]):
     """Return a Phantom container with the supplied fields."""
     return {
         # "asset_id": 12,
@@ -34,7 +34,7 @@ def ph_container(artifacts=[]):
         "description": "Test container.",
         # "due_time": "2015-03-21T19:29:23.759Z",
         "label": "events",
-        "name": "Test event",
+        "name": event_name,
         # "owner_id": "phantom@recordedfuture.com",
         # "run_automation": True,
         # "sensitivity": "red",
