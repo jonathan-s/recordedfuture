@@ -10,7 +10,7 @@ requests.packages.urllib3.disable_warnings()
 # Logger
 LOGGER = logging.getLogger(__name__)
 
-PBOOK = 'recorded_future_file_reputation_test'
+PBOOK = 'recorded_future_reputation_test'
 
 
 class RfFileReputationTests(RfTests):

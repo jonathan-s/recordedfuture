@@ -464,7 +464,8 @@ class RecordedfutureConnector(BaseConnector):
         elif action_id == 'lookup_vulnerability':
             fields = ["timestamps", "risk", "threatLists", "intelCard",
                       "metrics", "cvss", "nvdDescription", "relatedEntities"]
-            path_info = '/vulnerability/%s' % param['vulnerability']
+            path_info = '/vulnerability/%s' % urllib.quote(
+                param['vulnerability'], safe='')
             my_ret_val = self._handle_reputation(param, path_info, fields)
 
         elif action_id == 'rule_id_lookup':
