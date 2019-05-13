@@ -6,7 +6,7 @@ PKG_TARGETS := $(addprefix $(DIST_DIR)/,$(PACKAGES))
 # COPYFILE prevents tar on Macos to add virtual files for file permissions to archive.
 # Phantom can't deal with those files.
 COPYFILE := $(shell if [ "x`tar --version | cut -d' ' -f1`" = "xbsdtar" -a "x`uname`" = "xDarwin" ]; then echo --disable-copyfile; fi)
-PRIVATE_KEYWORDS := 'recfut|recordedfuture'
+PRIVATE_KEYWORDS := 'recfut|@recordedfuture'
 
 all:
 	@echo "Handle Phantom playbook packages"
@@ -28,6 +28,8 @@ $(DIST_DIR)/%.tgz: dist_dirs
 		echo `egrep -r $(PRIVATE_KEYWORDS) $(@F:.tgz=)`; \
 		exit 1; \
 	fi
-	tar zcvf $@ $(COPYFILE) \
-		$(@F:.tgz=)/$(@F:.tgz=).json \
-		$(@F:.tgz=)/$(@F:.tgz=).py
+	(cd $(@F:.tgz=); \
+	 tar zcvf ../$@ $(COPYFILE) \
+		$(@F:.tgz=).json \
+		$(@F:.tgz=).py)
+

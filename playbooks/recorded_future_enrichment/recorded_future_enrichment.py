@@ -9,20 +9,20 @@ from datetime import datetime, timedelta
 def on_start(container):
     phantom.debug('on_start() called')
     
-    # call 'Recorded_Future_IP_Information' block
-    Recorded_Future_IP_Information(container=container)
+    # call 'ip_reputation_1' block
+    ip_reputation_1(container=container)
 
     return
 
-def Recorded_Future_IP_Information(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('Recorded_Future_IP_Information() called')
+def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('ip_reputation_1() called')
 
-    # collect data for 'Recorded_Future_IP_Information' call
+    # collect data for 'ip_reputation_1' call
     container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])
 
     parameters = []
     
-    # build parameters list for 'Recorded_Future_IP_Information' call
+    # build parameters list for 'ip_reputation_1' call
     for container_item in container_data:
         if container_item[0]:
             parameters.append({
@@ -31,7 +31,7 @@ def Recorded_Future_IP_Information(action=None, success=None, container=None, re
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("ip reputation", parameters=parameters, assets=['recorded future'], callback=Filter_For_Risk_90_Plus, name="Recorded_Future_IP_Information")
+    phantom.act("ip reputation", parameters=parameters, assets=['recordedfuture'], callback=Filter_For_Risk_90_Plus, name="ip_reputation_1")
 
     return
 
@@ -43,8 +43,8 @@ def Filter_For_Risk_90_Plus(action=None, success=None, container=None, results=N
         container=container,
         action_results=results,
         conditions=[
-            ["Recorded_Future_IP_Information:action_result.data.*.risk.score", ">=", 90],
-            ["Recorded_Future_IP_Information:action_result.data.*.risk.evidenceDetails.*.rule", "in", "Current C&C Server"],
+            ["ip_reputation_1:action_result.data.*.risk.score", ">=", 90],
+            ["ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.rule", "in", "Current C&C Server"],
         ],
         logical_operator='and')
 
@@ -72,13 +72,13 @@ def Send_Very_Malicious_IP_Email(action=None, success=None, container=None, resu
         'body': formatted_data_1,
         'from': "sender@example.com",
         'attachments': "",
-        'to': "recipient@example.com",
-        'bcc': "",
         'headers': "",
+        'bcc': "",
+        'to': "recipient@example.com",
         'subject': "Very Malicious IP ",
     })
 
-    phantom.act("send email", parameters=parameters, assets=['defaultmail'], callback=Add_to_Bad_IP_List, name="Send_Very_Malicious_IP_Email")
+    phantom.act("send email", parameters=parameters, assets=['smtp'], callback=Add_to_Bad_IP_List, name="Send_Very_Malicious_IP_Email")
 
     return
 
@@ -110,15 +110,15 @@ More information about:
 
     # parameter list for template variable replacement
     parameters = [
-        "Recorded_Future_IP_Information:action_result.parameter.ip",
-        "Recorded_Future_IP_Information:action_result.data.*.risk.score",
-        "Recorded_Future_IP_Information:action_result.data.*.risk.evidenceDetails.*.evidenceString",
-        "Recorded_Future_IP_Information:action_result.data.*.risk.riskSummary",
-        "Recorded_Future_IP_Information:action_result.data.*.risk.evidenceDetails.*.rule",
-        "Recorded_Future_IP_Information:action_result.data.*.intelCard",
-        "Recorded_Future_IP_Information:action_result.data.*.relatedEntities.*.type",
-        "Recorded_Future_IP_Information:action_result.data.*.relatedEntities.*.entities.*.entity.name",
-        "Recorded_Future_IP_Information:action_result.data.*.relatedEntities.*.entities.*.entity.type",
+        "ip_reputation_1:action_result.parameter.ip",
+        "ip_reputation_1:action_result.data.*.risk.score",
+        "ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.evidenceString",
+        "ip_reputation_1:action_result.data.*.risk.riskSummary",
+        "ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.rule",
+        "ip_reputation_1:action_result.data.*.intelCard",
+        "ip_reputation_1:action_result.data.*.relatedEntities.*.type",
+        "ip_reputation_1:action_result.data.*.relatedEntities.*.entities.*.entity.name",
+        "ip_reputation_1:action_result.data.*.relatedEntities.*.entities.*.entity.type",
     ]
 
     phantom.format(container=container, template=template, parameters=parameters, name="Format_High_Threat_Email")
