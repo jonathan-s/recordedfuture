@@ -9,20 +9,20 @@ from datetime import datetime, timedelta
 def on_start(container):
     phantom.debug('on_start() called')
     
-    # call 'Recorded_Future_IOC_Lookup' block
-    Recorded_Future_IOC_Lookup(container=container)
+    # call 'ip_reputation_1' block
+    ip_reputation_1(container=container)
 
     return
 
-def Recorded_Future_IOC_Lookup(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('Recorded_Future_IOC_Lookup() called')
+def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('ip_reputation_1() called')
 
-    # collect data for 'Recorded_Future_IOC_Lookup' call
+    # collect data for 'ip_reputation_1' call
     container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])
 
     parameters = []
     
-    # build parameters list for 'Recorded_Future_IOC_Lookup' call
+    # build parameters list for 'ip_reputation_1' call
     for container_item in container_data:
         if container_item[0]:
             parameters.append({
@@ -31,7 +31,7 @@ def Recorded_Future_IOC_Lookup(action=None, success=None, container=None, result
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("ip reputation", parameters=parameters, assets=['recorded future'], callback=Process_Risk_90_Plus, name="Recorded_Future_IOC_Lookup")
+    phantom.act("ip reputation", parameters=parameters, assets=['recordedfuture'], callback=Process_Risk_90_Plus, name="ip_reputation_1")
 
     return
 
@@ -43,7 +43,7 @@ def Process_Risk_90_Plus(action=None, success=None, container=None, results=None
         container=container,
         action_results=results,
         conditions=[
-            ["Recorded_Future_IOC_Lookup:action_result.data.*.risk.score", ">=", 90],
+            ["ip_reputation_1:action_result.data.*.risk.score", ">=", 90],
         ])
 
     # call connected blocks if condition 1 matched
@@ -65,8 +65,8 @@ def SPL_Query_to_build_IP_Lookup(action=None, success=None, container=None, resu
 
     # parameter list for template variable replacement
     parameters = [
-        "Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedIpAddress.*.name",
-        "Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
+        "ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.name",
+        "ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
     ]
 
     phantom.format(container=container, template=template, parameters=parameters, name="SPL_Query_to_build_IP_Lookup")
@@ -91,7 +91,7 @@ def Build_IP_Lookup_Table(action=None, success=None, container=None, results=Non
         'display': "",
     })
 
-    phantom.act("run query", parameters=parameters, assets=['splunk.example.com'], callback=Search_against_last_1_day_of_IP_Traffic, name="Build_IP_Lookup_Table")
+    phantom.act("run query", parameters=parameters, assets=['splunk-server'], callback=Search_against_last_1_day_of_IP_Traffic, name="Build_IP_Lookup_Table")
 
     return
 
@@ -110,7 +110,7 @@ def Search_against_last_1_day_of_IP_Traffic(action=None, success=None, container
         'display': "",
     })
 
-    phantom.act("run query", parameters=parameters, assets=['splunk.example.com'], callback=Search_against_last_1_day_of_IP_Traffic_callback, name="Search_against_last_1_day_of_IP_Traffic", parent_action=action)
+    phantom.act("run query", parameters=parameters, assets=['splunk-server'], callback=Search_against_last_1_day_of_IP_Traffic_callback, name="Search_against_last_1_day_of_IP_Traffic", parent_action=action)
 
     return
 
@@ -142,7 +142,7 @@ def Prompt_to_ask_user_to_add_to_Block_List(action=None, success=None, container
     phantom.debug('Prompt_to_ask_user_to_add_to_Block_List() called')
     
     # set user and message variables for phantom.prompt call
-    user = "rich"
+    user = "approve_user"
     message = """Do you want to add these IP's to the block IP block list:
 {0}"""
 
@@ -151,16 +151,21 @@ def Prompt_to_ask_user_to_add_to_Block_List(action=None, success=None, container
         "Search_against_last_1_day_of_IP_Traffic:action_result.data.*.IP",
     ]
 
-    # response options
-    options = {
-        "type": "list",
-        "choices": [
-            "Yes",
-            "No",
-        ]
-    }
+    #responses:
+    response_types = [
+        {
+            "prompt": "",
+            "options": {
+                "type": "list",
+                "choices": [
+                    "Yes",
+                    "No",
+                ]
+            },
+        },
+    ]
 
-    phantom.prompt(container=container, user=user, message=message, respond_in_mins=30, name="Prompt_to_ask_user_to_add_to_Block_List", parameters=parameters, options=options, callback=If_yes_add_to_list_if_no_drop)
+    phantom.prompt2(container=container, user=user, message=message, respond_in_mins=30, name="Prompt_to_ask_user_to_add_to_Block_List", parameters=parameters, response_types=response_types, callback=If_yes_add_to_list_if_no_drop)
 
     return
 
@@ -172,7 +177,7 @@ def If_yes_add_to_list_if_no_drop(action=None, success=None, container=None, res
         container=container,
         action_results=results,
         conditions=[
-            ["Prompt_to_ask_user_to_add_to_Block_List:action_result.summary.response", "==", "Yes"],
+            ["Prompt_to_ask_user_to_add_to_Block_List:action_result.summary.responses.0", "==", "Yes"],
         ])
 
     # call connected blocks if condition 1 matched
@@ -274,8 +279,8 @@ IPs: {2}"""
 
     # parameter list for template variable replacement
     parameters = [
-        "Recorded_Future_IOC_Lookup:action_result.parameter.ip",
-        "Recorded_Future_IOC_Lookup:action_result.data.*.risk.score",
+        "ip_reputation_1:action_result.parameter.ip",
+        "ip_reputation_1:action_result.data.*.risk.score",
         "Search_against_last_1_day_of_IP_Traffic:action_result.data.*.IP",
     ]
 
@@ -298,16 +303,16 @@ def send_email_1(action=None, success=None, container=None, results=None, handle
     # build parameters list for 'send_email_1' call
     parameters.append({
         'body': formatted_data_1,
-        'from': "sender@example.com",
+        'from': "phantom@example.com",
         'attachments': "",
-        'to': "recipient@example.com",
+        'headers': "",
         'cc': "",
         'bcc': "",
-        'headers': "",
+        'to': "recipient@example.com",
         'subject': "Malicous IP with related entities found in Splunk",
     })
 
-    phantom.act("send email", parameters=parameters, assets=['defaultmail'], name="send_email_1")
+    phantom.act("send email", parameters=parameters, assets=['smtp'], name="send_email_1")
 
     return
 
@@ -318,8 +323,8 @@ def SPL_Query_to_build_Domain_Lookup(action=None, success=None, container=None, 
 
     # parameter list for template variable replacement
     parameters = [
-        "Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name",
-        "Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
+        "ip_reputation_1:action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name",
+        "ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
     ]
 
     phantom.format(container=container, template=template, parameters=parameters, name="SPL_Query_to_build_Domain_Lookup")
@@ -344,7 +349,7 @@ def Build_Domain_Lookup_Table(action=None, success=None, container=None, results
         'display': "",
     })
 
-    phantom.act("run query", parameters=parameters, assets=['splunk.example.com'], callback=Search_against_last_1_day_of_Domain_Logs, name="Build_Domain_Lookup_Table")
+    phantom.act("run query", parameters=parameters, assets=['splunk-server'], callback=Search_against_last_1_day_of_Domain_Logs, name="Build_Domain_Lookup_Table")
 
     return
 
@@ -355,8 +360,8 @@ def SPL_Query_to_build_Hash_List(action=None, success=None, container=None, resu
 
     # parameter list for template variable replacement
     parameters = [
-        "Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedHash.*.name",
-        "Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedHash.*.refCount",
+        "ip_reputation_1:action_result.data.*.relatedEntities.RelatedHash.*.name",
+        "ip_reputation_1:action_result.data.*.relatedEntities.RelatedHash.*.refCount",
     ]
 
     phantom.format(container=container, template=template, parameters=parameters, name="SPL_Query_to_build_Hash_List")
@@ -381,7 +386,7 @@ def Build_Hash_Lookup_Table(action=None, success=None, container=None, results=N
         'display': "",
     })
 
-    phantom.act("run query", parameters=parameters, assets=['splunk.example.com'], callback=Search_against_last_1_day_of_Hash_Logs, name="Build_Hash_Lookup_Table")
+    phantom.act("run query", parameters=parameters, assets=['splunk-server'], callback=Search_against_last_1_day_of_Hash_Logs, name="Build_Hash_Lookup_Table")
 
     return
 
@@ -392,8 +397,8 @@ def SPL_Query_to_build_related_vulns(action=None, success=None, container=None, 
 
     # parameter list for template variable replacement
     parameters = [
-        "Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name",
-        "Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount",
+        "ip_reputation_1:action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name",
+        "ip_reputation_1:action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount",
     ]
 
     phantom.format(container=container, template=template, parameters=parameters, name="SPL_Query_to_build_related_vulns")
@@ -418,7 +423,7 @@ def Build_Vulnerability_Lookup_Table(action=None, success=None, container=None, 
         'display': "",
     })
 
-    phantom.act("run query", parameters=parameters, assets=['splunk.example.com'], callback=Search_against_last_7_days_of_Vuln_data, name="Build_Vulnerability_Lookup_Table")
+    phantom.act("run query", parameters=parameters, assets=['splunk-server'], callback=Search_against_last_7_days_of_Vuln_data, name="Build_Vulnerability_Lookup_Table")
 
     return
 
@@ -437,7 +442,7 @@ def Search_against_last_1_day_of_Domain_Logs(action=None, success=None, containe
         'display': "",
     })
 
-    phantom.act("run query", parameters=parameters, assets=['splunk.example.com'], callback=join_Send_email_if_related_entities_are_found, name="Search_against_last_1_day_of_Domain_Logs", parent_action=action)
+    phantom.act("run query", parameters=parameters, assets=['splunk-server'], callback=join_Send_email_if_related_entities_are_found, name="Search_against_last_1_day_of_Domain_Logs", parent_action=action)
 
     return
 
@@ -456,7 +461,7 @@ def Search_against_last_1_day_of_Hash_Logs(action=None, success=None, container=
         'display': "",
     })
 
-    phantom.act("run query", parameters=parameters, assets=['splunk.example.com'], callback=join_Send_email_if_related_entities_are_found, name="Search_against_last_1_day_of_Hash_Logs", parent_action=action)
+    phantom.act("run query", parameters=parameters, assets=['splunk-server'], callback=join_Send_email_if_related_entities_are_found, name="Search_against_last_1_day_of_Hash_Logs", parent_action=action)
 
     return
 
@@ -475,7 +480,7 @@ def Search_against_last_7_days_of_Vuln_data(action=None, success=None, container
         'display': "",
     })
 
-    phantom.act("run query", parameters=parameters, assets=['splunk.example.com'], callback=join_Send_email_if_related_entities_are_found, name="Search_against_last_7_days_of_Vuln_data", parent_action=action)
+    phantom.act("run query", parameters=parameters, assets=['splunk-server'], callback=join_Send_email_if_related_entities_are_found, name="Search_against_last_7_days_of_Vuln_data", parent_action=action)
 
     return
 

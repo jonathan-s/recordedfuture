@@ -7,7 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "This use can be spawned manually or through high fidelity correlation searches.",
-            "hash": "19106e3742045dcf5f31fb19c7f7f6f64d5a5f7d",
+            "hash": "297d9ff9bbf78ccdc1dd869015bbede80cbe7963",
             "joint": {
                 "cells": [
                     {
@@ -20,11 +20,11 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".outPorts>.port-out": {
                                 "ref": ".background",
@@ -55,7 +55,7 @@
                                 "display": "block"
                             }
                         },
-                        "block_code": "def on_start(container):\n    phantom.debug('on_start() called')\n    \n    # call 'Recorded_Future_IOC_Lookup' block\n    Recorded_Future_IOC_Lookup(container=container)\n\n    return",
+                        "block_code": "def on_start(container):\n    phantom.debug('on_start() called')\n    \n    # call 'ip_reputation_1' block\n    ip_reputation_1(container=container)\n\n    return",
                         "callback_code": "# read-only block view not available",
                         "callback_start": 1,
                         "callsback": false,
@@ -162,11 +162,11 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -199,7 +199,7 @@
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "Recorded Future IOC Lookup, Prompt to ask user to add to Block List, Prompt to ask user to add to Block List, send email, Search against last 1 day of IP Traffic, Search against last 1 day of Domain Logs, Search against last 1 day of Hash Logs, Search against last 7 days of Vuln data",
+                        "connection_name": "ip reputation, Prompt to ask user to add to Block List, Prompt to ask user to add to Block List, send email, Search against last 1 day of IP Traffic, Search against last 1 day of Domain Logs, Search against last 1 day of Hash Logs, Search against last 7 days of Vuln data",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -217,8 +217,8 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 495,
-                        "line_start": 482,
+                        "line_end": 500,
+                        "line_start": 487,
                         "name": "",
                         "notes": "",
                         "number": 0,
@@ -575,454 +575,6 @@
                         "z": 34
                     },
                     {
-                        "action": "ip reputation",
-                        "action_type": "investigate",
-                        "active": false,
-                        "active_keys": {},
-                        "active_values": {
-                            "ip": "artifact:*.cef.destinationAddress"
-                        },
-                        "angle": 0,
-                        "app": "Recorded Future",
-                        "appid": "1fdc41ba-295c-4a2a-9d1e-0be23924c336",
-                        "approver": "",
-                        "assets": [
-                            {
-                                "action": "ip reputation",
-                                "actions": [
-                                    "test connectivity",
-                                    "domain reputation",
-                                    "url reputation",
-                                    "ip reputation",
-                                    "file reputation",
-                                    "lookup vulnerability"
-                                ],
-                                "active": true,
-                                "app_name": "Recorded Future",
-                                "app_version": "1.2.1",
-                                "appid": "1fdc41ba-295c-4a2a-9d1e-0be23924c336",
-                                "asset_name": "recorded future",
-                                "config_type": "asset",
-                                "count": 0,
-                                "fields": {
-                                    "ip": "artifact:*.cef.destinationAddress"
-                                },
-                                "has_app": true,
-                                "id": 6,
-                                "loaded": false,
-                                "missing": false,
-                                "name": "recorded future",
-                                "output": [
-                                    {
-                                        "contains": [
-                                            "ip"
-                                        ],
-                                        "data_path": "action_result.parameter.ip",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.timestamps.firstSeen",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.timestamps.lastSeen",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.intelCard",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.asn",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.cidr.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.organization",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.location.country",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.location.city",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.riskSummary",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.rules",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.criticality",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.criticalityLabel",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.score",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.threatLists.*.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.threatLists.*.description",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.totalHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.oneDaysHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.sevenDaysHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.sixtyDaysHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.maliciousHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.infoSecHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.socialMediaHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.criminalForumHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.darkWebHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.pasteHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedAttackVectorCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedCompanyCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedCountryCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedEmailAddressCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedHashCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedInternetDomainCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedMalwareCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedMalwareCategoryCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedOrganizationCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedProductCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedTechnologyCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedUsernameCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedVulnerabilityCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.refCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.refCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.refCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount",
-                                        "data_type": "numeric"
-                                    }
-                                ],
-                                "parameters": {
-                                    "ip": {
-                                        "contains": [
-                                            "ip"
-                                        ],
-                                        "data_type": "string",
-                                        "default": null,
-                                        "description": "IP Address to look up",
-                                        "key": "ip",
-                                        "primary": true,
-                                        "required": true
-                                    }
-                                },
-                                "product_name": "Recorded Future",
-                                "product_vendor": "Recorded Future",
-                                "targets": "6",
-                                "type": "threat intelligence service"
-                            }
-                        ],
-                        "attrs": {
-                            ".action": {
-                                "text": "Recorded Future IOC Loo..."
-                            },
-                            ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
-                            },
-                            ".color-band": {
-                                "fill": "#3C444D"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "ref-x": 5,
-                                "ref-y": 105,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out>.port-body": {
-                                "port": {
-                                    "id": "out",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "Investigate"
-                            },
-                            "g.approver image": {
-                                "opacity": 1
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.icon image": {
-                                "xlink:href": "/inc/coa/img/block_icon_investigate.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            },
-                            "g.timer image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def Recorded_Future_IOC_Lookup(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Recorded_Future_IOC_Lookup() called')\n\n    # collect data for 'Recorded_Future_IOC_Lookup' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'Recorded_Future_IOC_Lookup' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip reputation\", parameters=parameters, assets=['recorded future'], callback=Process_Risk_90_Plus, name=\"Recorded_Future_IOC_Lookup\")\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": true,
-                        "color": "",
-                        "connected_to_start": true,
-                        "connection_name": "",
-                        "connection_type": "",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "Recorded Future IOC Lookup",
-                        "delay": 0,
-                        "description": "",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "fa6cef57-4b79-448b-ab89-b1dec84203f2",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 38,
-                        "line_start": 17,
-                        "message": "Configuring now",
-                        "name": "ip reputation",
-                        "notes": "",
-                        "number": 1,
-                        "order": 2,
-                        "outPorts": [
-                            "out"
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 240,
-                            "y": 80
-                        },
-                        "previous_function": "",
-                        "previous_name": "Recorded_Future_IOC_Lookup",
-                        "required_params": {
-                            "ip": true
-                        },
-                        "reviewer": "",
-                        "show_number": false,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "app_action_assets",
-                        "status": "",
-                        "title": "Investigate",
-                        "type": "coa.Action",
-                        "warn": false,
-                        "z": 44
-                    },
-                    {
                         "attrs": {
                             ".connection": {
                                 "stroke": "#6C7A89",
@@ -1229,11 +781,11 @@
                     {
                         "active": false,
                         "angle": 0,
-                        "approver": "rich",
+                        "approver": "approver_user",
                         "attrs": {
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -1274,7 +826,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Prompt_to_ask_user_to_add_to_Block_List(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Prompt_to_ask_user_to_add_to_Block_List() called')\n    \n    # set user and message variables for phantom.prompt call\n    user = \"rich\"\n    message = \"\"\"Do you want to add these IP's to the block IP block list:\n{0}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"Search_against_last_1_day_of_IP_Traffic:action_result.data.*.IP\",\n    ]\n\n    # response options\n    options = {\n        \"type\": \"list\",\n        \"choices\": [\n            \"Yes\",\n            \"No\",\n        ]\n    }\n\n    phantom.prompt(container=container, user=user, message=message, respond_in_mins=30, name=\"Prompt_to_ask_user_to_add_to_Block_List\", parameters=parameters, options=options, callback=If_yes_add_to_list_if_no_drop)\n\n    return",
+                        "block_code": "def Prompt_to_ask_user_to_add_to_Block_List(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Prompt_to_ask_user_to_add_to_Block_List() called')\n    \n    # set user and message variables for phantom.prompt call\n    user = \"approver_user\"\n    message = \"\"\"Do you want to add these IP's to the block IP block list:\n{0}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"Search_against_last_1_day_of_IP_Traffic:action_result.data.*.IP\",\n    ]\n\n    #responses:\n    response_types = [\n        {\n            \"prompt\": \"\",\n            \"options\": {\n                \"type\": \"list\",\n                \"choices\": [\n                    \"Yes\",\n                    \"No\",\n                ]\n            },\n        },\n    ]\n\n    phantom.prompt2(container=container, user=user, message=message, respond_in_mins=30, name=\"Prompt_to_ask_user_to_add_to_Block_List\", parameters=parameters, response_types=response_types, callback=If_yes_add_to_list_if_no_drop)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -1297,7 +849,7 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 167,
+                        "line_end": 172,
                         "line_start": 141,
                         "message": "Do you want to add these IP's to the block IP block list:\n{0}",
                         "name": "prompt",
@@ -1379,6 +931,17 @@
                             "No"
                         ],
                         "response_type": "list",
+                        "responses": [
+                            {
+                                "response_key": "Yes/No",
+                                "response_options": [
+                                    "Yes",
+                                    "No"
+                                ],
+                                "response_prompt": "",
+                                "response_type": "list"
+                            }
+                        ],
                         "show_number": true,
                         "size": {
                             "height": 80,
@@ -1395,7 +958,7 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#000000",
+                                "fill": "#FFFFFF",
                                 "stroke": "#637282",
                                 "transform": "rotate(45 30 70)"
                             },
@@ -1452,7 +1015,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def If_yes_add_to_list_if_no_drop(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('If_yes_add_to_list_if_no_drop() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"Prompt_to_ask_user_to_add_to_Block_List:action_result.summary.response\", \"==\", \"Yes\"],\n        ])\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        Add_to_Block_IP_List(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # call connected blocks for 'else' condition 2\n\n    return",
+                        "block_code": "def If_yes_add_to_list_if_no_drop(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('If_yes_add_to_list_if_no_drop() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"Prompt_to_ask_user_to_add_to_Block_List:action_result.summary.responses.0\", \"==\", \"Yes\"],\n        ])\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        Add_to_Block_IP_List(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # call connected blocks for 'else' condition 2\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
@@ -1476,8 +1039,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 187,
-                        "line_start": 167,
+                        "line_end": 192,
+                        "line_start": 172,
                         "name": "decision",
                         "notes": "",
                         "number": 2,
@@ -1492,7 +1055,7 @@
                                     {
                                         "comparison": "==",
                                         "data_type": "",
-                                        "param": "Prompt_to_ask_user_to_add_to_Block_List:action_result.summary.response",
+                                        "param": "Prompt_to_ask_user_to_add_to_Block_List:action_result.summary.responses.0",
                                         "value": "Yes"
                                     }
                                 ],
@@ -1592,11 +1155,11 @@
                                 "text": "Add to Block IP List"
                             },
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -1626,6 +1189,9 @@
                             },
                             ".title": {
                                 "text": "API"
+                            },
+                            "g.code image": {
+                                "opacity": 1
                             },
                             "g.delete": {
                                 "display": "none"
@@ -1678,8 +1244,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 196,
-                        "line_start": 187,
+                        "line_end": 201,
+                        "line_start": 192,
                         "message": "Configuring now",
                         "name": "add list",
                         "notes": "",
@@ -1843,11 +1409,11 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".format": {
                                 "text": "Format Email message"
@@ -1895,7 +1461,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Format_Email_message(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Format_Email_message() called')\n    \n    template = \"\"\"The very malicious destination IP {0} with a Risk Score of {1} was identified. \n\nAdditional searches performed against logs showed that the following related entities occurring in > 10  relations have been found in the last 14 days.\n\nIPs: {2}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"Recorded_Future_IOC_Lookup:action_result.parameter.ip\",\n        \"Recorded_Future_IOC_Lookup:action_result.data.*.risk.score\",\n        \"Search_against_last_1_day_of_IP_Traffic:action_result.data.*.IP\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Format_Email_message\")\n\n    send_email_1(container=container)\n\n    return",
+                        "block_code": "def Format_Email_message(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Format_Email_message() called')\n    \n    template = \"\"\"The very malicious destination IP {0} with a Risk Score of {1} was identified. \n\nAdditional searches performed against logs showed that the following related entities occurring in > 10  relations have been found in the last 14 days.\n\nIPs: {2}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"ip_reputation_1:action_result.parameter.ip\",\n        \"ip_reputation_1:action_result.data.*.risk.score\",\n        \"Search_against_last_1_day_of_IP_Traffic:action_result.data.*.IP\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Format_Email_message\")\n\n    send_email_1(container=container)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
@@ -1919,8 +1485,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 288,
-                        "line_start": 266,
+                        "line_end": 293,
+                        "line_start": 271,
                         "message": "Configuring now",
                         "name": "format",
                         "notes": "",
@@ -1933,12 +1499,12 @@
                             {
                                 "position": 0,
                                 "type": "",
-                                "value": "Recorded_Future_IOC_Lookup:action_result.parameter.ip"
+                                "value": "ip_reputation_1:action_result.parameter.ip"
                             },
                             {
                                 "position": 1,
                                 "type": "",
-                                "value": "Recorded_Future_IOC_Lookup:action_result.data.*.risk.score"
+                                "value": "ip_reputation_1:action_result.data.*.risk.score"
                             },
                             {
                                 "position": 2,
@@ -2067,7 +1633,7 @@
                             "bcc": "",
                             "body": "Format_Email_message:formatted_data",
                             "cc": "",
-                            "from": "sender@example.com",
+                            "from": "phantom@example.com",
                             "headers": "",
                             "subject": "Malicous IP with related entities found in Splunk",
                             "to": "recipient@example.com"
@@ -2095,7 +1661,7 @@
                                     "bcc": "",
                                     "body": "Format_Email_message:formatted_data",
                                     "cc": "",
-                                    "from": "sender@example.com",
+                                    "from": "phantom@example.com",
                                     "headers": "",
                                     "subject": "Malicous IP with related entities found in Splunk",
                                     "to": "recipient@example.com"
@@ -2104,7 +1670,7 @@
                                 "id": 10,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "defaultmail",
+                                "name": "smtp",
                                 "output": [
                                     {
                                         "column_name": "Status",
@@ -2280,11 +1846,11 @@
                                 "text": "send email"
                             },
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -2340,7 +1906,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def send_email_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('send_email_1() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'send_email_1' call\n    formatted_data_1 = phantom.get_format_data(name='Format_Email_message')\n\n    parameters = []\n    \n    # build parameters list for 'send_email_1' call\n    parameters.append({\n        'body': formatted_data_1,\n        'from': \"sender@example.com\",\n        'attachments': \"\",\n        'to': \"recipient@example.com\",\n        'cc': \"\",\n        'bcc': \"\",\n        'headers': \"\",\n        'subject': \"Malicous IP with related entities found in Splunk\",\n    })\n\n    phantom.act(\"send email\", parameters=parameters, assets=['defaultmail'], name=\"send_email_1\")\n\n    return",
+                        "block_code": "def send_email_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('send_email_1() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'send_email_1' call\n    formatted_data_1 = phantom.get_format_data(name='Format_Email_message')\n\n    parameters = []\n    \n    # build parameters list for 'send_email_1' call\n    parameters.append({\n        'body': formatted_data_1,\n        'from': \"phantom@example.com\",\n        'attachments': \"\",\n        'headers': \"\",\n        'cc': \"\",\n        'bcc': \"\",\n        'to': \"recipient@example.com\",\n        'subject': \"Malicous IP with related entities found in Splunk\",\n    })\n\n    phantom.act(\"send email\", parameters=parameters, assets=['smtp'], name=\"send_email_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -2365,8 +1931,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 314,
-                        "line_start": 288,
+                        "line_end": 319,
+                        "line_start": 293,
                         "message": "Configuring now",
                         "name": "send email",
                         "notes": "",
@@ -2570,7 +2136,7 @@
                                 "id": 11,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "splunk.example.com",
+                                "name": "splunk-server",
                                 "output": [
                                     {
                                         "column_name": "Host",
@@ -2708,11 +2274,11 @@
                                 "text": "Build IP Lookup Table"
                             },
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -2771,13 +2337,13 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Build_IP_Lookup_Table(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Build_IP_Lookup_Table() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Build_IP_Lookup_Table' call\n    formatted_data_1 = phantom.get_format_data(name='SPL_Query_to_build_IP_Lookup')\n\n    parameters = []\n    \n    # build parameters list for 'Build_IP_Lookup_Table' call\n    parameters.append({\n        'query': formatted_data_1,\n        'display': \"\",\n    })\n\n    phantom.act(\"run query\", parameters=parameters, assets=['splunk.example.com'], callback=Search_against_last_1_day_of_IP_Traffic, name=\"Build_IP_Lookup_Table\")\n\n    return",
+                        "block_code": "def Build_IP_Lookup_Table(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Build_IP_Lookup_Table() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Build_IP_Lookup_Table' call\n    formatted_data_1 = phantom.get_format_data(name='SPL_Query_to_build_IP_Lookup')\n\n    parameters = []\n    \n    # build parameters list for 'Build_IP_Lookup_Table' call\n    parameters.append({\n        'query': formatted_data_1,\n        'display': \"\",\n    })\n\n    phantom.act(\"run query\", parameters=parameters, assets=['splunk-server'], callback=Search_against_last_1_day_of_IP_Traffic, name=\"Build_IP_Lookup_Table\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 97,
                         "callsback": true,
                         "color": "",
                         "connected_to_start": true,
-                        "connection_name": "Recorded Future IOC Lookup",
+                        "connection_name": "ip reputation",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -2959,7 +2525,7 @@
                                 "id": 11,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "splunk.example.com",
+                                "name": "splunk-server",
                                 "output": [
                                     {
                                         "column_name": "Host",
@@ -3097,11 +2663,11 @@
                                 "text": "Build Domain Lookup Ta..."
                             },
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -3157,13 +2723,13 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Build_Domain_Lookup_Table(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Build_Domain_Lookup_Table() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Build_Domain_Lookup_Table' call\n    formatted_data_1 = phantom.get_format_data(name='SPL_Query_to_build_Domain_Lookup')\n\n    parameters = []\n    \n    # build parameters list for 'Build_Domain_Lookup_Table' call\n    parameters.append({\n        'query': formatted_data_1,\n        'display': \"\",\n    })\n\n    phantom.act(\"run query\", parameters=parameters, assets=['splunk.example.com'], callback=Search_against_last_1_day_of_Domain_Logs, name=\"Build_Domain_Lookup_Table\")\n\n    return",
+                        "block_code": "def Build_Domain_Lookup_Table(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Build_Domain_Lookup_Table() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Build_Domain_Lookup_Table' call\n    formatted_data_1 = phantom.get_format_data(name='SPL_Query_to_build_Domain_Lookup')\n\n    parameters = []\n    \n    # build parameters list for 'Build_Domain_Lookup_Table' call\n    parameters.append({\n        'query': formatted_data_1,\n        'display': \"\",\n    })\n\n    phantom.act(\"run query\", parameters=parameters, assets=['splunk-server'], callback=Search_against_last_1_day_of_Domain_Logs, name=\"Build_Domain_Lookup_Table\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
                         "color": "",
                         "connected_to_start": true,
-                        "connection_name": "Recorded Future IOC Lookup",
+                        "connection_name": "ip reputation",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -3182,8 +2748,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 351,
-                        "line_start": 331,
+                        "line_end": 356,
+                        "line_start": 336,
                         "message": "Configuring now",
                         "name": "run query",
                         "notes": "",
@@ -3311,11 +2877,11 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".format": {
                                 "text": "SPL Query to build Doma..."
@@ -3363,12 +2929,12 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def SPL_Query_to_build_Domain_Lookup(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('SPL_Query_to_build_Domain_Lookup() called')\n    \n    template = \"\"\"| makeresults | eval domain=\\\"{0}\\\" | makemv domain delim=\\\", \\\" | mvexpand domain | appendcols [| makeresults | eval RC=\\\"{1}\\\" | makemv RC delim=\\\", \\\" | mvexpand RC ] | outputlookup huntdomain.csv\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name\",\n        \"Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"SPL_Query_to_build_Domain_Lookup\")\n\n    Build_Domain_Lookup_Table(container=container)\n\n    return",
+                        "block_code": "def SPL_Query_to_build_Domain_Lookup(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('SPL_Query_to_build_Domain_Lookup() called')\n    \n    template = \"\"\"| makeresults | eval domain=\\\"{0}\\\" | makemv domain delim=\\\", \\\" | mvexpand domain | appendcols [| makeresults | eval RC=\\\"{1}\\\" | makemv RC delim=\\\", \\\" | mvexpand RC ] | outputlookup huntdomain.csv\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"ip_reputation_1:action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name\",\n        \"ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"SPL_Query_to_build_Domain_Lookup\")\n\n    Build_Domain_Lookup_Table(container=container)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "Recorded Future IOC Lookup",
+                        "connection_name": "ip reputation",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -3387,8 +2953,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 331,
-                        "line_start": 314,
+                        "line_end": 336,
+                        "line_start": 319,
                         "message": "Configuring now",
                         "name": "format",
                         "notes": "",
@@ -3401,12 +2967,12 @@
                             {
                                 "position": 0,
                                 "type": "",
-                                "value": "Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name"
+                                "value": "ip_reputation_1:action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name"
                             },
                             {
                                 "position": 1,
                                 "type": "",
-                                "value": "Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount"
+                                "value": "ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount"
                             }
                         ],
                         "ports": {
@@ -3525,11 +3091,11 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".format": {
                                 "text": "SPL Query to build Hash ..."
@@ -3580,12 +3146,12 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def SPL_Query_to_build_Hash_List(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('SPL_Query_to_build_Hash_List() called')\n    \n    template = \"\"\"| makeresults | eval hash=\\\"{0}\\\" | makemv hash delim=\\\", \\\" | mvexpand hash | appendcols [| makeresults | eval RC=\\\"{1}\\\" | makemv RC delim=\\\", \\\" | mvexpand RC ] | outputlookup hunthash.csv\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedHash.*.name\",\n        \"Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedHash.*.refCount\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"SPL_Query_to_build_Hash_List\")\n\n    Build_Hash_Lookup_Table(container=container)\n\n    return",
+                        "block_code": "def SPL_Query_to_build_Hash_List(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('SPL_Query_to_build_Hash_List() called')\n    \n    template = \"\"\"| makeresults | eval hash=\\\"{0}\\\" | makemv hash delim=\\\", \\\" | mvexpand hash | appendcols [| makeresults | eval RC=\\\"{1}\\\" | makemv RC delim=\\\", \\\" | mvexpand RC ] | outputlookup hunthash.csv\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"ip_reputation_1:action_result.data.*.relatedEntities.RelatedHash.*.name\",\n        \"ip_reputation_1:action_result.data.*.relatedEntities.RelatedHash.*.refCount\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"SPL_Query_to_build_Hash_List\")\n\n    Build_Hash_Lookup_Table(container=container)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "Recorded Future IOC Lookup",
+                        "connection_name": "ip reputation",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -3604,8 +3170,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 368,
-                        "line_start": 351,
+                        "line_end": 373,
+                        "line_start": 356,
                         "message": "Configuring now",
                         "name": "format",
                         "notes": "",
@@ -3618,12 +3184,12 @@
                             {
                                 "position": 0,
                                 "type": "",
-                                "value": "Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedHash.*.name"
+                                "value": "ip_reputation_1:action_result.data.*.relatedEntities.RelatedHash.*.name"
                             },
                             {
                                 "position": 1,
                                 "type": "",
-                                "value": "Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedHash.*.refCount"
+                                "value": "ip_reputation_1:action_result.data.*.relatedEntities.RelatedHash.*.refCount"
                             }
                         ],
                         "ports": {
@@ -3736,7 +3302,7 @@
                                 "id": 11,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "splunk.example.com",
+                                "name": "splunk-server",
                                 "output": [
                                     {
                                         "column_name": "Host",
@@ -3874,11 +3440,11 @@
                                 "text": "Build Hash Lookup Table"
                             },
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -3934,13 +3500,13 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Build_Hash_Lookup_Table(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Build_Hash_Lookup_Table() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Build_Hash_Lookup_Table' call\n    formatted_data_1 = phantom.get_format_data(name='SPL_Query_to_build_Hash_List')\n\n    parameters = []\n    \n    # build parameters list for 'Build_Hash_Lookup_Table' call\n    parameters.append({\n        'query': formatted_data_1,\n        'display': \"\",\n    })\n\n    phantom.act(\"run query\", parameters=parameters, assets=['splunk.example.com'], callback=Search_against_last_1_day_of_Hash_Logs, name=\"Build_Hash_Lookup_Table\")\n\n    return",
+                        "block_code": "def Build_Hash_Lookup_Table(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Build_Hash_Lookup_Table() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Build_Hash_Lookup_Table' call\n    formatted_data_1 = phantom.get_format_data(name='SPL_Query_to_build_Hash_List')\n\n    parameters = []\n    \n    # build parameters list for 'Build_Hash_Lookup_Table' call\n    parameters.append({\n        'query': formatted_data_1,\n        'display': \"\",\n    })\n\n    phantom.act(\"run query\", parameters=parameters, assets=['splunk-server'], callback=Search_against_last_1_day_of_Hash_Logs, name=\"Build_Hash_Lookup_Table\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
                         "color": "",
                         "connected_to_start": true,
-                        "connection_name": "Recorded Future IOC Lookup",
+                        "connection_name": "ip reputation",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -3959,8 +3525,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 388,
-                        "line_start": 368,
+                        "line_end": 393,
+                        "line_start": 373,
                         "message": "Configuring now",
                         "name": "run query",
                         "notes": "",
@@ -4088,11 +3654,11 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".format": {
                                 "text": "SPL Query to build relate..."
@@ -4128,7 +3694,7 @@
                                 "opacity": 1
                             },
                             "g.delete": {
-                                "display": "none"
+                                "display": "block"
                             },
                             "g.error": {
                                 "opacity": 0
@@ -4140,12 +3706,12 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def SPL_Query_to_build_related_vulns(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('SPL_Query_to_build_related_vulns() called')\n    \n    template = \"\"\"| makeresults | eval vuln=\\\"{0}\\\" | makemv vuln delim=\\\", \\\" | mvexpand vuln | appendcols [| makeresults | eval RC=\\\"{1}\\\" | makemv RC delim=\\\", \\\" | mvexpand RC ] | outputlookup huntvuln.csv\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name\",\n        \"Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"SPL_Query_to_build_related_vulns\")\n\n    Build_Vulnerability_Lookup_Table(container=container)\n\n    return",
+                        "block_code": "def SPL_Query_to_build_related_vulns(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('SPL_Query_to_build_related_vulns() called')\n    \n    template = \"\"\"| makeresults | eval vuln=\\\"{0}\\\" | makemv vuln delim=\\\", \\\" | mvexpand vuln | appendcols [| makeresults | eval RC=\\\"{1}\\\" | makemv RC delim=\\\", \\\" | mvexpand RC ] | outputlookup huntvuln.csv\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"ip_reputation_1:action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name\",\n        \"ip_reputation_1:action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"SPL_Query_to_build_related_vulns\")\n\n    Build_Vulnerability_Lookup_Table(container=container)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "Recorded Future IOC Lookup",
+                        "connection_name": "ip reputation",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -4164,8 +3730,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 405,
-                        "line_start": 388,
+                        "line_end": 410,
+                        "line_start": 393,
                         "message": "Configuring now",
                         "name": "format",
                         "notes": "",
@@ -4178,12 +3744,12 @@
                             {
                                 "position": 0,
                                 "type": "",
-                                "value": "Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name"
+                                "value": "ip_reputation_1:action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name"
                             },
                             {
                                 "position": 1,
                                 "type": "",
-                                "value": "Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount"
+                                "value": "ip_reputation_1:action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount"
                             }
                         ],
                         "ports": {
@@ -4336,7 +3902,7 @@
                                 "id": 11,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "splunk.example.com",
+                                "name": "splunk-server",
                                 "output": [
                                     {
                                         "column_name": "Host",
@@ -4474,11 +4040,11 @@
                                 "text": "Build Vulnerability Looku...."
                             },
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -4534,13 +4100,13 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Build_Vulnerability_Lookup_Table(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Build_Vulnerability_Lookup_Table() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Build_Vulnerability_Lookup_Table' call\n    formatted_data_1 = phantom.get_format_data(name='SPL_Query_to_build_related_vulns')\n\n    parameters = []\n    \n    # build parameters list for 'Build_Vulnerability_Lookup_Table' call\n    parameters.append({\n        'query': formatted_data_1,\n        'display': \"\",\n    })\n\n    phantom.act(\"run query\", parameters=parameters, assets=['splunk.example.com'], callback=Search_against_last_7_days_of_Vuln_data, name=\"Build_Vulnerability_Lookup_Table\")\n\n    return",
+                        "block_code": "def Build_Vulnerability_Lookup_Table(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Build_Vulnerability_Lookup_Table() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Build_Vulnerability_Lookup_Table' call\n    formatted_data_1 = phantom.get_format_data(name='SPL_Query_to_build_related_vulns')\n\n    parameters = []\n    \n    # build parameters list for 'Build_Vulnerability_Lookup_Table' call\n    parameters.append({\n        'query': formatted_data_1,\n        'display': \"\",\n    })\n\n    phantom.act(\"run query\", parameters=parameters, assets=['splunk-server'], callback=Search_against_last_7_days_of_Vuln_data, name=\"Build_Vulnerability_Lookup_Table\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
                         "color": "",
                         "connected_to_start": true,
-                        "connection_name": "Recorded Future IOC Lookup",
+                        "connection_name": "ip reputation",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -4559,8 +4125,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 425,
-                        "line_start": 405,
+                        "line_end": 430,
+                        "line_start": 410,
                         "message": "Configuring now",
                         "name": "run query",
                         "notes": "",
@@ -4722,7 +4288,7 @@
                                 "id": 11,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "splunk.example.com",
+                                "name": "splunk-server",
                                 "output": [
                                     {
                                         "column_name": "Host",
@@ -4860,11 +4426,11 @@
                                 "text": "Search against last 1 day..."
                             },
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -4920,7 +4486,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Search_against_last_1_day_of_Domain_Logs(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Search_against_last_1_day_of_Domain_Logs() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Search_against_last_1_day_of_Domain_Logs' call\n\n    parameters = []\n    \n    # build parameters list for 'Search_against_last_1_day_of_Domain_Logs' call\n    parameters.append({\n        'query': \"sourcetype=pan:threat ((earliest=-1d latest=now)) |eval domain=dest_hostname | lookup huntdomain.csv domain OUTPUT RC | search RC>10\",\n        'display': \"\",\n    })\n\n    phantom.act(\"run query\", parameters=parameters, assets=['splunk.example.com'], callback=join_Send_email_if_related_entities_are_found, name=\"Search_against_last_1_day_of_Domain_Logs\", parent_action=action)\n\n    return",
+                        "block_code": "def Search_against_last_1_day_of_Domain_Logs(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Search_against_last_1_day_of_Domain_Logs() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Search_against_last_1_day_of_Domain_Logs' call\n\n    parameters = []\n    \n    # build parameters list for 'Search_against_last_1_day_of_Domain_Logs' call\n    parameters.append({\n        'query': \"sourcetype=pan:threat ((earliest=-1d latest=now)) |eval domain=dest_hostname | lookup huntdomain.csv domain OUTPUT RC | search RC>10\",\n        'display': \"\",\n    })\n\n    phantom.act(\"run query\", parameters=parameters, assets=['splunk-server'], callback=join_Send_email_if_related_entities_are_found, name=\"Search_against_last_1_day_of_Domain_Logs\", parent_action=action)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -4945,8 +4511,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 444,
-                        "line_start": 425,
+                        "line_end": 449,
+                        "line_start": 430,
                         "message": "Configuring now",
                         "name": "run query",
                         "notes": "",
@@ -5271,7 +4837,7 @@
                                 "id": 11,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "splunk.example.com",
+                                "name": "splunk-server",
                                 "output": [
                                     {
                                         "column_name": "Host",
@@ -5409,11 +4975,11 @@
                                 "text": "Search against last 7 day..."
                             },
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -5469,7 +5035,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Search_against_last_7_days_of_Vuln_data(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Search_against_last_7_days_of_Vuln_data() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Search_against_last_7_days_of_Vuln_data' call\n\n    parameters = []\n    \n    # build parameters list for 'Search_against_last_7_days_of_Vuln_data' call\n    parameters.append({\n        'query': \"index=main sourcetype=\\\"tenable:sc:vuln\\\" ((earliest=-7d latest=now)) |eval vuln=cve | lookup huntvuln.csv vuln OUTPUT RC | search RC>10\",\n        'display': \"\",\n    })\n\n    phantom.act(\"run query\", parameters=parameters, assets=['splunk.example.com'], callback=join_Send_email_if_related_entities_are_found, name=\"Search_against_last_7_days_of_Vuln_data\", parent_action=action)\n\n    return",
+                        "block_code": "def Search_against_last_7_days_of_Vuln_data(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Search_against_last_7_days_of_Vuln_data() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Search_against_last_7_days_of_Vuln_data' call\n\n    parameters = []\n    \n    # build parameters list for 'Search_against_last_7_days_of_Vuln_data' call\n    parameters.append({\n        'query': \"index=main sourcetype=\\\"tenable:sc:vuln\\\" ((earliest=-7d latest=now)) |eval vuln=cve | lookup huntvuln.csv vuln OUTPUT RC | search RC>10\",\n        'display': \"\",\n    })\n\n    phantom.act(\"run query\", parameters=parameters, assets=['splunk-server'], callback=join_Send_email_if_related_entities_are_found, name=\"Search_against_last_7_days_of_Vuln_data\", parent_action=action)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -5494,8 +5060,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 482,
-                        "line_start": 463,
+                        "line_end": 487,
+                        "line_start": 468,
                         "message": "Configuring now",
                         "name": "run query",
                         "notes": "",
@@ -5747,11 +5313,11 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".format": {
                                 "text": "Format IP for Blocklist"
@@ -5919,7 +5485,7 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#000000",
+                                "fill": "#FFFFFF",
                                 "stroke": "#637282",
                                 "transform": "rotate(45 30 70)"
                             },
@@ -5973,12 +5539,12 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Process_Risk_90_Plus(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Process_Risk_90_Plus() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"Recorded_Future_IOC_Lookup:action_result.data.*.risk.score\", \">=\", 90],\n        ])\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        SPL_Query_to_build_IP_Lookup(action=action, success=success, container=container, results=results, handle=handle)\n        SPL_Query_to_build_Domain_Lookup(action=action, success=success, container=container, results=results, handle=handle)\n        SPL_Query_to_build_Hash_List(action=action, success=success, container=container, results=results, handle=handle)\n        SPL_Query_to_build_related_vulns(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # call connected blocks for 'else' condition 2\n\n    return",
+                        "block_code": "def Process_Risk_90_Plus(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Process_Risk_90_Plus() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"ip_reputation_1:action_result.data.*.risk.score\", \">=\", 90],\n        ])\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        SPL_Query_to_build_IP_Lookup(action=action, success=success, container=container, results=results, handle=handle)\n        SPL_Query_to_build_Domain_Lookup(action=action, success=success, container=container, results=results, handle=handle)\n        SPL_Query_to_build_Hash_List(action=action, success=success, container=container, results=results, handle=handle)\n        SPL_Query_to_build_related_vulns(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # call connected blocks for 'else' condition 2\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "Recorded Future IOC Lookup",
+                        "connection_name": "ip reputation",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -6013,7 +5579,7 @@
                                     {
                                         "comparison": ">=",
                                         "data_type": "",
-                                        "param": "Recorded_Future_IOC_Lookup:action_result.data.*.risk.score",
+                                        "param": "ip_reputation_1:action_result.data.*.risk.score",
                                         "value": "90"
                                     }
                                 ],
@@ -6109,7 +5675,7 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#000000",
+                                "fill": "#FFFFFF",
                                 "stroke": "#637282",
                                 "transform": "rotate(45 30 70)"
                             },
@@ -6234,9 +5800,9 @@
                         ],
                         "join_code": "def join_Send_email_if_related_entities_are_found(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('join_Send_email_if_related_entities_are_found() called')\n\n    # check if all connected incoming actions are done i.e. have succeeded or failed\n    if phantom.actions_done([ 'Search_against_last_1_day_of_IP_Traffic', 'Search_against_last_1_day_of_Domain_Logs', 'Search_against_last_1_day_of_Hash_Logs', 'Search_against_last_7_days_of_Vuln_data' ]):\n        \n        # call connected block \"Send_email_if_related_entities_are_found\"\n        Send_email_if_related_entities_are_found(container=container, handle=handle)\n    \n    return",
                         "join_optional": [],
-                        "join_start": 255,
-                        "line_end": 266,
-                        "line_start": 196,
+                        "join_start": 260,
+                        "line_end": 271,
+                        "line_start": 201,
                         "name": "decision",
                         "notes": "",
                         "number": 3,
@@ -6423,7 +5989,7 @@
                                 "id": 11,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "splunk.example.com",
+                                "name": "splunk-server",
                                 "output": [
                                     {
                                         "column_name": "Host",
@@ -6561,11 +6127,11 @@
                                 "text": "Search against last 1 day..."
                             },
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -6624,7 +6190,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Search_against_last_1_day_of_IP_Traffic(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Search_against_last_1_day_of_IP_Traffic() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Search_against_last_1_day_of_IP_Traffic' call\n\n    parameters = []\n    \n    # build parameters list for 'Search_against_last_1_day_of_IP_Traffic' call\n    parameters.append({\n        'query': \"sourcetype=pan:t* ((earliest=-1d latest=now)) |eval IP=dest_ip | lookup huntip.csv IP OUTPUT RC | search RC>10\",\n        'display': \"\",\n    })\n\n    phantom.act(\"run query\", parameters=parameters, assets=['splunk.example.com'], callback=Search_against_last_1_day_of_IP_Traffic_callback, name=\"Search_against_last_1_day_of_IP_Traffic\", parent_action=action)\n\n    return",
+                        "block_code": "def Search_against_last_1_day_of_IP_Traffic(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Search_against_last_1_day_of_IP_Traffic() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Search_against_last_1_day_of_IP_Traffic' call\n\n    parameters = []\n    \n    # build parameters list for 'Search_against_last_1_day_of_IP_Traffic' call\n    parameters.append({\n        'query': \"sourcetype=pan:t* ((earliest=-1d latest=now)) |eval IP=dest_ip | lookup huntip.csv IP OUTPUT RC | search RC>10\",\n        'display': \"\",\n    })\n\n    phantom.act(\"run query\", parameters=parameters, assets=['splunk-server'], callback=Search_against_last_1_day_of_IP_Traffic_callback, name=\"Search_against_last_1_day_of_IP_Traffic\", parent_action=action)\n\n    return",
                         "callback_code": "def Search_against_last_1_day_of_IP_Traffic_callback(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Search_against_last_1_day_of_IP_Traffic_callback() called')\n    \n    Format_IP_for_Blocklist(action=action, success=success, container=container, results=results, handle=handle)\n    join_Send_email_if_related_entities_are_found(action=action, success=success, container=container, results=results, handle=handle)\n\n    return",
                         "callback_start": 117,
                         "callsback": true,
@@ -6738,11 +6304,11 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".format": {
                                 "text": "SPL Query to build IP Lo..."
@@ -6790,12 +6356,12 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def SPL_Query_to_build_IP_Lookup(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('SPL_Query_to_build_IP_Lookup() called')\n    \n    template = \"\"\"| makeresults | eval IP=\\\"{0}\\\" | makemv IP delim=\\\", \\\" | mvexpand IP | appendcols [| makeresults | eval RC=\\\"{1}\\\" | makemv RC delim=\\\", \\\" | mvexpand RC ] | outputlookup huntip.csv\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedIpAddress.*.name\",\n        \"Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"SPL_Query_to_build_IP_Lookup\")\n\n    Build_IP_Lookup_Table(container=container)\n\n    return",
+                        "block_code": "def SPL_Query_to_build_IP_Lookup(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('SPL_Query_to_build_IP_Lookup() called')\n    \n    template = \"\"\"| makeresults | eval IP=\\\"{0}\\\" | makemv IP delim=\\\", \\\" | mvexpand IP | appendcols [| makeresults | eval RC=\\\"{1}\\\" | makemv RC delim=\\\", \\\" | mvexpand RC ] | outputlookup huntip.csv\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.name\",\n        \"ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"SPL_Query_to_build_IP_Lookup\")\n\n    Build_IP_Lookup_Table(container=container)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "Recorded Future IOC Lookup",
+                        "connection_name": "ip reputation",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -6828,12 +6394,12 @@
                             {
                                 "position": 0,
                                 "type": "",
-                                "value": "Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedIpAddress.*.name"
+                                "value": "ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.name"
                             },
                             {
                                 "position": 1,
                                 "type": "",
-                                "value": "Recorded_Future_IOC_Lookup:action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount"
+                                "value": "ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount"
                             }
                         ],
                         "ports": {
@@ -6946,7 +6512,7 @@
                                 "id": 11,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "splunk.example.com",
+                                "name": "splunk-server",
                                 "output": [
                                     {
                                         "column_name": "Host",
@@ -7084,11 +6650,11 @@
                                 "text": "Search against last 1 day..."
                             },
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -7147,7 +6713,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Search_against_last_1_day_of_Hash_Logs(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Search_against_last_1_day_of_Hash_Logs() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Search_against_last_1_day_of_Hash_Logs' call\n\n    parameters = []\n    \n    # build parameters list for 'Search_against_last_1_day_of_Hash_Logs' call\n    parameters.append({\n        'query': \"index=main sourcetype=symantec:ep:risk:file ((earliest=-1d latest=now)) |eval hash=file_hash | lookup hunthash.csv hash OUTPUT RC | search RC>10\",\n        'display': \"\",\n    })\n\n    phantom.act(\"run query\", parameters=parameters, assets=['splunk.example.com'], callback=join_Send_email_if_related_entities_are_found, name=\"Search_against_last_1_day_of_Hash_Logs\", parent_action=action)\n\n    return",
+                        "block_code": "def Search_against_last_1_day_of_Hash_Logs(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Search_against_last_1_day_of_Hash_Logs() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Search_against_last_1_day_of_Hash_Logs' call\n\n    parameters = []\n    \n    # build parameters list for 'Search_against_last_1_day_of_Hash_Logs' call\n    parameters.append({\n        'query': \"index=main sourcetype=symantec:ep:risk:file ((earliest=-1d latest=now)) |eval hash=file_hash | lookup hunthash.csv hash OUTPUT RC | search RC>10\",\n        'display': \"\",\n    })\n\n    phantom.act(\"run query\", parameters=parameters, assets=['splunk-server'], callback=join_Send_email_if_related_entities_are_found, name=\"Search_against_last_1_day_of_Hash_Logs\", parent_action=action)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -7172,8 +6738,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 463,
-                        "line_start": 444,
+                        "line_end": 468,
+                        "line_start": 449,
                         "message": "Configuring now",
                         "name": "run query",
                         "notes": "",
@@ -7253,17 +6819,502 @@
                         "status": "",
                         "title": "Investigate",
                         "type": "coa.Action",
-                        "warn": "",
+                        "warn": false,
                         "z": 173
+                    },
+                    {
+                        "action": "ip reputation",
+                        "action_type": "investigate",
+                        "active": false,
+                        "active_keys": {},
+                        "active_values": {
+                            "ip": "artifact:*.cef.destinationAddress"
+                        },
+                        "angle": 0,
+                        "app": "recordedfuture",
+                        "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
+                        "approver": "",
+                        "assets": [
+                            {
+                                "action": "ip reputation",
+                                "actions": [
+                                    "alert data lookup",
+                                    "rule id lookup",
+                                    "lookup vulnerability",
+                                    "file reputation",
+                                    "ip reputation",
+                                    "url reputation",
+                                    "domain reputation",
+                                    "test connectivity"
+                                ],
+                                "active": true,
+                                "app_name": "recordedfuture",
+                                "app_version": "2.0.0",
+                                "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
+                                "asset_name": "recordedfuture",
+                                "config_type": "asset",
+                                "count": 0,
+                                "fields": {
+                                    "ip": "artifact:*.cef.destinationAddress"
+                                },
+                                "has_app": true,
+                                "id": 6,
+                                "loaded": false,
+                                "missing": false,
+                                "name": "recordedfuture",
+                                "output": [
+                                    {
+                                        "column_name": "ip",
+                                        "column_order": 0,
+                                        "contains": [
+                                            "ip"
+                                        ],
+                                        "data_path": "action_result.parameter.ip",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "column_name": "status",
+                                        "column_order": 1,
+                                        "data_path": "action_result.status",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.message",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.timestamps.firstSeen",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.timestamps.lastSeen",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.intelCard",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.location.asn",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.location.cidr.name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.location.organization",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.location.location.country",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.location.location.city",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.riskSummary",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.rules",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.criticality",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.criticalityLabel",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.score",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.threatLists.*.name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.threatLists.*.description",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.totalHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.oneDaysHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.sevenDaysHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.sixtyDaysHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.maliciousHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.infoSecHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.socialMediaHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.criminalForumHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.darkWebHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.pasteHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedAttackVectorCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedCompanyCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedCountryCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedEmailAddressCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedHashCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedInternetDomainCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedMalwareCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedMalwareCategoryCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedOrganizationCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedProductCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedTechnologyCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedUsernameCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedVulnerabilityCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.refCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.refCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.refCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "column_name": "status",
+                                        "column_order": 1,
+                                        "data_path": "action_result.status",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.message",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.criticalityLabel",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.lastSeen",
+                                        "data_type": "string"
+                                    }
+                                ],
+                                "parameters": {
+                                    "ip": {
+                                        "contains": [
+                                            "ip"
+                                        ],
+                                        "data_type": "string",
+                                        "default": "",
+                                        "description": "IP to query",
+                                        "key": "ip",
+                                        "order": 0,
+                                        "primary": true,
+                                        "required": true,
+                                        "value_list": []
+                                    }
+                                },
+                                "product_name": "Recorded Future for Splunk Phantom",
+                                "product_vendor": "Recorded Future, Inc",
+                                "targets": "6",
+                                "type": "reputation"
+                            }
+                        ],
+                        "attrs": {
+                            ".action": {
+                                "text": "ip reputation"
+                            },
+                            ".background": {
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
+                            },
+                            ".color-band": {
+                                "fill": "#171D21"
+                            },
+                            ".inPorts>.port-in": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".inPorts>.port-in>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".message": {
+                                "opacity": 0,
+                                "ref-x": 5,
+                                "ref-y": 105,
+                                "text": "Configuring now"
+                            },
+                            ".outPorts>.port-out": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out>.port-body": {
+                                "port": {
+                                    "id": "out",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "text": "Investigate"
+                            },
+                            "g.approver image": {
+                                "opacity": 1
+                            },
+                            "g.code image": {
+                                "opacity": 1
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
+                            "g.icon image": {
+                                "xlink:href": "/inc/coa/img/block_icon_investigate.svg"
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
+                            },
+                            "g.timer image": {
+                                "opacity": 1
+                            }
+                        },
+                        "block_code": "def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_reputation_1() called')\n\n    # collect data for 'ip_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip reputation\", parameters=parameters, assets=['recordedfuture'], callback=Process_Risk_90_Plus, name=\"ip_reputation_1\")\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": true,
+                        "color": "",
+                        "connected_to_start": true,
+                        "connection_name": "",
+                        "connection_type": "",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "",
+                        "delay": 0,
+                        "description": "",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "fa6cef57-4b79-448b-ab89-b1dec84203f2",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 38,
+                        "line_start": 17,
+                        "message": "Configuring now",
+                        "name": "ip reputation",
+                        "notes": "",
+                        "number": 1,
+                        "order": 2,
+                        "outPorts": [
+                            "out"
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 240,
+                            "y": 80
+                        },
+                        "previous_function": "",
+                        "previous_name": "ip_reputation_1",
+                        "required_params": {
+                            "ip": true
+                        },
+                        "reviewer": "",
+                        "show_number": false,
+                        "size": {
+                            "height": 100,
+                            "width": 180
+                        },
+                        "state": "app_action_assets",
+                        "status": "",
+                        "title": "Investigate",
+                        "type": "coa.Action",
+                        "warn": "",
+                        "z": 175
                     }
                 ]
             },
             "notes": "Searches need to be changed for environment security stack."
         },
         "schema": 3,
-        "version": "4.1.94"
+        "version": "4.2.7532"
     },
-    "create_time": "2019-05-13T13:47:32.312516+00:00",
+    "create_time": "2019-05-14T11:32:22.165185+00:00",
     "draft_mode": false,
     "labels": [
         "events"
