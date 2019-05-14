@@ -1,4 +1,5 @@
 """
+Playbook created to reputation lookups as defined in the Recorded Future app.
 """
 
 import phantom.rules as phantom

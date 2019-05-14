@@ -6,7 +6,7 @@
         "data": {
             "clean": true,
             "code_block": "",
-            "description": "",
+            "description": "Playbook created to reputation lookups as defined in the Recorded Future app.",
             "hash": "56e5d8c0afd15ac53861541b0b637da7ee0d7ab7",
             "joint": {
                 "cells": [
