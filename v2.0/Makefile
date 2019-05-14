@@ -9,6 +9,7 @@ LOCAL_RSYNC := rsync
 SSH := ssh -t
 SED := sed
 MKDIR_P = mkdir -p
+MYTMPDIR := $(shell basename `mktemp -d -u`)
 
 all:
 	@echo Targets for make:
@@ -64,14 +65,16 @@ $(BUILD_DIR):
 package: $(PACKAGE)
 
 $(PACKAGE): build
-	@if [ "x$(PH)" = "x" ]; then \
+	if [ "x$(PH)" = "x" ]; then \
 		echo Environment variable PH must contain the hostname of the phantom server.;\
 		exit 1; \
 	fi
-	$(SSH) $(PH) "mkdir -p /tmp/recordedfuture"
-	$(RSYNC) $(BUILD_DIR)/* $(PH):/tmp/recordedfuture
-	$(SSH) $(PH) "cd /tmp; chmod a+w recordedfuture; (cd recordedfuture/; sudo -u phantom phenv python2.7 /opt/phantom/bin/compile_app.pyc -i)"
-	$(RSYNC) $(PH):/tmp/recordedfuture.tgz $@
+	$(SSH) $(PH) "mkdir -p /tmp/$(MYTMPDIR)/recordedfuture"
+	$(RSYNC) $(BUILD_DIR)/* $(PH):/tmp/$(MYTMPDIR)/recordedfuture
+	$(SSH) $(PH) "cd /tmp/$(MYTMPDIR)/recordedfuture; chmod -R a+w ..; \
+	              (sudo -u phantom phenv python2.7 /opt/phantom/bin/compile_app.pyc -i);";
+	$(RSYNC) $(PH):/tmp/$(MYTMPDIR)/recordedfuture.tgz $@
+	$(SSH) $(PH) "rm -rf /tmp/$(MYTMPDIR)"
 
 ##########################################
 #
