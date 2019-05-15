@@ -58,3 +58,10 @@ class RfTests(unittest.TestCase):
             result.extend(res.json()['data'])
         return result
 
+    def assertCorrectRiskScore(self, result, target_risk_score, *args):
+        try:
+            risk_score = result['data'][0]['result_data'][0]['data'][0][
+                'risk']['score']
+        except Exception as err:
+            print 'result: %s' % result
+        self.assertEqual(risk_score, target_risk_score, *args)
