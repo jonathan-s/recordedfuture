@@ -330,7 +330,7 @@ class RecordedfutureConnector(BaseConnector):
         # Optional values should use the .get() function
         # optional_parameter = param.get('optional_parameter', 'default_value')
         params = {
-            'rule_id': param['rule_id'],
+            'alertRule': param['rule_id'],
             'triggered': param['timeframe']
         }
 
