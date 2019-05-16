@@ -7,6 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "This playbook is called from a correlation search in Splunk ES",
+            "hash": "f64d34810e028b12e4c825ea273e92e0e6bc5b18",
             "joint": {
                 "cells": [
                     {
@@ -19,11 +20,11 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".outPorts>.port-out": {
                                 "ref": ".background",
@@ -54,7 +55,7 @@
                                 "display": "block"
                             }
                         },
-                        "block_code": "def on_start(container):\n    phantom.debug('on_start() called')\n    \n    # call 'Recorded_Future_Destination_IP' block\n    Recorded_Future_Destination_IP(container=container)\n\n    return",
+                        "block_code": "def on_start(container):\n    phantom.debug('on_start() called')\n    \n    # call 'ip_reputation_1' block\n    ip_reputation_1(container=container)\n\n    return",
                         "callback_code": "# read-only block view not available",
                         "callback_start": 1,
                         "callsback": false,
@@ -161,11 +162,11 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -198,7 +199,7 @@
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "Recorded Future Destination IP, Recorded Future Destination IP, Email notification, Post back to Splunk SOAR info",
+                        "connection_name": "ip reputation, ip reputation, Email notification, Post back to Splunk SOAR info",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -419,7 +420,7 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#000000",
+                                "fill": "#FFFFFF",
                                 "stroke": "#637282",
                                 "transform": "rotate(45 30 70)"
                             },
@@ -476,12 +477,12 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def IOCs_90_Plus(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('IOCs_90_Plus() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"Recorded_Future_Destination_IP:action_result.data.*.risk.score\", \">=\", 90],\n        ])\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        Add_Bad_IP_to_List(action=action, success=success, container=container, results=results, handle=handle)\n        Format_Data_For_Splunk(action=action, success=success, container=container, results=results, handle=handle)\n        Format_Data_for_Email(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # call connected blocks for 'else' condition 2\n\n    return",
+                        "block_code": "def IOCs_90_Plus(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('IOCs_90_Plus() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"ip_reputation_1:action_result.data.*.risk.score\", \">=\", 90],\n        ])\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        Add_Bad_IP_to_List(action=action, success=success, container=container, results=results, handle=handle)\n        Format_Data_For_Splunk(action=action, success=success, container=container, results=results, handle=handle)\n        Format_Data_for_Email(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # call connected blocks for 'else' condition 2\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "Recorded Future Destination IP",
+                        "connection_name": "ip reputation",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -516,7 +517,7 @@
                                     {
                                         "comparison": ">=",
                                         "data_type": "",
-                                        "param": "Recorded_Future_Destination_IP:action_result.data.*.risk.score",
+                                        "param": "ip_reputation_1:action_result.data.*.risk.score",
                                         "value": "90"
                                     }
                                 ],
@@ -656,11 +657,11 @@
                                 "text": "Add Bad IP to List"
                             },
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -691,6 +692,9 @@
                             ".title": {
                                 "text": "API"
                             },
+                            "g.code image": {
+                                "opacity": 1
+                            },
                             "g.delete": {
                                 "display": "none"
                             },
@@ -708,20 +712,20 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Add_Bad_IP_to_List(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Add_Bad_IP_to_List() called')\n\n    results_data_1 = phantom.collect2(container=container, datapath=['Recorded_Future_Destination_IP:action_result.parameter.ip'], action_results=results)\n\n    results_item_1_0 = [item[0] for item in results_data_1]\n\n    phantom.add_list(\"Identified IP's\", results_item_1_0)\n\n    return",
+                        "block_code": "def Add_Bad_IP_to_List(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Add_Bad_IP_to_List() called')\n\n    results_data_1 = phantom.collect2(container=container, datapath=['ip_reputation_1:action_result.parameter.ip'], action_results=results)\n\n    results_item_1_0 = [item[0] for item in results_data_1]\n\n    phantom.add_list(\"Identified IP's\", results_item_1_0)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
                         "color": "",
                         "configured": [
                             {
-                                "addListData": "Recorded_Future_Destination_IP:action_result.parameter.ip",
+                                "addListData": "ip_reputation_1:action_result.parameter.ip",
                                 "addListList": "Identified IP's",
                                 "key": "add-list"
                             }
                         ],
                         "connected_to_start": true,
-                        "connection_name": "Recorded Future Destination IP",
+                        "connection_name": "ip reputation",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -945,11 +949,11 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".format": {
                                 "text": "Format Data For Splunk"
@@ -1000,12 +1004,12 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Format_Data_For_Splunk(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Format_Data_For_Splunk() called')\n    \n    template = \"\"\"Destination={0}\nRisk={1}\nRiskString={2}\nRules={3}\nEvidence={4}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"Recorded_Future_Destination_IP:action_result.parameter.ip\",\n        \"Recorded_Future_Destination_IP:action_result.data.*.risk.score\",\n        \"Recorded_Future_Destination_IP:action_result.data.*.risk.riskSummary\",\n        \"Recorded_Future_Destination_IP:action_result.data.*.risk.evidenceDetails.*.rule\",\n        \"Recorded_Future_Destination_IP:action_result.data.*.risk.evidenceDetails.*.evidenceString\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Format_Data_For_Splunk\")\n\n    Post_back_to_Splunk_SOAR_info(container=container)\n\n    return",
+                        "block_code": "def Format_Data_For_Splunk(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Format_Data_For_Splunk() called')\n    \n    template = \"\"\"Destination={0}\nRisk={1}\nRiskString={2}\nRules={3}\nEvidence={4}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"ip_reputation_1:action_result.parameter.ip\",\n        \"ip_reputation_1:action_result.data.*.risk.score\",\n        \"ip_reputation_1:action_result.data.*.risk.riskSummary\",\n        \"ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.rule\",\n        \"ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.evidenceString\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Format_Data_For_Splunk\")\n\n    Post_back_to_Splunk_SOAR_info(container=container)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "Recorded Future Destination IP",
+                        "connection_name": "ip reputation",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -1038,27 +1042,27 @@
                             {
                                 "position": 0,
                                 "type": "",
-                                "value": "Recorded_Future_Destination_IP:action_result.parameter.ip"
+                                "value": "ip_reputation_1:action_result.parameter.ip"
                             },
                             {
                                 "position": 1,
                                 "type": "",
-                                "value": "Recorded_Future_Destination_IP:action_result.data.*.risk.score"
+                                "value": "ip_reputation_1:action_result.data.*.risk.score"
                             },
                             {
                                 "position": 2,
                                 "type": "",
-                                "value": "Recorded_Future_Destination_IP:action_result.data.*.risk.riskSummary"
+                                "value": "ip_reputation_1:action_result.data.*.risk.riskSummary"
                             },
                             {
                                 "position": 3,
                                 "type": "",
-                                "value": "Recorded_Future_Destination_IP:action_result.data.*.risk.evidenceDetails.*.rule"
+                                "value": "ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.rule"
                             },
                             {
                                 "position": 4,
                                 "type": "",
-                                "value": "Recorded_Future_Destination_IP:action_result.data.*.risk.evidenceDetails.*.evidenceString"
+                                "value": "ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.evidenceString"
                             }
                         ],
                         "ports": {
@@ -1137,11 +1141,11 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".format": {
                                 "text": "Format Data for Email"
@@ -1192,12 +1196,12 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Format_Data_for_Email(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Format_Data_for_Email() called')\n    \n    template = \"\"\"The IP address {0} with a risk score of {1} was added to the Bad IP List and sent back to Splunk.  More information on this IOC can be found at  {2}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"Recorded_Future_Destination_IP:action_result.parameter.ip\",\n        \"Recorded_Future_Destination_IP:action_result.data.*.risk.score\",\n        \"Recorded_Future_Destination_IP:action_result.data.*.intelCard\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Format_Data_for_Email\")\n\n    Email_notification(container=container)\n\n    return",
+                        "block_code": "def Format_Data_for_Email(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Format_Data_for_Email() called')\n    \n    template = \"\"\"The IP address {0} with a risk score of {1} was added to the Bad IP List and sent back to Splunk.  More information on this IOC can be found at  {2}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"ip_reputation_1:action_result.parameter.ip\",\n        \"ip_reputation_1:action_result.data.*.risk.score\",\n        \"ip_reputation_1:action_result.data.*.intelCard\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Format_Data_for_Email\")\n\n    Email_notification(container=container)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "Recorded Future Destination IP",
+                        "connection_name": "ip reputation",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -1230,17 +1234,17 @@
                             {
                                 "position": 0,
                                 "type": "",
-                                "value": "Recorded_Future_Destination_IP:action_result.parameter.ip"
+                                "value": "ip_reputation_1:action_result.parameter.ip"
                             },
                             {
                                 "position": 1,
                                 "type": "",
-                                "value": "Recorded_Future_Destination_IP:action_result.data.*.risk.score"
+                                "value": "ip_reputation_1:action_result.data.*.risk.score"
                             },
                             {
                                 "position": 2,
                                 "type": "",
-                                "value": "Recorded_Future_Destination_IP:action_result.data.*.intelCard"
+                                "value": "ip_reputation_1:action_result.data.*.intelCard"
                             }
                         ],
                         "ports": {
@@ -1401,7 +1405,7 @@
                                 "id": 10,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "defaultmail",
+                                "name": "smtp",
                                 "output": [
                                     {
                                         "column_name": "Status",
@@ -1577,11 +1581,11 @@
                                 "text": "Email notification"
                             },
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -1637,13 +1641,13 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Email_notification(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Email_notification() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Email_notification' call\n    formatted_data_1 = phantom.get_format_data(name='Format_Data_for_Email')\n\n    parameters = []\n    \n    # build parameters list for 'Email_notification' call\n    parameters.append({\n        'body': formatted_data_1,\n        'from': \"sender@example.com\",\n        'attachments': \"\",\n        'to': \"recipient@example.com\",\n        'cc': \"\",\n        'bcc': \"\",\n        'headers': \"\",\n        'subject': \"Alert Generated IP added to list\",\n    })\n\n    phantom.act(\"send email\", parameters=parameters, assets=['defaultmail'], name=\"Email_notification\")\n\n    return",
+                        "block_code": "def Email_notification(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Email_notification() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Email_notification' call\n    formatted_data_1 = phantom.get_format_data(name='Format_Data_for_Email')\n\n    parameters = []\n    \n    # build parameters list for 'Email_notification' call\n    parameters.append({\n        'body': formatted_data_1,\n        'from': \"sender@example.com\",\n        'attachments': \"\",\n        'to': \"recipient@example.com\",\n        'cc': \"\",\n        'bcc': \"\",\n        'headers': \"\",\n        'subject': \"Alert Generated IP added to list\",\n    })\n\n    phantom.act(\"send email\", parameters=parameters, assets=['smtp'], name=\"Email_notification\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
                         "color": "",
                         "connected_to_start": true,
-                        "connection_name": "Recorded Future Destination IP",
+                        "connection_name": "ip reputation",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -1873,7 +1877,7 @@
                                 "id": 11,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "splunk.example.com",
+                                "name": "splunk-server",
                                 "output": [
                                     {
                                         "data_path": "action_result.status",
@@ -1966,11 +1970,11 @@
                                 "text": "Post back to Splunk SOA..."
                             },
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -2026,13 +2030,13 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Post_back_to_Splunk_SOAR_info(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Post_back_to_Splunk_SOAR_info() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Post_back_to_Splunk_SOAR_info' call\n    formatted_data_1 = phantom.get_format_data(name='Format_Data_For_Splunk')\n\n    parameters = []\n    \n    # build parameters list for 'Post_back_to_Splunk_SOAR_info' call\n    parameters.append({\n        'index': \"\",\n        'host': \"\",\n        'data': formatted_data_1,\n        'source': \"Phantom\",\n        'source_type': \"Automation/Orchestration Platform\",\n    })\n\n    phantom.act(\"post data\", parameters=parameters, assets=['splunk.example.com'], name=\"Post_back_to_Splunk_SOAR_info\")\n\n    return",
+                        "block_code": "def Post_back_to_Splunk_SOAR_info(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Post_back_to_Splunk_SOAR_info() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Post_back_to_Splunk_SOAR_info' call\n    formatted_data_1 = phantom.get_format_data(name='Format_Data_For_Splunk')\n\n    parameters = []\n    \n    # build parameters list for 'Post_back_to_Splunk_SOAR_info' call\n    parameters.append({\n        'index': \"\",\n        'host': \"\",\n        'data': formatted_data_1,\n        'source': \"Phantom\",\n        'source_type': \"Automation/Orchestration Platform\",\n    })\n\n    phantom.act(\"post data\", parameters=parameters, assets=['splunk-server'], name=\"Post_back_to_Splunk_SOAR_info\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
                         "color": "",
                         "connected_to_start": true,
-                        "connection_name": "Recorded Future Destination IP",
+                        "connection_name": "ip reputation",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -2185,40 +2189,55 @@
                             "ip": "artifact:*.cef.destinationAddress"
                         },
                         "angle": 0,
-                        "app": "Recorded Future",
-                        "appid": "1fdc41ba-295c-4a2a-9d1e-0be23924c336",
+                        "app": "recordedfuture",
+                        "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
                         "approver": "",
                         "assets": [
                             {
                                 "action": "ip reputation",
                                 "actions": [
-                                    "lookup vulnerability",
+                                    "alert data lookup",
+                                    "rule id lookup",
+                                    "vulnerability reputation",
                                     "file reputation",
                                     "ip reputation",
+                                    "url reputation",
                                     "domain reputation",
                                     "test connectivity"
                                 ],
                                 "active": true,
-                                "app_name": "Recorded Future",
-                                "app_version": "1.1.2",
-                                "appid": "1fdc41ba-295c-4a2a-9d1e-0be23924c336",
-                                "asset_name": "recorded future",
+                                "app_name": "recordedfuture",
+                                "app_version": "2.0.0",
+                                "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
+                                "asset_name": "recorded future app",
                                 "config_type": "asset",
                                 "count": 0,
                                 "fields": {
                                     "ip": "artifact:*.cef.destinationAddress"
                                 },
                                 "has_app": true,
-                                "id": 6,
+                                "id": 7,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recorded future",
+                                "name": "recorded future app",
                                 "output": [
                                     {
+                                        "column_name": "ip",
+                                        "column_order": 0,
                                         "contains": [
                                             "ip"
                                         ],
                                         "data_path": "action_result.parameter.ip",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "column_name": "status",
+                                        "column_order": 1,
+                                        "data_path": "action_result.status",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.message",
                                         "data_type": "string"
                                     },
                                     {
@@ -2390,19 +2409,61 @@
                                         "data_type": "numeric"
                                     },
                                     {
-                                        "data_path": "action_result.data.*.relatedEntities.*.type",
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.name",
                                         "data_type": "string"
                                     },
                                     {
-                                        "data_path": "action_result.data.*.relatedEntities.*.entities.*.count",
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
                                         "data_type": "numeric"
                                     },
                                     {
-                                        "data_path": "action_result.data.*.relatedEntities.*.entities.*.entity.name",
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.name",
                                         "data_type": "string"
                                     },
                                     {
-                                        "data_path": "action_result.data.*.relatedEntities.*.entities.*.entity.type",
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.refCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.refCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.refCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "column_name": "status",
+                                        "column_order": 1,
+                                        "data_path": "action_result.status",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.message",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.criticalityLabel",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.lastSeen",
                                         "data_type": "string"
                                     }
                                 ],
@@ -2412,29 +2473,31 @@
                                             "ip"
                                         ],
                                         "data_type": "string",
-                                        "default": null,
-                                        "description": "IP Address to look up",
+                                        "default": "",
+                                        "description": "IP to query",
                                         "key": "ip",
+                                        "order": 0,
                                         "primary": true,
-                                        "required": true
+                                        "required": true,
+                                        "value_list": []
                                     }
                                 },
-                                "product_name": "Recorded Future",
-                                "product_vendor": "Recorded Future",
-                                "targets": "6",
-                                "type": "threat intelligence service"
+                                "product_name": "Recorded Future for Splunk Phantom",
+                                "product_vendor": "Recorded Future, Inc",
+                                "targets": "7",
+                                "type": "reputation"
                             }
                         ],
                         "attrs": {
                             ".action": {
-                                "text": "Recorded Future Destina..."
+                                "text": "ip reputation"
                             },
                             ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
                             },
                             ".color-band": {
-                                "fill": "#3C444D"
+                                "fill": "#171D21"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -2493,7 +2556,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Recorded_Future_Destination_IP(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Recorded_Future_Destination_IP() called')\n\n    # collect data for 'Recorded_Future_Destination_IP' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'Recorded_Future_Destination_IP' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip reputation\", parameters=parameters, assets=['recorded future'], callback=IOCs_90_Plus, name=\"Recorded_Future_Destination_IP\")\n\n    return",
+                        "block_code": "def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_reputation_1() called')\n\n    # collect data for 'ip_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip reputation\", parameters=parameters, assets=['recorded future app'], callback=IOCs_90_Plus, name=\"ip_reputation_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -2504,7 +2567,7 @@
                         "custom_callback": "",
                         "custom_code": "",
                         "custom_join": "",
-                        "custom_name": "Recorded Future Destination IP",
+                        "custom_name": "",
                         "delay": 0,
                         "description": "",
                         "has_custom": false,
@@ -2585,7 +2648,7 @@
                             "y": 60
                         },
                         "previous_function": "",
-                        "previous_name": "Recorded_Future_Destination_IP",
+                        "previous_name": "ip_reputation_1",
                         "required_params": {
                             "ip": true
                         },
@@ -2599,19 +2662,20 @@
                         "status": "",
                         "title": "Investigate",
                         "type": "coa.Action",
-                        "warn": false,
-                        "z": 35
+                        "warn": "",
+                        "z": 37
                     }
                 ]
             },
             "notes": ""
         },
         "schema": 3,
-        "version": "4.1.94"
+        "version": "4.2.7532"
     },
-    "create_time": "2019-02-21T13:48:04.747167+00:00",
+    "create_time": "2019-05-16T17:18:55.732023+00:00",
     "draft_mode": false,
     "labels": [
         "events"
-    ]
+    ],
+    "tags": []
 }

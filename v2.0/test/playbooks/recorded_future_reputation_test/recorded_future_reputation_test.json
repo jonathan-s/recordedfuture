@@ -7,7 +7,6 @@
             "clean": true,
             "code_block": "",
             "description": "Playbook created to reputation lookups as defined in the Recorded Future app.",
-            "hash": "56e5d8c0afd15ac53861541b0b637da7ee0d7ab7",
             "joint": {
                 "cells": [
                     {
@@ -76,8 +75,8 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 16,
-                        "line_start": 8,
+                        "line_end": 17,
+                        "line_start": 9,
                         "name": "",
                         "notes": "",
                         "number": 0,
@@ -199,7 +198,7 @@
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "ip reputation, domain reputation, file reputation, lookup vulnerability, url reputation",
+                        "connection_name": "ip reputation, domain reputation, file reputation, vulnerability reputation, url reputation",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -217,8 +216,8 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 201,
-                        "line_start": 188,
+                        "line_end": 202,
+                        "line_start": 189,
                         "name": "",
                         "notes": "",
                         "number": 0,
@@ -373,7 +372,7 @@
                                 "id": 6,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recordedfuture",
+                                "name": "recorded future app",
                                 "output": [
                                     {
                                         "column_name": "ip",
@@ -710,7 +709,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_reputation_1() called')\n\n    # collect data for 'ip_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip reputation\", parameters=parameters, assets=['recordedfuture'], name=\"ip_reputation_1\")\n\n    return",
+                        "block_code": "def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_reputation_1() called')\n\n    # collect data for 'ip_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip reputation\", parameters=parameters, assets=['recorded future app'], name=\"ip_reputation_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -735,8 +734,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 37,
-                        "line_start": 16,
+                        "line_end": 38,
+                        "line_start": 17,
                         "message": "Configuring now",
                         "name": "ip reputation",
                         "notes": "",
@@ -939,7 +938,7 @@
                                 "id": 6,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recordedfuture",
+                                "name": "recorded future app",
                                 "output": [
                                     {
                                         "column_name": "domain",
@@ -1246,7 +1245,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def domain_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('domain_reputation_1() called')\n\n    # collect data for 'domain_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationDnsDomain', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'domain_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'domain': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"domain reputation\", parameters=parameters, assets=['recordedfuture'], name=\"domain_reputation_1\")\n\n    return",
+                        "block_code": "def domain_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('domain_reputation_1() called')\n\n    # collect data for 'domain_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationDnsDomain', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'domain_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'domain': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"domain reputation\", parameters=parameters, assets=['recorded future app'], name=\"domain_reputation_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -1271,8 +1270,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 125,
-                        "line_start": 104,
+                        "line_end": 126,
+                        "line_start": 105,
                         "message": "Configuring now",
                         "name": "domain reputation",
                         "notes": "",
@@ -1394,7 +1393,7 @@
                                 "id": 6,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recordedfuture",
+                                "name": "recorded future app",
                                 "output": [
                                     {
                                         "column_name": "hash",
@@ -1721,7 +1720,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def file_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('file_reputation_1() called')\n\n    # collect data for 'file_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.fileHash', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'file_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'hash': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"file reputation\", parameters=parameters, assets=['recordedfuture'], name=\"file_reputation_1\")\n\n    return",
+                        "block_code": "def file_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('file_reputation_1() called')\n\n    # collect data for 'file_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.fileHash', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'file_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'hash': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"file reputation\", parameters=parameters, assets=['recorded future app'], name=\"file_reputation_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -1746,8 +1745,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 146,
-                        "line_start": 125,
+                        "line_end": 147,
+                        "line_start": 126,
                         "message": "Configuring now",
                         "name": "file reputation",
                         "notes": "",
@@ -1870,511 +1869,6 @@
                         },
                         "type": "link",
                         "z": 20
-                    },
-                    {
-                        "action": "lookup vulnerability",
-                        "action_type": "investigate",
-                        "active": false,
-                        "active_keys": {},
-                        "active_values": {
-                            "vulnerability": "artifact:*.cef.cs1"
-                        },
-                        "angle": 0,
-                        "app": "recordedfuture",
-                        "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-                        "approver": "",
-                        "assets": [
-                            {
-                                "action": "lookup vulnerability",
-                                "actions": [
-                                    "alert data lookup",
-                                    "rule id lookup",
-                                    "lookup vulnerability",
-                                    "file reputation",
-                                    "ip reputation",
-                                    "url reputation",
-                                    "domain reputation",
-                                    "test connectivity"
-                                ],
-                                "active": true,
-                                "app_name": "recordedfuture",
-                                "app_version": "2.0.0",
-                                "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-                                "asset_name": "recordedfuture",
-                                "config_type": "asset",
-                                "count": 0,
-                                "fields": {
-                                    "vulnerability": "artifact:*.cef.cs1"
-                                },
-                                "has_app": true,
-                                "id": 6,
-                                "loaded": false,
-                                "missing": false,
-                                "name": "recordedfuture",
-                                "output": [
-                                    {
-                                        "column_name": "vulnerability",
-                                        "column_order": 0,
-                                        "contains": [
-                                            "vulnerability"
-                                        ],
-                                        "data_path": "action_result.parameter.vulnerability",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "column_name": "status",
-                                        "column_order": 1,
-                                        "data_path": "action_result.status",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.message",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.timestamps.firstSeen",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.timestamps.lastSeen",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.intelCard",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.nvdDescription",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.cvss.score",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.cvss.accessComplexity",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.cvss.accessVector",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.cvss.authentication",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.cvss.availability",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.cvss.confidentiality",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.cvss.integrity",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.cvss.published",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.cvss.lastModified",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.riskSummary",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.rules",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.criticality",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.criticalityLabel",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.score",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.threatLists.*.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.threatLists.*.description",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.totalHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.oneDaysHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.sevenDaysHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.sixtyDaysHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.maliciousHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.infoSecHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.socialMediaHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.criminalForumHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.darkWebHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.pasteHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedAttackVectorCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedCompanyCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedCountryCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedEmailAddressCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedHashCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedInternetDomainCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedMalwareCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedMalwareCategoryCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedOrganizationCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedProductCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedTechnologyCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedUsernameCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedVulnerabilityCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.refCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.refCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.refCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "column_name": "status",
-                                        "column_order": 1,
-                                        "data_path": "action_result.status",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.message",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.criticalityLabel",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.lastSeen",
-                                        "data_type": "string"
-                                    }
-                                ],
-                                "parameters": {
-                                    "vulnerability": {
-                                        "contains": [
-                                            "vulnerability"
-                                        ],
-                                        "data_type": "string",
-                                        "default": "",
-                                        "description": "CVE vulnerability identifier to look up",
-                                        "key": "vulnerability",
-                                        "order": 0,
-                                        "primary": true,
-                                        "required": true,
-                                        "value_list": []
-                                    }
-                                },
-                                "product_name": "Recorded Future for Splunk Phantom",
-                                "product_vendor": "Recorded Future, Inc",
-                                "targets": "6",
-                                "type": "reputation"
-                            }
-                        ],
-                        "attrs": {
-                            ".action": {
-                                "text": "lookup vulnerability"
-                            },
-                            ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#818D99"
-                            },
-                            ".color-band": {
-                                "fill": "#171D21"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "ref-x": 5,
-                                "ref-y": 105,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out>.port-body": {
-                                "port": {
-                                    "id": "out",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "Investigate"
-                            },
-                            "g.approver image": {
-                                "opacity": 1
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
-                            },
-                            "g.icon image": {
-                                "xlink:href": "/inc/coa/img/block_icon_investigate.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            },
-                            "g.timer image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def lookup_vulnerability_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('lookup_vulnerability_1() called')\n\n    # collect data for 'lookup_vulnerability_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs1', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'lookup_vulnerability_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'vulnerability': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"lookup vulnerability\", parameters=parameters, assets=['recordedfuture'], name=\"lookup_vulnerability_1\")\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": true,
-                        "color": "",
-                        "connected_to_start": true,
-                        "connection_name": "",
-                        "connection_type": "",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "",
-                        "delay": 0,
-                        "description": "",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "9e5a231d-6aa6-48a4-a045-a3a10a99f023",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 167,
-                        "line_start": 146,
-                        "message": "Configuring now",
-                        "name": "lookup vulnerability",
-                        "notes": "",
-                        "number": 1,
-                        "order": 6,
-                        "outPorts": [
-                            "out"
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 460,
-                            "y": 560
-                        },
-                        "previous_function": "",
-                        "previous_name": "lookup_vulnerability_1",
-                        "required_params": {
-                            "vulnerability": true
-                        },
-                        "reviewer": "",
-                        "show_number": false,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "app_action_assets",
-                        "status": "",
-                        "title": "Investigate",
-                        "type": "coa.Action",
-                        "warn": false,
-                        "z": 23
                     },
                     {
                         "attrs": {
@@ -2701,7 +2195,7 @@
                                 "id": 6,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recordedfuture",
+                                "name": "recorded future app",
                                 "output": [
                                     {
                                         "column_name": "url",
@@ -3003,7 +2497,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def url_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('url_reputation_1() called')\n\n    # collect data for 'url_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.requestURL', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'url_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'url': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"url reputation\", parameters=parameters, assets=['recordedfuture'], name=\"url_reputation_1\")\n\n    return",
+                        "block_code": "def url_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('url_reputation_1() called')\n\n    # collect data for 'url_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.requestURL', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'url_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'url': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"url reputation\", parameters=parameters, assets=['recorded future app'], name=\"url_reputation_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -3028,8 +2522,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 188,
-                        "line_start": 167,
+                        "line_end": 189,
+                        "line_start": 168,
                         "message": "Configuring now",
                         "name": "url reputation",
                         "notes": "",
@@ -3216,7 +2710,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def decision_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('decision_1() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        conditions=[\n            [\"artifact:*.cef.fileHash\", \"!=\", \"\"],\n        ])\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        file_reputation_1(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # check for 'elif' condition 2\n    matched_artifacts_2, matched_results_2 = phantom.condition(\n        container=container,\n        conditions=[\n            [\"artifact:*.cef.cs1\", \"!=\", \"\"],\n            [\"artifact:*.cef.cs1Label\", \"==\", \"vulnerability\"],\n        ],\n        logical_operator='and')\n\n    # call connected blocks if condition 2 matched\n    if matched_artifacts_2 or matched_results_2:\n        lookup_vulnerability_1(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # check for 'elif' condition 3\n    matched_artifacts_3, matched_results_3 = phantom.condition(\n        container=container,\n        conditions=[\n            [\"artifact:*.cef.destinationAddress\", \"!=\", \"\"],\n        ])\n\n    # call connected blocks if condition 3 matched\n    if matched_artifacts_3 or matched_results_3:\n        ip_reputation_1(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # check for 'elif' condition 4\n    matched_artifacts_4, matched_results_4 = phantom.condition(\n        container=container,\n        conditions=[\n            [\"artifact:*.cef.destinationDnsDomain\", \"!=\", \"\"],\n        ])\n\n    # call connected blocks if condition 4 matched\n    if matched_artifacts_4 or matched_results_4:\n        domain_reputation_1(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # check for 'elif' condition 5\n    matched_artifacts_5, matched_results_5 = phantom.condition(\n        container=container,\n        conditions=[\n            [\"artifact:*.cef.requestURL\", \"!=\", \"\"],\n        ])\n\n    # call connected blocks if condition 5 matched\n    if matched_artifacts_5 or matched_results_5:\n        url_reputation_1(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    return",
+                        "block_code": "def decision_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('decision_1() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        conditions=[\n            [\"artifact:*.cef.fileHash\", \"!=\", \"\"],\n        ])\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        file_reputation_1(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # check for 'elif' condition 2\n    matched_artifacts_2, matched_results_2 = phantom.condition(\n        container=container,\n        conditions=[\n            [\"artifact:*.cef.cs1\", \"!=\", \"\"],\n            [\"artifact:*.cef.cs1Label\", \"==\", \"vulnerability\"],\n        ],\n        logical_operator='and')\n\n    # call connected blocks if condition 2 matched\n    if matched_artifacts_2 or matched_results_2:\n        vulnerability_reputation_1(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # check for 'elif' condition 3\n    matched_artifacts_3, matched_results_3 = phantom.condition(\n        container=container,\n        conditions=[\n            [\"artifact:*.cef.destinationAddress\", \"!=\", \"\"],\n        ])\n\n    # call connected blocks if condition 3 matched\n    if matched_artifacts_3 or matched_results_3:\n        ip_reputation_1(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # check for 'elif' condition 4\n    matched_artifacts_4, matched_results_4 = phantom.condition(\n        container=container,\n        conditions=[\n            [\"artifact:*.cef.destinationDnsDomain\", \"!=\", \"\"],\n        ])\n\n    # call connected blocks if condition 4 matched\n    if matched_artifacts_4 or matched_results_4:\n        domain_reputation_1(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # check for 'elif' condition 5\n    matched_artifacts_5, matched_results_5 = phantom.condition(\n        container=container,\n        conditions=[\n            [\"artifact:*.cef.requestURL\", \"!=\", \"\"],\n        ])\n\n    # call connected blocks if condition 5 matched\n    if matched_artifacts_5 or matched_results_5:\n        url_reputation_1(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
@@ -3240,8 +2734,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 104,
-                        "line_start": 37,
+                        "line_end": 105,
+                        "line_start": 38,
                         "name": "decision",
                         "notes": "",
                         "number": 1,
@@ -3394,6 +2888,511 @@
                         "type": "coa.Decision",
                         "warn": "",
                         "z": 42
+                    },
+                    {
+                        "action": "vulnerability reputation",
+                        "action_type": "investigate",
+                        "active": false,
+                        "active_keys": {},
+                        "active_values": {
+                            "vulnerability": "artifact:*.cef.cs1"
+                        },
+                        "angle": 0,
+                        "app": "recordedfuture",
+                        "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
+                        "approver": "",
+                        "assets": [
+                            {
+                                "action": "vulnerability reputation",
+                                "actions": [
+                                    "alert data lookup",
+                                    "rule id lookup",
+                                    "vulnerability reputation",
+                                    "file reputation",
+                                    "ip reputation",
+                                    "url reputation",
+                                    "domain reputation",
+                                    "test connectivity"
+                                ],
+                                "active": true,
+                                "app_name": "recordedfuture",
+                                "app_version": "2.0.0",
+                                "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
+                                "asset_name": "recorded future app",
+                                "config_type": "asset",
+                                "count": 0,
+                                "fields": {
+                                    "vulnerability": "artifact:*.cef.cs1"
+                                },
+                                "has_app": true,
+                                "id": 7,
+                                "loaded": false,
+                                "missing": false,
+                                "name": "recorded future app",
+                                "output": [
+                                    {
+                                        "column_name": "vulnerability",
+                                        "column_order": 0,
+                                        "contains": [
+                                            "vulnerability"
+                                        ],
+                                        "data_path": "action_result.parameter.vulnerability",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "column_name": "status",
+                                        "column_order": 1,
+                                        "data_path": "action_result.status",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.message",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.timestamps.firstSeen",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.timestamps.lastSeen",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.intelCard",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.nvdDescription",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.cvss.score",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.cvss.accessComplexity",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.cvss.accessVector",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.cvss.authentication",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.cvss.availability",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.cvss.confidentiality",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.cvss.integrity",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.cvss.published",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.cvss.lastModified",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.riskSummary",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.rules",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.criticality",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.criticalityLabel",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.score",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.threatLists.*.name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.threatLists.*.description",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.totalHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.oneDaysHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.sevenDaysHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.sixtyDaysHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.maliciousHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.infoSecHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.socialMediaHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.criminalForumHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.darkWebHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.pasteHits",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedAttackVectorCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedCompanyCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedCountryCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedEmailAddressCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedHashCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedInternetDomainCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedMalwareCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedMalwareCategoryCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedOrganizationCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedProductCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedTechnologyCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedUsernameCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.metrics.relatedVulnerabilityCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.refCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.refCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.refCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "column_name": "status",
+                                        "column_order": 1,
+                                        "data_path": "action_result.status",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.message",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.criticalityLabel",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.lastSeen",
+                                        "data_type": "string"
+                                    }
+                                ],
+                                "parameters": {
+                                    "vulnerability": {
+                                        "contains": [
+                                            "vulnerability"
+                                        ],
+                                        "data_type": "string",
+                                        "default": "",
+                                        "description": "CVE vulnerability identifier to look up",
+                                        "key": "vulnerability",
+                                        "order": 0,
+                                        "primary": true,
+                                        "required": true,
+                                        "value_list": []
+                                    }
+                                },
+                                "product_name": "Recorded Future for Splunk Phantom",
+                                "product_vendor": "Recorded Future, Inc",
+                                "targets": "7",
+                                "type": "reputation"
+                            }
+                        ],
+                        "attrs": {
+                            ".action": {
+                                "text": "vulnerability reputation"
+                            },
+                            ".background": {
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
+                            },
+                            ".color-band": {
+                                "fill": "#171D21"
+                            },
+                            ".inPorts>.port-in": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".inPorts>.port-in>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".message": {
+                                "opacity": 0,
+                                "ref-x": 5,
+                                "ref-y": 105,
+                                "text": "Configuring now"
+                            },
+                            ".outPorts>.port-out": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out>.port-body": {
+                                "port": {
+                                    "id": "out",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "text": "Investigate"
+                            },
+                            "g.approver image": {
+                                "opacity": 1
+                            },
+                            "g.code image": {
+                                "opacity": 1
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
+                            "g.icon image": {
+                                "xlink:href": "/inc/coa/img/block_icon_investigate.svg"
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
+                            },
+                            "g.timer image": {
+                                "opacity": 1
+                            }
+                        },
+                        "block_code": "def vulnerability_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('vulnerability_reputation_1() called')\n\n    # collect data for 'vulnerability_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs1', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'vulnerability_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'vulnerability': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"vulnerability reputation\", parameters=parameters, assets=['recorded future app'], name=\"vulnerability_reputation_1\")\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": true,
+                        "color": "",
+                        "connected_to_start": true,
+                        "connection_name": "",
+                        "connection_type": "",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "",
+                        "delay": 0,
+                        "description": "",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "9e5a231d-6aa6-48a4-a045-a3a10a99f023",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 168,
+                        "line_start": 147,
+                        "message": "Configuring now",
+                        "name": "vulnerability reputation",
+                        "notes": "",
+                        "number": 1,
+                        "order": 6,
+                        "outPorts": [
+                            "out"
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 460,
+                            "y": 560
+                        },
+                        "previous_function": "",
+                        "previous_name": "vulnerability_reputation_1",
+                        "required_params": {
+                            "vulnerability": true
+                        },
+                        "reviewer": "",
+                        "show_number": false,
+                        "size": {
+                            "height": 100,
+                            "width": 180
+                        },
+                        "state": "app_action_assets",
+                        "status": "",
+                        "title": "Investigate",
+                        "type": "coa.Action",
+                        "warn": false,
+                        "z": 44
                     }
                 ]
             },
@@ -3402,7 +3401,7 @@
         "schema": 3,
         "version": "4.2.7532"
     },
-    "create_time": "2019-05-13T13:10:03.422333+00:00",
+    "create_time": "2019-05-16T12:19:37.072792+00:00",
     "draft_mode": false,
     "labels": [
         "*"

@@ -1,4 +1,5 @@
 """
+Playbook created to test alert handling as defined in the Recorded Future app.
 """
 
 import phantom.rules as phantom
@@ -30,7 +31,7 @@ def rule_id_lookup_1(action=None, success=None, container=None, results=None, ha
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("rule id lookup", parameters=parameters, assets=['recordedfuture'], callback=format_1, name="rule_id_lookup_1")
+    phantom.act("rule id lookup", parameters=parameters, assets=['recorded future app'], callback=format_1, name="rule_id_lookup_1")
 
     return
 
@@ -83,7 +84,7 @@ def alert_data_lookup_2(action=None, success=None, container=None, results=None,
                 'context': {'artifact_id': container_item[2]},
             })
 
-    phantom.act("alert data lookup", parameters=parameters, assets=['recordedfuture'], callback=alert_data_lookup_2_callback, name="alert_data_lookup_2")
+    phantom.act("alert data lookup", parameters=parameters, assets=['recorded future app'], callback=alert_data_lookup_2_callback, name="alert_data_lookup_2")
 
     return
 
@@ -171,7 +172,7 @@ def alert_data_lookup_3(action=None, success=None, container=None, results=None,
                     'context': {'artifact_id': results_item_1[1]},
                 })
 
-    phantom.act("alert data lookup", parameters=parameters, assets=['recordedfuture'], callback=format_3, name="alert_data_lookup_3")
+    phantom.act("alert data lookup", parameters=parameters, assets=['recorded future app'], callback=format_3, name="alert_data_lookup_3")
 
     return
 

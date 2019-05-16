@@ -31,7 +31,7 @@ def ip_reputation_1(action=None, success=None, container=None, results=None, han
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("ip reputation", parameters=parameters, assets=['recordedfuture'], callback=Process_Risk_90_Plus, name="ip_reputation_1")
+    phantom.act("ip reputation", parameters=parameters, assets=['recorded future app'], callback=Process_Risk_90_Plus, name="ip_reputation_1")
 
     return
 
@@ -142,7 +142,7 @@ def Prompt_to_ask_user_to_add_to_Block_List(action=None, success=None, container
     phantom.debug('Prompt_to_ask_user_to_add_to_Block_List() called')
     
     # set user and message variables for phantom.prompt call
-    user = "approve_user"
+    user = "rich"
     message = """Do you want to add these IP's to the block IP block list:
 {0}"""
 
@@ -177,7 +177,7 @@ def If_yes_add_to_list_if_no_drop(action=None, success=None, container=None, res
         container=container,
         action_results=results,
         conditions=[
-            ["Prompt_to_ask_user_to_add_to_Block_List:action_result.summary.responses.0", "==", "Yes"],
+            ["Prompt_to_ask_user_to_add_to_Block_List:action_result.summary.response", "==", "Yes"],
         ])
 
     # call connected blocks if condition 1 matched
@@ -303,12 +303,12 @@ def send_email_1(action=None, success=None, container=None, results=None, handle
     # build parameters list for 'send_email_1' call
     parameters.append({
         'body': formatted_data_1,
-        'from': "phantom@example.com",
+        'from': "sender@example.com",
         'attachments': "",
-        'headers': "",
+        'to': "recipient@example.com",
         'cc': "",
         'bcc': "",
-        'to': "recipient@example.com",
+        'headers': "",
         'subject': "Malicous IP with related entities found in Splunk",
     })
 

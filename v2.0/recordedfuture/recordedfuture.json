@@ -1,7 +1,7 @@
 {
   "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
   "name": "recordedfuture",
-  "description": "Integration with Recorded Future",
+  "description": "This App implements actions to retrieve data from Recorded Future for event analysis.",
   "type": "reputation",
   "product_vendor": "Recorded Future, Inc",
   "logo": "logo_recordedfuture.svg",
@@ -1080,8 +1080,8 @@
       "versions": "EQ(*)"
     },
     {
-      "action": "lookup vulnerability",
-      "identifier": "lookup_vulnerability",
+      "action": "vulnerability reputation",
+      "identifier": "vulnerability reputation",
       "description": "Look up threat intel context for a CVE vulnerability identifier",
       "verbose": "",
       "type": "investigate",

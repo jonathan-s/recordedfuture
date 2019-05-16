@@ -1,6 +1,5 @@
  PACKAGES := recorded_future_reputation_test.tgz  \
-		recorded_future_rule_id_lookup_test.tgz  \
-		recorded_future_alert_data_lookup_test.tgz
+		recorded_future_alert_test.tgz
 DIST_DIR := pkg_build
 PKG_TARGETS := $(addprefix $(DIST_DIR)/,$(PACKAGES))
 # COPYFILE prevents tar on Macos to add virtual files for file permissions to archive.

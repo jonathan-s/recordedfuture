@@ -6,8 +6,8 @@
         "data": {
             "clean": true,
             "code_block": "",
-            "description": "",
-            "hash": "5691e163e3b660d1e08133ca08ff1383e26ff4a4",
+            "description": "Playbook created to test alert handling as defined in the Recorded Future app.",
+            "hash": "b4a08f4e464c5874eec3b141706274bd17b31cbe",
             "joint": {
                 "cells": [
                     {
@@ -76,8 +76,8 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 16,
-                        "line_start": 8,
+                        "line_end": 17,
+                        "line_start": 9,
                         "name": "",
                         "notes": "",
                         "number": 0,
@@ -217,8 +217,8 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 244,
-                        "line_start": 231,
+                        "line_end": 245,
+                        "line_start": 232,
                         "name": "",
                         "notes": "",
                         "number": 0,
@@ -494,7 +494,7 @@
                                 "id": 6,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recordedfuture",
+                                "name": "recorded future app",
                                 "output": [
                                     {
                                         "column_name": "Rule Names",
@@ -622,7 +622,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def rule_id_lookup_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('rule_id_lookup_1() called')\n\n    # collect data for 'rule_id_lookup_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs1', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'rule_id_lookup_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'rule_name': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"rule id lookup\", parameters=parameters, assets=['recordedfuture'], callback=format_1, name=\"rule_id_lookup_1\")\n\n    return",
+                        "block_code": "def rule_id_lookup_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('rule_id_lookup_1() called')\n\n    # collect data for 'rule_id_lookup_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs1', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'rule_id_lookup_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'rule_name': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"rule id lookup\", parameters=parameters, assets=['recorded future app'], callback=format_1, name=\"rule_id_lookup_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 37,
                         "callsback": true,
@@ -647,8 +647,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 37,
-                        "line_start": 16,
+                        "line_end": 38,
+                        "line_start": 17,
                         "message": "Configuring now",
                         "name": "rule id lookup",
                         "notes": "",
@@ -852,8 +852,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 117,
-                        "line_start": 98,
+                        "line_end": 118,
+                        "line_start": 99,
                         "message": "Configuring now",
                         "name": "format",
                         "notes": "",
@@ -1083,8 +1083,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 127,
-                        "line_start": 117,
+                        "line_end": 128,
+                        "line_start": 118,
                         "message": "Configuring now",
                         "name": "add comment",
                         "notes": "",
@@ -1336,8 +1336,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 152,
-                        "line_start": 143,
+                        "line_end": 153,
+                        "line_start": 144,
                         "message": "Configuring now",
                         "name": "add comment",
                         "notes": "",
@@ -1667,8 +1667,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 206,
-                        "line_start": 197,
+                        "line_end": 207,
+                        "line_start": 198,
                         "message": "Configuring now",
                         "name": "add comment",
                         "notes": "",
@@ -1885,8 +1885,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 68,
-                        "line_start": 37,
+                        "line_end": 69,
+                        "line_start": 38,
                         "name": "decision",
                         "notes": "",
                         "number": 1,
@@ -2087,8 +2087,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 197,
-                        "line_start": 178,
+                        "line_end": 198,
+                        "line_start": 179,
                         "message": "Configuring now",
                         "name": "format",
                         "notes": "",
@@ -2261,8 +2261,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 143,
-                        "line_start": 127,
+                        "line_end": 144,
+                        "line_start": 128,
                         "message": "Configuring now",
                         "name": "format",
                         "notes": "",
@@ -2431,7 +2431,7 @@
                                 "id": 6,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recordedfuture",
+                                "name": "recorded future app",
                                 "output": [
                                     {
                                         "contains": [
@@ -2593,7 +2593,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def alert_data_lookup_3(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('alert_data_lookup_3() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'alert_data_lookup_3' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs2', 'artifact:*.id'])\n    results_data_1 = phantom.collect2(container=container, datapath=['rule_id_lookup_1:action_result.data.*.rule.id', 'rule_id_lookup_1:action_result.parameter.context.artifact_id'], action_results=results)\n\n    parameters = []\n    \n    # build parameters list for 'alert_data_lookup_3' call\n    for container_item in container_data:\n        for results_item_1 in results_data_1:\n            if results_item_1[0] and container_item[0]:\n                parameters.append({\n                    'rule_id': results_item_1[0],\n                    'timeframe': container_item[0],\n                    # context (artifact id) is added to associate results with the artifact\n                    'context': {'artifact_id': results_item_1[1]},\n                })\n\n    phantom.act(\"alert data lookup\", parameters=parameters, assets=['recordedfuture'], callback=format_3, name=\"alert_data_lookup_3\")\n\n    return",
+                        "block_code": "def alert_data_lookup_3(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('alert_data_lookup_3() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'alert_data_lookup_3' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs2', 'artifact:*.id'])\n    results_data_1 = phantom.collect2(container=container, datapath=['rule_id_lookup_1:action_result.data.*.rule.id', 'rule_id_lookup_1:action_result.parameter.context.artifact_id'], action_results=results)\n\n    parameters = []\n    \n    # build parameters list for 'alert_data_lookup_3' call\n    for container_item in container_data:\n        for results_item_1 in results_data_1:\n            if results_item_1[0] and container_item[0]:\n                parameters.append({\n                    'rule_id': results_item_1[0],\n                    'timeframe': container_item[0],\n                    # context (artifact id) is added to associate results with the artifact\n                    'context': {'artifact_id': results_item_1[1]},\n                })\n\n    phantom.act(\"alert data lookup\", parameters=parameters, assets=['recorded future app'], callback=format_3, name=\"alert_data_lookup_3\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -2618,8 +2618,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 178,
-                        "line_start": 152,
+                        "line_end": 179,
+                        "line_start": 153,
                         "message": "Configuring now",
                         "name": "alert data lookup",
                         "notes": "",
@@ -2700,7 +2700,7 @@
                         "status": "",
                         "title": "Investigate",
                         "type": "coa.Action",
-                        "warn": "",
+                        "warn": false,
                         "z": 67
                     },
                     {
@@ -2744,7 +2744,7 @@
                                 "id": 6,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recordedfuture",
+                                "name": "recorded future app",
                                 "output": [
                                     {
                                         "contains": [
@@ -2906,9 +2906,9 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def alert_data_lookup_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('alert_data_lookup_2() called')\n\n    # collect data for 'alert_data_lookup_2' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs1', 'artifact:*.cef.cs2', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'alert_data_lookup_2' call\n    for container_item in container_data:\n        if container_item[0] and container_item[1]:\n            parameters.append({\n                'rule_id': container_item[0],\n                'timeframe': container_item[1],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[2]},\n            })\n\n    phantom.act(\"alert data lookup\", parameters=parameters, assets=['recordedfuture'], callback=alert_data_lookup_2_callback, name=\"alert_data_lookup_2\")\n\n    return",
+                        "block_code": "def alert_data_lookup_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('alert_data_lookup_2() called')\n\n    # collect data for 'alert_data_lookup_2' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs1', 'artifact:*.cef.cs2', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'alert_data_lookup_2' call\n    for container_item in container_data:\n        if container_item[0] and container_item[1]:\n            parameters.append({\n                'rule_id': container_item[0],\n                'timeframe': container_item[1],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[2]},\n            })\n\n    phantom.act(\"alert data lookup\", parameters=parameters, assets=['recorded future app'], callback=alert_data_lookup_2_callback, name=\"alert_data_lookup_2\")\n\n    return",
                         "callback_code": "def alert_data_lookup_2_callback(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('alert_data_lookup_2_callback() called')\n    \n    format_2(action=action, success=success, container=container, results=results, handle=handle)\n    format_4(action=action, success=success, container=container, results=results, handle=handle)\n\n    return",
-                        "callback_start": 90,
+                        "callback_start": 91,
                         "callsback": true,
                         "color": "",
                         "connected_to_start": true,
@@ -2931,8 +2931,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 92,
-                        "line_end": 98,
-                        "line_start": 68,
+                        "line_end": 99,
+                        "line_start": 69,
                         "message": "Configuring now",
                         "name": "alert data lookup",
                         "notes": "",
@@ -3013,7 +3013,7 @@
                         "status": "",
                         "title": "Investigate",
                         "type": "coa.Action",
-                        "warn": "",
+                        "warn": false,
                         "z": 68
                     },
                     {
@@ -3138,6 +3138,9 @@
                             ".title": {
                                 "text": "format"
                             },
+                            "g.code image": {
+                                "opacity": 1
+                            },
                             "g.delete": {
                                 "display": "none"
                             },
@@ -3146,6 +3149,9 @@
                             },
                             "g.notes": {
                                 "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
                             }
                         },
                         "block_code": "def format_4(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('format_4() called')\n    \n    template = \"\"\"Result count: {0}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"alert_data_lookup_2:action_result.summary.returned_number_of_alerts\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"format_4\")\n\n    add_comment_5(container=container)\n\n    return",
@@ -3172,8 +3178,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 231,
-                        "line_start": 215,
+                        "line_end": 232,
+                        "line_start": 216,
                         "message": "Configuring now",
                         "name": "format",
                         "notes": "",
@@ -3304,6 +3310,9 @@
                             ".title": {
                                 "text": "API"
                             },
+                            "g.code image": {
+                                "opacity": 1
+                            },
                             "g.delete": {
                                 "display": "none"
                             },
@@ -3315,6 +3324,9 @@
                             },
                             "g.notes": {
                                 "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
                             }
                         },
                         "block_code": "def add_comment_5(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('add_comment_5() called')\n\n    formatted_data_1 = phantom.get_format_data(name='format_4')\n\n    phantom.comment(container=container, comment=formatted_data_1)\n\n    return",
@@ -3347,8 +3359,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 215,
-                        "line_start": 206,
+                        "line_end": 216,
+                        "line_start": 207,
                         "message": "Configuring now",
                         "name": "add comment",
                         "notes": "",
@@ -3434,7 +3446,7 @@
         "schema": 3,
         "version": "4.2.7532"
     },
-    "create_time": "2019-05-16T07:46:20.348312+00:00",
+    "create_time": "2019-05-16T15:53:06.295597+00:00",
     "draft_mode": false,
     "labels": [
         "*"

@@ -31,7 +31,7 @@ def ip_reputation_1(action=None, success=None, container=None, results=None, han
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("ip reputation", parameters=parameters, assets=['recordedfuture'], name="ip_reputation_1")
+    phantom.act("ip reputation", parameters=parameters, assets=['recorded future app'], name="ip_reputation_1")
 
     return
 
@@ -61,7 +61,7 @@ def decision_1(action=None, success=None, container=None, results=None, handle=N
 
     # call connected blocks if condition 2 matched
     if matched_artifacts_2 or matched_results_2:
-        lookup_vulnerability_1(action=action, success=success, container=container, results=results, handle=handle)
+        vulnerability_reputation_1(action=action, success=success, container=container, results=results, handle=handle)
         return
 
     # check for 'elif' condition 3
@@ -119,7 +119,7 @@ def domain_reputation_1(action=None, success=None, container=None, results=None,
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("domain reputation", parameters=parameters, assets=['recordedfuture'], name="domain_reputation_1")
+    phantom.act("domain reputation", parameters=parameters, assets=['recorded future app'], name="domain_reputation_1")
 
     return
 
@@ -140,19 +140,19 @@ def file_reputation_1(action=None, success=None, container=None, results=None, h
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("file reputation", parameters=parameters, assets=['recordedfuture'], name="file_reputation_1")
+    phantom.act("file reputation", parameters=parameters, assets=['recorded future app'], name="file_reputation_1")
 
     return
 
-def lookup_vulnerability_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('lookup_vulnerability_1() called')
+def vulnerability_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('vulnerability_reputation_1() called')
 
-    # collect data for 'lookup_vulnerability_1' call
+    # collect data for 'vulnerability_reputation_1' call
     container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs1', 'artifact:*.id'])
 
     parameters = []
     
-    # build parameters list for 'lookup_vulnerability_1' call
+    # build parameters list for 'vulnerability_reputation_1' call
     for container_item in container_data:
         if container_item[0]:
             parameters.append({
@@ -161,7 +161,7 @@ def lookup_vulnerability_1(action=None, success=None, container=None, results=No
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("lookup vulnerability", parameters=parameters, assets=['recordedfuture'], name="lookup_vulnerability_1")
+    phantom.act("vulnerability reputation", parameters=parameters, assets=['recorded future app'], name="vulnerability_reputation_1")
 
     return
 
@@ -182,7 +182,7 @@ def url_reputation_1(action=None, success=None, container=None, results=None, ha
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("url reputation", parameters=parameters, assets=['recordedfuture'], name="url_reputation_1")
+    phantom.act("url reputation", parameters=parameters, assets=['recorded future app'], name="url_reputation_1")
 
     return
 

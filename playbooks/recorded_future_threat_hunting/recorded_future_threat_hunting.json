@@ -7,7 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "This use can be spawned manually or through high fidelity correlation searches.",
-            "hash": "297d9ff9bbf78ccdc1dd869015bbede80cbe7963",
+            "hash": "0f006e930ca88198d8a7b8ab73e4b4ce4ee2083e",
             "joint": {
                 "cells": [
                     {
@@ -781,7 +781,7 @@
                     {
                         "active": false,
                         "angle": 0,
-                        "approver": "approver_user",
+                        "approver": "rich",
                         "attrs": {
                             ".background": {
                                 "fill": "#FFFFFF",
@@ -826,7 +826,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Prompt_to_ask_user_to_add_to_Block_List(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Prompt_to_ask_user_to_add_to_Block_List() called')\n    \n    # set user and message variables for phantom.prompt call\n    user = \"approver_user\"\n    message = \"\"\"Do you want to add these IP's to the block IP block list:\n{0}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"Search_against_last_1_day_of_IP_Traffic:action_result.data.*.IP\",\n    ]\n\n    #responses:\n    response_types = [\n        {\n            \"prompt\": \"\",\n            \"options\": {\n                \"type\": \"list\",\n                \"choices\": [\n                    \"Yes\",\n                    \"No\",\n                ]\n            },\n        },\n    ]\n\n    phantom.prompt2(container=container, user=user, message=message, respond_in_mins=30, name=\"Prompt_to_ask_user_to_add_to_Block_List\", parameters=parameters, response_types=response_types, callback=If_yes_add_to_list_if_no_drop)\n\n    return",
+                        "block_code": "def Prompt_to_ask_user_to_add_to_Block_List(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Prompt_to_ask_user_to_add_to_Block_List() called')\n    \n    # set user and message variables for phantom.prompt call\n    user = \"rich\"\n    message = \"\"\"Do you want to add these IP's to the block IP block list:\n{0}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"Search_against_last_1_day_of_IP_Traffic:action_result.data.*.IP\",\n    ]\n\n    #responses:\n    response_types = [\n        {\n            \"prompt\": \"\",\n            \"options\": {\n                \"type\": \"list\",\n                \"choices\": [\n                    \"Yes\",\n                    \"No\",\n                ]\n            },\n        },\n    ]\n\n    phantom.prompt2(container=container, user=user, message=message, respond_in_mins=30, name=\"Prompt_to_ask_user_to_add_to_Block_List\", parameters=parameters, response_types=response_types, callback=If_yes_add_to_list_if_no_drop)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -1015,7 +1015,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def If_yes_add_to_list_if_no_drop(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('If_yes_add_to_list_if_no_drop() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"Prompt_to_ask_user_to_add_to_Block_List:action_result.summary.responses.0\", \"==\", \"Yes\"],\n        ])\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        Add_to_Block_IP_List(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # call connected blocks for 'else' condition 2\n\n    return",
+                        "block_code": "def If_yes_add_to_list_if_no_drop(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('If_yes_add_to_list_if_no_drop() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"Prompt_to_ask_user_to_add_to_Block_List:action_result.summary.response\", \"==\", \"Yes\"],\n        ])\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        Add_to_Block_IP_List(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # call connected blocks for 'else' condition 2\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
@@ -1055,7 +1055,7 @@
                                     {
                                         "comparison": "==",
                                         "data_type": "",
-                                        "param": "Prompt_to_ask_user_to_add_to_Block_List:action_result.summary.responses.0",
+                                        "param": "Prompt_to_ask_user_to_add_to_Block_List:action_result.summary.response",
                                         "value": "Yes"
                                     }
                                 ],
@@ -1454,6 +1454,9 @@
                             "g.error": {
                                 "opacity": 0
                             },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
                             "g.notes": {
                                 "display": "block"
                             },
@@ -1633,7 +1636,7 @@
                             "bcc": "",
                             "body": "Format_Email_message:formatted_data",
                             "cc": "",
-                            "from": "phantom@example.com",
+                            "from": "sender@example.com",
                             "headers": "",
                             "subject": "Malicous IP with related entities found in Splunk",
                             "to": "recipient@example.com"
@@ -1661,7 +1664,7 @@
                                     "bcc": "",
                                     "body": "Format_Email_message:formatted_data",
                                     "cc": "",
-                                    "from": "phantom@example.com",
+                                    "from": "sender@example.com",
                                     "headers": "",
                                     "subject": "Malicous IP with related entities found in Splunk",
                                     "to": "recipient@example.com"
@@ -1906,7 +1909,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def send_email_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('send_email_1() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'send_email_1' call\n    formatted_data_1 = phantom.get_format_data(name='Format_Email_message')\n\n    parameters = []\n    \n    # build parameters list for 'send_email_1' call\n    parameters.append({\n        'body': formatted_data_1,\n        'from': \"phantom@example.com\",\n        'attachments': \"\",\n        'headers': \"\",\n        'cc': \"\",\n        'bcc': \"\",\n        'to': \"recipient@example.com\",\n        'subject': \"Malicous IP with related entities found in Splunk\",\n    })\n\n    phantom.act(\"send email\", parameters=parameters, assets=['smtp'], name=\"send_email_1\")\n\n    return",
+                        "block_code": "def send_email_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('send_email_1() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'send_email_1' call\n    formatted_data_1 = phantom.get_format_data(name='Format_Email_message')\n\n    parameters = []\n    \n    # build parameters list for 'send_email_1' call\n    parameters.append({\n        'body': formatted_data_1,\n        'from': \"sender@example.com\",\n        'attachments': \"\",\n        'to': \"recipient@example.com\",\n        'cc': \"\",\n        'bcc': \"\",\n        'headers': \"\",\n        'subject': \"Malicous IP with related entities found in Splunk\",\n    })\n\n    phantom.act(\"send email\", parameters=parameters, assets=['smtp'], name=\"send_email_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -2922,6 +2925,9 @@
                             "g.error": {
                                 "opacity": 0
                             },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
                             "g.notes": {
                                 "display": "block"
                             },
@@ -3694,10 +3700,13 @@
                                 "opacity": 1
                             },
                             "g.delete": {
-                                "display": "block"
+                                "display": "none"
                             },
                             "g.error": {
                                 "opacity": 0
+                            },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
                             },
                             "g.notes": {
                                 "display": "block"
@@ -5532,6 +5541,9 @@
                             "g.error": {
                                 "opacity": 0
                             },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
                             "g.notes": {
                                 "display": "block"
                             },
@@ -6300,180 +6312,6 @@
                         "z": 171
                     },
                     {
-                        "active": false,
-                        "angle": 0,
-                        "attrs": {
-                            ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#818D99"
-                            },
-                            ".color-band": {
-                                "fill": "#171D21"
-                            },
-                            ".format": {
-                                "text": "SPL Query to build IP Lo..."
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out-1": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out-1>.port-body": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "format"
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def SPL_Query_to_build_IP_Lookup(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('SPL_Query_to_build_IP_Lookup() called')\n    \n    template = \"\"\"| makeresults | eval IP=\\\"{0}\\\" | makemv IP delim=\\\", \\\" | mvexpand IP | appendcols [| makeresults | eval RC=\\\"{1}\\\" | makemv RC delim=\\\", \\\" | mvexpand RC ] | outputlookup huntip.csv\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.name\",\n        \"ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"SPL_Query_to_build_IP_Lookup\")\n\n    Build_IP_Lookup_Table(container=container)\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "connected_to_start": true,
-                        "connection_name": "ip reputation",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "SPL Query to build IP Lookup",
-                        "description": "",
-                        "format": "format",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "74bc01bc-1ab1-4296-a880-4dbd087e42ed",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 78,
-                        "line_start": 61,
-                        "message": "Configuring now",
-                        "name": "format",
-                        "notes": "",
-                        "number": 1,
-                        "order": 4,
-                        "outPorts": [
-                            "out-1"
-                        ],
-                        "parameters": [
-                            {
-                                "position": 0,
-                                "type": "",
-                                "value": "ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.name"
-                            },
-                            {
-                                "position": 1,
-                                "type": "",
-                                "value": "ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount"
-                            }
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 660,
-                            "y": 80
-                        },
-                        "previous_function": "",
-                        "previous_name": "SPL_Query_to_build_IP_Lookup",
-                        "show_number": true,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "format",
-                        "status": "",
-                        "template": "| makeresults | eval IP=\"{0}\" | makemv IP delim=\", \" | mvexpand IP | appendcols [| makeresults | eval RC=\"{1}\" | makemv RC delim=\", \" | mvexpand RC ] | outputlookup huntip.csv",
-                        "title": "format",
-                        "type": "coa.Format",
-                        "warn": false,
-                        "z": 172
-                    },
-                    {
                         "action": "run query",
                         "action_type": "investigate",
                         "active": false,
@@ -6840,7 +6678,7 @@
                                 "actions": [
                                     "alert data lookup",
                                     "rule id lookup",
-                                    "lookup vulnerability",
+                                    "vulnerability reputation",
                                     "file reputation",
                                     "ip reputation",
                                     "url reputation",
@@ -6851,17 +6689,17 @@
                                 "app_name": "recordedfuture",
                                 "app_version": "2.0.0",
                                 "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-                                "asset_name": "recordedfuture",
+                                "asset_name": "recorded future app",
                                 "config_type": "asset",
                                 "count": 0,
                                 "fields": {
                                     "ip": "artifact:*.cef.destinationAddress"
                                 },
                                 "has_app": true,
-                                "id": 6,
+                                "id": 7,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recordedfuture",
+                                "name": "recorded future app",
                                 "output": [
                                     {
                                         "column_name": "ip",
@@ -7126,7 +6964,7 @@
                                 },
                                 "product_name": "Recorded Future for Splunk Phantom",
                                 "product_vendor": "Recorded Future, Inc",
-                                "targets": "6",
+                                "targets": "7",
                                 "type": "reputation"
                             }
                         ],
@@ -7198,7 +7036,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_reputation_1() called')\n\n    # collect data for 'ip_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip reputation\", parameters=parameters, assets=['recordedfuture'], callback=Process_Risk_90_Plus, name=\"ip_reputation_1\")\n\n    return",
+                        "block_code": "def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_reputation_1() called')\n\n    # collect data for 'ip_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip reputation\", parameters=parameters, assets=['recorded future app'], callback=Process_Risk_90_Plus, name=\"ip_reputation_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -7306,6 +7144,183 @@
                         "type": "coa.Action",
                         "warn": "",
                         "z": 175
+                    },
+                    {
+                        "active": false,
+                        "angle": 0,
+                        "attrs": {
+                            ".background": {
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
+                            },
+                            ".color-band": {
+                                "fill": "#171D21"
+                            },
+                            ".format": {
+                                "text": "SPL Query to build IP Lo..."
+                            },
+                            ".inPorts>.port-in": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".inPorts>.port-in>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".message": {
+                                "opacity": 0,
+                                "text": "Configuring now"
+                            },
+                            ".outPorts>.port-out-1": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out-1>.port-body": {
+                                "port": {
+                                    "id": "out-1",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "text": "format"
+                            },
+                            "g.code image": {
+                                "opacity": 1
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
+                            }
+                        },
+                        "block_code": "def SPL_Query_to_build_IP_Lookup(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('SPL_Query_to_build_IP_Lookup() called')\n    \n    template = \"\"\"| makeresults | eval IP=\\\"{0}\\\" | makemv IP delim=\\\", \\\" | mvexpand IP | appendcols [| makeresults | eval RC=\\\"{1}\\\" | makemv RC delim=\\\", \\\" | mvexpand RC ] | outputlookup huntip.csv\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.name\",\n        \"ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"SPL_Query_to_build_IP_Lookup\")\n\n    Build_IP_Lookup_Table(container=container)\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": false,
+                        "connected_to_start": true,
+                        "connection_name": "ip reputation",
+                        "connection_type": "action",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "SPL Query to build IP Lookup",
+                        "description": "",
+                        "format": "format",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "74bc01bc-1ab1-4296-a880-4dbd087e42ed",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 78,
+                        "line_start": 61,
+                        "message": "Configuring now",
+                        "name": "format",
+                        "notes": "",
+                        "number": 1,
+                        "order": 4,
+                        "outPorts": [
+                            "out-1"
+                        ],
+                        "parameters": [
+                            {
+                                "position": 0,
+                                "type": "",
+                                "value": "ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.name"
+                            },
+                            {
+                                "position": 1,
+                                "type": "",
+                                "value": "ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount"
+                            }
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 660,
+                            "y": 80
+                        },
+                        "previous_function": "",
+                        "previous_name": "SPL_Query_to_build_IP_Lookup",
+                        "show_number": true,
+                        "size": {
+                            "height": 100,
+                            "width": 180
+                        },
+                        "state": "format",
+                        "status": "",
+                        "template": "| makeresults | eval IP=\"{0}\" | makemv IP delim=\", \" | mvexpand IP | appendcols [| makeresults | eval RC=\"{1}\" | makemv RC delim=\", \" | mvexpand RC ] | outputlookup huntip.csv",
+                        "title": "format",
+                        "type": "coa.Format",
+                        "warn": false,
+                        "z": 176
                     }
                 ]
             },
@@ -7314,7 +7329,7 @@
         "schema": 3,
         "version": "4.2.7532"
     },
-    "create_time": "2019-05-14T11:32:22.165185+00:00",
+    "create_time": "2019-05-16T17:17:56.245100+00:00",
     "draft_mode": false,
     "labels": [
         "events"

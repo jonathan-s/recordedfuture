@@ -31,7 +31,7 @@ def ip_reputation_1(action=None, success=None, container=None, results=None, han
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("ip reputation", parameters=parameters, assets=['recordedfuture'], callback=Filter_For_Risk_90_Plus, name="ip_reputation_1")
+    phantom.act("ip reputation", parameters=parameters, assets=['recorded future app'], callback=Filter_For_Risk_90_Plus, name="ip_reputation_1")
 
     return
 
@@ -72,9 +72,10 @@ def Send_Very_Malicious_IP_Email(action=None, success=None, container=None, resu
         'body': formatted_data_1,
         'from': "sender@example.com",
         'attachments': "",
-        'headers': "",
-        'bcc': "",
         'to': "recipient@example.com",
+        'cc': "",
+        'bcc': "",
+        'headers': "",
         'subject': "Very Malicious IP ",
     })
 

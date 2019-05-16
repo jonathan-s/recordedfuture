@@ -9,20 +9,20 @@ from datetime import datetime, timedelta
 def on_start(container):
     phantom.debug('on_start() called')
     
-    # call 'Recorded_Future_Destination_IP' block
-    Recorded_Future_Destination_IP(container=container)
+    # call 'ip_reputation_1' block
+    ip_reputation_1(container=container)
 
     return
 
-def Recorded_Future_Destination_IP(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('Recorded_Future_Destination_IP() called')
+def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('ip_reputation_1() called')
 
-    # collect data for 'Recorded_Future_Destination_IP' call
+    # collect data for 'ip_reputation_1' call
     container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])
 
     parameters = []
     
-    # build parameters list for 'Recorded_Future_Destination_IP' call
+    # build parameters list for 'ip_reputation_1' call
     for container_item in container_data:
         if container_item[0]:
             parameters.append({
@@ -31,7 +31,7 @@ def Recorded_Future_Destination_IP(action=None, success=None, container=None, re
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("ip reputation", parameters=parameters, assets=['recorded future'], callback=IOCs_90_Plus, name="Recorded_Future_Destination_IP")
+    phantom.act("ip reputation", parameters=parameters, assets=['recorded future app'], callback=IOCs_90_Plus, name="ip_reputation_1")
 
     return
 
@@ -43,7 +43,7 @@ def IOCs_90_Plus(action=None, success=None, container=None, results=None, handle
         container=container,
         action_results=results,
         conditions=[
-            ["Recorded_Future_Destination_IP:action_result.data.*.risk.score", ">=", 90],
+            ["ip_reputation_1:action_result.data.*.risk.score", ">=", 90],
         ])
 
     # call connected blocks if condition 1 matched
@@ -60,7 +60,7 @@ def IOCs_90_Plus(action=None, success=None, container=None, results=None, handle
 def Add_Bad_IP_to_List(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
     phantom.debug('Add_Bad_IP_to_List() called')
 
-    results_data_1 = phantom.collect2(container=container, datapath=['Recorded_Future_Destination_IP:action_result.parameter.ip'], action_results=results)
+    results_data_1 = phantom.collect2(container=container, datapath=['ip_reputation_1:action_result.parameter.ip'], action_results=results)
 
     results_item_1_0 = [item[0] for item in results_data_1]
 
@@ -79,11 +79,11 @@ Evidence={4}"""
 
     # parameter list for template variable replacement
     parameters = [
-        "Recorded_Future_Destination_IP:action_result.parameter.ip",
-        "Recorded_Future_Destination_IP:action_result.data.*.risk.score",
-        "Recorded_Future_Destination_IP:action_result.data.*.risk.riskSummary",
-        "Recorded_Future_Destination_IP:action_result.data.*.risk.evidenceDetails.*.rule",
-        "Recorded_Future_Destination_IP:action_result.data.*.risk.evidenceDetails.*.evidenceString",
+        "ip_reputation_1:action_result.parameter.ip",
+        "ip_reputation_1:action_result.data.*.risk.score",
+        "ip_reputation_1:action_result.data.*.risk.riskSummary",
+        "ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.rule",
+        "ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.evidenceString",
     ]
 
     phantom.format(container=container, template=template, parameters=parameters, name="Format_Data_For_Splunk")
@@ -99,9 +99,9 @@ def Format_Data_for_Email(action=None, success=None, container=None, results=Non
 
     # parameter list for template variable replacement
     parameters = [
-        "Recorded_Future_Destination_IP:action_result.parameter.ip",
-        "Recorded_Future_Destination_IP:action_result.data.*.risk.score",
-        "Recorded_Future_Destination_IP:action_result.data.*.intelCard",
+        "ip_reputation_1:action_result.parameter.ip",
+        "ip_reputation_1:action_result.data.*.risk.score",
+        "ip_reputation_1:action_result.data.*.intelCard",
     ]
 
     phantom.format(container=container, template=template, parameters=parameters, name="Format_Data_for_Email")
@@ -132,7 +132,7 @@ def Email_notification(action=None, success=None, container=None, results=None, 
         'subject': "Alert Generated IP added to list",
     })
 
-    phantom.act("send email", parameters=parameters, assets=['defaultmail'], name="Email_notification")
+    phantom.act("send email", parameters=parameters, assets=['smtp'], name="Email_notification")
 
     return
 
@@ -155,7 +155,7 @@ def Post_back_to_Splunk_SOAR_info(action=None, success=None, container=None, res
         'source_type': "Automation/Orchestration Platform",
     })
 
-    phantom.act("post data", parameters=parameters, assets=['splunk.example.com'], name="Post_back_to_Splunk_SOAR_info")
+    phantom.act("post data", parameters=parameters, assets=['splunk-server'], name="Post_back_to_Splunk_SOAR_info")
 
     return
 
