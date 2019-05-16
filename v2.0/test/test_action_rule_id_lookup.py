@@ -22,7 +22,7 @@ class RfRuleIdLookupTests(RfTests):
 
     def test_rule_id_lookup(self):
         """Test behavior when an ip is supplied."""
-        artifact = ph_artifact(cs1="Recorded",
+        artifact = ph_artifact(cs1="recordedfuture.com Leaked Credentials Document",
                                cs1Label="alert rule name")
         container = ph_container("Alert Rule Name event", [artifact])
         res = self._rest_call('post', 'container', container)
