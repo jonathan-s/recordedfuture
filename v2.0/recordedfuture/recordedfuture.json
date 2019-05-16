@@ -291,7 +291,7 @@
       ],
       "render": {
         "type": "custom",
-        "view": "recordedfuture_view.display_results",
+        "view": "recordedfuture_view.reputation_results",
         "title": "Threat Intel Context for Domain"
       },
       "versions": "EQ(*)"
@@ -319,7 +319,7 @@
       },
       "render": {
         "type": "custom",
-        "view": "recordedfuture_view.display_results",
+        "view": "recordedfuture_view.reputation_results",
         "title": "Threat Intel Context for URL"
       },
       "output": [
@@ -809,7 +809,7 @@
       ],
       "render": {
         "type": "custom",
-        "view": "recordedfuture_view.display_results",
+        "view": "recordedfuture_view.reputation_results",
         "title": "Threat Intel Context for IP Address"
       },
       "versions": "EQ(*)"
@@ -1074,7 +1074,7 @@
       ],
       "render": {
         "type": "custom",
-        "view": "recordedfuture_view.display_results",
+        "view": "recordedfuture_view.reputation_results",
         "title": "Threat Intel Context for File Hash"
       },
       "versions": "EQ(*)"
@@ -1369,7 +1369,7 @@
       ],
       "render": {
         "type": "custom",
-        "view": "recordedfuture_view.display_results",
+        "view": "recordedfuture_view.reputation_results",
         "title": "Threat Intel Context for Vulnerability"
       },
       "versions": "EQ(*)"

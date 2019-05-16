@@ -41,7 +41,7 @@ def format_result(result):
     return retval
 
 
-def display_results(provides, all_app_runs, context):
+def reputation_results(provides, all_app_runs, context):
 
     context['results'] = results = []
     for summary, action_results in all_app_runs:
@@ -51,4 +51,4 @@ def display_results(provides, all_app_runs, context):
             if (not formatted):
                 continue
             results.append(formatted)
-    return 'display_results.html'
+    return 'reputation_results.html'
