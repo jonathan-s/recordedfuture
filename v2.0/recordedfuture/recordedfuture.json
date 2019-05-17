@@ -217,7 +217,7 @@
     },
     {
       "action": "url intelligence",
-      "identifier": "url_reputation",
+      "identifier": "url_intelligence",
       "description": "Queries URL info",
       "verbose": "",
       "type": "investigate",
@@ -703,7 +703,7 @@
     },
     {
       "action": "vulnerability intelligence",
-      "identifier": "vulnerability reputation",
+      "identifier": "vulnerability_intelligence",
       "description": "Look up threat intel context for a CVE vulnerability identifier",
       "verbose": "",
       "type": "investigate",
@@ -998,7 +998,7 @@
     },
     {
       "action": "vulnerability reputation",
-      "identifier": "vulnerability reputation",
+      "identifier": "vulnerability_reputation",
       "description": "Look up threat intel context for a CVE vulnerability identifier",
       "verbose": "",
       "type": "investigate",
@@ -1293,7 +1293,7 @@
     },
     {
       "action": "file intelligence",
-      "identifier": "file_reputation",
+      "identifier": "file_intelligence",
       "description": "Queries for file reputation info",
       "verbose": "",
       "type": "investigate",
@@ -1823,7 +1823,7 @@
     },
     {
       "action": "domain intelligence",
-      "identifier": "domain_reputation",
+      "identifier": "domain_intelligence",
       "description": "Queries domain info",
       "verbose": "",
       "type": "investigate",
@@ -2313,7 +2313,7 @@
     },
     {
       "action": "ip intelligence",
-      "identifier": "ip_reputation",
+      "identifier": "ip_intelligence",
       "description": "Queries IP info",
       "verbose": "",
       "type": "investigate",
