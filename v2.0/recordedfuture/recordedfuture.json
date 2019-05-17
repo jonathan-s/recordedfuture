@@ -214,6 +214,249 @@
       "versions": "EQ(*)"
     },
     {
+      "action": "url intelligence",
+      "identifier": "url_reputation",
+      "description": "Queries URL info",
+      "verbose": "",
+      "type": "investigate",
+      "read_only": true,
+      "parameters": {
+        "url": {
+          "description": "URL to query",
+          "data_type": "string",
+          "required": true,
+          "primary": true,
+          "contains": [
+            "url"
+          ],
+          "value_list": [],
+          "default": "",
+          "order": 0
+        }
+      },
+      "render": {
+        "type": "custom",
+        "view": "recordedfuture_view.reputation_results",
+        "title": "Threat Intel Context for URL"
+      },
+      "output": [
+        {
+          "data_path": "action_result.parameter.url",
+          "data_type": "string",
+          "contains": [
+            "url"
+          ],
+          "column_name": "url",
+          "column_order": 0
+        },
+        {
+          "data_path": "action_result.status",
+          "data_type": "string",
+          "column_name": "status",
+          "column_order": 1
+        },
+        {
+          "data_path": "action_result.message",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.timestamps.firstSeen",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.timestamps.lastSeen",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.riskSummary",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.rules",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.risk.criticality",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.risk.criticalityLabel",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.score",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.totalHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.oneDaysHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.sevenDaysHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.sixtyDaysHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.maliciousHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.infoSecHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.socialMediaHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.criminalForumHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.darkWebHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.pasteHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedAttackVectorCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedCompanyCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedCountryCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedEmailAddressCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedHashCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedInternetDomainCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedMalwareCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedMalwareCategoryCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedOrganizationCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedProductCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedTechnologyCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedUsernameCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedVulnerabilityCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.status",
+          "data_type": "string",
+          "column_name": "status",
+          "column_order": 1
+        },
+        {
+          "data_path": "action_result.message",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.summary.criticalityLabel",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.summary.lastSeen",
+          "data_type": "string"
+        }
+      ],
+      "versions": "EQ(*)"
+    },
+    {
       "action": "url reputation",
       "identifier": "url_reputation",
       "description": "Queries URL info",
@@ -454,6 +697,301 @@
           "data_type": "string"
         }
       ],
+      "versions": "EQ(*)"
+    },
+    {
+      "action": "vulnerability intelligence",
+      "identifier": "vulnerability reputation",
+      "description": "Look up threat intel context for a CVE vulnerability identifier",
+      "verbose": "",
+      "type": "investigate",
+      "read_only": true,
+      "parameters": {
+        "vulnerability": {
+          "description": "CVE vulnerability identifier to look up",
+          "data_type": "string",
+          "required": true,
+          "primary": true,
+          "contains": [
+            "vulnerability"
+          ],
+          "value_list": [],
+          "default": "",
+          "order": 0
+        }
+      },
+      "output": [
+        {
+          "data_path": "action_result.parameter.vulnerability",
+          "data_type": "string",
+          "contains": [
+            "vulnerability"
+          ],
+          "column_name": "vulnerability",
+          "column_order": 0
+        },
+        {
+          "data_path": "action_result.status",
+          "data_type": "string",
+          "column_name": "status",
+          "column_order": 1
+        },
+        {
+          "data_path": "action_result.message",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.timestamps.firstSeen",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.timestamps.lastSeen",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.intelCard",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.nvdDescription",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.cvss.score",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.cvss.accessComplexity",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.cvss.accessVector",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.cvss.authentication",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.cvss.availability",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.cvss.confidentiality",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.cvss.integrity",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.cvss.published",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.cvss.lastModified",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.riskSummary",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.rules",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.risk.criticality",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.risk.criticalityLabel",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.score",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.threatLists.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.threatLists.*.description",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.totalHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.oneDaysHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.sevenDaysHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.sixtyDaysHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.maliciousHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.infoSecHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.socialMediaHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.criminalForumHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.darkWebHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.pasteHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedAttackVectorCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedCompanyCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedCountryCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedEmailAddressCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedHashCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedInternetDomainCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedMalwareCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedMalwareCategoryCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedOrganizationCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedProductCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedTechnologyCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedUsernameCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedVulnerabilityCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.status",
+          "data_type": "string",
+          "column_name": "status",
+          "column_order": 1
+        },
+        {
+          "data_path": "action_result.message",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.summary.criticalityLabel",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.summary.lastSeen",
+          "data_type": "string"
+        }
+      ],
+      "render": {
+        "type": "custom",
+        "view": "recordedfuture_view.reputation_results",
+        "title": "Threat Intel Context for Vulnerability"
+      },
       "versions": "EQ(*)"
     },
     {
@@ -752,6 +1290,271 @@
       "versions": "EQ(*)"
     },
     {
+      "action": "file intelligence",
+      "identifier": "file_reputation",
+      "description": "Queries for file reputation info",
+      "verbose": "",
+      "type": "investigate",
+      "read_only": true,
+      "parameters": {
+        "hash": {
+          "description": "File hash to query",
+          "data_type": "string",
+          "required": true,
+          "primary": true,
+          "contains": [
+            "hash",
+            "sha256",
+            "sha1",
+            "md5"
+          ],
+          "value_list": [],
+          "default": "",
+          "order": 0
+        }
+      },
+      "output": [
+        {
+          "data_path": "action_result.parameter.hash",
+          "data_type": "string",
+          "contains": [
+            "hash",
+            "sha256",
+            "sha1",
+            "md5"
+          ],
+          "column_name": "hash",
+          "column_order": 0
+        },
+        {
+          "data_path": "action_result.status",
+          "data_type": "string",
+          "column_name": "status",
+          "column_order": 1
+        },
+        {
+          "data_path": "action_result.message",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.timestamps.firstSeen",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.timestamps.lastSeen",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.intelCard",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.hashAlgorithm",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.riskSummary",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.rules",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.risk.criticality",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.risk.criticalityLabel",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.score",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.threatLists.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.threatLists.*.description",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.totalHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.oneDaysHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.sevenDaysHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.sixtyDaysHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.maliciousHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.infoSecHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.socialMediaHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.criminalForumHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.darkWebHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.pasteHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedAttackVectorCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedCompanyCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedCountryCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedEmailAddressCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedHashCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedInternetDomainCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedMalwareCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedMalwareCategoryCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedOrganizationCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedProductCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedTechnologyCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedUsernameCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedVulnerabilityCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.status",
+          "data_type": "string",
+          "column_name": "status",
+          "column_order": 1
+        },
+        {
+          "data_path": "action_result.message",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.summary.criticalityLabel",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.summary.lastSeen",
+          "data_type": "string"
+        }
+      ],
+      "render": {
+        "type": "custom",
+        "view": "recordedfuture_view.reputation_results",
+        "title": "Threat Intel Context for File Hash"
+      },
+      "versions": "EQ(*)"
+    },
+    {
       "action": "file reputation",
       "identifier": "file_reputation",
       "description": "Queries for file reputation info",
@@ -1017,6 +1820,251 @@
       "versions": "EQ(*)"
     },
     {
+      "action": "domain intelligence",
+      "identifier": "domain_reputation",
+      "description": "Queries domain info",
+      "verbose": "",
+      "type": "investigate",
+      "read_only": true,
+      "parameters": {
+        "domain": {
+          "description": "Domain to query",
+          "data_type": "string",
+          "required": true,
+          "primary": true,
+          "contains": [
+            "domain"
+          ],
+          "value_list": [],
+          "default": "",
+          "order": 0
+        }
+      },
+      "output": [
+        {
+          "data_path": "action_result.parameter.domain",
+          "data_type": "string",
+          "contains": [
+            "domain"
+          ],
+          "column_name": "domain",
+          "column_order": 0
+        },
+        {
+          "data_path": "action_result.data.*.timestamps.firstSeen",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.timestamps.lastSeen",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.intelCard",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.riskSummary",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.rules",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.risk.criticality",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.risk.criticalityLabel",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.score",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.threatLists.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.threatLists.*.description",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.totalHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.oneDaysHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.sevenDaysHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.sixtyDaysHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.maliciousHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.infoSecHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.socialMediaHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.criminalForumHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.darkWebHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.pasteHits",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedAttackVectorCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedCompanyCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedCountryCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedEmailAddressCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedHashCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedInternetDomainCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedMalwareCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedMalwareCategoryCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedOrganizationCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedProductCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedTechnologyCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedUsernameCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.metrics.relatedVulnerabilityCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.status",
+          "data_type": "string",
+          "column_name": "status",
+          "column_order": 1
+        },
+        {
+          "data_path": "action_result.message",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.summary.criticalityLabel",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.summary.lastSeen",
+          "data_type": "string"
+        }
+      ],
+      "render": {
+        "type": "custom",
+        "view": "recordedfuture_view.reputation_results",
+        "title": "Threat Intel Context for Domain"
+      },
+      "versions": "EQ(*)"
+    },
+    {
       "action": "domain reputation",
       "identifier": "domain_reputation",
       "description": "Queries domain info",
@@ -1262,7 +2310,7 @@
       "versions": "EQ(*)"
     },
     {
-      "action": "ip reputation",
+      "action": "ip intelligence",
       "identifier": "ip_reputation",
       "description": "Queries IP info",
       "verbose": "",
@@ -1533,1054 +2581,6 @@
         "type": "custom",
         "view": "recordedfuture_view.reputation_results",
         "title": "Threat Intel Context for IP Address"
-      },
-      "versions": "EQ(*)"
-    },
-    {
-      "action": "url reputation",
-      "identifier": "url_reputation",
-      "description": "Queries URL info",
-      "verbose": "",
-      "type": "investigate",
-      "read_only": true,
-      "parameters": {
-        "url": {
-          "description": "URL to query",
-          "data_type": "string",
-          "required": true,
-          "primary": true,
-          "contains": [
-            "url"
-          ],
-          "value_list": [],
-          "default": "",
-          "order": 0
-        }
-      },
-      "render": {
-        "type": "custom",
-        "view": "recordedfuture_view.reputation_results",
-        "title": "Threat Intel Context for URL"
-      },
-      "output": [
-        {
-          "data_path": "action_result.parameter.url",
-          "data_type": "string",
-          "contains": [
-            "url"
-          ],
-          "column_name": "url",
-          "column_order": 0
-        },
-        {
-          "data_path": "action_result.status",
-          "data_type": "string",
-          "column_name": "status",
-          "column_order": 1
-        },
-        {
-          "data_path": "action_result.message",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.timestamps.firstSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.timestamps.lastSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.riskSummary",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.rules",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.criticality",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.criticalityLabel",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.score",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.totalHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.oneDaysHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.sevenDaysHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.sixtyDaysHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.maliciousHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.infoSecHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.socialMediaHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.criminalForumHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.darkWebHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.pasteHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedAttackVectorCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedCompanyCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedCountryCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedEmailAddressCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedHashCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedInternetDomainCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedMalwareCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedMalwareCategoryCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedOrganizationCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedProductCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedTechnologyCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedUsernameCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedVulnerabilityCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.status",
-          "data_type": "string",
-          "column_name": "status",
-          "column_order": 1
-        },
-        {
-          "data_path": "action_result.message",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.summary.criticalityLabel",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.summary.lastSeen",
-          "data_type": "string"
-        }
-      ],
-      "versions": "EQ(*)"
-    },
-    {
-      "action": "vulnerability reputation",
-      "identifier": "vulnerability reputation",
-      "description": "Look up threat intel context for a CVE vulnerability identifier",
-      "verbose": "",
-      "type": "investigate",
-      "read_only": true,
-      "parameters": {
-        "vulnerability": {
-          "description": "CVE vulnerability identifier to look up",
-          "data_type": "string",
-          "required": true,
-          "primary": true,
-          "contains": [
-            "vulnerability"
-          ],
-          "value_list": [],
-          "default": "",
-          "order": 0
-        }
-      },
-      "output": [
-        {
-          "data_path": "action_result.parameter.vulnerability",
-          "data_type": "string",
-          "contains": [
-            "vulnerability"
-          ],
-          "column_name": "vulnerability",
-          "column_order": 0
-        },
-        {
-          "data_path": "action_result.status",
-          "data_type": "string",
-          "column_name": "status",
-          "column_order": 1
-        },
-        {
-          "data_path": "action_result.message",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.timestamps.firstSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.timestamps.lastSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.intelCard",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.nvdDescription",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.cvss.score",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.cvss.accessComplexity",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.cvss.accessVector",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.cvss.authentication",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.cvss.availability",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.cvss.confidentiality",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.cvss.integrity",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.cvss.published",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.cvss.lastModified",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.riskSummary",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.rules",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.criticality",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.criticalityLabel",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.score",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.threatLists.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.threatLists.*.description",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.totalHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.oneDaysHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.sevenDaysHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.sixtyDaysHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.maliciousHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.infoSecHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.socialMediaHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.criminalForumHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.darkWebHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.pasteHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedAttackVectorCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedCompanyCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedCountryCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedEmailAddressCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedHashCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedInternetDomainCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedMalwareCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedMalwareCategoryCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedOrganizationCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedProductCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedTechnologyCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedUsernameCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedVulnerabilityCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.status",
-          "data_type": "string",
-          "column_name": "status",
-          "column_order": 1
-        },
-        {
-          "data_path": "action_result.message",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.summary.criticalityLabel",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.summary.lastSeen",
-          "data_type": "string"
-        }
-      ],
-      "render": {
-        "type": "custom",
-        "view": "recordedfuture_view.reputation_results",
-        "title": "Threat Intel Context for Vulnerability"
-      },
-      "versions": "EQ(*)"
-    },
-    {
-      "action": "file reputation",
-      "identifier": "file_reputation",
-      "description": "Queries for file reputation info",
-      "verbose": "",
-      "type": "investigate",
-      "read_only": true,
-      "parameters": {
-        "hash": {
-          "description": "File hash to query",
-          "data_type": "string",
-          "required": true,
-          "primary": true,
-          "contains": [
-            "hash",
-            "sha256",
-            "sha1",
-            "md5"
-          ],
-          "value_list": [],
-          "default": "",
-          "order": 0
-        }
-      },
-      "output": [
-        {
-          "data_path": "action_result.parameter.hash",
-          "data_type": "string",
-          "contains": [
-            "hash",
-            "sha256",
-            "sha1",
-            "md5"
-          ],
-          "column_name": "hash",
-          "column_order": 0
-        },
-        {
-          "data_path": "action_result.status",
-          "data_type": "string",
-          "column_name": "status",
-          "column_order": 1
-        },
-        {
-          "data_path": "action_result.message",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.timestamps.firstSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.timestamps.lastSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.intelCard",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.hashAlgorithm",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.riskSummary",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.rules",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.criticality",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.criticalityLabel",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.score",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.threatLists.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.threatLists.*.description",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.totalHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.oneDaysHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.sevenDaysHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.sixtyDaysHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.maliciousHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.infoSecHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.socialMediaHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.criminalForumHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.darkWebHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.pasteHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedAttackVectorCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedCompanyCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedCountryCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedEmailAddressCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedHashCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedInternetDomainCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedMalwareCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedMalwareCategoryCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedOrganizationCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedProductCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedTechnologyCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedUsernameCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedVulnerabilityCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.status",
-          "data_type": "string",
-          "column_name": "status",
-          "column_order": 1
-        },
-        {
-          "data_path": "action_result.message",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.summary.criticalityLabel",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.summary.lastSeen",
-          "data_type": "string"
-        }
-      ],
-      "render": {
-        "type": "custom",
-        "view": "recordedfuture_view.reputation_results",
-        "title": "Threat Intel Context for File Hash"
-      },
-      "versions": "EQ(*)"
-    },
-    {
-      "action": "domain reputation",
-      "identifier": "domain_reputation",
-      "description": "Queries domain info",
-      "verbose": "",
-      "type": "investigate",
-      "read_only": true,
-      "parameters": {
-        "domain": {
-          "description": "Domain to query",
-          "data_type": "string",
-          "required": true,
-          "primary": true,
-          "contains": [
-            "domain"
-          ],
-          "value_list": [],
-          "default": "",
-          "order": 0
-        }
-      },
-      "output": [
-        {
-          "data_path": "action_result.parameter.domain",
-          "data_type": "string",
-          "contains": [
-            "domain"
-          ],
-          "column_name": "domain",
-          "column_order": 0
-        },
-        {
-          "data_path": "action_result.data.*.timestamps.firstSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.timestamps.lastSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.intelCard",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.riskSummary",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.rules",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.criticality",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.criticalityLabel",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.score",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.threatLists.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.threatLists.*.description",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.totalHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.oneDaysHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.sevenDaysHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.sixtyDaysHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.maliciousHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.infoSecHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.socialMediaHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.criminalForumHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.darkWebHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.pasteHits",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedAttackVectorCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedCompanyCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedCountryCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedEmailAddressCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedHashCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedInternetDomainCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedMalwareCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedMalwareCategoryCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedOrganizationCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedProductCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedTechnologyCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedUsernameCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.metrics.relatedVulnerabilityCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.status",
-          "data_type": "string",
-          "column_name": "status",
-          "column_order": 1
-        },
-        {
-          "data_path": "action_result.message",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.summary.criticalityLabel",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.summary.lastSeen",
-          "data_type": "string"
-        }
-      ],
-      "render": {
-        "type": "custom",
-        "view": "recordedfuture_view.reputation_results",
-        "title": "Threat Intel Context for Domain"
       },
       "versions": "EQ(*)"
     },
