@@ -64,4 +64,5 @@ class RfTests(unittest.TestCase):
                 'risk']['score']
         except Exception as err:
             print 'result: %s' % result
+            raise
         self.assertEqual(risk_score, target_risk_score, *args)

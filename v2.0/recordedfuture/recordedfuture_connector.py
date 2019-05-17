@@ -29,6 +29,57 @@ import urllib
 import json
 from bs4 import BeautifulSoup
 
+# (path_info template, fields, quote parameter)
+REPUTATION_MAP = {
+    'ip': ('/ip/%s',
+           ['entity', 'risk', 'timestamps'],
+           'ip',
+           False),
+    'domain': ('/domain/idn:%s',
+               ['entity', 'risk', 'timestamps'],
+               'domain',
+               False),
+    'file': ('/hash/%s',
+             ['entity', 'risk', 'timestamps'],
+             'hash',
+             False),
+    'vulnerability': ('/vulnerability/%s',
+                      ['entity', 'risk', 'timestamps'],
+                      'vulnerability',
+                      False),
+    'url': ('/url/%s',
+            ['entity', 'risk', 'timestamps'],
+            'url',
+            True),
+}
+INTELLIGENCE_MAP = {
+    'ip': ('/ip/%s',
+           ['entity', 'risk', 'timestamps', "threatLists", "intelCard",
+            "metrics", "location", "relatedEntities"],
+           'ip',
+           False),
+    'domain': ('/domain/idn:%s',
+               ['entity', 'risk', 'timestamps', "threatLists",
+                 "intelCard", "metrics", "relatedEntities"],
+               'domain',
+               False),
+    'file': ('/hash/%s',
+             ['entity', 'risk', 'timestamps', "threatLists", "intelCard",
+              "metrics", "hashAlgorithm", "relatedEntities"],
+             'hash',
+             False),
+    'vulnerability': ('/vulnerability/%s',
+                      ['entity', 'risk', 'timestamps', "threatLists",
+                       "intelCard",
+                       "metrics", "cvss", "nvdDescription", "relatedEntities"],
+                      'vulnerability',
+                      False),
+    'url': ('/url/%s',
+            ['entity', 'risk', 'timestamps', "metrics", "relatedEntities"],
+            'url',
+            True),
+}
+
 
 class RetVal(tuple):
     def __new__(cls, val1, val2=None):
@@ -250,8 +301,8 @@ class RecordedfutureConnector(BaseConnector):
         if phantom.is_fail(my_ret_val):
             return action_result.get_status()
 
-        if response == {}:
-            return action_result.set_status(phantom.APP_SUCCESS)
+        # if response == {}:
+        #    return action_result.set_status(phantom.APP_SUCCESS)
 
         # Now post process the data,  uncomment code as you deem fit
         res = response['data']
@@ -453,39 +504,27 @@ class RecordedfutureConnector(BaseConnector):
         # Get the action that we are supposed to execute for this App Run
         action_id = self.get_action_identifier()
 
-        self.debug_print("action_id", self.get_action_identifier())
+        self.debug_print("action_id", action_id)
+
+        if len(action_id.split('_')) == 2:
+            entity_type, operation_type = action_id.split('_')
+        else:
+            entity_type, operation_type = None, None
+
+        self.debug_print('entity_type, operation_type = %s, %s'
+                         % (entity_type, operation_type))
 
         if action_id == 'test_connectivity':
             my_ret_val = self._handle_test_connectivity(param)
 
-        elif action_id == 'domain_reputation':
-            fields = ["timestamps", "risk", "threatLists",
-                      "intelCard", "metrics", "relatedEntities"]
-            path_info = '/domain/idn:%s' % param['domain']
-            my_ret_val = self._handle_reputation(param, path_info, fields)
-
-        elif action_id == 'url_reputation':
-            fields = ["timestamps", "risk", "metrics", "relatedEntities"]
-            path_info = '/url/%s' % urllib.quote_plus(param["url"])
-            my_ret_val = self._handle_reputation(param, path_info, fields)
-
-        elif action_id == 'ip_reputation':
-            fields = ["timestamps", "risk", "threatLists", "intelCard",
-                      "metrics", "location", "relatedEntities"]
-            path_info = '/ip/%s' % param['ip']
-            my_ret_val = self._handle_reputation(param, path_info, fields)
-
-        elif action_id == 'file_reputation':
-            fields = ["timestamps", "risk", "threatLists", "intelCard",
-                      "metrics", "hashAlgorithm", "relatedEntities"]
-            path_info = '/hash/%s' % param['hash']
-            my_ret_val = self._handle_reputation(param, path_info, fields)
-
-        elif action_id == 'vulnerability_reputation':
-            fields = ["timestamps", "risk", "threatLists", "intelCard",
-                      "metrics", "cvss", "nvdDescription", "relatedEntities"]
-            path_info = '/vulnerability/%s' % urllib.quote(
-                param['vulnerability'], safe='')
+        elif operation_type in ['reputation', 'intelligence']:
+            omap = {'reputation': REPUTATION_MAP,
+                    'intelligence': INTELLIGENCE_MAP}[operation_type]
+            path_info_tmplt, fields, tag, do_quote = omap[entity_type]
+            if do_quote:
+                path_info = path_info_tmplt % urllib.quote_plus(param[tag])
+            else:
+                path_info = path_info_tmplt % param[tag]
             my_ret_val = self._handle_reputation(param, path_info, fields)
 
         elif action_id == 'rule_id_lookup':
