@@ -14,15 +14,15 @@ def on_start(container):
 
     return
 
-def rule_id_lookup_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('rule_id_lookup_1() called')
+def alert_rule_id_lookup_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('alert_rule_id_lookup_1() called')
 
-    # collect data for 'rule_id_lookup_1' call
+    # collect data for 'alert_rule_id_lookup_1' call
     container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs1', 'artifact:*.id'])
 
     parameters = []
     
-    # build parameters list for 'rule_id_lookup_1' call
+    # build parameters list for 'alert_rule_id_lookup_1' call
     for container_item in container_data:
         if container_item[0]:
             parameters.append({
@@ -31,7 +31,7 @@ def rule_id_lookup_1(action=None, success=None, container=None, results=None, ha
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("rule id lookup", parameters=parameters, assets=['recorded future app'], callback=format_1, name="rule_id_lookup_1")
+    phantom.act("alert rule id lookup", parameters=parameters, assets=['recordedfuture'], callback=format_1, name="alert_rule_id_lookup_1")
 
     return
 
@@ -47,7 +47,7 @@ def decision_1(action=None, success=None, container=None, results=None, handle=N
 
     # call connected blocks if condition 1 matched
     if matched_artifacts_1 or matched_results_1:
-        rule_id_lookup_1(action=action, success=success, container=container, results=results, handle=handle)
+        alert_rule_id_lookup_1(action=action, success=success, container=container, results=results, handle=handle)
         return
 
     # check for 'elif' condition 2
@@ -84,7 +84,7 @@ def alert_data_lookup_2(action=None, success=None, container=None, results=None,
                 'context': {'artifact_id': container_item[2]},
             })
 
-    phantom.act("alert data lookup", parameters=parameters, assets=['recorded future app'], callback=alert_data_lookup_2_callback, name="alert_data_lookup_2")
+    phantom.act("alert data lookup", parameters=parameters, assets=['recordedfuture'], callback=alert_data_lookup_2_callback, name="alert_data_lookup_2")
 
     return
 
@@ -104,9 +104,9 @@ def format_1(action=None, success=None, container=None, results=None, handle=Non
 
     # parameter list for template variable replacement
     parameters = [
-        "rule_id_lookup_1:action_result.summary.returned_number_of_rules",
-        "rule_id_lookup_1:action_result.data.*.rule.id",
-        "rule_id_lookup_1:action_result.data.*.rule.title",
+        "alert_rule_id_lookup_1:action_result.summary.returned_number_of_rules",
+        "alert_rule_id_lookup_1:action_result.data.*.rule.id",
+        "alert_rule_id_lookup_1:action_result.data.*.rule.title",
     ]
 
     phantom.format(container=container, template=template, parameters=parameters, name="format_1")
@@ -157,7 +157,7 @@ def alert_data_lookup_3(action=None, success=None, container=None, results=None,
     
     # collect data for 'alert_data_lookup_3' call
     container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs2', 'artifact:*.id'])
-    results_data_1 = phantom.collect2(container=container, datapath=['rule_id_lookup_1:action_result.data.*.rule.id', 'rule_id_lookup_1:action_result.parameter.context.artifact_id'], action_results=results)
+    results_data_1 = phantom.collect2(container=container, datapath=['alert_rule_id_lookup_1:action_result.data.*.rule.id', 'alert_rule_id_lookup_1:action_result.parameter.context.artifact_id'], action_results=results)
 
     parameters = []
     
@@ -172,7 +172,7 @@ def alert_data_lookup_3(action=None, success=None, container=None, results=None,
                     'context': {'artifact_id': results_item_1[1]},
                 })
 
-    phantom.act("alert data lookup", parameters=parameters, assets=['recorded future app'], callback=format_3, name="alert_data_lookup_3")
+    phantom.act("alert data lookup", parameters=parameters, assets=['recordedfuture'], callback=format_3, name="alert_data_lookup_3")
 
     return
 

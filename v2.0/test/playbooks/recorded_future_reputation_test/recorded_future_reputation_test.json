@@ -7,6 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "Playbook created to reputation lookups as defined in the Recorded Future app.",
+            "hash": "577e87acaaa18b08beb1a8d9ac1cb8c32ae8aa36",
             "joint": {
                 "cells": [
                     {
@@ -75,8 +76,8 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 17,
-                        "line_start": 9,
+                        "line_end": 16,
+                        "line_start": 8,
                         "name": "",
                         "notes": "",
                         "number": 0,
@@ -216,8 +217,8 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 202,
-                        "line_start": 189,
+                        "line_end": 201,
+                        "line_start": 188,
                         "name": "",
                         "notes": "",
                         "number": 0,
@@ -372,7 +373,7 @@
                                 "id": 6,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recorded future app",
+                                "name": "recordedfuture",
                                 "output": [
                                     {
                                         "column_name": "ip",
@@ -709,7 +710,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_reputation_1() called')\n\n    # collect data for 'ip_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip reputation\", parameters=parameters, assets=['recorded future app'], name=\"ip_reputation_1\")\n\n    return",
+                        "block_code": "def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_reputation_1() called')\n\n    # collect data for 'ip_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip reputation\", parameters=parameters, assets=['recordedfuture'], name=\"ip_reputation_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -734,8 +735,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 38,
-                        "line_start": 17,
+                        "line_end": 37,
+                        "line_start": 16,
                         "message": "Configuring now",
                         "name": "ip reputation",
                         "notes": "",
@@ -938,7 +939,7 @@
                                 "id": 6,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recorded future app",
+                                "name": "recordedfuture",
                                 "output": [
                                     {
                                         "column_name": "domain",
@@ -1245,7 +1246,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def domain_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('domain_reputation_1() called')\n\n    # collect data for 'domain_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationDnsDomain', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'domain_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'domain': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"domain reputation\", parameters=parameters, assets=['recorded future app'], name=\"domain_reputation_1\")\n\n    return",
+                        "block_code": "def domain_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('domain_reputation_1() called')\n\n    # collect data for 'domain_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationDnsDomain', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'domain_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'domain': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"domain reputation\", parameters=parameters, assets=['recordedfuture'], name=\"domain_reputation_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -1270,8 +1271,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 126,
-                        "line_start": 105,
+                        "line_end": 125,
+                        "line_start": 104,
                         "message": "Configuring now",
                         "name": "domain reputation",
                         "notes": "",
@@ -1393,7 +1394,7 @@
                                 "id": 6,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recorded future app",
+                                "name": "recordedfuture",
                                 "output": [
                                     {
                                         "column_name": "hash",
@@ -1720,7 +1721,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def file_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('file_reputation_1() called')\n\n    # collect data for 'file_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.fileHash', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'file_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'hash': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"file reputation\", parameters=parameters, assets=['recorded future app'], name=\"file_reputation_1\")\n\n    return",
+                        "block_code": "def file_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('file_reputation_1() called')\n\n    # collect data for 'file_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.fileHash', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'file_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'hash': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"file reputation\", parameters=parameters, assets=['recordedfuture'], name=\"file_reputation_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -1745,8 +1746,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 147,
-                        "line_start": 126,
+                        "line_end": 146,
+                        "line_start": 125,
                         "message": "Configuring now",
                         "name": "file reputation",
                         "notes": "",
@@ -2195,7 +2196,7 @@
                                 "id": 6,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recorded future app",
+                                "name": "recordedfuture",
                                 "output": [
                                     {
                                         "column_name": "url",
@@ -2497,7 +2498,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def url_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('url_reputation_1() called')\n\n    # collect data for 'url_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.requestURL', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'url_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'url': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"url reputation\", parameters=parameters, assets=['recorded future app'], name=\"url_reputation_1\")\n\n    return",
+                        "block_code": "def url_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('url_reputation_1() called')\n\n    # collect data for 'url_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.requestURL', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'url_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'url': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"url reputation\", parameters=parameters, assets=['recordedfuture'], name=\"url_reputation_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -2522,8 +2523,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 189,
-                        "line_start": 168,
+                        "line_end": 188,
+                        "line_start": 167,
                         "message": "Configuring now",
                         "name": "url reputation",
                         "notes": "",
@@ -2734,8 +2735,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 105,
-                        "line_start": 38,
+                        "line_end": 104,
+                        "line_start": 37,
                         "name": "decision",
                         "notes": "",
                         "number": 1,
@@ -2905,30 +2906,35 @@
                             {
                                 "action": "vulnerability reputation",
                                 "actions": [
-                                    "alert data lookup",
-                                    "rule id lookup",
-                                    "vulnerability reputation",
-                                    "file reputation",
                                     "ip reputation",
-                                    "url reputation",
+                                    "ip intelligence",
                                     "domain reputation",
+                                    "domain intelligence",
+                                    "file reputation",
+                                    "file intelligence",
+                                    "vulnerability reputation",
+                                    "vulnerability intelligence",
+                                    "url reputation",
+                                    "url intelligence",
+                                    "alert data lookup",
+                                    "alert rule id lookup",
                                     "test connectivity"
                                 ],
                                 "active": true,
                                 "app_name": "recordedfuture",
                                 "app_version": "2.0.0",
                                 "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-                                "asset_name": "recorded future app",
+                                "asset_name": "recordedfuture",
                                 "config_type": "asset",
                                 "count": 0,
                                 "fields": {
                                     "vulnerability": "artifact:*.cef.cs1"
                                 },
                                 "has_app": true,
-                                "id": 7,
+                                "id": 6,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recorded future app",
+                                "name": "recordedfuture",
                                 "output": [
                                     {
                                         "column_name": "vulnerability",
@@ -3213,7 +3219,7 @@
                                 },
                                 "product_name": "Recorded Future for Splunk Phantom",
                                 "product_vendor": "Recorded Future, Inc",
-                                "targets": "7",
+                                "targets": "6",
                                 "type": "reputation"
                             }
                         ],
@@ -3285,7 +3291,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def vulnerability_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('vulnerability_reputation_1() called')\n\n    # collect data for 'vulnerability_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs1', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'vulnerability_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'vulnerability': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"vulnerability reputation\", parameters=parameters, assets=['recorded future app'], name=\"vulnerability_reputation_1\")\n\n    return",
+                        "block_code": "def vulnerability_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('vulnerability_reputation_1() called')\n\n    # collect data for 'vulnerability_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs1', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'vulnerability_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'vulnerability': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"vulnerability reputation\", parameters=parameters, assets=['recordedfuture'], name=\"vulnerability_reputation_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -3310,8 +3316,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 168,
-                        "line_start": 147,
+                        "line_end": 167,
+                        "line_start": 146,
                         "message": "Configuring now",
                         "name": "vulnerability reputation",
                         "notes": "",
@@ -3377,7 +3383,7 @@
                             "y": 560
                         },
                         "previous_function": "",
-                        "previous_name": "vulnerability_reputation_1",
+                        "previous_name": "lookup_vulnerability_1",
                         "required_params": {
                             "vulnerability": true
                         },
@@ -3391,8 +3397,8 @@
                         "status": "",
                         "title": "Investigate",
                         "type": "coa.Action",
-                        "warn": false,
-                        "z": 44
+                        "warn": "",
+                        "z": 46
                     }
                 ]
             },
@@ -3401,7 +3407,7 @@
         "schema": 3,
         "version": "4.2.7532"
     },
-    "create_time": "2019-05-16T12:19:37.072792+00:00",
+    "create_time": "2019-05-17T17:25:58.892167+00:00",
     "draft_mode": false,
     "labels": [
         "*"
