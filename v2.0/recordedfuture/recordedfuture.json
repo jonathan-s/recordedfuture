@@ -209,7 +209,9 @@
         }
       ],
       "render": {
-        "type": "table"
+        "type": "custom",
+        "view": "recordedfuture_view.alert_results",
+        "title": "Recorded Future Alerts"
       },
       "versions": "EQ(*)"
     },

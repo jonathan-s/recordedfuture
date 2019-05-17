@@ -16,13 +16,15 @@
 # -----------------------------------------
 
 
-def format_result(result):
-
-    retval = { 'param': result.get_param() }
+def format_result(result, all_data=False):
+    retval = {'param': result.get_param()}
 
     data = result.get_data()
     if (data):
-        retval['data'] = data[0]
+        if all_data:
+            retval['data'] = data[0]
+        else:
+            retval['data'] = data[0]
 
     summary = result.get_summary()
     if (summary):
@@ -42,7 +44,6 @@ def format_result(result):
 
 
 def reputation_results(provides, all_app_runs, context):
-
     context['results'] = results = []
     for summary, action_results in all_app_runs:
         for result in action_results:
@@ -52,3 +53,26 @@ def reputation_results(provides, all_app_runs, context):
                 continue
             results.append(formatted)
     return 'reputation_results.html'
+
+
+def format_alert_result(result):
+    return format_result(result)
+
+
+def alert_results(provides, all_app_runs, context):
+    """Setup the view for alert results."""
+    context['results'] = results = []
+
+    for summary, action_results in all_app_runs:
+
+        for result in action_results:
+            # formatted = format_alert_result(result, True)
+            formatted = {
+                'param': result.get_param(),
+                'data': result.get_data()
+            }
+            if not formatted:
+                continue
+            results.append(formatted)
+
+    return 'alert_results.html'

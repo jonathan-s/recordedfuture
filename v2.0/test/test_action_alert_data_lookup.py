@@ -23,7 +23,8 @@ class RfAlertDataLookupTests(RfTests):
     def test_alert_data_lookup(self):
         """Test behavior when an ip is supplied."""
         artifact = ph_artifact(cs1="VNPVFc",
-                               cs1Label="alert rule id")
+                               cs1Label="alert rule id",
+                               cs2="anytime")
         container = ph_container("Alert Data event", [artifact])
         res = self._rest_call('post', 'container', container)
 

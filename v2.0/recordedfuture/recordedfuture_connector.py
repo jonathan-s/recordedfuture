@@ -340,34 +340,54 @@ class RecordedfutureConnector(BaseConnector):
                                                     params=params)
 
         if phantom.is_fail(my_ret_val):
-            # the call to the 3rd party device or service failed, action
-            # result should contain all the error details
             return action_result.get_status()
 
-        # Now post process the data,  uncomment code as you deem fit
+        # Setup summary
+        summary = action_result.get_summary()
+        summary['total_number_of_alerts'] = response['counts']['total']
+        summary['returned_number_of_alerts'] = response['counts']['returned']
+
+        # We consider no results a failure, probably a bad rule id.
+        if response['counts']['total'] == 0:
+            action_result.set_summary(summary)
+            return action_result.set_status(phantom.APP_SUCCESS,
+                                            'No alerts triggered from rule %s '
+                                            'within timerange "%s"',
+                                            param['rule_id'],
+                                            param['timeframe'])
+
+        # Add info about the rule to summary and action_result['data']
+        summary['rule_name'] = response['data']['results'][0]['rule']['name']
+        summary['rule_id'] = response['data']['results'][0]['rule']['id']
+        action_result.set_summary(summary)
+
+        # res = response['data']
+        # action_result.add_data(res)
+
+        # Now post process the data, uncomment code as you deem fit
+        alerts = []
         for alert in response['data']['results']:
+            self.save_progress('In alert loop: %s' % alert)
             url2 = '/alert/%s' % alert['id']
             ret_val2, response2 = self._make_rest_call(url2, action_result)
             entities = self._parse_rule_data(response2['data'])
+            self.save_progress('ENTITIES: %s' % entities)
 
             # Add the response into the data section
             current_alert = {
                 'alertTitle': response2['data']['title'],
                 'triggered': response2['data']['triggered'],
                 'alertUrl': response2['data']['url'],
+                'content': response2['data'],
                 'entities': entities
             }
-            action_result.add_data({'alert': current_alert})
+            alerts.append({'alert': current_alert})
             self.save_progress('Alert: "%s" triggered "%s"'
                                % (response2['data']['title'],
                                   response2['data']['triggered']))
 
-        # Add a dictionary that is made up of the most important values from
-        # data into the summary
-        summary = action_result.get_summary()
-        summary['total_number_of_alerts'] = response['counts']['total']
-        summary['returned_number_of_alerts'] = response['counts']['returned']
-        action_result.set_summary(summary)
+        action_result.add_data({'rule': response['data']['results'][0]['rule'],
+                                'alerts': alerts})
 
         # Return success, no need to set the message, only the status
         # BaseConnector will create a textual message based off of the summary
