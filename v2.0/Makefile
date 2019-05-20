@@ -3,11 +3,12 @@ BUILDID := $(shell svn info --show-item revision)
 BUILD_DIR := pkg_build
 SRC_DIR := recordedfuture
 PACKAGE := recordedfuture-$(RELEASE).tgz
+RFUSERARG := $(if ${RFLDAP},"-l ${RFLDAP}","")
 
 RSYNC := env RSYNC_RSH=ssh rsync -rav
 LOCAL_RSYNC := rsync
 SSH := ssh -l phantom
-SSHRAW := ssh -t
+SSHRAW := ssh -t $(RFUSERARG)
 SED := sed
 MKDIR_P = mkdir -p
 MYTMPDIR := $(shell basename `mktemp -d -u`)
@@ -18,6 +19,9 @@ all:
 	@echo "  package       - will build the package on a Phantom server and retreive it."
 	@echo "  setup_ssh     - will copy id_rsa.pub to the phantom user authorized key on "
 	@echo "                  the phantom server."
+	@echo
+	@echo "If your LDAP username name differs from you local one, set RFLDAP to your LDAP username"
+
 
 ##########################################
 #
