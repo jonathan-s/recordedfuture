@@ -9,11 +9,58 @@
       Threat hunting and Alert handling.
     </p>
 
-    <h2>CHANGELOG</h2>
-    XXX Renamed actions....
+    <h2>CHANGELOG %RELEASE%</h2>
+    <h3>New Actions</h3>
+    <dl>
+      <dt>alert rule id lookup</dt>
+      <dd>Searches for Alert Rules matching the search string and returns
+        the name and id of each match.
+      </dd>
+      <dt>alert data lookup</dt>
+      <dd>Return detailed information of any triggered Alerts for the
+        provided Alert id and timerange.
+      </dd>
+      <dt>url reputation</dt>
+      <dd>Return risk and timing information for an URL.</dd>
+      <dt>ip intelligence</dt>
+      <dd>Return detailed intelligence for an IP.</dd>
+      <dt>domain intelligence</dt>
+      <dd>Return detailed intelligence for a domain.</dd>
+      <dt>file intelligence</dt>
+      <dd>Return detailed intelligence for a file (a hash).</dd>
+      <dt>vulnerability intelligence</dt>
+      <dd>Return detailed intelligence for an vulnerability (ex a CVE).</dd>
+      <dt>url intelligence</dt>
+      <dd>Return detailed intelligence for an URL.</dd>
+    </dl>
 
-    XXX Changed actions....
+    <h3>Changed Actions</h3>
+    <dl>
+      <dt>ip reputation</dt>
+      <dd>Changed to return a smaller set of data but faster. If the full
+        set of information is required use <i>ip intelligence</i> instead.
+      </dd>
+      <dt>domain reputation</dt>
+      <dd>Changed to return a smaller set of data but faster. If the full
+        set of information is required use <i>domain intelligence</i> instead
+        .
+      </dd>
+      <dt>file reputation</dt>
+      <dd>Changed to return a smaller set of data but faster. If the full
+        set of information is required use <i>file intelligence</i> instead
+        .
+      </dd>
+      <dt>lookup vulnerability</dt>
+      <dd>Name has changed to <i>vulnerability reputation</i> to match
+        the other similar actions. Changed to return asmaller set of
+        data but faster. If the full set of information is required use <i>ip
+          intelligence</i> instead.
+      </dd>
+      <dt>ip reputation</dt>
+      <dd>Changed to return a smaller set of data but faster. If the full
+        set of information is required use <i>ip intelligence</i> instead.
+      </dd>
+    </dl>
 
-    XXX New actions....
   </body>
 </html>
