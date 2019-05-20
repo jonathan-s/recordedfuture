@@ -11,6 +11,7 @@ all:
 	@echo "Handle Phantom TEST playbook packages"
 	@echo "Targets:"
 	@echo "  packages      - make packages"
+	@echo "  clean         - remove all .pyc files and built packages"
 
 packages: $(PKG_TARGETS)
 
@@ -29,3 +30,7 @@ $(DIST_DIR)/%.tgz: dist_dirs
 	 tar zcvf ../$@ $(COPYFILE) \
 		$(@F:.tgz=).json \
 		$(@F:.tgz=).py)
+
+clean:
+	rm -f */*.pyc
+	rm -rf $(DIST_DIR)
