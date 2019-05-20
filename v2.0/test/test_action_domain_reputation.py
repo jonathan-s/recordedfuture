@@ -20,17 +20,20 @@ class RfDomainReputationTests(RfTests):
         """Setup test environment."""
         RfTests.setUp(self, PBOOK)
 
-    def test_domain_reputation(self):
+    def _test_domain_reputation_score(self, ioc, target_risk_score):
         """Test behavior when a domain is supplied."""
-        artifact = ph_artifact(destinationDnsDomain="www.google.com")
-        container = ph_container("Domain Reputation event", [artifact])
-        res = self._rest_call('post', 'container', container)
+        # Create container and artifact.
+        container_id = self._create_event_and_artifact('Domain Reputation',
+                                                       destinationDnsDomain=ioc)
 
-        # Check that it was a success.
-        self.assertEqual(res.status_code, 200)
+        # Fetch the result of the automatic run.
+        ares = self._action_result(container_id)
 
-        # Check the Phantom status
-        jres = res.json()
-        self.assertEqual(jres['success'], True)
+        # Check correct risk score.
+        self.assertCorrectRiskScore(ares, target_risk_score,
+                                    'result: %s' % ares)
 
-        artifact_id = jres['id']
+    def test_domain_reputation(self):
+        """Test behavior when an ip is supplied."""
+        for ioc, target_risk_score in [('www.google.com', 24)]:
+            self._test_domain_reputation_score(ioc, target_risk_score)

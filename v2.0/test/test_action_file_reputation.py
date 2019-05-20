@@ -13,24 +13,28 @@ LOGGER = logging.getLogger(__name__)
 PBOOK = 'recorded_future_reputation_test'
 
 
-class RfFileReputationTests(RfTests):
+class RfDomainReputationTests(RfTests):
     """Test cases for file reputation action."""
 
     def setUp(self):
         """Setup test environment."""
         RfTests.setUp(self, PBOOK)
 
+    def _test_file_reputation_score(self, ioc, target_risk_score):
+        """Test behavior when a file is supplied."""
+        # Create container and artifact.
+        container_id = self._create_event_and_artifact('File Reputation',
+                                                       fileHash=ioc)
+
+        # Fetch the result of the automatic run.
+        ares = self._action_result(container_id)
+
+        # Check correct risk score.
+        self.assertCorrectRiskScore(ares, target_risk_score,
+                                    'result: %s' % ares)
+
     def test_file_reputation(self):
-        """Test behavior when a domain is supplied."""
-        artifact = ph_artifact(fileHash="394bed68bb412f26f8df71874d346b9b")
-        container = ph_container("File Reputation event", [artifact])
-        res = self._rest_call('post', 'container', container)
-
-        # Check that it was a success.
-        self.assertEqual(res.status_code, 200)
-
-        # Check the Phantom status
-        jres = res.json()
-        self.assertEqual(jres['success'], True)
-
-        artifact_id = jres['id']
+        """Test behavior when an ip is supplied."""
+        for ioc, target_risk_score in [
+            ('394bed68bb412f26f8df71874d346b9b', 89)]:
+            self._test_file_reputation_score(ioc, target_risk_score)

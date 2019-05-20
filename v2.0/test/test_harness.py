@@ -1,7 +1,10 @@
 import unittest
 import os
 import json
+import time
 import requests
+from phantom_ops import *
+
 
 class RfTests(unittest.TestCase):
     """Test cases for all reputation actions."""
@@ -57,6 +60,30 @@ class RfTests(unittest.TestCase):
             res = self._rest_call('get', path_info, payload={'page': page})
             result.extend(res.json()['data'])
         return result
+
+    def _create_event_and_artifact(self, category, **kwargs):
+        """Create an event with an artifact.
+
+        Returns the id of the created container."""
+        artifact = ph_artifact(**kwargs)
+        container = ph_container("%s event" % category, [artifact])
+        res = self._rest_call('post', 'container', container)
+
+        # Check that it was a success.
+        self.assertEqual(res.status_code, 200)
+
+        # Check the Phantom status
+        time.sleep(1)  # XXX should try and poll for completion instead
+        jres = res.json()
+        self.assertEqual(jres['success'], True)
+
+        return jres['id']
+
+    def _action_result(self, container_id):
+        """Return the result of an action."""
+        return self._rest_call('get', 'app_run',
+                               {'_filter_container': container_id,
+                                'include_expensive': True}).json()
 
     def assertCorrectRiskScore(self, result, target_risk_score, *args):
         try:
