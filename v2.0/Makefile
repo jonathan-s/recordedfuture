@@ -6,7 +6,8 @@ PACKAGE := recordedfuture-$(RELEASE).tgz
 
 RSYNC := env RSYNC_RSH=ssh rsync -rav
 LOCAL_RSYNC := rsync
-SSH := ssh -t
+SSH := ssh -l phantom
+SSHRAW := ssh -t
 SED := sed
 MKDIR_P = mkdir -p
 MYTMPDIR := $(shell basename `mktemp -d -u`)
@@ -15,6 +16,8 @@ all:
 	@echo Targets for make:
 	@echo "  build         - will build a ready-for-import set of files in $(BUILD_DIR)."
 	@echo "  package       - will build the package on a Phantom server and retreive it."
+	@echo "  setup_ssh     - will copy id_rsa.pub to the phantom user authorized key on "
+	@echo "                  the phantom server."
 
 ##########################################
 #
@@ -70,10 +73,10 @@ $(PACKAGE): build
 		exit 1; \
 	fi
 	$(SSH) $(PH) "mkdir -p /tmp/$(MYTMPDIR)/recordedfuture"
-	$(RSYNC) $(BUILD_DIR)/* $(PH):/tmp/$(MYTMPDIR)/recordedfuture
+	$(RSYNC) $(BUILD_DIR)/* phantom@$(PH):/tmp/$(MYTMPDIR)/recordedfuture
 	$(SSH) $(PH) "cd /tmp/$(MYTMPDIR)/recordedfuture; chmod -R a+w ..; \
-	              (sudo -u phantom phenv python2.7 /opt/phantom/bin/compile_app.pyc -i);";
-	$(RSYNC) $(PH):/tmp/$(MYTMPDIR)/recordedfuture.tgz $@
+	              (phenv python2.7 /opt/phantom/bin/compile_app.pyc -i);";
+	$(RSYNC) phantom@$(PH):/tmp/$(MYTMPDIR)/recordedfuture.tgz $@
 	$(SSH) $(PH) "rm -rf /tmp/$(MYTMPDIR)"
 
 ##########################################
@@ -84,3 +87,14 @@ $(PACKAGE): build
 clean:
 	rm -rf $(BUILD_DIR)
 	rm -f $(PACKAGE)
+
+setup_ssh:
+	@if [ "x$(PH)" = "x" ]; then \
+		echo Environment variable PH must contain the hostname of the phantom server.;\
+		exit 1; \
+	fi
+	scp ~/.ssh/id_rsa.pub $(PH):/tmp/
+	$(SSHRAW) $(PH) "sudo -u phantom mkdir -p ~phantom/.ssh; \
+	                 sudo -u phantom chmod go= ~phantom/.ssh; \
+	                 sudo -u phantom cp /tmp/id_rsa.pub ~phantom/.ssh/authorized_keys; \
+	                 sudo chown phantom ~phantom/.ssh/authorized_keys"
