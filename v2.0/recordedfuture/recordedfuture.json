@@ -71,6 +71,10 @@
       },
       "output": [
         {
+          "data_path": "action_result.parameter.rule_name",
+          "data_type": "string"
+        },
+        {
           "data_path": "action_result.data.*.rule.title",
           "data_type": "string",
           "column_order": 0,
@@ -84,14 +88,6 @@
             "recorded future alert rule"
           ],
           "column_name": "Rule Ids"
-        },
-        {
-          "data_path": "action_result.data.parameter.rule_name",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.parameter.rule_name",
-          "data_type": "string"
         },
         {
           "data_path": "action_result.status",
@@ -164,14 +160,6 @@
           "contains": []
         },
         {
-          "data_path": "action_result.status",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.message",
-          "data_type": "string"
-        },
-        {
           "data_path": "action_result.data.*.alert.alertTitle",
           "data_type": "string",
           "column_name": "Alert Title",
@@ -190,11 +178,35 @@
           "column_order": 1
         },
         {
-          "data_path": "action_result.data.*.alert.entities.InternetDomainName",
+          "data_path": "action_result.data.*.alert.entities.InternetDomainName.*",
           "data_type": "string"
         },
         {
-          "data_path": "action_result.data.*.alert.entities.EmailAddress",
+          "data_path": "action_result.data.*.alert.entities.Document.*",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alert.entities.EmailAddress.*",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.rule.url",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.rule.id",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.rule.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.summary.rule_id",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.summary.rule_name",
           "data_type": "string"
         },
         {
