@@ -34,7 +34,7 @@ class RfDomainReputationTests(RfTests):
                                     'result: %s' % ares)
 
     def test_file_reputation(self):
-        """Test behavior when an ip is supplied."""
+        """Test behavior when a file is supplied."""
         for ioc, target_risk_score in [
             ('394bed68bb412f26f8df71874d346b9b', 89)]:
             self._test_file_reputation_score(ioc, target_risk_score)

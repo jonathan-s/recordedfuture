@@ -34,6 +34,6 @@ class RfDomainReputationTests(RfTests):
                                     'result: %s' % ares)
 
     def test_domain_reputation(self):
-        """Test behavior when an ip is supplied."""
+        """Test behavior when a domain is supplied."""
         for ioc, target_risk_score in [('www.google.com', 24)]:
             self._test_domain_reputation_score(ioc, target_risk_score)

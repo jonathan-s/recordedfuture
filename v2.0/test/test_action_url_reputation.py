@@ -34,6 +34,6 @@ class RfUrlReputationTests(RfTests):
                                     'result: %s' % ares)
 
     def test_url_reputation(self):
-        """Test behavior when an ip is supplied."""
+        """Test behavior when a url is supplied."""
         for ioc, target_risk_score in [('https://www.google.com', 55)]:
             self._test_url_reputation_score(ioc, target_risk_score)

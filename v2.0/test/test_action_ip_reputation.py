@@ -20,7 +20,7 @@ class RfIpReputationTests(RfTests):
         RfTests.setUp(self, PBOOK)
 
     def _test_ip_reputation_score(self, ioc, target_risk_score):
-        """Test behavior when a domain is supplied."""
+        """Test behavior when an ip is supplied."""
         # Create container and artifact.
         container_id = self._create_event_and_artifact('IP Reputation',
                                                        destinationAddress=ioc)
