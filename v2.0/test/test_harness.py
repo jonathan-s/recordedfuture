@@ -2,12 +2,16 @@ import unittest
 import os
 import json
 import time
+from time import sleep
 import requests
 from phantom_ops import *
 
 
 class RfTests(unittest.TestCase):
     """Test cases for all reputation actions."""
+
+    POLL_MAXTRIES = 10
+    POLL_WAITTIME = 0.25
 
     @classmethod
     def setUpClass(cls):
@@ -85,11 +89,30 @@ class RfTests(unittest.TestCase):
                                {'_filter_container': container_id,
                                 'include_expensive': True}).json()
 
+    def _poll_for_success(self, fn, params, maxtries=POLL_MAXTRIES, waittime=POLL_WAITTIME):
+        """Polls the return from the passed function until successfull."""
+        # The action is not triggered immediately, returning an empty data array.
+        # So we check count before checking the status of the action
+        tries = 0
+        while True:
+            tries = tries + 1
+            if (tries > maxtries):
+                raise Exception('Max tries %s exceeded when polling for request success' % maxtries)
+
+            # Call passed in function with passed params
+            res = fn(params)
+            if res['count'] > 0:
+                if res['data'][0]['status'] == 'success':
+                    break
+            sleep(waittime)
+
+        return res
+
     def assertCorrectRiskScore(self, result, target_risk_score, *args):
         try:
             risk_score = result['data'][0]['result_data'][0]['data'][0][
                 'risk']['score']
         except Exception as err:
-            print 'result: %s' % result
+            print ('result: %s' % result)
             raise
         self.assertEqual(risk_score, target_risk_score, *args)
