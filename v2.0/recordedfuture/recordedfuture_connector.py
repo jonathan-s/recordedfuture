@@ -16,6 +16,11 @@
 
 # Global imports
 import os
+import requests
+import urllib
+import json
+import hashlib
+from bs4 import BeautifulSoup
 
 # Phantom App imports
 import phantom.app as phantom
@@ -24,10 +29,6 @@ from phantom.action_result import ActionResult
 
 # Usage of the consts file is recommended
 from recordedfuture_consts import *
-import requests
-import urllib
-import json
-from bs4 import BeautifulSoup
 
 # (path_info template, fields, quote parameter)
 REPUTATION_MAP = {
@@ -60,7 +61,7 @@ INTELLIGENCE_MAP = {
            False),
     'domain': ('/domain/idn:%s',
                ['entity', 'risk', 'timestamps', "threatLists",
-                 "intelCard", "metrics", "relatedEntities"],
+                "intelCard", "metrics", "relatedEntities"],
                'domain',
                False),
     'file': ('/hash/%s',
@@ -225,10 +226,16 @@ class RecordedfutureConnector(BaseConnector):
             platform=platform)
 
         # headers
+        api_key = config.get('recordedfuture_api_token')
         my_headers = {
-            'X-RFToken': config.get('recordedfuture_api_token'),
+            'X-RFToken': api_key,
             'User-Agent': user_agent
         }
+
+        self.debug_print('_make_rest_call url', url)
+        self.debug_print('_make_rest_call kwargs', kwargs)
+        self.debug_print('_make_rest_call api key fingerprint: %s'
+                         % hashlib.md5(api_key).hexdigest()[:6])
 
         try:
             resp = request_func(
@@ -297,6 +304,12 @@ class RecordedfutureConnector(BaseConnector):
         my_ret_val, response = self._make_rest_call(path_info,
                                                     action_result,
                                                     params=params)
+
+        self.debug_print('_handle_reputation', {'path_info': path_info,
+                                                'action_result': action_result,
+                                                'params': params,
+                                                'my_ret_val': my_ret_val,
+                                                'response': response})
 
         if phantom.is_fail(my_ret_val):
             return action_result.get_status()
@@ -390,6 +403,13 @@ class RecordedfutureConnector(BaseConnector):
                                                     action_result,
                                                     params=params)
 
+        self.debug_print('_handle_alert_data_lookup',
+                         {'path_info': '/alert/search',
+                          'action_result': action_result,
+                          'params': params,
+                          'my_ret_val': my_ret_val,
+                          'response': response})
+
         if phantom.is_fail(my_ret_val):
             return action_result.get_status()
 
@@ -398,14 +418,14 @@ class RecordedfutureConnector(BaseConnector):
         summary['total_number_of_alerts'] = response['counts']['total']
         summary['returned_number_of_alerts'] = response['counts']['returned']
 
-        # We consider no results a failure, probably a bad rule id.
+        # No results can be non existing rule id or just that, no results...
         if response['counts']['total'] == 0:
             action_result.set_summary(summary)
             return action_result.set_status(phantom.APP_SUCCESS,
                                             'No alerts triggered from rule %s '
-                                            'within timerange "%s"',
-                                            param['rule_id'],
-                                            param['timeframe'])
+                                            'within timerange "%s"'
+                                            % (param['rule_id'],
+                                               param['timeframe']))
 
         # Add info about the rule to summary and action_result['data']
         summary['rule_name'] = response['data']['results'][0]['rule']['name']
@@ -421,6 +441,13 @@ class RecordedfutureConnector(BaseConnector):
             self.save_progress('In alert loop: %s' % alert)
             url2 = '/alert/%s' % alert['id']
             ret_val2, response2 = self._make_rest_call(url2, action_result)
+            self.debug_print('_handle_alert_data_lookup',
+                             {'path_info': url2,
+                              'action_result': action_result,
+                              'params': None,
+                              'my_ret_val': ret_val2,
+                              'response': response2})
+
             entities = self._parse_rule_data(response2['data'])
             self.save_progress('ENTITIES: %s' % entities)
 
@@ -473,6 +500,13 @@ class RecordedfutureConnector(BaseConnector):
         my_ret_val, response = self._make_rest_call('/alert/rule',
                                                     action_result,
                                                     params=params)
+
+        self.debug_print('_handle_rule_id_lookup',
+                         {'path_info': '/alert/rule',
+                          'action_result': action_result,
+                          'params': params,
+                          'my_ret_val': my_ret_val,
+                          'response': response})
 
         if phantom.is_fail(my_ret_val):
             return action_result.get_status()
