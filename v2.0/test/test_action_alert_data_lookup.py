@@ -86,7 +86,7 @@ class RfAlertDataLookupTests(RfTests):
 
         testdata = {
             'alertruleid':          'KALLE',
-            'alertrulelabel':       'neg alert rule id',
+            'alertrulelabel':       'alert rule id',
             'alertruletimeframe':   'anytime'
         }
 
@@ -94,7 +94,8 @@ class RfAlertDataLookupTests(RfTests):
                                cs1Label=testdata['alertrulelabel'],
                                cs2=testdata['alertruletimeframe'])
 
-        container = ph_container("Neg Alert Data event", [artifact])
+        container = ph_container("Neg Alert Data event (bad rule id)",
+                                 [artifact])
 
         res = self._rest_call('post', 'container', container)
 
@@ -106,20 +107,18 @@ class RfAlertDataLookupTests(RfTests):
         self.assertEqual(jres['success'], True)
 
         # Get action result
-        ares = self._action_result([jres['id']])
+        ares = self._poll_for_success(self._action_result, jres['id'])
 
         # Assert we get empty values
-        self.assertEqual(ares['count'], 0)
-        self.assertEqual(ares['num_pages'], 0)
-        self.assertEqual(len(ares['data']), 0)
+        self.assertEqual(ares['data'][0]['result_data'][0]['summary']['total_number_of_alerts'], 0)
 
-    @unittest.skip("Skipping due to https://recordedfuture.atlassian.net/browse/RF-41776")
+    # @unittest.skip("Skipping due to https://recordedfuture.atlassian.net/browse/RF-41776")
     def test_neg_alert_data_lookup_invalid_timeframe(self):
         """Test behavior when passing alert query parameters with invalid timeframe."""
 
         testdata = {
             'alertruleid':          'VNPVFc',
-            'alertrulelabel':       'neg alert rule timestamp invalid',
+            'alertrulelabel':       'alert rule id',
             'alertruletimeframe':   'kalle'
         }
 
@@ -127,25 +126,20 @@ class RfAlertDataLookupTests(RfTests):
                                cs1Label=testdata['alertrulelabel'],
                                cs2=testdata['alertruletimeframe'])
 
-        container = ph_container("Neg Alert Data event", [artifact])
+        container = ph_container("Neg Alert Data event (bad time range)",
+                                 [artifact])
 
         res = self._rest_call('post', 'container', container)
 
         # Check that it was a success.
         self.assertEqual(res.status_code, 200)
 
-        # # Check the Phantom status
+        # Check the Phantom status
+        jres = res.json()
+        self.assertEqual(jres['success'], True)
 
-        # jres = res.json()
-        # self.assertEqual(jres['success'], True)
+        # Get action result
+        ares = self._poll_for_success(self._action_result, jres['id'])
 
-        # Here we get a
-        # # Get action result
-        # ares = self._action_result([jres['id']])
-        #
-        # print(ares)
-        #
-        # # Assert we get empty values
-        # self.assertEqual(ares['count'], 0)
-        # self.assertEqual(ares['num_pages'], 0)
-        # self.assertEqual(len(ares['data']), 0)
+        # Assert we get a status failed
+        self.assertEqual(ares['data'][0]['status'], 'failed')

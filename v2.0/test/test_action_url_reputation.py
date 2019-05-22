@@ -35,5 +35,6 @@ class RfUrlReputationTests(RfTests):
 
     def test_url_reputation(self):
         """Test behavior when a url is supplied."""
-        for ioc, target_risk_score in [('https://www.google.com', 55)]:
+        for ioc, target_risk_score in [('http://www.plexipr.com/vAHzWX.php',
+                                        91)]:
             self._test_url_reputation_score(ioc, target_risk_score)

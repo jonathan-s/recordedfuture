@@ -85,28 +85,36 @@ class RfTests(unittest.TestCase):
 
     def _action_result(self, container_id):
         """Return the result of an action."""
+        print '_filter_container: %s' % container_id
         return self._rest_call('get', 'app_run',
                                {'_filter_container': container_id,
                                 'include_expensive': True}).json()
 
-    def _poll_for_success(self, fn, params, maxtries=POLL_MAXTRIES, waittime=POLL_WAITTIME):
-        """Polls the return from the passed function until successfull."""
-        # The action is not triggered immediately, returning an empty data array.
-        # So we check count before checking the status of the action
-        tries = 0
-        while True:
-            tries = tries + 1
-            if (tries > maxtries):
-                raise Exception('Max tries %s exceeded when polling for request success' % maxtries)
+    # Let's hold of on this for a bit, we need to figure out how to poll
+    # without re-running the call
+    #
+    # def _poll_for_success(self, fn, params, maxtries=POLL_MAXTRIES, waittime=POLL_WAITTIME):
+    #     """Polls the return from the passed function until successfull."""
+    #     # The action is not triggered immediately, returning an empty data array.
+    #     # So we check count before checking the status of the action
+    #     tries = 0
+    #     while True:
+    #         tries = tries + 1
+    #         if (tries > maxtries):
+    #             raise Exception('Max tries %s exceeded when polling for request success' % maxtries)
+    #
+    #         # Call passed in function with passed params
+    #         res = fn(params)
+    #         if res['count'] > 0:
+    #             if res['data'][0]['status'] == 'success':
+    #                 break
+    #         sleep(waittime)
+    #
+    #     return res
 
-            # Call passed in function with passed params
-            res = fn(params)
-            if res['count'] > 0:
-                if res['data'][0]['status'] == 'success':
-                    break
-            sleep(waittime)
-
-        return res
+    def _poll_for_success(self, fn, params):
+        sleep(2)
+        return fn(params)
 
     def assertCorrectRiskScore(self, result, target_risk_score, *args):
         try:
