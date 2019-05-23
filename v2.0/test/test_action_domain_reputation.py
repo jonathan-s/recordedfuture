@@ -35,5 +35,12 @@ class RfDomainReputationTests(RfTests):
 
     def test_domain_reputation(self):
         """Test behavior when a domain is supplied."""
-        for ioc, target_risk_score in [('ddobnajanu.club', 96)]:
+
+        # Get 1 ioc TARGET with riskScore less than 89 and greater than 91.
+        TARGETS = self.getTestDataByIocTypeAndRiskScore("InternetDomainName", 89, 91, 1)
+
+        self.assertEquals(len(TARGETS), 1)
+
+        # Call the test for each target
+        for ioc, target_risk_score in TARGETS:
             self._test_domain_reputation_score(ioc, target_risk_score)

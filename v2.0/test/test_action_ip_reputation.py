@@ -38,6 +38,8 @@ class RfIpReputationTests(RfTests):
         # Get 1 IP TARGETS with riskScore less than 89 and greater than 91.
         TARGETS = self.getTestDataByIocTypeAndRiskScore("IpAddress", 89, 91, 1)
 
+        self.assertEquals(len(TARGETS), 1)
+
         # Call the test for each target
         for ioc, target_risk_score in TARGETS:
             self._test_ip_reputation_score(ioc, target_risk_score)

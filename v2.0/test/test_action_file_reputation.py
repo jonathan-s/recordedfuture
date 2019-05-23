@@ -41,5 +41,6 @@ class RfDomainReputationTests(RfTests):
 
         self.assertEquals(len(TARGETS), 1)
 
+        # Call the test for each target
         for ioc, target_risk_score in TARGETS:
             self._test_file_reputation_score(ioc, target_risk_score)
