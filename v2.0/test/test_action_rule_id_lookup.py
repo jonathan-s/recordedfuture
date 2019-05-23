@@ -42,6 +42,11 @@ class RfRuleIdLookupTests(RfTests):
         self.assertEqual(set(rule_id_list), set(result_rule_id_list))
 
     def test_rule_id_lookup(self):
-        """Test behavior when an ip is supplied."""
+        """Verify that a freetext search finds the proper rule ids."""
         for freetext, rule_id_list in TARGETS:
             self._test_alert_fule_id_lookup_rule_id(freetext, rule_id_list)
+
+    def test_no_match_rule_id_lookup(self):
+        """Verify that a freetext search without any match returns empty list.
+        """
+        self._test_alert_fule_id_lookup_rule_id('Tardis', [])
