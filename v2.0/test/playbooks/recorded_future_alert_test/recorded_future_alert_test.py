@@ -49,18 +49,18 @@ def alert_data_lookup_1(action=None, success=None, container=None, results=None,
     phantom.debug('alert_data_lookup_1() called')
 
     # collect data for 'alert_data_lookup_1' call
-    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs1', 'artifact:*.id'])
+    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs1', 'artifact:*.cef.cs2', 'artifact:*.id'])
 
     parameters = []
     
     # build parameters list for 'alert_data_lookup_1' call
     for container_item in container_data:
-        if container_item[0]:
+        if container_item[0] and container_item[1]:
             parameters.append({
                 'rule_id': container_item[0],
-                'timeframe': "anytime",
+                'timeframe': container_item[1],
                 # context (artifact id) is added to associate results with the artifact
-                'context': {'artifact_id': container_item[1]},
+                'context': {'artifact_id': container_item[2]},
             })
 
     phantom.act("alert data lookup", parameters=parameters, assets=['recordedfuture'], callback=format_1, name="alert_data_lookup_1")
@@ -145,19 +145,21 @@ def alert_data_lookup_2(action=None, success=None, container=None, results=None,
     #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
     
     # collect data for 'alert_data_lookup_2' call
+    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs2', 'artifact:*.id'])
     results_data_1 = phantom.collect2(container=container, datapath=['alert_rule_id_lookup_2:action_result.data.*.rule.id', 'alert_rule_id_lookup_2:action_result.parameter.context.artifact_id'], action_results=results)
 
     parameters = []
     
     # build parameters list for 'alert_data_lookup_2' call
-    for results_item_1 in results_data_1:
-        if results_item_1[0]:
-            parameters.append({
-                'rule_id': results_item_1[0],
-                'timeframe': "anytime",
-                # context (artifact id) is added to associate results with the artifact
-                'context': {'artifact_id': results_item_1[1]},
-            })
+    for container_item in container_data:
+        for results_item_1 in results_data_1:
+            if results_item_1[0] and container_item[0]:
+                parameters.append({
+                    'rule_id': results_item_1[0],
+                    'timeframe': container_item[0],
+                    # context (artifact id) is added to associate results with the artifact
+                    'context': {'artifact_id': results_item_1[1]},
+                })
 
     phantom.act("alert data lookup", parameters=parameters, assets=['recordedfuture'], callback=format_3, name="alert_data_lookup_2")
 

@@ -7,7 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "Playbook created to test alert handling as defined in the Recorded Future app.",
-            "hash": "a8a697c49a301f9f117a33ee22f88758850f94dc",
+            "hash": "259469a32b775ad453face4de3b3f184797f31c7",
             "joint": {
                 "cells": [
                     {
@@ -76,8 +76,8 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 16,
-                        "line_start": 8,
+                        "line_end": 17,
+                        "line_start": 9,
                         "name": "",
                         "notes": "",
                         "number": 0,
@@ -148,7 +148,6 @@
                             "height": 54,
                             "width": 80
                         },
-                        "state": "start",
                         "status": "",
                         "title": "START",
                         "type": "coa.StartEnd",
@@ -218,8 +217,8 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 203,
-                        "line_start": 190,
+                        "line_end": 206,
+                        "line_start": 193,
                         "name": "",
                         "notes": "",
                         "number": 0,
@@ -288,7 +287,6 @@
                             "height": 54,
                             "width": 80
                         },
-                        "state": "end",
                         "status": "",
                         "title": "END",
                         "type": "coa.StartEnd",
@@ -417,312 +415,6 @@
                         "z": 9
                     },
                     {
-                        "action": "alert data lookup",
-                        "action_type": "investigate",
-                        "active": false,
-                        "active_keys": {},
-                        "active_values": {
-                            "rule_id": "artifact:*.cef.cs1",
-                            "timeframe": "anytime"
-                        },
-                        "angle": 0,
-                        "app": "recordedfuture",
-                        "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-                        "approver": "",
-                        "assets": [
-                            {
-                                "action": "alert data lookup",
-                                "actions": [
-                                    "ip reputation",
-                                    "ip intelligence",
-                                    "domain reputation",
-                                    "domain intelligence",
-                                    "file reputation",
-                                    "file intelligence",
-                                    "vulnerability reputation",
-                                    "vulnerability intelligence",
-                                    "url reputation",
-                                    "url intelligence",
-                                    "alert data lookup",
-                                    "alert rule id lookup",
-                                    "test connectivity"
-                                ],
-                                "active": true,
-                                "app_name": "recordedfuture",
-                                "app_version": "2.0.0",
-                                "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-                                "asset_name": "recordedfuture",
-                                "config_type": "asset",
-                                "count": 0,
-                                "fields": {
-                                    "rule_id": "artifact:*.cef.cs1",
-                                    "timeframe": "anytime"
-                                },
-                                "has_app": true,
-                                "id": 6,
-                                "loaded": false,
-                                "missing": false,
-                                "name": "recordedfuture",
-                                "output": [
-                                    {
-                                        "contains": [
-                                            "recorded future alert rule"
-                                        ],
-                                        "data_path": "action_result.parameter.rule_id",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "contains": [],
-                                        "data_path": "action_result.parameter.timeframe",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.status",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.message",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "column_name": "Alert Title",
-                                        "column_order": 0,
-                                        "data_path": "action_result.data.*.alert.alertTitle",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "column_name": "URL for details",
-                                        "column_order": 2,
-                                        "data_path": "action_result.data.*.alert.alertUrl",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "column_name": "Triggered",
-                                        "column_order": 1,
-                                        "data_path": "action_result.data.*.alert.triggered",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.alert.entities.InternetDomainName",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.alert.entities.EmailAddress",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.total_number_of_alerts",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.returned_number_of_alerts",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.status",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.message",
-                                        "data_type": "string"
-                                    }
-                                ],
-                                "parameters": {
-                                    "rule_id": {
-                                        "contains": [
-                                            "recorded future alert rule"
-                                        ],
-                                        "data_type": "string",
-                                        "default": "",
-                                        "description": "Rule ID to look up alert data for",
-                                        "key": "rule_id",
-                                        "order": 0,
-                                        "primary": true,
-                                        "required": true,
-                                        "value_list": []
-                                    },
-                                    "timeframe": {
-                                        "contains": [],
-                                        "data_type": "string",
-                                        "default": "-24h to now",
-                                        "description": "Timeframe for when rules were triggered",
-                                        "key": "timeframe",
-                                        "order": 0,
-                                        "primary": false,
-                                        "required": true,
-                                        "value_list": []
-                                    }
-                                },
-                                "product_name": "Recorded Future for Splunk Phantom",
-                                "product_vendor": "Recorded Future, Inc",
-                                "targets": "6",
-                                "type": "reputation"
-                            }
-                        ],
-                        "attrs": {
-                            ".action": {
-                                "text": "alert data lookup 1"
-                            },
-                            ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#818D99"
-                            },
-                            ".color-band": {
-                                "fill": "#171D21"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "ref-x": 5,
-                                "ref-y": 105,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out>.port-body": {
-                                "port": {
-                                    "id": "out",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "Investigate"
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.icon image": {
-                                "xlink:href": "/inc/coa/img/block_icon_investigate.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            }
-                        },
-                        "block_code": "def alert_data_lookup_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('alert_data_lookup_1() called')\n\n    # collect data for 'alert_data_lookup_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs1', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'alert_data_lookup_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'rule_id': container_item[0],\n                'timeframe': \"anytime\",\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"alert data lookup\", parameters=parameters, assets=['recordedfuture'], callback=format_1, name=\"alert_data_lookup_1\")\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": true,
-                        "color": "",
-                        "connected_to_start": true,
-                        "connection_name": "",
-                        "connection_type": "",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "",
-                        "delay": 0,
-                        "description": "",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "7784e43e-e66c-48e9-8eb5-1a796fa498bf",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 69,
-                        "line_start": 47,
-                        "message": "Configuring now",
-                        "name": "alert data lookup",
-                        "notes": "",
-                        "number": 1,
-                        "order": 3,
-                        "outPorts": [
-                            "out"
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 360,
-                            "y": 160
-                        },
-                        "previous_function": "",
-                        "previous_name": "alert_rule_id_lookup_1",
-                        "required_params": {
-                            "rule_id": true,
-                            "timeframe": true
-                        },
-                        "reviewer": "",
-                        "show_number": true,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "app_action_assets",
-                        "status": "",
-                        "title": "Investigate",
-                        "type": "coa.Action",
-                        "warn": "",
-                        "z": 10
-                    },
-                    {
                         "attrs": {
                             ".connection": {
                                 "stroke": "#818D99",
@@ -803,6 +495,9 @@
                             ".title": {
                                 "text": "format"
                             },
+                            "g.code image": {
+                                "opacity": 1
+                            },
                             "g.delete": {
                                 "display": "none"
                             },
@@ -811,6 +506,9 @@
                             },
                             "g.notes": {
                                 "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
                             }
                         },
                         "block_code": "def format_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('format_1() called')\n    \n    template = \"\"\"{0}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"alert_data_lookup_1:action_result.message\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"format_1\")\n\n    add_comment_1(container=container)\n\n    return",
@@ -837,8 +535,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 85,
-                        "line_start": 69,
+                        "line_end": 86,
+                        "line_start": 70,
                         "message": "Configuring now",
                         "name": "format",
                         "notes": "",
@@ -1009,6 +707,9 @@
                             ".title": {
                                 "text": "API"
                             },
+                            "g.code image": {
+                                "opacity": 1
+                            },
                             "g.delete": {
                                 "display": "none"
                             },
@@ -1020,6 +721,9 @@
                             },
                             "g.notes": {
                                 "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
                             }
                         },
                         "block_code": "def add_comment_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('add_comment_1() called')\n\n    formatted_data_1 = phantom.get_format_data(name='format_1')\n\n    phantom.comment(container=container, comment=formatted_data_1)\n\n    return",
@@ -1052,8 +756,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 94,
-                        "line_start": 85,
+                        "line_end": 95,
+                        "line_start": 86,
                         "message": "Configuring now",
                         "name": "add comment",
                         "notes": "",
@@ -1260,6 +964,10 @@
                                 "name": "recordedfuture",
                                 "output": [
                                     {
+                                        "data_path": "action_result.parameter.rule_name",
+                                        "data_type": "string"
+                                    },
+                                    {
                                         "column_name": "Rule Names",
                                         "column_order": 0,
                                         "data_path": "action_result.data.*.rule.title",
@@ -1272,14 +980,6 @@
                                             "recorded future alert rule"
                                         ],
                                         "data_path": "action_result.data.*.rule.id",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.parameter.rule_name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.parameter.rule_name",
                                         "data_type": "string"
                                     },
                                     {
@@ -1357,6 +1057,12 @@
                             ".title": {
                                 "text": "Investigate"
                             },
+                            "g.approver image": {
+                                "opacity": 1
+                            },
+                            "g.code image": {
+                                "opacity": 1
+                            },
                             "g.delete": {
                                 "display": "none"
                             },
@@ -1368,6 +1074,12 @@
                             },
                             "g.notes": {
                                 "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
+                            },
+                            "g.timer image": {
+                                "opacity": 1
                             }
                         },
                         "block_code": "def alert_rule_id_lookup_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('alert_rule_id_lookup_2() called')\n\n    # collect data for 'alert_rule_id_lookup_2' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs1', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'alert_rule_id_lookup_2' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'rule_name': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"alert rule id lookup\", parameters=parameters, assets=['recordedfuture'], callback=format_2, name=\"alert_rule_id_lookup_2\")\n\n    return",
@@ -1395,8 +1107,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 115,
-                        "line_start": 94,
+                        "line_end": 116,
+                        "line_start": 95,
                         "message": "Configuring now",
                         "name": "alert rule id lookup",
                         "notes": "",
@@ -1476,7 +1188,7 @@
                         "status": "",
                         "title": "Investigate",
                         "type": "coa.Action",
-                        "warn": "",
+                        "warn": false,
                         "z": 17
                     },
                     {
@@ -1560,6 +1272,9 @@
                             ".title": {
                                 "text": "format"
                             },
+                            "g.code image": {
+                                "opacity": 1
+                            },
                             "g.delete": {
                                 "display": "none"
                             },
@@ -1568,6 +1283,9 @@
                             },
                             "g.notes": {
                                 "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
                             }
                         },
                         "block_code": "def format_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('format_2() called')\n    \n    template = \"\"\"{0}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"alert_rule_id_lookup_2:action_result.message\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"format_2\")\n\n    add_comment_2(container=container)\n\n    return",
@@ -1594,8 +1312,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 131,
-                        "line_start": 115,
+                        "line_end": 132,
+                        "line_start": 116,
                         "message": "Configuring now",
                         "name": "format",
                         "notes": "",
@@ -1766,6 +1484,9 @@
                             ".title": {
                                 "text": "API"
                             },
+                            "g.code image": {
+                                "opacity": 1
+                            },
                             "g.delete": {
                                 "display": "none"
                             },
@@ -1774,6 +1495,9 @@
                             },
                             "g.notes": {
                                 "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
                             }
                         },
                         "block_code": "def add_comment_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('add_comment_2() called')\n\n    formatted_data_1 = phantom.get_format_data(name='format_2')\n\n    phantom.comment(container=container, comment=formatted_data_1)\n    alert_data_lookup_2(container=container)\n\n    return",
@@ -1806,8 +1530,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 141,
-                        "line_start": 131,
+                        "line_end": 142,
+                        "line_start": 132,
                         "message": "Configuring now",
                         "name": "add comment",
                         "notes": "",
@@ -1927,312 +1651,6 @@
                         "z": 22
                     },
                     {
-                        "action": "alert data lookup",
-                        "action_type": "investigate",
-                        "active": false,
-                        "active_keys": {},
-                        "active_values": {
-                            "rule_id": "alert_rule_id_lookup_2:action_result.data.*.rule.id",
-                            "timeframe": "anytime"
-                        },
-                        "angle": 0,
-                        "app": "recordedfuture",
-                        "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-                        "approver": "",
-                        "assets": [
-                            {
-                                "action": "alert data lookup",
-                                "actions": [
-                                    "ip reputation",
-                                    "ip intelligence",
-                                    "domain reputation",
-                                    "domain intelligence",
-                                    "file reputation",
-                                    "file intelligence",
-                                    "vulnerability reputation",
-                                    "vulnerability intelligence",
-                                    "url reputation",
-                                    "url intelligence",
-                                    "alert data lookup",
-                                    "alert rule id lookup",
-                                    "test connectivity"
-                                ],
-                                "active": true,
-                                "app_name": "recordedfuture",
-                                "app_version": "2.0.0",
-                                "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-                                "asset_name": "recordedfuture",
-                                "config_type": "asset",
-                                "count": 0,
-                                "fields": {
-                                    "rule_id": "alert_rule_id_lookup_2:action_result.data.*.rule.id",
-                                    "timeframe": "anytime"
-                                },
-                                "has_app": true,
-                                "id": 6,
-                                "loaded": false,
-                                "missing": false,
-                                "name": "recordedfuture",
-                                "output": [
-                                    {
-                                        "contains": [
-                                            "recorded future alert rule"
-                                        ],
-                                        "data_path": "action_result.parameter.rule_id",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "contains": [],
-                                        "data_path": "action_result.parameter.timeframe",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.status",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.message",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "column_name": "Alert Title",
-                                        "column_order": 0,
-                                        "data_path": "action_result.data.*.alert.alertTitle",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "column_name": "URL for details",
-                                        "column_order": 2,
-                                        "data_path": "action_result.data.*.alert.alertUrl",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "column_name": "Triggered",
-                                        "column_order": 1,
-                                        "data_path": "action_result.data.*.alert.triggered",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.alert.entities.InternetDomainName",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.alert.entities.EmailAddress",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.total_number_of_alerts",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.returned_number_of_alerts",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.status",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.message",
-                                        "data_type": "string"
-                                    }
-                                ],
-                                "parameters": {
-                                    "rule_id": {
-                                        "contains": [
-                                            "recorded future alert rule"
-                                        ],
-                                        "data_type": "string",
-                                        "default": "",
-                                        "description": "Rule ID to look up alert data for",
-                                        "key": "rule_id",
-                                        "order": 0,
-                                        "primary": true,
-                                        "required": true,
-                                        "value_list": []
-                                    },
-                                    "timeframe": {
-                                        "contains": [],
-                                        "data_type": "string",
-                                        "default": "-24h to now",
-                                        "description": "Timeframe for when rules were triggered",
-                                        "key": "timeframe",
-                                        "order": 0,
-                                        "primary": false,
-                                        "required": true,
-                                        "value_list": []
-                                    }
-                                },
-                                "product_name": "Recorded Future for Splunk Phantom",
-                                "product_vendor": "Recorded Future, Inc",
-                                "targets": "6",
-                                "type": "reputation"
-                            }
-                        ],
-                        "attrs": {
-                            ".action": {
-                                "text": "alert data lookup 2"
-                            },
-                            ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#818D99"
-                            },
-                            ".color-band": {
-                                "fill": "#171D21"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "ref-x": 5,
-                                "ref-y": 105,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out>.port-body": {
-                                "port": {
-                                    "id": "out",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "Investigate"
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.icon image": {
-                                "xlink:href": "/inc/coa/img/block_icon_investigate.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            }
-                        },
-                        "block_code": "def alert_data_lookup_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('alert_data_lookup_2() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'alert_data_lookup_2' call\n    results_data_1 = phantom.collect2(container=container, datapath=['alert_rule_id_lookup_2:action_result.data.*.rule.id', 'alert_rule_id_lookup_2:action_result.parameter.context.artifact_id'], action_results=results)\n\n    parameters = []\n    \n    # build parameters list for 'alert_data_lookup_2' call\n    for results_item_1 in results_data_1:\n        if results_item_1[0]:\n            parameters.append({\n                'rule_id': results_item_1[0],\n                'timeframe': \"anytime\",\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': results_item_1[1]},\n            })\n\n    phantom.act(\"alert data lookup\", parameters=parameters, assets=['recordedfuture'], callback=format_3, name=\"alert_data_lookup_2\")\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": true,
-                        "color": "",
-                        "connected_to_start": true,
-                        "connection_name": "alert rule id lookup",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "",
-                        "delay": 0,
-                        "description": "",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "1b7966bb-880e-4137-b134-5eab9cf7a047",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 165,
-                        "line_start": 141,
-                        "message": "Configuring now",
-                        "name": "alert data lookup",
-                        "notes": "",
-                        "number": 2,
-                        "order": 9,
-                        "outPorts": [
-                            "out"
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 360,
-                            "y": 460
-                        },
-                        "previous_function": "",
-                        "previous_name": "alert_data_lookup_2",
-                        "required_params": {
-                            "rule_id": true,
-                            "timeframe": true
-                        },
-                        "reviewer": "",
-                        "show_number": true,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "app_action_assets",
-                        "status": "",
-                        "title": "Investigate",
-                        "type": "coa.Action",
-                        "warn": "",
-                        "z": 23
-                    },
-                    {
                         "attrs": {
                             ".connection": {
                                 "stroke": "#818D99",
@@ -2313,6 +1731,9 @@
                             ".title": {
                                 "text": "format"
                             },
+                            "g.code image": {
+                                "opacity": 1
+                            },
                             "g.delete": {
                                 "display": "none"
                             },
@@ -2321,6 +1742,9 @@
                             },
                             "g.notes": {
                                 "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
                             }
                         },
                         "block_code": "def format_3(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('format_3() called')\n    \n    template = \"\"\"{0}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"alert_data_lookup_2:action_result.message\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"format_3\")\n\n    add_comment_3(container=container)\n\n    return",
@@ -2347,8 +1771,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 181,
-                        "line_start": 165,
+                        "line_end": 184,
+                        "line_start": 168,
                         "message": "Configuring now",
                         "name": "format",
                         "notes": "",
@@ -2519,6 +1943,9 @@
                             ".title": {
                                 "text": "API"
                             },
+                            "g.code image": {
+                                "opacity": 1
+                            },
                             "g.delete": {
                                 "display": "none"
                             },
@@ -2527,6 +1954,9 @@
                             },
                             "g.notes": {
                                 "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
                             }
                         },
                         "block_code": "def add_comment_3(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('add_comment_3() called')\n\n    formatted_data_1 = phantom.get_format_data(name='format_3')\n\n    phantom.comment(container=container, comment=formatted_data_1)\n\n    return",
@@ -2559,8 +1989,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 190,
-                        "line_start": 181,
+                        "line_end": 193,
+                        "line_start": 184,
                         "message": "Configuring now",
                         "name": "add comment",
                         "notes": "",
@@ -2748,6 +2178,9 @@
                             },
                             "g.notes": {
                                 "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
                             }
                         },
                         "block_code": "def decision_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('decision_1() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        conditions=[\n            [\"artifact:*.cef.cs1Label\", \"==\", \"alert rule id\"],\n        ])\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        alert_data_lookup_1(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # check for 'elif' condition 2\n    matched_artifacts_2, matched_results_2 = phantom.condition(\n        container=container,\n        conditions=[\n            [\"artifact:*.cef.cs1Label\", \"==\", \"alert rule name\"],\n        ])\n\n    # call connected blocks if condition 2 matched\n    if matched_artifacts_2 or matched_results_2:\n        alert_rule_id_lookup_2(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # call connected blocks for 'else' condition 3\n\n    return",
@@ -2774,8 +2207,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 47,
-                        "line_start": 16,
+                        "line_end": 48,
+                        "line_start": 17,
                         "name": "decision",
                         "notes": "",
                         "number": 1,
@@ -2894,6 +2327,674 @@
                         "type": "coa.Decision",
                         "warn": "",
                         "z": 30
+                    },
+                    {
+                        "action": "alert data lookup",
+                        "action_type": "investigate",
+                        "active": false,
+                        "active_keys": {},
+                        "active_values": {
+                            "rule_id": "artifact:*.cef.cs1",
+                            "timeframe": "artifact:*.cef.cs2"
+                        },
+                        "angle": 0,
+                        "app": "recordedfuture",
+                        "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
+                        "approver": "",
+                        "assets": [
+                            {
+                                "action": "alert data lookup",
+                                "actions": [
+                                    "ip reputation",
+                                    "ip intelligence",
+                                    "domain reputation",
+                                    "domain intelligence",
+                                    "file reputation",
+                                    "file intelligence",
+                                    "vulnerability reputation",
+                                    "vulnerability intelligence",
+                                    "url reputation",
+                                    "url intelligence",
+                                    "alert data lookup",
+                                    "alert rule id lookup",
+                                    "test connectivity"
+                                ],
+                                "active": true,
+                                "app_name": "recordedfuture",
+                                "app_version": "2.0.0",
+                                "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
+                                "asset_name": "recordedfuture",
+                                "config_type": "asset",
+                                "count": 0,
+                                "fields": {
+                                    "rule_id": "artifact:*.cef.cs1",
+                                    "timeframe": "artifact:*.cef.cs2"
+                                },
+                                "has_app": true,
+                                "id": 6,
+                                "loaded": false,
+                                "missing": false,
+                                "name": "recordedfuture",
+                                "output": [
+                                    {
+                                        "contains": [
+                                            "recorded future alert rule"
+                                        ],
+                                        "data_path": "action_result.parameter.rule_id",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "contains": [],
+                                        "data_path": "action_result.parameter.timeframe",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "column_name": "Alert Title",
+                                        "column_order": 0,
+                                        "data_path": "action_result.data.*.alert.alertTitle",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "column_name": "URL for details",
+                                        "column_order": 2,
+                                        "data_path": "action_result.data.*.alert.alertUrl",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "column_name": "Triggered",
+                                        "column_order": 1,
+                                        "data_path": "action_result.data.*.alert.triggered",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.alert.entities.InternetDomainName.*",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.alert.entities.Document.*",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.alert.entities.EmailAddress.*",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.rule.url",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.rule.id",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.rule.name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.rule_id",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.rule_name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.total_number_of_alerts",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.returned_number_of_alerts",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.status",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.message",
+                                        "data_type": "string"
+                                    }
+                                ],
+                                "parameters": {
+                                    "rule_id": {
+                                        "contains": [
+                                            "recorded future alert rule"
+                                        ],
+                                        "data_type": "string",
+                                        "default": "",
+                                        "description": "Rule ID to look up alert data for",
+                                        "key": "rule_id",
+                                        "order": 0,
+                                        "primary": true,
+                                        "required": true,
+                                        "value_list": []
+                                    },
+                                    "timeframe": {
+                                        "contains": [],
+                                        "data_type": "string",
+                                        "default": "-24h to now",
+                                        "description": "Timeframe for when rules were triggered",
+                                        "key": "timeframe",
+                                        "order": 0,
+                                        "primary": false,
+                                        "required": true,
+                                        "value_list": []
+                                    }
+                                },
+                                "product_name": "Recorded Future for Splunk Phantom",
+                                "product_vendor": "Recorded Future, Inc",
+                                "targets": "6",
+                                "type": "reputation"
+                            }
+                        ],
+                        "attrs": {
+                            ".action": {
+                                "text": "alert data lookup 1"
+                            },
+                            ".background": {
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
+                            },
+                            ".color-band": {
+                                "fill": "#171D21"
+                            },
+                            ".inPorts>.port-in": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".inPorts>.port-in>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".message": {
+                                "opacity": 0,
+                                "ref-x": 5,
+                                "ref-y": 105,
+                                "text": "Configuring now"
+                            },
+                            ".outPorts>.port-out": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out>.port-body": {
+                                "port": {
+                                    "id": "out",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "text": "Investigate"
+                            },
+                            "g.approver image": {
+                                "opacity": 1
+                            },
+                            "g.code image": {
+                                "opacity": 1
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.icon image": {
+                                "xlink:href": "/inc/coa/img/block_icon_investigate.svg"
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
+                            },
+                            "g.timer image": {
+                                "opacity": 1
+                            }
+                        },
+                        "block_code": "def alert_data_lookup_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('alert_data_lookup_1() called')\n\n    # collect data for 'alert_data_lookup_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs1', 'artifact:*.cef.cs2', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'alert_data_lookup_1' call\n    for container_item in container_data:\n        if container_item[0] and container_item[1]:\n            parameters.append({\n                'rule_id': container_item[0],\n                'timeframe': container_item[1],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[2]},\n            })\n\n    phantom.act(\"alert data lookup\", parameters=parameters, assets=['recordedfuture'], callback=format_1, name=\"alert_data_lookup_1\")\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": true,
+                        "color": "",
+                        "connected_to_start": true,
+                        "connection_name": "",
+                        "connection_type": "",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "",
+                        "delay": 0,
+                        "description": "",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "7784e43e-e66c-48e9-8eb5-1a796fa498bf",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 70,
+                        "line_start": 48,
+                        "message": "Configuring now",
+                        "name": "alert data lookup",
+                        "notes": "",
+                        "number": 1,
+                        "order": 3,
+                        "outPorts": [
+                            "out"
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 360,
+                            "y": 160
+                        },
+                        "previous_function": "",
+                        "previous_name": "alert_data_lookup_1",
+                        "required_params": {
+                            "rule_id": true,
+                            "timeframe": true
+                        },
+                        "reviewer": "",
+                        "show_number": true,
+                        "size": {
+                            "height": 100,
+                            "width": 180
+                        },
+                        "state": "app_action_assets",
+                        "status": "",
+                        "title": "Investigate",
+                        "type": "coa.Action",
+                        "warn": "",
+                        "z": 31
+                    },
+                    {
+                        "action": "alert data lookup",
+                        "action_type": "investigate",
+                        "active": false,
+                        "active_keys": {},
+                        "active_values": {
+                            "rule_id": "alert_rule_id_lookup_2:action_result.data.*.rule.id",
+                            "timeframe": "artifact:*.cef.cs2"
+                        },
+                        "angle": 0,
+                        "app": "recordedfuture",
+                        "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
+                        "approver": "",
+                        "assets": [
+                            {
+                                "action": "alert data lookup",
+                                "actions": [
+                                    "ip reputation",
+                                    "ip intelligence",
+                                    "domain reputation",
+                                    "domain intelligence",
+                                    "file reputation",
+                                    "file intelligence",
+                                    "vulnerability reputation",
+                                    "vulnerability intelligence",
+                                    "url reputation",
+                                    "url intelligence",
+                                    "alert data lookup",
+                                    "alert rule id lookup",
+                                    "test connectivity"
+                                ],
+                                "active": true,
+                                "app_name": "recordedfuture",
+                                "app_version": "2.0.0",
+                                "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
+                                "asset_name": "recordedfuture",
+                                "config_type": "asset",
+                                "count": 0,
+                                "fields": {
+                                    "rule_id": "alert_rule_id_lookup_2:action_result.data.*.rule.id",
+                                    "timeframe": "artifact:*.cef.cs2"
+                                },
+                                "has_app": true,
+                                "id": 6,
+                                "loaded": false,
+                                "missing": false,
+                                "name": "recordedfuture",
+                                "output": [
+                                    {
+                                        "contains": [
+                                            "recorded future alert rule"
+                                        ],
+                                        "data_path": "action_result.parameter.rule_id",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "contains": [],
+                                        "data_path": "action_result.parameter.timeframe",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "column_name": "Alert Title",
+                                        "column_order": 0,
+                                        "data_path": "action_result.data.*.alert.alertTitle",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "column_name": "URL for details",
+                                        "column_order": 2,
+                                        "data_path": "action_result.data.*.alert.alertUrl",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "column_name": "Triggered",
+                                        "column_order": 1,
+                                        "data_path": "action_result.data.*.alert.triggered",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.alert.entities.InternetDomainName.*",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.alert.entities.Document.*",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.alert.entities.EmailAddress.*",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.rule.url",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.rule.id",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.rule.name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.rule_id",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.rule_name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.total_number_of_alerts",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.returned_number_of_alerts",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.status",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.message",
+                                        "data_type": "string"
+                                    }
+                                ],
+                                "parameters": {
+                                    "rule_id": {
+                                        "contains": [
+                                            "recorded future alert rule"
+                                        ],
+                                        "data_type": "string",
+                                        "default": "",
+                                        "description": "Rule ID to look up alert data for",
+                                        "key": "rule_id",
+                                        "order": 0,
+                                        "primary": true,
+                                        "required": true,
+                                        "value_list": []
+                                    },
+                                    "timeframe": {
+                                        "contains": [],
+                                        "data_type": "string",
+                                        "default": "-24h to now",
+                                        "description": "Timeframe for when rules were triggered",
+                                        "key": "timeframe",
+                                        "order": 0,
+                                        "primary": false,
+                                        "required": true,
+                                        "value_list": []
+                                    }
+                                },
+                                "product_name": "Recorded Future for Splunk Phantom",
+                                "product_vendor": "Recorded Future, Inc",
+                                "targets": "6",
+                                "type": "reputation"
+                            }
+                        ],
+                        "attrs": {
+                            ".action": {
+                                "text": "alert data lookup 2"
+                            },
+                            ".background": {
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
+                            },
+                            ".color-band": {
+                                "fill": "#171D21"
+                            },
+                            ".inPorts>.port-in": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".inPorts>.port-in>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".message": {
+                                "opacity": 0,
+                                "ref-x": 5,
+                                "ref-y": 105,
+                                "text": "Configuring now"
+                            },
+                            ".outPorts>.port-out": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out>.port-body": {
+                                "port": {
+                                    "id": "out",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "text": "Investigate"
+                            },
+                            "g.approver image": {
+                                "opacity": 1
+                            },
+                            "g.code image": {
+                                "opacity": 1
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.icon image": {
+                                "xlink:href": "/inc/coa/img/block_icon_investigate.svg"
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
+                            },
+                            "g.timer image": {
+                                "opacity": 1
+                            }
+                        },
+                        "block_code": "def alert_data_lookup_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('alert_data_lookup_2() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'alert_data_lookup_2' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs2', 'artifact:*.id'])\n    results_data_1 = phantom.collect2(container=container, datapath=['alert_rule_id_lookup_2:action_result.data.*.rule.id', 'alert_rule_id_lookup_2:action_result.parameter.context.artifact_id'], action_results=results)\n\n    parameters = []\n    \n    # build parameters list for 'alert_data_lookup_2' call\n    for container_item in container_data:\n        for results_item_1 in results_data_1:\n            if results_item_1[0] and container_item[0]:\n                parameters.append({\n                    'rule_id': results_item_1[0],\n                    'timeframe': container_item[0],\n                    # context (artifact id) is added to associate results with the artifact\n                    'context': {'artifact_id': results_item_1[1]},\n                })\n\n    phantom.act(\"alert data lookup\", parameters=parameters, assets=['recordedfuture'], callback=format_3, name=\"alert_data_lookup_2\")\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": true,
+                        "color": "",
+                        "connected_to_start": true,
+                        "connection_name": "alert rule id lookup",
+                        "connection_type": "action",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "",
+                        "delay": 0,
+                        "description": "",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "1b7966bb-880e-4137-b134-5eab9cf7a047",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 168,
+                        "line_start": 142,
+                        "message": "Configuring now",
+                        "name": "alert data lookup",
+                        "notes": "",
+                        "number": 2,
+                        "order": 9,
+                        "outPorts": [
+                            "out"
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 360,
+                            "y": 460
+                        },
+                        "previous_function": "",
+                        "previous_name": "alert_data_lookup_2",
+                        "required_params": {
+                            "rule_id": true,
+                            "timeframe": true
+                        },
+                        "reviewer": "",
+                        "show_number": true,
+                        "size": {
+                            "height": 100,
+                            "width": 180
+                        },
+                        "state": "app_action_assets",
+                        "status": "",
+                        "title": "Investigate",
+                        "type": "coa.Action",
+                        "warn": "",
+                        "z": 32
                     }
                 ]
             },
@@ -2902,7 +3003,7 @@
         "schema": 3,
         "version": "4.2.7532"
     },
-    "create_time": "2019-05-20T07:07:58.366212+00:00",
+    "create_time": "2019-05-22T12:33:17.507317+00:00",
     "draft_mode": false,
     "labels": [
         "*"
