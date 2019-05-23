@@ -33,6 +33,11 @@ class RfIpReputationTests(RfTests):
                                     'result: %s' % ares)
 
     def test_ip_reputation(self):
-        """Test behavior when an ip is supplied."""
-        for ioc, target_risk_score in [('88.215.2.29', 99)]:
+        """Test behavior when a single ip is supplied."""
+
+        # Get 1 IP TARGETS with riskScore less than 89 and greater than 91.
+        TARGETS = self.getTestDataByIocTypeAndRiskScore("IpAddress", 89, 91, 1)
+
+        # Call the test for each target
+        for ioc, target_risk_score in TARGETS:
             self._test_ip_reputation_score(ioc, target_risk_score)

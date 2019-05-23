@@ -5,13 +5,13 @@ import time
 from time import sleep
 import requests
 from phantom_ops import *
-
+from rfapi import RawApiClient
 
 class RfTests(unittest.TestCase):
     """Test cases for all reputation actions."""
 
     POLL_MAXTRIES = 10
-    POLL_WAITTIME = 0.25
+    POLL_WAITTIME = 0.5
 
     @classmethod
     def setUpClass(cls):
@@ -85,7 +85,7 @@ class RfTests(unittest.TestCase):
 
     def _action_result(self, container_id):
         """Return the result of an action."""
-        print '_filter_container: %s' % container_id
+        print('_filter_container: %s' % container_id)
         return self._rest_call('get', 'app_run',
                                {'_filter_container': container_id,
                                 'include_expensive': True}).json()
@@ -105,6 +105,7 @@ class RfTests(unittest.TestCase):
     #
     #         # Call passed in function with passed params
     #         res = fn(params)
+    #         print(res)
     #         if res['count'] > 0:
     #             if res['data'][0]['status'] == 'success':
     #                 break
@@ -124,3 +125,46 @@ class RfTests(unittest.TestCase):
             print ('result: %s' % result)
             raise
         self.assertEqual(risk_score, target_risk_score, *args)
+
+    def getTestDataByIocTypeAndRiskScore(self, type, rs_min, rs_max, limit):
+        """Function that queries RawAPI for IOCs for a specific data group and risk score ."""
+        api = RawApiClient()
+
+        query = {
+            "cluster": {
+                "data_group": type,
+                "limit": limit,
+                "attributes": [
+                    {
+                        "name": "stats.metrics.riskScore",
+                        "range": {
+                            "gt": rs_min
+                        }
+                    },
+                    {
+                        "name": "stats.metrics.riskScore",
+                        "range": {
+                            "lt": rs_max
+                        }
+                    }
+                ]
+            },
+            "output": {
+                "exclude": [
+                    "stats.entity_lists"
+                ],
+                "inline_entities": True
+            }
+        }
+
+        res = api.query(query)
+
+        self.assertEquals(res.result['status'], 'SUCCESS');
+
+        TARGETS = []
+        for event in res.result['events']:
+            ip = event['attributes']['entities'][0]['name']
+            riskScore = event['stats']['metrics']['riskScore']
+            TARGETS.append((ip, riskScore))
+
+        return TARGETS
