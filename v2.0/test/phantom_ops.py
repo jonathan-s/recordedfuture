@@ -24,7 +24,7 @@ def ph_artifact(**kwargs):
     return artifact
 
 
-def ph_container(event_name="Test event", artifacts=[]):
+def ph_container(event_name="Test event", artifacts=[], tag='test'):
     """Return a Phantom container with the supplied fields."""
     return {
         # "asset_id": 12,
@@ -43,5 +43,5 @@ def ph_container(event_name="Test event", artifacts=[]):
         # "status": "new",
         # "start_time": "2015-03-21T19:28:13.759Z",
         # "open_time": "2015-03-21T19:29:00.141Z",
-        # "tags": ["tag1", "tag2"]
+        "tags": [tag]
     }

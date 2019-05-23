@@ -9,8 +9,8 @@ from datetime import datetime, timedelta
 def on_start(container):
     phantom.debug('on_start() called')
     
-    # call 'decision_1' block
-    decision_1(container=container)
+    # call 'filter_1' block
+    filter_1(container=container)
 
     return
 
@@ -183,6 +183,25 @@ def url_intelligence_1(action=None, success=None, container=None, results=None, 
             })
 
     phantom.act("url intelligence", parameters=parameters, assets=['recordedfuture'], name="url_intelligence_1")
+
+    return
+
+def filter_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('filter_1() called')
+    
+    tags_param = container.get('tags', None)
+
+    # collect filtered artifact ids for 'if' condition 1
+    matched_artifacts_1, matched_results_1 = phantom.condition(
+        container=container,
+        conditions=[
+            [tags_param, "==", ['recorded_future_intelligence_test']],
+        ],
+        name="filter_1:condition_1")
+
+    # call connected blocks if filtered artifacts or results
+    if matched_artifacts_1 or matched_results_1:
+        decision_1(action=action, success=success, container=container, results=results, handle=handle, filtered_artifacts=matched_artifacts_1, filtered_results=matched_results_1)
 
     return
 

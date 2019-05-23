@@ -1,5 +1,5 @@
 """
-Playbook created to reputation lookups as defined in the Recorded Future app.
+Playbook used to test the intelligence methods of the Recorded Future app.
 """
 
 import phantom.rules as phantom
@@ -9,29 +9,8 @@ from datetime import datetime, timedelta
 def on_start(container):
     phantom.debug('on_start() called')
     
-    # call 'decision_1' block
-    decision_1(container=container)
-
-    return
-
-def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('ip_reputation_1() called')
-
-    # collect data for 'ip_reputation_1' call
-    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])
-
-    parameters = []
-    
-    # build parameters list for 'ip_reputation_1' call
-    for container_item in container_data:
-        if container_item[0]:
-            parameters.append({
-                'ip': container_item[0],
-                # context (artifact id) is added to associate results with the artifact
-                'context': {'artifact_id': container_item[1]},
-            })
-
-    phantom.act("ip reputation", parameters=parameters, assets=['recordedfuture'], name="ip_reputation_1")
+    # call 'filter_1' block
+    filter_1(container=container)
 
     return
 
@@ -54,14 +33,12 @@ def decision_1(action=None, success=None, container=None, results=None, handle=N
     matched_artifacts_2, matched_results_2 = phantom.condition(
         container=container,
         conditions=[
-            ["artifact:*.cef.cs1", "!=", ""],
-            ["artifact:*.cef.cs1Label", "==", "vulnerability"],
-        ],
-        logical_operator='and')
+            ["artifact:*.cef.requestURL", "!=", ""],
+        ])
 
     # call connected blocks if condition 2 matched
     if matched_artifacts_2 or matched_results_2:
-        vulnerability_reputation_1(action=action, success=success, container=container, results=results, handle=handle)
+        url_reputation_1(action=action, success=success, container=container, results=results, handle=handle)
         return
 
     # check for 'elif' condition 3
@@ -92,34 +69,36 @@ def decision_1(action=None, success=None, container=None, results=None, handle=N
     matched_artifacts_5, matched_results_5 = phantom.condition(
         container=container,
         conditions=[
-            ["artifact:*.cef.requestURL", "!=", ""],
-        ])
+            ["artifact:*.cef.cs1Label", "==", "vulnerability"],
+            ["artifact:*.cef.cs1", "!=", ""],
+        ],
+        logical_operator='and')
 
     # call connected blocks if condition 5 matched
     if matched_artifacts_5 or matched_results_5:
-        url_reputation_1(action=action, success=success, container=container, results=results, handle=handle)
+        vulnerability_reputation_1(action=action, success=success, container=container, results=results, handle=handle)
         return
 
     return
 
-def domain_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('domain_reputation_1() called')
+def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('ip_reputation_1() called')
 
-    # collect data for 'domain_reputation_1' call
-    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationDnsDomain', 'artifact:*.id'])
+    # collect data for 'ip_reputation_1' call
+    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])
 
     parameters = []
     
-    # build parameters list for 'domain_reputation_1' call
+    # build parameters list for 'ip_reputation_1' call
     for container_item in container_data:
         if container_item[0]:
             parameters.append({
-                'domain': container_item[0],
+                'ip': container_item[0],
                 # context (artifact id) is added to associate results with the artifact
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("domain reputation", parameters=parameters, assets=['recordedfuture'], name="domain_reputation_1")
+    phantom.act("ip reputation", parameters=parameters, assets=['recordedfuture'], name="ip_reputation_1")
 
     return
 
@@ -141,6 +120,27 @@ def file_reputation_1(action=None, success=None, container=None, results=None, h
             })
 
     phantom.act("file reputation", parameters=parameters, assets=['recordedfuture'], name="file_reputation_1")
+
+    return
+
+def domain_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('domain_reputation_1() called')
+
+    # collect data for 'domain_reputation_1' call
+    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationDnsDomain', 'artifact:*.id'])
+
+    parameters = []
+    
+    # build parameters list for 'domain_reputation_1' call
+    for container_item in container_data:
+        if container_item[0]:
+            parameters.append({
+                'domain': container_item[0],
+                # context (artifact id) is added to associate results with the artifact
+                'context': {'artifact_id': container_item[1]},
+            })
+
+    phantom.act("domain reputation", parameters=parameters, assets=['recordedfuture'], name="domain_reputation_1")
 
     return
 
@@ -183,6 +183,25 @@ def url_reputation_1(action=None, success=None, container=None, results=None, ha
             })
 
     phantom.act("url reputation", parameters=parameters, assets=['recordedfuture'], name="url_reputation_1")
+
+    return
+
+def filter_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('filter_1() called')
+    
+    tags_param = container.get('tags', None)
+
+    # collect filtered artifact ids for 'if' condition 1
+    matched_artifacts_1, matched_results_1 = phantom.condition(
+        container=container,
+        conditions=[
+            [tags_param, "==", ['recorded_future_reputation_test']],
+        ],
+        name="filter_1:condition_1")
+
+    # call connected blocks if filtered artifacts or results
+    if matched_artifacts_1 or matched_results_1:
+        decision_1(action=action, success=success, container=container, results=results, handle=handle, filtered_artifacts=matched_artifacts_1, filtered_results=matched_results_1)
 
     return
 

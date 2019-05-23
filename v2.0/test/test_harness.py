@@ -30,6 +30,7 @@ class RfTests(unittest.TestCase):
         """Setup test environment."""
         self.phantom_host = os.environ['PHOST']
         self.phantom_cred = os.environ['PTOK']
+        self.phantom_playbook = playbook
 
         # Ensure the test_ip_reputation playbook is installed
         res = self._rest_get('playbook')
@@ -70,7 +71,8 @@ class RfTests(unittest.TestCase):
 
         Returns the id of the created container."""
         artifact = ph_artifact(**kwargs)
-        container = ph_container("%s event" % category, [artifact])
+        container = ph_container("%s event" % category, [artifact],
+                                 self.phantom_playbook)
         res = self._rest_call('post', 'container', container)
 
         # Check that it was a success.
