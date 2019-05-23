@@ -35,6 +35,11 @@ class RfDomainReputationTests(RfTests):
 
     def test_file_reputation(self):
         """Test behavior when a file is supplied."""
-        for ioc, target_risk_score in [
-            ('e285b6ce047015943e685e6638bd837e', 89)]:
+
+        # Get 1 IP TARGETS with riskScore less than 89 and greater than 91.
+        TARGETS = self.getTestDataByIocTypeAndRiskScore("Hash", 40, 90, 1)
+
+        self.assertEquals(len(TARGETS), 1)
+
+        for ioc, target_risk_score in TARGETS:
             self._test_file_reputation_score(ioc, target_risk_score)

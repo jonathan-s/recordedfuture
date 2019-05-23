@@ -164,9 +164,11 @@ class RfTests(unittest.TestCase):
         self.assertEquals(res.result['status'], 'SUCCESS');
 
         TARGETS = []
+        #print("res.result: %s" % res.result)
         for event in res.result['events']:
-            ip = event['attributes']['entities'][0]['name']
+            ioc = event['attributes']['entities'][0]['name']
             riskScore = event['stats']['metrics']['riskScore']
-            TARGETS.append((ip, riskScore))
+            #print("ioc: %s" % ioc);
+            TARGETS.append((ioc, riskScore))
 
         return TARGETS
