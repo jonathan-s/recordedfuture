@@ -30,23 +30,25 @@ class RfAlertDataLookupTests(RfTests):
             'alertrulename':        'recordedfuture.com Leaked Credentials Document'
         }
 
-        artifact = ph_artifact(cs1=testdata['alertruleid'],
-                               cs1Label=testdata['alertrulelabel'],
-                               cs2=testdata['alertruletimeframe'])
+        container_id = self._create_event_and_artifact(
+            'Test Event Domain Reputation',
+            cs1=testdata['alertruleid'],
+            cs1Label=testdata['alertrulelabel'],
+            cs2=testdata['alertruletimeframe'])
 
-        container = ph_container("Alert Data event", [artifact])
-
-        res = self._rest_call('post', 'container', container)
-
-        # Check that it was a success.
-        self.assertEqual(res.status_code, 200)
-
-        # Check the Phantom status
-        jres = res.json()
-        self.assertEqual(jres['success'], True)
+        # container = ph_container("Test Event alert aata lookup", [artifact])
+        #
+        # res = self._rest_call('post', 'container', container)
+        #
+        # # Check that it was a success.
+        # self.assertEqual(res.status_code, 200)
+        #
+        # # Check the Phantom status
+        # jres = res.json()
+        # self.assertEqual(jres['success'], True)
 
         # Pass self._action_result to poll with container id as argument
-        ares = self._poll_for_success(self._action_result, [jres['id']])
+        ares = self._poll_for_success(self._action_result, container_id)
 
         # Assert that the call to RF was success
         self.assertEqual(ares['data'][0]['result_data'][0]['status'], 'success')
@@ -80,7 +82,7 @@ class RfAlertDataLookupTests(RfTests):
             self.assertEquals(rule['id'], testdata['alertruleid'])
             self.assertEquals(rule['name'], testdata['alertrulename'])
 
-
+    @unittest.skip
     def test_neg_alert_data_lookup_no_match(self):
         """Test behavior when passing alert query parameters that do not return data."""
 

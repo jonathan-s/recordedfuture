@@ -5,13 +5,13 @@ import time
 from time import sleep
 import requests
 from phantom_ops import *
-from rfapi import RawApiClient
+from rfapi import RawApiClient, ConnectApiClient
 
 class RfTests(unittest.TestCase):
     """Test cases for all reputation actions."""
 
     POLL_MAXTRIES = 10
-    POLL_WAITTIME = 0.5
+    POLL_WAITTIME = 1
 
     @classmethod
     def setUpClass(cls):
@@ -92,83 +92,95 @@ class RfTests(unittest.TestCase):
                                {'_filter_container': container_id,
                                 'include_expensive': True}).json()
 
-    # Let's hold of on this for a bit, we need to figure out how to poll
-    # without re-running the call
-    #
-    # def _poll_for_success(self, fn, params, maxtries=POLL_MAXTRIES, waittime=POLL_WAITTIME):
-    #     """Polls the return from the passed function until successfull."""
-    #     # The action is not triggered immediately, returning an empty data array.
-    #     # So we check count before checking the status of the action
-    #     tries = 0
-    #     while True:
-    #         tries = tries + 1
-    #         if (tries > maxtries):
-    #             raise Exception('Max tries %s exceeded when polling for request success' % maxtries)
-    #
-    #         # Call passed in function with passed params
-    #         res = fn(params)
-    #         print(res)
-    #         if res['count'] > 0:
-    #             if res['data'][0]['status'] == 'success':
-    #                 break
-    #         sleep(waittime)
-    #
-    #     return res
+    def _poll_for_success(self, fn, params, maxtries=POLL_MAXTRIES, waittime=POLL_WAITTIME):
+        """Polls the return from the passed function until successfull.
 
-    def _poll_for_success(self, fn, params):
-        sleep(2)
-        return fn(params)
+        The action is not triggered immediately, returning an empty data array.
+        So we check count before checking the status of the action
+        """
+        for attempt in range(maxtries):
+            # Call passed in function with passed params
+            res = fn(params)
+            try:
+                assert(res['data'][0]['status'] == 'success')
+                return res
+            except Exception:
+                pass
+
+            sleep(waittime)
+
+        raise Exception('Max tries %s exceeded when polling for request success' % maxtries)
+
+    # def _poll_for_success(self, fn, params):
+    #     sleep(2)
+    #     return fn(params)
 
     def assertCorrectRiskScore(self, result, target_risk_score, *args):
+        """Assert that the risk score matches the target."""
         try:
             risk_score = result['data'][0]['result_data'][0]['data'][0][
                 'risk']['score']
         except Exception as err:
-            print ('result: %s' % result)
+            print ('result %s' % (result['data'][0]))
             raise
         self.assertEqual(risk_score, target_risk_score, *args)
 
-    def getTestDataByIocTypeAndRiskScore(self, type, rs_min, rs_max, limit):
-        """Function that queries RawAPI for IOCs for a specific data group and risk score ."""
-        api = RawApiClient()
+    def assertMetrics(self, result):
+        """Assert that metrics for totalHits exists and is an int."""
+        metrics = result['data'][0]['result_data'][0]['data'][0]['metrics']
+        total_hits = [met['value'] for met in metrics
+                      if met['type'] == 'totalHits'][0]
+        self.assertIsInstance(total_hits, int)
 
-        query = {
-            "cluster": {
-                "data_group": type,
-                "limit": limit,
-                "attributes": [
-                    {
-                        "name": "stats.metrics.riskScore",
-                        "range": {
-                            "gt": rs_min
-                        }
-                    },
-                    {
-                        "name": "stats.metrics.riskScore",
-                        "range": {
-                            "lt": rs_max
-                        }
-                    }
-                ]
-            },
-            "output": {
-                "exclude": [
-                    "stats.entity_lists"
-                ],
-                "inline_entities": True
-            }
-        }
+    def high_risk_iocs_by_category(self, category, limit, **kwargs):
+        """Return limit IOCs of a category."""
+        api = ConnectApiClient()
+        res = api.search(category, limit=limit, **kwargs)
+        return [(entity['entity']['name'], entity['risk']['score'])
+                for entity in res.entities]
 
-        res = api.query(query)
-
-        self.assertEquals(res.result['status'], 'SUCCESS');
-
-        TARGETS = []
-        #print("res.result: %s" % res.result)
-        for event in res.result['events']:
-            ioc = event['attributes']['entities'][0]['name']
-            riskScore = event['stats']['metrics']['riskScore']
-            #print("ioc: %s" % ioc);
-            TARGETS.append((ioc, riskScore))
-
-        return TARGETS
+    # def get_test_data_by_ioc_type_and_risk_score(self, type, rs_min, rs_max,
+    #                                              limit):
+    #     """Function that queries RawAPI for IOCs for a specific data group
+    #     and risk score .
+    #     """
+    #     api = RawApiClient()
+    #
+    #     query = {
+    #         "cluster": {
+    #             "data_group": type,
+    #             "limit": limit,
+    #             "attributes": [
+    #                 {
+    #                     "name": "stats.metrics.riskScore",
+    #                     "range": {
+    #                         "gt": rs_min
+    #                     }
+    #                 },
+    #                 {
+    #                     "name": "stats.metrics.riskScore",
+    #                     "range": {
+    #                         "lt": rs_max
+    #                     }
+    #                 }
+    #             ]
+    #         },
+    #         "output": {
+    #             "exclude": [
+    #                 "stats.entity_lists"
+    #             ],
+    #             "inline_entities": True
+    #         }
+    #     }
+    #
+    #     res = api.query(query)
+    #
+    #     self.assertEquals(res.result['status'], 'SUCCESS');
+    #
+    #     targets = []
+    #     for event in res.result['events']:
+    #         ip = event['attributes']['entities'][0]['name']
+    #         riskScore = event['stats']['metrics']['riskScore']
+    #         targets.append((ip, riskScore))
+    #
+    #     return targets

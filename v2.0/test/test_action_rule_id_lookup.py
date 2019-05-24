@@ -12,7 +12,7 @@ LOGGER = logging.getLogger(__name__)
 
 PBOOK = 'recorded_future_alert_test'
 TARGETS = [
-        ('recordedfuture.com Leaked Credentials Document', ['VNPVFc']),
+    # ('recordedfuture.com Leaked Credentials Document', ['VNPVFc']),
     ('Recorded', [u'Ya4pFB', u'YcKufV', u'Vp5IXy', u'VNPVFc', u'VKhgWu',
                   u'Vp5IXx', u'YcKufW', u'Ya9Aof', u'YbYAKE'
                   ])
@@ -35,7 +35,7 @@ class RfRuleIdLookupTests(RfTests):
             cs1Label="alert rule name")
 
         # Fetch the result of the automatic run.
-        ares = self._action_result(container_id)
+        ares = self._poll_for_success(self._action_result, container_id)
 
         result_data = ares['data'][0]['result_data'][0]['data']
         result_rule_id_list = [result['rule']['id'] for result in result_data]

@@ -23,8 +23,9 @@ class RfUrlReputationTests(RfTests):
     def _test_url_reputation_score(self, ioc, target_risk_score):
         """Test behavior when a url is supplied."""
         # Create container and artifact.
-        container_id = self._create_event_and_artifact('Url Reputation',
-                                                       requestURL=ioc)
+        container_id = self._create_event_and_artifact(
+            'Test Event Url Reputation',
+            requestURL=ioc)
 
         # Fetch the result of the automatic run.
         ares = self._action_result(container_id)
