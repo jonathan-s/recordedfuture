@@ -139,7 +139,6 @@
           "data_type": "string",
           "required": true,
           "primary": false,
-          "contains": [],
           "value_list": [],
           "default": "-24h to now",
           "order": 0
@@ -152,7 +151,8 @@
         },
         {
           "data_path": "action_result.parameter.timeframe",
-          "data_type": "string"        },
+          "data_type": "string"
+        },
         {
           "data_path": "action_result.data.*.alert.alertTitle",
           "data_type": "string",
