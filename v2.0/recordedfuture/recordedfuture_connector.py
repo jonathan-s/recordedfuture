@@ -136,8 +136,7 @@ class RecordedfutureConnector(BaseConnector):
         return RetVal(action_result.set_status(phantom.APP_ERROR, message),
                       None)
 
-    @staticmethod
-    def _process_json_response(resp, action_result):
+    def _process_json_response(self, resp, action_result, **kwargs):
 
         # Try a json parse
         try:
@@ -152,8 +151,96 @@ class RecordedfutureConnector(BaseConnector):
         if 200 <= resp.status_code < 399:
             return RetVal(phantom.APP_SUCCESS, resp_json)
 
-        if resp.status_code == 404:
-            return RetVal(phantom.APP_SUCCESS, {})
+        # If an IOC has no data in Recorded Future's API it returns 404.
+        # While this is correct in REST semantics it's not what our app
+        # needs. We will create an empty response instead.
+        self.debug_print('_process_json_response kwargs: ', kwargs)
+        if 'fields' in kwargs.get('params', {}):
+            fields = kwargs['params']['fields'].split(',')
+            self.debug_print('_process_json_response fields: ', fields)
+            if resp.status_code == 404:
+                resp_json = {
+                    "data": {
+                        "entity": {
+                            "name": '',
+                        },
+                        "timestamps": {
+                            "firstSeen": "never",
+                            "lastSeen": "never"
+                        },
+                        "risk": {
+                            "criticalityLabel": "None",
+                            "rules": 0,
+                            "evidenceDetails": [],
+                            "riskSummary": "No Risk Rules are currently "
+                                           "observed.",
+                            "criticality": 0,
+                            "riskString": "",
+                            "score": 0
+                        }
+                    }
+                }
+                if 'intelCard' in fields:
+                    resp_json['data']['intelCard'] = ''
+                if 'threatLists' in fields:
+                    resp_json['data']['threatLists'] = []
+                if 'relatedEntities' in fields:
+                    resp_json['data']['relatedEntities'] = []
+                if 'location' in fields:
+                    resp_json['data']['location'] = {}
+                if 'metrics' in fields:
+                    resp_json['data']['metrics'] = [
+                        {
+                            "type": "pasteHits",
+                            "value": 0,
+                        },
+                        {
+                            "type": "darkWebHits",
+                            "value": 0
+                        },
+                        {
+                            "type": "criticality",
+                            "value": 0
+                        },
+                        {
+                            "type": "undergroundForumHits",
+                            "value": 0
+                        },
+                        {
+                            "type": "maliciousHits",
+                            "value": 0
+                        },
+                        {
+                            "type": "technicalReportingHits",
+                            "value": 0
+                        },
+                        {
+                            "type": "infoSecHits",
+                            "value": 0
+                        },
+                        {
+                            "type": "totalHits",
+                            "value": 0
+                        },
+                        {
+                            "type": "sixtyDaysHits",
+                            "value": 0
+                        },
+                        {
+                            "type": "oneDayHits",
+                            "value": 0
+                        },
+                        {
+                            "type": "socialMediaHits",
+                            "value": 0
+                        },
+                        {
+                            "type": "sevenDaysHits",
+                            "value": 0
+                        }
+                    ]
+
+                return RetVal(phantom.APP_SUCCESS, resp_json)
 
         # You should process the error returned in the json
         message = "Error from server. Status Code: {0} " \
@@ -165,7 +252,7 @@ class RecordedfutureConnector(BaseConnector):
         return RetVal(action_result.set_status(phantom.APP_ERROR, message),
                       None)
 
-    def _process_response(self, resp, action_result):
+    def _process_response(self, resp, action_result, **kwargs):
         # store the r_text in debug data, it will get dumped in the logs if
         # the action fails
         if hasattr(action_result, 'add_debug_data'):
@@ -177,7 +264,7 @@ class RecordedfutureConnector(BaseConnector):
 
         # Process a json response
         if 'json' in resp.headers.get('Content-Type', ''):
-            return self._process_json_response(resp, action_result)
+            return self._process_json_response(resp, action_result, **kwargs)
 
         # Process an HTML response, Do this no matter what the api talks.
         # There is a high chance of a PROXY in between phantom and the rest of
@@ -210,9 +297,10 @@ class RecordedfutureConnector(BaseConnector):
         try:
             request_func = getattr(requests, method)
         except AttributeError:
-            return RetVal(action_result.set_status(phantom.APP_ERROR,
-                                                   "Invalid method: {0}".format(
-                                                       method)), resp_json)
+            return RetVal(action_result.set_status(
+                phantom.APP_ERROR,
+                "Invalid method: {0}".format(method)),
+                resp_json)
 
         # Create a URL to connect to
         url = self._base_url + endpoint
@@ -249,7 +337,7 @@ class RecordedfutureConnector(BaseConnector):
                 "Error Connecting to server. Details: {0}".format(str(err))),
                 resp_json)
 
-        return self._process_response(resp, action_result)
+        return self._process_response(resp, action_result, **kwargs)
 
     def _handle_test_connectivity(self, param):
 

@@ -19,11 +19,12 @@ class RfIpReputationTests(RfTests):
         """Setup test environment."""
         RfTests.setUp(self, PBOOK)
 
-    def _test_ip_intelligence_data(self, ioc, target_risk_score):
+    def _test_ip_intelligence_data(self, ioc, target_risk_score, cname):
         """Test behavior when an ip is supplied."""
         # Create container and artifact.
         container_id = self._create_event_and_artifact(
-            'Test Event IP Intelligence', destinationAddress=ioc)
+            cname,
+            destinationAddress=ioc)
 
         # Fetch the result of the automatic run.
         ares = self._poll_for_success(self._action_result, container_id)
@@ -42,4 +43,15 @@ class RfIpReputationTests(RfTests):
 
         # Call the test for each target
         for ioc, target_risk_score in targets:
-            self._test_ip_intelligence_data(ioc, target_risk_score)
+            self._test_ip_intelligence_data(ioc, target_risk_score,
+                                            'Test Event IP Intelligence')
+
+    def test_neg_ip_intelligence(self):
+        """Test behavior when an ip without info is supplied."""
+        targets = [('1.2.3.4', 0)]
+
+        # Call the test for each target
+        for ioc, target_risk_score in targets:
+            self._test_ip_intelligence_data(
+                ioc, target_risk_score,
+                'Test Event Neg IP Intelligence (no info IOC)')
