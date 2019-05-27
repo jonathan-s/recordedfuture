@@ -1,16 +1,3 @@
-# Copyright 2019 Recorded Future, Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
 """
 This playbook is called from a correlation search in Splunk ES
 """
@@ -44,12 +31,15 @@ def ip_reputation_1(action=None, success=None, container=None, results=None, han
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("ip reputation", parameters=parameters, assets=['recorded future app'], callback=IOCs_90_Plus, name="ip_reputation_1")
+    phantom.act("ip reputation", parameters=parameters, assets=['recorded future app'], callback=filter_for_risk_score_above_90, name="ip_reputation_1")
 
     return
 
-def IOCs_90_Plus(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('IOCs_90_Plus() called')
+"""
+Match IP address against Recorded Future's Risk List for any IP addresses with a risk score of 90 or above.
+"""
+def filter_for_risk_score_above_90(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('filter_for_risk_score_above_90() called')
 
     # check for 'if' condition 1
     matched_artifacts_1, matched_results_1 = phantom.condition(
@@ -61,17 +51,17 @@ def IOCs_90_Plus(action=None, success=None, container=None, results=None, handle
 
     # call connected blocks if condition 1 matched
     if matched_artifacts_1 or matched_results_1:
-        Add_Bad_IP_to_List(action=action, success=success, container=container, results=results, handle=handle)
-        Format_Data_For_Splunk(action=action, success=success, container=container, results=results, handle=handle)
-        Format_Data_for_Email(action=action, success=success, container=container, results=results, handle=handle)
+        add_bad_ip_to_list(action=action, success=success, container=container, results=results, handle=handle)
+        format_info(action=action, success=success, container=container, results=results, handle=handle)
+        format_email(action=action, success=success, container=container, results=results, handle=handle)
         return
 
     # call connected blocks for 'else' condition 2
 
     return
 
-def Add_Bad_IP_to_List(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('Add_Bad_IP_to_List() called')
+def add_bad_ip_to_list(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('add_bad_ip_to_list() called')
 
     results_data_1 = phantom.collect2(container=container, datapath=['ip_reputation_1:action_result.parameter.ip'], action_results=results)
 
@@ -81,8 +71,8 @@ def Add_Bad_IP_to_List(action=None, success=None, container=None, results=None, 
 
     return
 
-def Format_Data_For_Splunk(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('Format_Data_For_Splunk() called')
+def format_info(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('format_info() called')
     
     template = """Destination={0}
 Risk={1}
@@ -99,14 +89,14 @@ Evidence={4}"""
         "ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.evidenceString",
     ]
 
-    phantom.format(container=container, template=template, parameters=parameters, name="Format_Data_For_Splunk")
+    phantom.format(container=container, template=template, parameters=parameters, name="format_info")
 
-    Post_back_to_Splunk_SOAR_info(container=container)
+    send_info_to_splunk(container=container)
 
     return
 
-def Format_Data_for_Email(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('Format_Data_for_Email() called')
+def format_email(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('format_email() called')
     
     template = """The IP address {0} with a risk score of {1} was added to the Bad IP List and sent back to Splunk.  More information on this IOC can be found at  {2}"""
 
@@ -117,23 +107,27 @@ def Format_Data_for_Email(action=None, success=None, container=None, results=Non
         "ip_reputation_1:action_result.data.*.intelCard",
     ]
 
-    phantom.format(container=container, template=template, parameters=parameters, name="Format_Data_for_Email")
+    phantom.format(container=container, template=template, parameters=parameters, name="format_email")
 
-    Email_notification(container=container)
+    send_email(container=container)
 
     return
 
-def Email_notification(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('Email_notification() called')
+"""
+
+
+"""
+def send_email(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('send_email() called')
     
     #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
     
-    # collect data for 'Email_notification' call
-    formatted_data_1 = phantom.get_format_data(name='Format_Data_for_Email')
+    # collect data for 'send_email' call
+    formatted_data_1 = phantom.get_format_data(name='format_email')
 
     parameters = []
     
-    # build parameters list for 'Email_notification' call
+    # build parameters list for 'send_email' call
     parameters.append({
         'body': formatted_data_1,
         'from': "sender@example.com",
@@ -145,21 +139,25 @@ def Email_notification(action=None, success=None, container=None, results=None, 
         'subject': "Alert Generated IP added to list",
     })
 
-    phantom.act("send email", parameters=parameters, assets=['smtp'], name="Email_notification")
+    phantom.act("send email", parameters=parameters, assets=['smtp'], name="send_email")
 
     return
 
-def Post_back_to_Splunk_SOAR_info(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('Post_back_to_Splunk_SOAR_info() called')
+"""
+
+
+"""
+def send_info_to_splunk(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('send_info_to_splunk() called')
     
     #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
     
-    # collect data for 'Post_back_to_Splunk_SOAR_info' call
-    formatted_data_1 = phantom.get_format_data(name='Format_Data_For_Splunk')
+    # collect data for 'send_info_to_splunk' call
+    formatted_data_1 = phantom.get_format_data(name='format_info')
 
     parameters = []
     
-    # build parameters list for 'Post_back_to_Splunk_SOAR_info' call
+    # build parameters list for 'send_info_to_splunk' call
     parameters.append({
         'index': "",
         'host': "",
@@ -168,7 +166,7 @@ def Post_back_to_Splunk_SOAR_info(action=None, success=None, container=None, res
         'source_type': "Automation/Orchestration Platform",
     })
 
-    phantom.act("post data", parameters=parameters, assets=['splunk-server'], name="Post_back_to_Splunk_SOAR_info")
+    phantom.act("post data", parameters=parameters, assets=['splunk-server'], name="send_info_to_splunk")
 
     return
 

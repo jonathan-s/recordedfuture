@@ -7,6 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "Show's enrichment with decision based off Risk Score.  This playbook is typically used for artifact enrichment.",
+            "hash": "d7162d3d19e1e6fdfa7af4faf6cdd2e15b4d8ad4",
             "joint": {
                 "cells": [
                     {
@@ -54,7 +55,7 @@
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "Send Very Malicious IP Email, ip reputation",
+                        "connection_name": "send email, ip reputation",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -72,8 +73,8 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 155,
-                        "line_start": 142,
+                        "line_end": 158,
+                        "line_start": 145,
                         "name": "",
                         "notes": "",
                         "number": 0,
@@ -576,208 +577,172 @@
                         "z": 85
                     },
                     {
+                        "action": "ip reputation",
+                        "action_type": "investigate",
                         "active": false,
-                        "angle": 0,
-                        "attrs": {
-                            ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#637282",
-                                "transform": "rotate(45 30 70)"
-                            },
-                            ".inPorts>.port-0>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".number": {
-                                "text": 1
-                            },
-                            ".outPorts>.port-0": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                },
-                                "ref-x": 83,
-                                "ref-y": 40
-                            },
-                            ".outPorts>.port-0>.port-body": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                }
-                            },
-                            ".outPorts>.port-1": {
-                                "port": {
-                                    "id": "out-2",
-                                    "type": "out"
-                                },
-                                "ref-x": 41,
-                                "ref-y": 82
-                            },
-                            ".outPorts>.port-1>.port-body": {
-                                "port": {
-                                    "id": "out-2",
-                                    "type": "out"
-                                }
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
+                        "active_keys": {},
+                        "active_values": {
+                            "ip": "artifact:*.cef.destinationAddress"
                         },
-                        "block_code": "def Filter_For_Risk_90_Plus(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Filter_For_Risk_90_Plus() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"ip_reputation_1:action_result.data.*.risk.score\", \">=\", 90],\n            [\"ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.rule\", \"in\", \"Current C&C Server\"],\n        ],\n        logical_operator='and')\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        Format_High_Threat_Email(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # call connected blocks for 'else' condition 2\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "connected_to_start": true,
-                        "connection_name": "ip reputation",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "Filter For Risk 90 Plus",
-                        "description": "",
-                        "hasElse": true,
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "d3209520-b750-4d44-96ef-bc673465ab34",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 60,
-                        "line_start": 38,
-                        "name": "decision",
-                        "notes": "",
-                        "number": 1,
-                        "order": 3,
-                        "outPorts": [
-                            "out-1",
-                            "out-2"
-                        ],
-                        "outputs": [
+                        "angle": 0,
+                        "app": "recordedfuture",
+                        "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
+                        "approver": "",
+                        "assets": [
                             {
-                                "conditions": [
+                                "action": "ip reputation",
+                                "actions": [
+                                    "alert data lookup",
+                                    "rule id lookup",
+                                    "lookup vulnerability",
+                                    "file reputation",
+                                    "ip reputation",
+                                    "url reputation",
+                                    "domain reputation",
+                                    "test connectivity"
+                                ],
+                                "active": true,
+                                "app_name": "recordedfuture",
+                                "app_version": "2.0.0",
+                                "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
+                                "asset_name": "recordedfuture",
+                                "config_type": "asset",
+                                "count": 0,
+                                "fields": {
+                                    "ip": "artifact:*.cef.destinationAddress"
+                                },
+                                "has_app": true,
+                                "id": 13,
+                                "loaded": false,
+                                "missing": false,
+                                "name": "recorded future app",
+                                "output": [
                                     {
-                                        "comparison": ">=",
-                                        "data_type": "",
-                                        "param": "ip_reputation_1:action_result.data.*.risk.score",
-                                        "value": "90"
+                                        "column_name": "ip",
+                                        "column_order": 0,
+                                        "contains": [
+                                            "ip"
+                                        ],
+                                        "data_path": "action_result.parameter.ip",
+                                        "data_type": "string"
                                     },
                                     {
-                                        "comparison": "in",
-                                        "data_type": "",
-                                        "param": "ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.rule",
-                                        "value": "Current C&C Server"
+                                        "column_name": "status",
+                                        "column_order": 1,
+                                        "data_path": "action_result.status",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.message",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.entity.type",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.entity.name",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.entity.id",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.timestamps.firstSeen",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.timestamps.lastSeen",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.riskSummary",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.rules",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.criticality",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.criticalityLabel",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.score",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.mitigationString",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "column_name": "status",
+                                        "column_order": 1,
+                                        "data_path": "action_result.status",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.message",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.riskSummary",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.criticalityLabel",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.lastSeen",
+                                        "data_type": "string"
                                     }
                                 ],
-                                "display": "If",
-                                "logic": "and",
-                                "type": "if"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "comparison": "==",
-                                        "data_type": "",
-                                        "param": "",
-                                        "value": ""
-                                    }
-                                ],
-                                "display": "Else",
-                                "logic": "and",
-                                "type": "else"
-                            }
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
+                                "parameters": {
+                                    "ip": {
+                                        "contains": [
+                                            "ip"
+                                        ],
+                                        "data_type": "string",
+                                        "default": "",
+                                        "description": "IP to query",
+                                        "key": "ip",
+                                        "order": 0,
+                                        "primary": true,
+                                        "required": true,
+                                        "value_list": []
                                     }
                                 },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
+                                "product_name": "Recorded Future for Splunk Phantom",
+                                "product_vendor": "Recorded Future, Inc",
+                                "targets": "13",
+                                "type": "reputation"
                             }
-                        },
-                        "position": {
-                            "x": 420,
-                            "y": 40
-                        },
-                        "previous_function": "",
-                        "previous_name": "Filter_For_Risk_90_Plus",
-                        "show_number": true,
-                        "size": {
-                            "height": 82,
-                            "width": 82
-                        },
-                        "state": "decision",
-                        "status": "",
-                        "type": "coa.Decision",
-                        "warn": "",
-                        "z": 89
-                    },
-                    {
-                        "active": false,
-                        "angle": 0,
-                        "api": "add list",
+                        ],
                         "attrs": {
-                            ".api": {
-                                "text": "Add to Bad IP List"
+                            ".action": {
+                                "text": "ip reputation"
                             },
                             ".background": {
                                 "fill": "#FFFFFF",
@@ -813,7 +778,10 @@
                                 }
                             },
                             ".title": {
-                                "text": "API"
+                                "text": "Investigate"
+                            },
+                            "g.approver image": {
+                                "opacity": 1
                             },
                             "g.code image": {
                                 "opacity": 1
@@ -824,55 +792,54 @@
                             "g.error": {
                                 "opacity": 0
                             },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
+                            "g.icon image": {
+                                "xlink:href": "/inc/coa/img/block_icon_investigate.svg"
+                            },
                             "g.notes": {
                                 "display": "block"
                             },
-                            "g.notes code": {
-                                "opacity": 1,
-                                "xlink:href": "/inc/coa/img/block_icon_code_dark_off.svg"
-                            },
                             "g.notes image": {
+                                "opacity": 1
+                            },
+                            "g.timer image": {
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Add_to_Bad_IP_List(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Add_to_Bad_IP_List() called')\n\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    container_item_0 = [item[0] for item in container_data]\n\n    phantom.add_list(\"Identified IP's\", container_item_0)\n\n    return",
+                        "block_code": "def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_reputation_1() called')\n\n    # collect data for 'ip_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip reputation\", parameters=parameters, assets=['recorded future app'], callback=filter_for_risk_score_above_90, name=\"ip_reputation_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
-                        "callsback": false,
+                        "callsback": true,
                         "color": "",
-                        "configured": [
-                            {
-                                "addListData": "artifact:*.cef.destinationAddress",
-                                "addListList": "Identified IP's",
-                                "key": "add-list"
-                            }
-                        ],
                         "connected_to_start": true,
-                        "connection_name": "Send Very Malicious IP Email",
-                        "connection_type": "action",
+                        "connection_name": "",
+                        "connection_type": "",
                         "custom_callback": "",
                         "custom_code": "",
                         "custom_join": "",
-                        "custom_name": "Add to Bad IP List",
+                        "custom_name": "",
+                        "delay": "0",
                         "description": "",
                         "has_custom": false,
                         "has_custom_block": false,
                         "has_custom_callback": false,
                         "has_custom_join": false,
-                        "id": "0c69448a-5be7-48a7-a0d1-f641dfc87285",
+                        "id": "3b2cd0f6-535d-4ad3-8df6-81cd4edbd309",
                         "inPorts": [
                             "in"
                         ],
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 142,
-                        "line_start": 131,
+                        "line_end": 38,
+                        "line_start": 17,
                         "message": "Configuring now",
-                        "name": "add list",
+                        "name": "ip reputation",
                         "notes": "",
                         "number": 1,
-                        "order": 6,
+                        "order": 2,
                         "outPorts": [
                             "out"
                         ],
@@ -929,22 +896,26 @@
                             }
                         },
                         "position": {
-                            "x": 1000,
-                            "y": 60
+                            "x": 200,
+                            "y": 40
                         },
                         "previous_function": "",
-                        "previous_name": "Add_to_Bad_IP_List",
+                        "previous_name": "ip_reputation_1",
+                        "required_params": {
+                            "ip": true
+                        },
+                        "reviewer": "",
                         "show_number": false,
                         "size": {
                             "height": 100,
                             "width": 180
                         },
-                        "state": "api",
+                        "state": "app_action_assets",
                         "status": "",
-                        "title": "API",
-                        "type": "coa.API",
+                        "title": "Investigate",
+                        "type": "coa.Action",
                         "warn": false,
-                        "z": 92
+                        "z": 102
                     },
                     {
                         "active": false,
@@ -958,7 +929,7 @@
                                 "fill": "#171D21"
                             },
                             ".format": {
-                                "text": "Format High Threat Email"
+                                "text": "format email"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -1003,7 +974,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Format_High_Threat_Email(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Format_High_Threat_Email() called')\n    \n    template = \"\"\"The IP {0}  is has a risk score of {1} \n\nThe rules triggered for this IP are:\n\n{3}\n\n{4}\n\nThe Evidence Details are:\n\n{2}\n\nRelated Entities:\n\n{6}\n\n{7}\n\n{8}\n\nMore information about:\n{5}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"ip_reputation_1:action_result.parameter.ip\",\n        \"ip_reputation_1:action_result.data.*.risk.score\",\n        \"ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.evidenceString\",\n        \"ip_reputation_1:action_result.data.*.risk.riskSummary\",\n        \"ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.rule\",\n        \"ip_reputation_1:action_result.data.*.intelCard\",\n        \"ip_reputation_1:action_result.data.*.relatedEntities.*.type\",\n        \"ip_reputation_1:action_result.data.*.relatedEntities.*.entities.*.entity.name\",\n        \"ip_reputation_1:action_result.data.*.relatedEntities.*.entities.*.entity.type\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Format_High_Threat_Email\")\n\n    Send_Very_Malicious_IP_Email(container=container)\n\n    return",
+                        "block_code": "def format_email(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('format_email() called')\n    \n    template = \"\"\"The IP {0}  is has a risk score of {1} \n\nThe rules triggered for this IP are:\n\n{3}\n\n{4}\n\nThe Evidence Details are:\n\n{2}\n\nRelated Entities:\n\n{6}\n\n{7}\n\n{8}\n\nMore information about:\n{5}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"ip_reputation_1:action_result.parameter.ip\",\n        \"ip_reputation_1:action_result.data.*.risk.score\",\n        \"ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.evidenceString\",\n        \"ip_reputation_1:action_result.data.*.risk.riskSummary\",\n        \"ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.rule\",\n        \"ip_reputation_1:action_result.data.*.intelCard\",\n        \"ip_reputation_1:action_result.data.*.relatedEntities.*.type\",\n        \"ip_reputation_1:action_result.data.*.relatedEntities.*.entities.*.entity.name\",\n        \"ip_reputation_1:action_result.data.*.relatedEntities.*.entities.*.entity.type\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"format_email\")\n\n    send_email(container=container)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
@@ -1013,7 +984,7 @@
                         "custom_callback": "",
                         "custom_code": "",
                         "custom_join": "",
-                        "custom_name": "Format High Threat Email",
+                        "custom_name": "format email",
                         "description": "",
                         "format": "format",
                         "has_custom": false,
@@ -1027,8 +998,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 141,
-                        "line_end": 131,
-                        "line_start": 86,
+                        "line_end": 134,
+                        "line_start": 89,
                         "message": "Configuring now",
                         "name": "format",
                         "notes": "",
@@ -1141,7 +1112,7 @@
                             "y": 60
                         },
                         "previous_function": "",
-                        "previous_name": "Format_High_Threat_Email",
+                        "previous_name": "format_email",
                         "show_number": true,
                         "size": {
                             "height": 100,
@@ -1153,7 +1124,203 @@
                         "title": "format",
                         "type": "coa.Format",
                         "warn": false,
-                        "z": 93
+                        "z": 103
+                    },
+                    {
+                        "active": false,
+                        "angle": 0,
+                        "attrs": {
+                            ".background": {
+                                "fill": "#FFFFFF",
+                                "stroke": "#637282",
+                                "transform": "rotate(45 30 70)"
+                            },
+                            ".inPorts>.port-0>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".number": {
+                                "text": 1
+                            },
+                            ".outPorts>.port-0": {
+                                "port": {
+                                    "id": "out-1",
+                                    "type": "out"
+                                },
+                                "ref-x": 83,
+                                "ref-y": 40
+                            },
+                            ".outPorts>.port-0>.port-body": {
+                                "port": {
+                                    "id": "out-1",
+                                    "type": "out"
+                                }
+                            },
+                            ".outPorts>.port-1": {
+                                "port": {
+                                    "id": "out-2",
+                                    "type": "out"
+                                },
+                                "ref-x": 41,
+                                "ref-y": 82
+                            },
+                            ".outPorts>.port-1>.port-body": {
+                                "port": {
+                                    "id": "out-2",
+                                    "type": "out"
+                                }
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
+                            }
+                        },
+                        "block_code": "def filter_for_risk_score_above_90(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('filter_for_risk_score_above_90() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"ip_reputation_1:action_result.data.*.risk.score\", \">=\", 90],\n            [\"ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.rule\", \"in\", \"Current C&C Server\"],\n        ],\n        logical_operator='and')\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        format_email(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # call connected blocks for 'else' condition 2\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": false,
+                        "connected_to_start": true,
+                        "connection_name": "ip reputation",
+                        "connection_type": "action",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "filter for risk score above 90",
+                        "description": "Match IP address against Recorded Future's Risk List for any IP addresses with a risk score of 90 or above.",
+                        "hasElse": true,
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "d3209520-b750-4d44-96ef-bc673465ab34",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 63,
+                        "line_start": 41,
+                        "name": "decision",
+                        "notes": "",
+                        "number": 1,
+                        "order": 3,
+                        "outPorts": [
+                            "out-1",
+                            "out-2"
+                        ],
+                        "outputs": [
+                            {
+                                "conditions": [
+                                    {
+                                        "comparison": ">=",
+                                        "data_type": "",
+                                        "param": "ip_reputation_1:action_result.data.*.risk.score",
+                                        "value": "90"
+                                    },
+                                    {
+                                        "comparison": "in",
+                                        "data_type": "",
+                                        "param": "ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.rule",
+                                        "value": "Current C&C Server"
+                                    }
+                                ],
+                                "display": "If",
+                                "logic": "and",
+                                "type": "if"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "comparison": "==",
+                                        "data_type": "",
+                                        "param": "",
+                                        "value": ""
+                                    }
+                                ],
+                                "display": "Else",
+                                "logic": "and",
+                                "type": "else"
+                            }
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 420,
+                            "y": 40
+                        },
+                        "previous_function": "",
+                        "previous_name": "filter_for_risk_score_above_90",
+                        "show_number": true,
+                        "size": {
+                            "height": 82,
+                            "width": 82
+                        },
+                        "state": "decision",
+                        "status": "",
+                        "type": "coa.Decision",
+                        "warn": "",
+                        "z": 105
                     },
                     {
                         "action": "send email",
@@ -1163,7 +1330,7 @@
                         "active_values": {
                             "attachments": "",
                             "bcc": "",
-                            "body": "Format_High_Threat_Email:formatted_data",
+                            "body": "format_email:formatted_data",
                             "from": "sender@example.com",
                             "headers": "",
                             "subject": "Very Malicious IP ",
@@ -1190,7 +1357,7 @@
                                 "fields": {
                                     "attachments": "",
                                     "bcc": "",
-                                    "body": "Format_High_Threat_Email:formatted_data",
+                                    "body": "format_email:formatted_data",
                                     "cc": "",
                                     "from": "sender@example.com",
                                     "headers": "",
@@ -1374,7 +1541,7 @@
                         ],
                         "attrs": {
                             ".action": {
-                                "text": "Send Very Malicious IP E..."
+                                "text": "send email"
                             },
                             ".background": {
                                 "fill": "#FFFFFF",
@@ -1440,7 +1607,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Send_Very_Malicious_IP_Email(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('Send_Very_Malicious_IP_Email() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Send_Very_Malicious_IP_Email' call\n    formatted_data_1 = phantom.get_format_data(name='Format_High_Threat_Email')\n\n    parameters = []\n    \n    # build parameters list for 'Send_Very_Malicious_IP_Email' call\n    parameters.append({\n        'body': formatted_data_1,\n        'from': \"sender@example.com\",\n        'attachments': \"\",\n        'to': \"recipient@example.com\",\n        'cc': \"\",\n        'bcc': \"\",\n        'headers': \"\",\n        'subject': \"Very Malicious IP \",\n    })\n\n    phantom.act(\"send email\", parameters=parameters, assets=['smtp'], callback=Add_to_Bad_IP_List, name=\"Send_Very_Malicious_IP_Email\")\n\n    return",
+                        "block_code": "def send_email(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('send_email() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'send_email' call\n    formatted_data_1 = phantom.get_format_data(name='format_email')\n\n    parameters = []\n    \n    # build parameters list for 'send_email' call\n    parameters.append({\n        'body': formatted_data_1,\n        'from': \"sender@example.com\",\n        'attachments': \"\",\n        'to': \"recipient@example.com\",\n        'cc': \"\",\n        'bcc': \"\",\n        'headers': \"\",\n        'subject': \"Very Malicious IP \",\n    })\n\n    phantom.act(\"send email\", parameters=parameters, assets=['smtp'], callback=add_bad_ip_to_list, name=\"send_email\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 84,
                         "callsback": true,
@@ -1451,7 +1618,7 @@
                         "custom_callback": "",
                         "custom_code": "",
                         "custom_join": "",
-                        "custom_name": "Send Very Malicious IP Email",
+                        "custom_name": "send email",
                         "delay": 0,
                         "description": "",
                         "has_custom": false,
@@ -1465,8 +1632,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 86,
-                        "line_start": 60,
+                        "line_end": 89,
+                        "line_start": 63,
                         "message": "Configuring now",
                         "name": "send email",
                         "notes": "",
@@ -1532,7 +1699,7 @@
                             "y": 60
                         },
                         "previous_function": "",
-                        "previous_name": "Send_Very_Malicious_IP_Email",
+                        "previous_name": "send_email",
                         "required_params": {
                             "body": true,
                             "to": true
@@ -1548,319 +1715,15 @@
                         "title": "Generic",
                         "type": "coa.Action",
                         "warn": false,
-                        "z": 94
+                        "z": 106
                     },
                     {
-                        "action": "ip reputation",
-                        "action_type": "investigate",
                         "active": false,
-                        "active_keys": {},
-                        "active_values": {
-                            "ip": "artifact:*.cef.destinationAddress"
-                        },
                         "angle": 0,
-                        "app": "recordedfuture",
-                        "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-                        "approver": "",
-                        "assets": [
-                            {
-                                "action": "ip reputation",
-                                "actions": [
-                                    "alert data lookup",
-                                    "rule id lookup",
-                                    "lookup vulnerability",
-                                    "file reputation",
-                                    "ip reputation",
-                                    "url reputation",
-                                    "domain reputation",
-                                    "test connectivity"
-                                ],
-                                "active": true,
-                                "app_name": "recordedfuture",
-                                "app_version": "2.0.0",
-                                "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-                                "asset_name": "recordedfuture",
-                                "config_type": "asset",
-                                "count": 0,
-                                "fields": {
-                                    "ip": "artifact:*.cef.destinationAddress"
-                                },
-                                "has_app": true,
-                                "id": 13,
-                                "loaded": false,
-                                "missing": false,
-                                "name": "recorded future app",
-                                "output": [
-                                    {
-                                        "column_name": "ip",
-                                        "column_order": 0,
-                                        "contains": [
-                                            "ip"
-                                        ],
-                                        "data_path": "action_result.parameter.ip",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "column_name": "status",
-                                        "column_order": 1,
-                                        "data_path": "action_result.status",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.message",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.timestamps.firstSeen",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.timestamps.lastSeen",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.intelCard",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.asn",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.cidr.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.organization",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.location.country",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.location.city",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.riskSummary",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.rules",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.criticality",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.criticalityLabel",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.score",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.threatLists.*.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.threatLists.*.description",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.totalHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.oneDaysHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.sevenDaysHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.sixtyDaysHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.maliciousHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.infoSecHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.socialMediaHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.criminalForumHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.darkWebHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.pasteHits",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedAttackVectorCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedCompanyCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedCountryCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedEmailAddressCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedHashCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedInternetDomainCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedMalwareCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedMalwareCategoryCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedOrganizationCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedProductCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedTechnologyCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedUsernameCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.relatedVulnerabilityCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedEmailAddress.*.refCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedInternetDomainName.*.refCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedHash.*.refCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "column_name": "status",
-                                        "column_order": 1,
-                                        "data_path": "action_result.status",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.message",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.criticalityLabel",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.lastSeen",
-                                        "data_type": "string"
-                                    }
-                                ],
-                                "parameters": {
-                                    "ip": {
-                                        "contains": [
-                                            "ip"
-                                        ],
-                                        "data_type": "string",
-                                        "default": "",
-                                        "description": "IP to query",
-                                        "key": "ip",
-                                        "order": 0,
-                                        "primary": true,
-                                        "required": true,
-                                        "value_list": []
-                                    }
-                                },
-                                "product_name": "Recorded Future for Splunk Phantom",
-                                "product_vendor": "Recorded Future, Inc",
-                                "targets": "13",
-                                "type": "reputation"
-                            }
-                        ],
+                        "api": "add list",
                         "attrs": {
-                            ".action": {
-                                "text": "ip reputation"
+                            ".api": {
+                                "text": "add bad ip to list"
                             },
                             ".background": {
                                 "fill": "#FFFFFF",
@@ -1896,10 +1759,7 @@
                                 }
                             },
                             ".title": {
-                                "text": "Investigate"
-                            },
-                            "g.approver image": {
-                                "opacity": 1
+                                "text": "API"
                             },
                             "g.code image": {
                                 "opacity": 1
@@ -1910,54 +1770,55 @@
                             "g.error": {
                                 "opacity": 0
                             },
-                            "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
-                            },
-                            "g.icon image": {
-                                "xlink:href": "/inc/coa/img/block_icon_investigate.svg"
-                            },
                             "g.notes": {
                                 "display": "block"
                             },
-                            "g.notes image": {
-                                "opacity": 1
+                            "g.notes code": {
+                                "opacity": 1,
+                                "xlink:href": "/inc/coa/img/block_icon_code_dark_off.svg"
                             },
-                            "g.timer image": {
+                            "g.notes image": {
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_reputation_1() called')\n\n    # collect data for 'ip_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip reputation\", parameters=parameters, assets=['recorded future app'], callback=Filter_For_Risk_90_Plus, name=\"ip_reputation_1\")\n\n    return",
+                        "block_code": "def add_bad_ip_to_list(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('add_bad_ip_to_list() called')\n\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    container_item_0 = [item[0] for item in container_data]\n\n    phantom.add_list(\"Identified IP's\", container_item_0)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
-                        "callsback": true,
+                        "callsback": false,
                         "color": "",
+                        "configured": [
+                            {
+                                "addListData": "artifact:*.cef.destinationAddress",
+                                "addListList": "Identified IP's",
+                                "key": "add-list"
+                            }
+                        ],
                         "connected_to_start": true,
-                        "connection_name": "",
-                        "connection_type": "",
+                        "connection_name": "send email",
+                        "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
                         "custom_join": "",
-                        "custom_name": "",
-                        "delay": "0",
+                        "custom_name": "add bad ip to list",
                         "description": "",
                         "has_custom": false,
                         "has_custom_block": false,
                         "has_custom_callback": false,
                         "has_custom_join": false,
-                        "id": "3b2cd0f6-535d-4ad3-8df6-81cd4edbd309",
+                        "id": "0c69448a-5be7-48a7-a0d1-f641dfc87285",
                         "inPorts": [
                             "in"
                         ],
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 38,
-                        "line_start": 17,
+                        "line_end": 145,
+                        "line_start": 134,
                         "message": "Configuring now",
-                        "name": "ip reputation",
+                        "name": "add list",
                         "notes": "",
                         "number": 1,
-                        "order": 2,
+                        "order": 6,
                         "outPorts": [
                             "out"
                         ],
@@ -2014,26 +1875,22 @@
                             }
                         },
                         "position": {
-                            "x": 200,
-                            "y": 40
+                            "x": 1000,
+                            "y": 60
                         },
                         "previous_function": "",
-                        "previous_name": "ip_reputation_1",
-                        "required_params": {
-                            "ip": true
-                        },
-                        "reviewer": "",
+                        "previous_name": "add_bad_ip_to_list",
                         "show_number": false,
                         "size": {
                             "height": 100,
                             "width": 180
                         },
-                        "state": "app_action_assets",
+                        "state": "api",
                         "status": "",
-                        "title": "Investigate",
-                        "type": "coa.Action",
+                        "title": "API",
+                        "type": "coa.API",
                         "warn": false,
-                        "z": 96
+                        "z": 107
                     }
                 ]
             },
@@ -2042,7 +1899,7 @@
         "schema": 3,
         "version": "4.2.7532"
     },
-    "create_time": "2019-05-16T12:57:29.821212+00:00",
+    "create_time": "2019-05-27T08:49:57.615051+00:00",
     "draft_mode": false,
     "labels": [
         "events"

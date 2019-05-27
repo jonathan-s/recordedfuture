@@ -1,16 +1,3 @@
-# Copyright 2019 Recorded Future, Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
 """
 Show's enrichment with decision based off Risk Score.  This playbook is typically used for artifact enrichment.
 """
@@ -44,12 +31,15 @@ def ip_reputation_1(action=None, success=None, container=None, results=None, han
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("ip reputation", parameters=parameters, assets=['recorded future app'], callback=Filter_For_Risk_90_Plus, name="ip_reputation_1")
+    phantom.act("ip reputation", parameters=parameters, assets=['recorded future app'], callback=filter_for_risk_score_above_90, name="ip_reputation_1")
 
     return
 
-def Filter_For_Risk_90_Plus(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('Filter_For_Risk_90_Plus() called')
+"""
+Match IP address against Recorded Future's Risk List for any IP addresses with a risk score of 90 or above.
+"""
+def filter_for_risk_score_above_90(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('filter_for_risk_score_above_90() called')
 
     # check for 'if' condition 1
     matched_artifacts_1, matched_results_1 = phantom.condition(
@@ -63,24 +53,24 @@ def Filter_For_Risk_90_Plus(action=None, success=None, container=None, results=N
 
     # call connected blocks if condition 1 matched
     if matched_artifacts_1 or matched_results_1:
-        Format_High_Threat_Email(action=action, success=success, container=container, results=results, handle=handle)
+        format_email(action=action, success=success, container=container, results=results, handle=handle)
         return
 
     # call connected blocks for 'else' condition 2
 
     return
 
-def Send_Very_Malicious_IP_Email(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('Send_Very_Malicious_IP_Email() called')
+def send_email(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('send_email() called')
     
     #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
     
-    # collect data for 'Send_Very_Malicious_IP_Email' call
-    formatted_data_1 = phantom.get_format_data(name='Format_High_Threat_Email')
+    # collect data for 'send_email' call
+    formatted_data_1 = phantom.get_format_data(name='format_email')
 
     parameters = []
     
-    # build parameters list for 'Send_Very_Malicious_IP_Email' call
+    # build parameters list for 'send_email' call
     parameters.append({
         'body': formatted_data_1,
         'from': "sender@example.com",
@@ -92,12 +82,12 @@ def Send_Very_Malicious_IP_Email(action=None, success=None, container=None, resu
         'subject': "Very Malicious IP ",
     })
 
-    phantom.act("send email", parameters=parameters, assets=['smtp'], callback=Add_to_Bad_IP_List, name="Send_Very_Malicious_IP_Email")
+    phantom.act("send email", parameters=parameters, assets=['smtp'], callback=add_bad_ip_to_list, name="send_email")
 
     return
 
-def Format_High_Threat_Email(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('Format_High_Threat_Email() called')
+def format_email(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('format_email() called')
     
     template = """The IP {0}  is has a risk score of {1} 
 
@@ -135,14 +125,14 @@ More information about:
         "ip_reputation_1:action_result.data.*.relatedEntities.*.entities.*.entity.type",
     ]
 
-    phantom.format(container=container, template=template, parameters=parameters, name="Format_High_Threat_Email")
+    phantom.format(container=container, template=template, parameters=parameters, name="format_email")
 
-    Send_Very_Malicious_IP_Email(container=container)
+    send_email(container=container)
 
     return
 
-def Add_to_Bad_IP_List(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('Add_to_Bad_IP_List() called')
+def add_bad_ip_to_list(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('add_bad_ip_to_list() called')
 
     container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])
 
