@@ -7,7 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "Playbook created to test alert handling as defined in the Recorded Future app.",
-            "hash": "259469a32b775ad453face4de3b3f184797f31c7",
+            "hash": "102ee182eb50f7db600388898335f565ef48e4dd",
             "joint": {
                 "cells": [
                     {
@@ -139,7 +139,7 @@
                         },
                         "position": {
                             "x": 100,
-                            "y": 100
+                            "y": 180
                         },
                         "previous_function": "",
                         "previous_name": "",
@@ -199,7 +199,7 @@
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "alert data lookup 1, alert data lookup 2",
+                        "connection_name": "alert data lookup, alert rule lookup",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -217,12 +217,12 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 206,
-                        "line_start": 193,
+                        "line_end": 152,
+                        "line_start": 139,
                         "name": "",
                         "notes": "",
                         "number": 0,
-                        "order": 12,
+                        "order": 9,
                         "outPorts": [],
                         "ports": {
                             "groups": {
@@ -277,8 +277,8 @@
                             }
                         },
                         "position": {
-                            "x": 1180,
-                            "y": 100
+                            "x": 1100,
+                            "y": 180
                         },
                         "previous_function": "",
                         "previous_name": "",
@@ -332,47 +332,6 @@
                         },
                         "type": "link",
                         "z": 3
-                    },
-                    {
-                        "attrs": {
-                            ".connection": {
-                                "stroke": "#818D99",
-                                "stroke-width": 2
-                            },
-                            ".marker-target": {
-                                "d": "M 10 0 L 0 5 L 10 10 z",
-                                "fill": "#818D99",
-                                "stroke": "#818D99"
-                            }
-                        },
-                        "connector": {
-                            "args": {
-                                "radius": 5
-                            },
-                            "name": "rounded"
-                        },
-                        "endDirections": [
-                            "left"
-                        ],
-                        "id": "c7462ddc-b9e5-4f51-824a-5c969ad714cb",
-                        "router": {
-                            "name": "metro"
-                        },
-                        "source": {
-                            "id": "fd6d3c02-11bd-4411-a329-920b07721cfb",
-                            "port": "out-3",
-                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(3) > circle:nth-child(1)"
-                        },
-                        "startDirections": [
-                            "right"
-                        ],
-                        "target": {
-                            "id": "38f3e3b7-cb56-4a2b-b0e1-8b06248e9a0c",
-                            "port": null,
-                            "selector": "g:nth-child(1) > g:nth-child(1) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "type": "link",
-                        "z": 7
                     },
                     {
                         "attrs": {
@@ -516,7 +475,7 @@
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "alert data lookup 1",
+                        "connection_name": "alert data lookup",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -535,8 +494,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 86,
-                        "line_start": 70,
+                        "line_end": 84,
+                        "line_start": 68,
                         "message": "Configuring now",
                         "name": "format",
                         "notes": "",
@@ -605,7 +564,7 @@
                             }
                         },
                         "position": {
-                            "x": 580,
+                            "x": 600,
                             "y": 160
                         },
                         "previous_function": "",
@@ -738,7 +697,7 @@
                             }
                         ],
                         "connected_to_start": true,
-                        "connection_name": "alert data lookup 1",
+                        "connection_name": "alert data lookup",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -756,8 +715,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 95,
-                        "line_start": 86,
+                        "line_end": 93,
+                        "line_start": 84,
                         "message": "Configuring now",
                         "name": "add comment",
                         "notes": "",
@@ -819,7 +778,7 @@
                             }
                         },
                         "position": {
-                            "x": 820,
+                            "x": 840,
                             "y": 160
                         },
                         "previous_function": "",
@@ -918,280 +877,6 @@
                         "z": 16
                     },
                     {
-                        "action": "alert rule id lookup",
-                        "action_type": "investigate",
-                        "active": false,
-                        "active_keys": {},
-                        "active_values": {
-                            "rule_name": "artifact:*.cef.cs1"
-                        },
-                        "angle": 0,
-                        "app": "recordedfuture",
-                        "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-                        "approver": "",
-                        "assets": [
-                            {
-                                "action": "alert rule id lookup",
-                                "actions": [
-                                    "ip reputation",
-                                    "ip intelligence",
-                                    "domain reputation",
-                                    "domain intelligence",
-                                    "file reputation",
-                                    "file intelligence",
-                                    "vulnerability reputation",
-                                    "vulnerability intelligence",
-                                    "url reputation",
-                                    "url intelligence",
-                                    "alert data lookup",
-                                    "alert rule id lookup",
-                                    "test connectivity"
-                                ],
-                                "active": true,
-                                "app_name": "recordedfuture",
-                                "app_version": "2.0.0",
-                                "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-                                "asset_name": "recordedfuture",
-                                "config_type": "asset",
-                                "count": 0,
-                                "fields": {
-                                    "rule_name": "artifact:*.cef.cs1"
-                                },
-                                "has_app": true,
-                                "id": 6,
-                                "loaded": false,
-                                "missing": false,
-                                "name": "recordedfuture",
-                                "output": [
-                                    {
-                                        "data_path": "action_result.parameter.rule_name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "column_name": "Rule Names",
-                                        "column_order": 0,
-                                        "data_path": "action_result.data.*.rule.title",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "column_name": "Rule Ids",
-                                        "column_order": 1,
-                                        "contains": [
-                                            "recorded future alert rule"
-                                        ],
-                                        "data_path": "action_result.data.*.rule.id",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.status",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.message",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.total_number_of_rules",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.returned_number_of_rules",
-                                        "data_type": "numeric"
-                                    }
-                                ],
-                                "parameters": {
-                                    "rule_name": {
-                                        "data_type": "string",
-                                        "default": "",
-                                        "description": "Alert rule name to look up",
-                                        "key": "rule_name",
-                                        "order": 0,
-                                        "primary": true,
-                                        "required": true,
-                                        "value_list": []
-                                    }
-                                },
-                                "product_name": "Recorded Future for Splunk Phantom",
-                                "product_vendor": "Recorded Future, Inc",
-                                "targets": "6",
-                                "type": "reputation"
-                            }
-                        ],
-                        "attrs": {
-                            ".action": {
-                                "text": "alert rule id lookup"
-                            },
-                            ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#818D99"
-                            },
-                            ".color-band": {
-                                "fill": "#171D21"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "ref-x": 5,
-                                "ref-y": 105,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out>.port-body": {
-                                "port": {
-                                    "id": "out",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "Investigate"
-                            },
-                            "g.approver image": {
-                                "opacity": 1
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.icon image": {
-                                "xlink:href": "/inc/coa/img/block_icon_investigate.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            },
-                            "g.timer image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def alert_rule_id_lookup_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('alert_rule_id_lookup_2() called')\n\n    # collect data for 'alert_rule_id_lookup_2' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs1', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'alert_rule_id_lookup_2' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'rule_name': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"alert rule id lookup\", parameters=parameters, assets=['recordedfuture'], callback=format_2, name=\"alert_rule_id_lookup_2\")\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": true,
-                        "color": "",
-                        "connected_to_start": true,
-                        "connection_name": "",
-                        "connection_type": "",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "",
-                        "delay": 0,
-                        "description": "",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "05571beb-b39d-4eeb-b7dc-b0cf8cee14dc",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 116,
-                        "line_start": 95,
-                        "message": "Configuring now",
-                        "name": "alert rule id lookup",
-                        "notes": "",
-                        "number": 2,
-                        "order": 6,
-                        "outPorts": [
-                            "out"
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 360,
-                            "y": 320
-                        },
-                        "previous_function": "",
-                        "previous_name": "alert_rule_id_lookup_2",
-                        "required_params": {
-                            "rule_name": true
-                        },
-                        "reviewer": "",
-                        "show_number": false,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "app_action_assets",
-                        "status": "",
-                        "title": "Investigate",
-                        "type": "coa.Action",
-                        "warn": false,
-                        "z": 17
-                    },
-                    {
                         "attrs": {
                             ".connection": {
                                 "stroke": "#818D99",
@@ -1232,175 +917,6 @@
                         "z": 18
                     },
                     {
-                        "active": false,
-                        "angle": 0,
-                        "attrs": {
-                            ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#818D99"
-                            },
-                            ".color-band": {
-                                "fill": "#171D21"
-                            },
-                            ".format": {
-                                "text": "format 2"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out-1": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out-1>.port-body": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "format"
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def format_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('format_2() called')\n    \n    template = \"\"\"{0}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"alert_rule_id_lookup_2:action_result.message\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"format_2\")\n\n    add_comment_2(container=container)\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "connected_to_start": true,
-                        "connection_name": "alert rule id lookup",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "",
-                        "description": "",
-                        "format": "format",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "27365a87-bff5-4285-a6f1-2582a50ae7f7",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 132,
-                        "line_start": 116,
-                        "message": "Configuring now",
-                        "name": "format",
-                        "notes": "",
-                        "number": 2,
-                        "order": 7,
-                        "outPorts": [
-                            "out-1"
-                        ],
-                        "parameters": [
-                            {
-                                "position": 0,
-                                "type": "",
-                                "value": "alert_rule_id_lookup_2:action_result.message"
-                            }
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 580,
-                            "y": 320
-                        },
-                        "previous_function": "",
-                        "previous_name": "format_2",
-                        "show_number": true,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "format",
-                        "status": "",
-                        "template": "{0}",
-                        "title": "format",
-                        "type": "coa.Format",
-                        "warn": false,
-                        "z": 19
-                    },
-                    {
                         "attrs": {
                             ".connection": {
                                 "stroke": "#818D99",
@@ -1439,894 +955,6 @@
                         },
                         "type": "link",
                         "z": 20
-                    },
-                    {
-                        "active": false,
-                        "angle": 0,
-                        "api": "add comment",
-                        "attrs": {
-                            ".api": {
-                                "text": "add comment"
-                            },
-                            ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#818D99"
-                            },
-                            ".color-band": {
-                                "fill": "#171D21"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "ref-x": 5,
-                                "ref-y": 105,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out>.port-body": {
-                                "port": {
-                                    "id": "out",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "API"
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def add_comment_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('add_comment_2() called')\n\n    formatted_data_1 = phantom.get_format_data(name='format_2')\n\n    phantom.comment(container=container, comment=formatted_data_1)\n    alert_data_lookup_2(container=container)\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "color": "",
-                        "configured": [
-                            {
-                                "addCommentComment": "format_2:formatted_data",
-                                "key": "add-comment"
-                            }
-                        ],
-                        "connected_to_start": true,
-                        "connection_name": "alert rule id lookup",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "",
-                        "description": "",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "14c42c02-c8ff-437f-870f-3dc37444dc60",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 142,
-                        "line_start": 132,
-                        "message": "Configuring now",
-                        "name": "add comment",
-                        "notes": "",
-                        "number": 2,
-                        "order": 8,
-                        "outPorts": [
-                            "out"
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 820,
-                            "y": 320
-                        },
-                        "previous_function": "",
-                        "previous_name": "add_comment_2",
-                        "show_number": false,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "api",
-                        "status": "",
-                        "title": "API",
-                        "type": "coa.API",
-                        "warn": false,
-                        "z": 21
-                    },
-                    {
-                        "attrs": {
-                            ".connection": {
-                                "stroke": "#818D99",
-                                "stroke-width": 2
-                            },
-                            ".marker-target": {
-                                "d": "M 10 0 L 0 5 L 10 10 z",
-                                "fill": "#818D99",
-                                "stroke": "#818D99"
-                            }
-                        },
-                        "connector": {
-                            "args": {
-                                "radius": 5
-                            },
-                            "name": "rounded"
-                        },
-                        "endDirections": [
-                            "left"
-                        ],
-                        "id": "5a09bb35-9dc9-43f0-9de4-93e2e41264c0",
-                        "router": {
-                            "name": "metro"
-                        },
-                        "source": {
-                            "id": "14c42c02-c8ff-437f-870f-3dc37444dc60",
-                            "port": null,
-                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "startDirections": [
-                            "right"
-                        ],
-                        "target": {
-                            "id": "1b7966bb-880e-4137-b134-5eab9cf7a047",
-                            "selector": ".port-body[type=\"input\"]"
-                        },
-                        "type": "link",
-                        "z": 22
-                    },
-                    {
-                        "attrs": {
-                            ".connection": {
-                                "stroke": "#818D99",
-                                "stroke-width": 2
-                            },
-                            ".marker-target": {
-                                "d": "M 10 0 L 0 5 L 10 10 z",
-                                "fill": "#818D99",
-                                "stroke": "#818D99"
-                            }
-                        },
-                        "connector": {
-                            "args": {
-                                "radius": 5
-                            },
-                            "name": "rounded"
-                        },
-                        "endDirections": [
-                            "left"
-                        ],
-                        "id": "4a075114-f964-4f3e-88b6-856ac1b1e8ba",
-                        "router": {
-                            "name": "metro"
-                        },
-                        "source": {
-                            "id": "1b7966bb-880e-4137-b134-5eab9cf7a047",
-                            "port": null,
-                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "startDirections": [
-                            "right"
-                        ],
-                        "target": {
-                            "id": "1a5be3ba-0409-4ee2-bce1-f0506434bd43",
-                            "selector": ".port-body[type=\"input\"]"
-                        },
-                        "type": "link",
-                        "z": 24
-                    },
-                    {
-                        "active": false,
-                        "angle": 0,
-                        "attrs": {
-                            ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#818D99"
-                            },
-                            ".color-band": {
-                                "fill": "#171D21"
-                            },
-                            ".format": {
-                                "text": "format 3"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out-1": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out-1>.port-body": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "format"
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def format_3(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('format_3() called')\n    \n    template = \"\"\"{0}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"alert_data_lookup_2:action_result.message\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"format_3\")\n\n    add_comment_3(container=container)\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "connected_to_start": true,
-                        "connection_name": "alert data lookup 2",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "",
-                        "description": "",
-                        "format": "format",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "1a5be3ba-0409-4ee2-bce1-f0506434bd43",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 184,
-                        "line_start": 168,
-                        "message": "Configuring now",
-                        "name": "format",
-                        "notes": "",
-                        "number": 3,
-                        "order": 10,
-                        "outPorts": [
-                            "out-1"
-                        ],
-                        "parameters": [
-                            {
-                                "position": 0,
-                                "type": "",
-                                "value": "alert_data_lookup_2:action_result.message"
-                            }
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 580,
-                            "y": 460
-                        },
-                        "previous_function": "",
-                        "previous_name": "format_3",
-                        "show_number": true,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "format",
-                        "status": "",
-                        "template": "{0}",
-                        "title": "format",
-                        "type": "coa.Format",
-                        "warn": false,
-                        "z": 25
-                    },
-                    {
-                        "attrs": {
-                            ".connection": {
-                                "stroke": "#818D99",
-                                "stroke-width": 2
-                            },
-                            ".marker-target": {
-                                "d": "M 10 0 L 0 5 L 10 10 z",
-                                "fill": "#818D99",
-                                "stroke": "#818D99"
-                            }
-                        },
-                        "connector": {
-                            "args": {
-                                "radius": 5
-                            },
-                            "name": "rounded"
-                        },
-                        "endDirections": [
-                            "left"
-                        ],
-                        "id": "b2118aa2-abf3-47e4-9574-613297d5b0b9",
-                        "router": {
-                            "name": "metro"
-                        },
-                        "source": {
-                            "id": "1a5be3ba-0409-4ee2-bce1-f0506434bd43",
-                            "port": null,
-                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "startDirections": [
-                            "right"
-                        ],
-                        "target": {
-                            "id": "7aecfe3c-4597-4d77-92da-788c877a22bb",
-                            "selector": ".port-body[type=\"input\"]"
-                        },
-                        "type": "link",
-                        "z": 26
-                    },
-                    {
-                        "active": false,
-                        "angle": 0,
-                        "api": "add comment",
-                        "attrs": {
-                            ".api": {
-                                "text": "add comment"
-                            },
-                            ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#818D99"
-                            },
-                            ".color-band": {
-                                "fill": "#171D21"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "ref-x": 5,
-                                "ref-y": 105,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out>.port-body": {
-                                "port": {
-                                    "id": "out",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "API"
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def add_comment_3(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('add_comment_3() called')\n\n    formatted_data_1 = phantom.get_format_data(name='format_3')\n\n    phantom.comment(container=container, comment=formatted_data_1)\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "color": "",
-                        "configured": [
-                            {
-                                "addCommentComment": "format_3:formatted_data",
-                                "key": "add-comment"
-                            }
-                        ],
-                        "connected_to_start": true,
-                        "connection_name": "alert data lookup 2",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "",
-                        "description": "",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "7aecfe3c-4597-4d77-92da-788c877a22bb",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 193,
-                        "line_start": 184,
-                        "message": "Configuring now",
-                        "name": "add comment",
-                        "notes": "",
-                        "number": 3,
-                        "order": 11,
-                        "outPorts": [
-                            "out"
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 820,
-                            "y": 460
-                        },
-                        "previous_function": "",
-                        "previous_name": "add_comment_3",
-                        "show_number": false,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "api",
-                        "status": "",
-                        "title": "API",
-                        "type": "coa.API",
-                        "warn": false,
-                        "z": 27
-                    },
-                    {
-                        "attrs": {
-                            ".connection": {
-                                "stroke": "#818D99",
-                                "stroke-width": 2
-                            },
-                            ".marker-target": {
-                                "d": "M 10 0 L 0 5 L 10 10 z",
-                                "fill": "#818D99",
-                                "stroke": "#818D99"
-                            }
-                        },
-                        "connector": {
-                            "args": {
-                                "radius": 5
-                            },
-                            "name": "rounded"
-                        },
-                        "endDirections": [
-                            "left"
-                        ],
-                        "id": "e94c9be1-dbd0-4173-90a9-069e520c57fc",
-                        "router": {
-                            "name": "metro"
-                        },
-                        "source": {
-                            "id": "7aecfe3c-4597-4d77-92da-788c877a22bb",
-                            "port": null,
-                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "startDirections": [
-                            "right"
-                        ],
-                        "target": {
-                            "id": "38f3e3b7-cb56-4a2b-b0e1-8b06248e9a0c",
-                            "port": null,
-                            "selector": "g:nth-child(1) > g:nth-child(1) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "type": "link",
-                        "z": 28
-                    },
-                    {
-                        "active": false,
-                        "angle": 0,
-                        "attrs": {
-                            ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#637282",
-                                "transform": "rotate(45 30 70)"
-                            },
-                            ".inPorts>.port-0>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".number": {
-                                "text": 1
-                            },
-                            ".outPorts>.port-0": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                },
-                                "ref-x": 83,
-                                "ref-y": 40
-                            },
-                            ".outPorts>.port-0>.port-body": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                }
-                            },
-                            ".outPorts>.port-1": {
-                                "port": {
-                                    "id": "out-2",
-                                    "type": "out"
-                                },
-                                "ref-x": 41,
-                                "ref-y": 82
-                            },
-                            ".outPorts>.port-1>.port-body": {
-                                "port": {
-                                    "id": "out-2",
-                                    "type": "out"
-                                }
-                            },
-                            ".outPorts>.port-2": {
-                                "port": {
-                                    "id": "out-3",
-                                    "type": "out"
-                                },
-                                "ref-x": 41,
-                                "ref-y": -2
-                            },
-                            ".outPorts>.port-2>.port-body": {
-                                "port": {
-                                    "id": "out-3",
-                                    "type": "out"
-                                }
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def decision_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('decision_1() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        conditions=[\n            [\"artifact:*.cef.cs1Label\", \"==\", \"alert rule id\"],\n        ])\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        alert_data_lookup_1(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # check for 'elif' condition 2\n    matched_artifacts_2, matched_results_2 = phantom.condition(\n        container=container,\n        conditions=[\n            [\"artifact:*.cef.cs1Label\", \"==\", \"alert rule name\"],\n        ])\n\n    # call connected blocks if condition 2 matched\n    if matched_artifacts_2 or matched_results_2:\n        alert_rule_id_lookup_2(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # call connected blocks for 'else' condition 3\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "connected_to_start": true,
-                        "connection_name": "",
-                        "connection_type": "",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "",
-                        "description": "",
-                        "hasElse": true,
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "fd6d3c02-11bd-4411-a329-920b07721cfb",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 48,
-                        "line_start": 17,
-                        "name": "decision",
-                        "notes": "",
-                        "number": 1,
-                        "order": 2,
-                        "outPorts": [
-                            "out-1",
-                            "out-2",
-                            "out-3"
-                        ],
-                        "outputs": [
-                            {
-                                "conditions": [
-                                    {
-                                        "comparison": "==",
-                                        "data_type": "",
-                                        "param": "artifact:*.cef.cs1Label",
-                                        "value": "alert rule id"
-                                    }
-                                ],
-                                "display": "If",
-                                "logic": "and",
-                                "type": "if"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "comparison": "==",
-                                        "data_type": "",
-                                        "param": "artifact:*.cef.cs1Label",
-                                        "value": "alert rule name"
-                                    }
-                                ],
-                                "display": "Else If",
-                                "logic": "and",
-                                "type": "elif"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "comparison": "==",
-                                        "data_type": "",
-                                        "param": "",
-                                        "value": ""
-                                    }
-                                ],
-                                "display": "Else",
-                                "logic": "and",
-                                "type": "else"
-                            }
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 240,
-                            "y": 160
-                        },
-                        "previous_function": "",
-                        "previous_name": "decision_1",
-                        "show_number": true,
-                        "size": {
-                            "height": 82,
-                            "width": 82
-                        },
-                        "state": "decision",
-                        "status": "",
-                        "type": "coa.Decision",
-                        "warn": "",
-                        "z": 30
                     },
                     {
                         "action": "alert data lookup",
@@ -2377,14 +1005,10 @@
                                 "name": "recordedfuture",
                                 "output": [
                                     {
-                                        "contains": [
-                                            "recorded future alert rule"
-                                        ],
                                         "data_path": "action_result.parameter.rule_id",
                                         "data_type": "string"
                                     },
                                     {
-                                        "contains": [],
                                         "data_path": "action_result.parameter.timeframe",
                                         "data_type": "string"
                                     },
@@ -2489,7 +1113,7 @@
                         ],
                         "attrs": {
                             ".action": {
-                                "text": "alert data lookup 1"
+                                "text": "alert data lookup"
                             },
                             ".background": {
                                 "fill": "#FFFFFF",
@@ -2577,8 +1201,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 70,
-                        "line_start": 48,
+                        "line_end": 68,
+                        "line_start": 46,
                         "message": "Configuring now",
                         "name": "alert data lookup",
                         "notes": "",
@@ -2650,7 +1274,7 @@
                             "timeframe": true
                         },
                         "reviewer": "",
-                        "show_number": true,
+                        "show_number": false,
                         "size": {
                             "height": 100,
                             "width": 180
@@ -2659,17 +1283,57 @@
                         "status": "",
                         "title": "Investigate",
                         "type": "coa.Action",
-                        "warn": "",
+                        "warn": false,
                         "z": 31
                     },
                     {
-                        "action": "alert data lookup",
+                        "attrs": {
+                            ".connection": {
+                                "stroke": "#818D99",
+                                "stroke-width": 2
+                            },
+                            ".marker-target": {
+                                "d": "M 10 0 L 0 5 L 10 10 z",
+                                "fill": "#818D99",
+                                "stroke": "#818D99"
+                            }
+                        },
+                        "connector": {
+                            "args": {
+                                "radius": 5
+                            },
+                            "name": "rounded"
+                        },
+                        "endDirections": [
+                            "left"
+                        ],
+                        "id": "0aa3e89c-cce8-4fbe-8742-01dd936f1c4b",
+                        "router": {
+                            "name": "metro"
+                        },
+                        "source": {
+                            "id": "14c42c02-c8ff-437f-870f-3dc37444dc60",
+                            "port": null,
+                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
+                        },
+                        "startDirections": [
+                            "right"
+                        ],
+                        "target": {
+                            "id": "38f3e3b7-cb56-4a2b-b0e1-8b06248e9a0c",
+                            "port": null,
+                            "selector": "g:nth-child(1) > g:nth-child(1) > g:nth-child(1) > circle:nth-child(1)"
+                        },
+                        "type": "link",
+                        "z": 57
+                    },
+                    {
+                        "action": "alert rule lookup",
                         "action_type": "investigate",
                         "active": false,
                         "active_keys": {},
                         "active_values": {
-                            "rule_id": "alert_rule_id_lookup_2:action_result.data.*.rule.id",
-                            "timeframe": "artifact:*.cef.cs2"
+                            "rule_name": "artifact:*.cef.cs1"
                         },
                         "angle": 0,
                         "app": "recordedfuture",
@@ -2677,7 +1341,7 @@
                         "approver": "",
                         "assets": [
                             {
-                                "action": "alert data lookup",
+                                "action": "alert rule lookup",
                                 "actions": [
                                     "ip reputation",
                                     "ip intelligence",
@@ -2690,7 +1354,7 @@
                                     "url reputation",
                                     "url intelligence",
                                     "alert data lookup",
-                                    "alert rule id lookup",
+                                    "alert rule lookup",
                                     "test connectivity"
                                 ],
                                 "active": true,
@@ -2701,8 +1365,7 @@
                                 "config_type": "asset",
                                 "count": 0,
                                 "fields": {
-                                    "rule_id": "alert_rule_id_lookup_2:action_result.data.*.rule.id",
-                                    "timeframe": "artifact:*.cef.cs2"
+                                    "rule_name": "artifact:*.cef.cs1"
                                 },
                                 "has_app": true,
                                 "id": 6,
@@ -2711,74 +1374,20 @@
                                 "name": "recordedfuture",
                                 "output": [
                                     {
-                                        "contains": [
-                                            "recorded future alert rule"
-                                        ],
-                                        "data_path": "action_result.parameter.rule_id",
+                                        "data_path": "action_result.parameter.rule_name",
                                         "data_type": "string"
                                     },
                                     {
-                                        "contains": [],
-                                        "data_path": "action_result.parameter.timeframe",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "column_name": "Alert Title",
+                                        "column_name": "Rule Name",
                                         "column_order": 0,
-                                        "data_path": "action_result.data.*.alert.alertTitle",
+                                        "data_path": "action_result.data.*.rule.title",
                                         "data_type": "string"
                                     },
                                     {
-                                        "column_name": "URL for details",
-                                        "column_order": 2,
-                                        "data_path": "action_result.data.*.alert.alertUrl",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "column_name": "Triggered",
+                                        "column_name": "Rule Id",
                                         "column_order": 1,
-                                        "data_path": "action_result.data.*.alert.triggered",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.alert.entities.InternetDomainName.*",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.alert.entities.Document.*",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.alert.entities.EmailAddress.*",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.rule.url",
-                                        "data_type": "string"
-                                    },
-                                    {
                                         "data_path": "action_result.data.*.rule.id",
                                         "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.rule.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.rule_id",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.rule_name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.total_number_of_alerts",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.returned_number_of_alerts",
-                                        "data_type": "numeric"
                                     },
                                     {
                                         "data_path": "action_result.status",
@@ -2787,30 +1396,28 @@
                                     {
                                         "data_path": "action_result.message",
                                         "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.rule_id_list",
+                                        "data_type": "string"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.total_number_of_rules",
+                                        "data_type": "numeric"
+                                    },
+                                    {
+                                        "data_path": "action_result.summary.returned_number_of_rules",
+                                        "data_type": "numeric"
                                     }
                                 ],
                                 "parameters": {
-                                    "rule_id": {
-                                        "contains": [
-                                            "recorded future alert rule"
-                                        ],
+                                    "rule_name": {
                                         "data_type": "string",
                                         "default": "",
-                                        "description": "Rule ID to look up alert data for",
-                                        "key": "rule_id",
+                                        "description": "Alert rule name",
+                                        "key": "rule_name",
                                         "order": 0,
                                         "primary": true,
-                                        "required": true,
-                                        "value_list": []
-                                    },
-                                    "timeframe": {
-                                        "contains": [],
-                                        "data_type": "string",
-                                        "default": "-24h to now",
-                                        "description": "Timeframe for when rules were triggered",
-                                        "key": "timeframe",
-                                        "order": 0,
-                                        "primary": false,
                                         "required": true,
                                         "value_list": []
                                     }
@@ -2823,7 +1430,7 @@
                         ],
                         "attrs": {
                             ".action": {
-                                "text": "alert data lookup 2"
+                                "text": "alert rule lookup"
                             },
                             ".background": {
                                 "fill": "#FFFFFF",
@@ -2873,6 +1480,9 @@
                             "g.error": {
                                 "opacity": 0
                             },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
                             "g.icon image": {
                                 "xlink:href": "/inc/coa/img/block_icon_investigate.svg"
                             },
@@ -2886,14 +1496,14 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def alert_data_lookup_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('alert_data_lookup_2() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'alert_data_lookup_2' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs2', 'artifact:*.id'])\n    results_data_1 = phantom.collect2(container=container, datapath=['alert_rule_id_lookup_2:action_result.data.*.rule.id', 'alert_rule_id_lookup_2:action_result.parameter.context.artifact_id'], action_results=results)\n\n    parameters = []\n    \n    # build parameters list for 'alert_data_lookup_2' call\n    for container_item in container_data:\n        for results_item_1 in results_data_1:\n            if results_item_1[0] and container_item[0]:\n                parameters.append({\n                    'rule_id': results_item_1[0],\n                    'timeframe': container_item[0],\n                    # context (artifact id) is added to associate results with the artifact\n                    'context': {'artifact_id': results_item_1[1]},\n                })\n\n    phantom.act(\"alert data lookup\", parameters=parameters, assets=['recordedfuture'], callback=format_3, name=\"alert_data_lookup_2\")\n\n    return",
+                        "block_code": "def alert_rule_lookup_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('alert_rule_lookup_1() called')\n\n    # collect data for 'alert_rule_lookup_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs1', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'alert_rule_lookup_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'rule_name': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"alert rule lookup\", parameters=parameters, assets=['recordedfuture'], callback=format_2, name=\"alert_rule_lookup_1\")\n\n    return",
                         "callback_code": "",
-                        "callback_start": 1,
+                        "callback_start": 114,
                         "callsback": true,
                         "color": "",
                         "connected_to_start": true,
-                        "connection_name": "alert rule id lookup",
-                        "connection_type": "action",
+                        "connection_name": "",
+                        "connection_type": "",
                         "custom_callback": "",
                         "custom_code": "",
                         "custom_join": "",
@@ -2904,20 +1514,20 @@
                         "has_custom_block": false,
                         "has_custom_callback": false,
                         "has_custom_join": false,
-                        "id": "1b7966bb-880e-4137-b134-5eab9cf7a047",
+                        "id": "05571beb-b39d-4eeb-b7dc-b0cf8cee14dc",
                         "inPorts": [
                             "in"
                         ],
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 168,
-                        "line_start": 142,
+                        "line_end": 114,
+                        "line_start": 93,
                         "message": "Configuring now",
-                        "name": "alert data lookup",
+                        "name": "alert rule lookup",
                         "notes": "",
-                        "number": 2,
-                        "order": 9,
+                        "number": 1,
+                        "order": 6,
                         "outPorts": [
                             "out"
                         ],
@@ -2975,16 +1585,15 @@
                         },
                         "position": {
                             "x": 360,
-                            "y": 460
+                            "y": 300
                         },
                         "previous_function": "",
-                        "previous_name": "alert_data_lookup_2",
+                        "previous_name": "alert_rule_lookup_1",
                         "required_params": {
-                            "rule_id": true,
-                            "timeframe": true
+                            "rule_name": true
                         },
                         "reviewer": "",
-                        "show_number": true,
+                        "show_number": false,
                         "size": {
                             "height": 100,
                             "width": 180
@@ -2993,8 +1602,540 @@
                         "status": "",
                         "title": "Investigate",
                         "type": "coa.Action",
+                        "warn": false,
+                        "z": 86
+                    },
+                    {
+                        "active": false,
+                        "angle": 0,
+                        "attrs": {
+                            ".background": {
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
+                            },
+                            ".color-band": {
+                                "fill": "#171D21"
+                            },
+                            ".format": {
+                                "text": "format 2"
+                            },
+                            ".inPorts>.port-in": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".inPorts>.port-in>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".message": {
+                                "opacity": 0,
+                                "text": "Configuring now"
+                            },
+                            ".outPorts>.port-out-1": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out-1>.port-body": {
+                                "port": {
+                                    "id": "out-1",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "text": "format"
+                            },
+                            "g.code image": {
+                                "opacity": 1
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
+                            }
+                        },
+                        "block_code": "def format_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('format_2() called')\n    \n    template = \"\"\"{0}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"alert_rule_lookup_1:action_result.summary.rule_id_list\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"format_2\")\n\n    add_comment_2(container=container)\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": false,
+                        "connected_to_start": true,
+                        "connection_name": "alert rule lookup",
+                        "connection_type": "action",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "",
+                        "description": "",
+                        "format": "format",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "27365a87-bff5-4285-a6f1-2582a50ae7f7",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 130,
+                        "line_start": 114,
+                        "message": "Configuring now",
+                        "name": "format",
+                        "notes": "",
+                        "number": 2,
+                        "order": 7,
+                        "outPorts": [
+                            "out-1"
+                        ],
+                        "parameters": [
+                            {
+                                "position": 1,
+                                "type": "",
+                                "value": "alert_rule_lookup_1:action_result.summary.rule_id_list"
+                            }
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 600,
+                            "y": 300
+                        },
+                        "previous_function": "",
+                        "previous_name": "format_2",
+                        "show_number": true,
+                        "size": {
+                            "height": 100,
+                            "width": 180
+                        },
+                        "state": "format",
+                        "status": "",
+                        "template": "{0}",
+                        "title": "format",
+                        "type": "coa.Format",
+                        "warn": false,
+                        "z": 90
+                    },
+                    {
+                        "active": false,
+                        "angle": 0,
+                        "api": "add comment",
+                        "attrs": {
+                            ".api": {
+                                "text": "add comment"
+                            },
+                            ".background": {
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
+                            },
+                            ".color-band": {
+                                "fill": "#171D21"
+                            },
+                            ".inPorts>.port-in": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".inPorts>.port-in>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".message": {
+                                "opacity": 0,
+                                "ref-x": 5,
+                                "ref-y": 105,
+                                "text": "Configuring now"
+                            },
+                            ".outPorts>.port-out": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out>.port-body": {
+                                "port": {
+                                    "id": "out",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "text": "API"
+                            },
+                            "g.code image": {
+                                "opacity": 1
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
+                            }
+                        },
+                        "block_code": "def add_comment_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('add_comment_2() called')\n\n    formatted_data_1 = phantom.get_format_data(name='format_2')\n\n    phantom.comment(container=container, comment=formatted_data_1)\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": false,
+                        "color": "",
+                        "configured": [
+                            {
+                                "addCommentComment": "format_2:formatted_data",
+                                "key": "add-comment"
+                            }
+                        ],
+                        "connected_to_start": true,
+                        "connection_name": "alert rule lookup",
+                        "connection_type": "action",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "",
+                        "description": "",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "14c42c02-c8ff-437f-870f-3dc37444dc60",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 139,
+                        "line_start": 130,
+                        "message": "Configuring now",
+                        "name": "add comment",
+                        "notes": "",
+                        "number": 2,
+                        "order": 8,
+                        "outPorts": [
+                            "out"
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 840,
+                            "y": 300
+                        },
+                        "previous_function": "",
+                        "previous_name": "add_comment_2",
+                        "show_number": false,
+                        "size": {
+                            "height": 100,
+                            "width": 180
+                        },
+                        "state": "api",
+                        "status": "",
+                        "title": "API",
+                        "type": "coa.API",
+                        "warn": false,
+                        "z": 91
+                    },
+                    {
+                        "active": false,
+                        "angle": 0,
+                        "attrs": {
+                            ".background": {
+                                "fill": "#FFFFFF",
+                                "stroke": "#637282",
+                                "transform": "rotate(45 30 70)"
+                            },
+                            ".inPorts>.port-0>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".number": {
+                                "text": 1
+                            },
+                            ".outPorts>.port-0": {
+                                "port": {
+                                    "id": "out-1",
+                                    "type": "out"
+                                },
+                                "ref-x": 83,
+                                "ref-y": 40
+                            },
+                            ".outPorts>.port-0>.port-body": {
+                                "port": {
+                                    "id": "out-1",
+                                    "type": "out"
+                                }
+                            },
+                            ".outPorts>.port-1": {
+                                "port": {
+                                    "id": "out-2",
+                                    "type": "out"
+                                },
+                                "ref-x": 41,
+                                "ref-y": 82
+                            },
+                            ".outPorts>.port-1>.port-body": {
+                                "port": {
+                                    "id": "out-2",
+                                    "type": "out"
+                                }
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
+                            }
+                        },
+                        "block_code": "def decision_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('decision_1() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        conditions=[\n            [\"artifact:*.cef.cs1Label\", \"==\", \"alert rule id\"],\n        ])\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        alert_data_lookup_1(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # check for 'elif' condition 2\n    matched_artifacts_2, matched_results_2 = phantom.condition(\n        container=container,\n        conditions=[\n            [\"artifact:*.cef.cs1Label\", \"==\", \"alert rule name\"],\n        ])\n\n    # call connected blocks if condition 2 matched\n    if matched_artifacts_2 or matched_results_2:\n        alert_rule_lookup_1(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": false,
+                        "connected_to_start": true,
+                        "connection_name": "",
+                        "connection_type": "",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "",
+                        "description": "",
+                        "hasElse": false,
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "fd6d3c02-11bd-4411-a329-920b07721cfb",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 46,
+                        "line_start": 17,
+                        "name": "decision",
+                        "notes": "",
+                        "number": 1,
+                        "order": 2,
+                        "outPorts": [
+                            "out-1",
+                            "out-2"
+                        ],
+                        "outputs": [
+                            {
+                                "conditions": [
+                                    {
+                                        "comparison": "==",
+                                        "data_type": "",
+                                        "param": "artifact:*.cef.cs1Label",
+                                        "value": "alert rule id"
+                                    }
+                                ],
+                                "display": "If",
+                                "logic": "and",
+                                "type": "if"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "comparison": "==",
+                                        "data_type": "",
+                                        "param": "artifact:*.cef.cs1Label",
+                                        "value": "alert rule name"
+                                    }
+                                ],
+                                "display": "Else If",
+                                "logic": "and",
+                                "type": "elif"
+                            }
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 240,
+                            "y": 160
+                        },
+                        "previous_function": "",
+                        "previous_name": "decision_1",
+                        "show_number": true,
+                        "size": {
+                            "height": 82,
+                            "width": 82
+                        },
+                        "state": "decision",
+                        "status": "",
+                        "type": "coa.Decision",
                         "warn": "",
-                        "z": 32
+                        "z": 92
                     }
                 ]
             },
@@ -3003,10 +2144,12 @@
         "schema": 3,
         "version": "4.2.7532"
     },
-    "create_time": "2019-05-22T12:33:17.507317+00:00",
+    "create_time": "2019-05-24T11:42:51.682705+00:00",
     "draft_mode": false,
     "labels": [
         "*"
     ],
-    "tags": []
+    "tags": [
+        "recorded_future_alert_test"
+    ]
 }
