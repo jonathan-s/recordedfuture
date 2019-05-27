@@ -52,7 +52,7 @@
       "versions": "EQ(*)"
     },
     {
-      "action": "alert rule id lookup",
+      "action": "alert rule lookup",
       "identifier": "rule_id_lookup",
       "description": "Search for alert rule IDs by name",
       "verbose": "",
@@ -78,16 +78,13 @@
           "data_path": "action_result.data.*.rule.title",
           "data_type": "string",
           "column_order": 0,
-          "column_name": "Rule Names"
+          "column_name": "Rule Name"
         },
         {
           "data_path": "action_result.data.*.rule.id",
           "data_type": "string",
           "column_order": 1,
-          "contains": [
-            "recorded future alert rule"
-          ],
-          "column_name": "Rule Ids"
+          "column_name": "Rule Id"
         },
         {
           "data_path": "action_result.status",
@@ -95,6 +92,10 @@
         },
         {
           "data_path": "action_result.message",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.summary.rule_id_list",
           "data_type": "string"
         },
         {
@@ -128,10 +129,8 @@
           "data_type": "string",
           "required": true,
           "primary": true,
-          "contains": [
-            "recorded future alert rule"
-          ],
           "value_list": [],
+          "allow_list": true,
           "default": "",
           "order": 0
         },
@@ -149,16 +148,11 @@
       "output": [
         {
           "data_path": "action_result.parameter.rule_id",
-          "data_type": "string",
-          "contains": [
-            "recorded future alert rule"
-          ]
+          "data_type": "string"
         },
         {
           "data_path": "action_result.parameter.timeframe",
-          "data_type": "string",
-          "contains": []
-        },
+          "data_type": "string"        },
         {
           "data_path": "action_result.data.*.alert.alertTitle",
           "data_type": "string",

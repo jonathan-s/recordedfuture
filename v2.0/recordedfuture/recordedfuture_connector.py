@@ -514,15 +514,18 @@ class RecordedfutureConnector(BaseConnector):
         # Now post process the data,  uncomment code as you deem fit
 
         # Add the response into the data section
+        rule_ids = []
         for result in response['data'].values():
             for rule in result:
                 action_result.add_data({'rule': rule})
+                rule_ids.append(rule['id'])
 
         # Add a dictionary that is made up of the most important values from
         # data into the summary
         summary = action_result.get_summary()
         summary['total_number_of_rules'] = response['counts']['total']
         summary['returned_number_of_rules'] = response['counts']['returned']
+        summary['rule_id_list'] = ','.join(rule_ids)
 
         action_result.set_summary(summary)
 
