@@ -94,7 +94,6 @@ class RfAlertDataLookupTests(RfTests):
             self.assertEquals(rule['id'], testdata['alertruleid'])
             self.assertEquals(rule['name'], testdata['alertrulename'])
 
-    @unittest.skip
     def test_neg_alert_data_lookup_no_match(self):
         """Test behavior when passing alert query parameters that do not
         return data.
