@@ -26,7 +26,7 @@ class RfIpReputationTests(RfTests):
             'Test Event IP Intelligence', destinationAddress=ioc)
 
         # Fetch the result of the automatic run.
-        ares = self._action_result(container_id)
+        ares = self._poll_for_success(self._action_result, container_id)
 
         # Check correct risk score.
         self.assertCorrectRiskScore(ares, target_risk_score,

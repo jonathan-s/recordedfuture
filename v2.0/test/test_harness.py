@@ -5,12 +5,17 @@ import time
 from time import sleep
 import requests
 from phantom_ops import *
+import logging
+from jsonpath_rw import jsonpath, parse
 from rfapi import RawApiClient, ConnectApiClient
+
+LGR = logging.getLogger(__name__)
+
 
 class RfTests(unittest.TestCase):
     """Test cases for all reputation actions."""
 
-    POLL_MAXTRIES = 10
+    POLL_MAXTRIES = 20
     POLL_WAITTIME = 1
 
     @classmethod
@@ -87,13 +92,14 @@ class RfTests(unittest.TestCase):
 
     def _action_result(self, container_id):
         """Return the result of an action."""
-        print('_filter_container: %s' % container_id)
+        LGR.debug('_filter_container: %s', container_id)
         return self._rest_call('get', 'app_run',
                                {'_filter_container': container_id,
                                 'include_expensive': True}).json()
 
-    def _poll_for_success(self, fn, params, maxtries=POLL_MAXTRIES, waittime=POLL_WAITTIME):
-        """Polls the return from the passed function until successfull.
+    def _poll_for_success(self, fn, params, maxtries=POLL_MAXTRIES,
+                          waittime=POLL_WAITTIME):
+        """Polls until no action_results are in running mode.
 
         The action is not triggered immediately, returning an empty data array.
         So we check count before checking the status of the action
@@ -102,18 +108,32 @@ class RfTests(unittest.TestCase):
             # Call passed in function with passed params
             res = fn(params)
             try:
-                assert(res['data'][0]['status'] == 'success')
+                assert (len(res['data']) > 0)  # wait for any results
+                LGR.info('len: %s', len(res['data']))
+
+                # Check overall status
+                jpath = parse('$.data[*].status')
+                running = [match.value for match in jpath.find(res)
+                           if match.value == 'running']
+                LGR.info('running: %s', running)
+                assert (running == [])  # wait until no more running
+
+                # Check status for each parameter set
+                jpath = parse('$.data[*].result_data[*].status')
+                running2 = [match.value for match in jpath.find(res)
+                            if match.value == 'running']
+                LGR.info('running2: %s', running)
+                assert (running2 == [])  # wait until no more running
+
+                # Nothing is left in running state, we're ready to evaluate
                 return res
-            except Exception:
+            except AssertionError:
                 pass
 
             sleep(waittime)
 
-        raise Exception('Max tries %s exceeded when polling for request success' % maxtries)
-
-    # def _poll_for_success(self, fn, params):
-    #     sleep(2)
-    #     return fn(params)
+        raise Exception(
+            'Max tries %s exceeded when polling for request success' % maxtries)
 
     def assertCorrectRiskScore(self, result, target_risk_score, *args):
         """Assert that the risk score matches the target."""
@@ -121,7 +141,7 @@ class RfTests(unittest.TestCase):
             risk_score = result['data'][0]['result_data'][0]['data'][0][
                 'risk']['score']
         except Exception as err:
-            print ('result %s' % (result['data'][0]))
+            LGR.error('result %s', result['data'])
             raise
         self.assertEqual(risk_score, target_risk_score, *args)
 

@@ -26,7 +26,7 @@ class RfIpReputationTests(RfTests):
             'Test Event IP Reputation', destinationAddress=ioc)
 
         # Fetch the result of the automatic run.
-        ares = self._action_result(container_id)
+        ares = self._poll_for_success(self._action_result, container_id)
 
         # Check correct risk score.
         self.assertCorrectRiskScore(ares, target_risk_score,
@@ -36,8 +36,6 @@ class RfIpReputationTests(RfTests):
         """Test behavior when a single ip is supplied."""
         targets = self.high_risk_iocs_by_category('ip', 5, fields=['entity',
                                                                    'risk'])
-
-        self.assertEquals(len(TARGETS), 1)
 
         # Call the test for each target
         for ioc, target_risk_score in targets:

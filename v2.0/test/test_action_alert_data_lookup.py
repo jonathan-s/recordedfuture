@@ -13,6 +13,7 @@ LOGGER = logging.getLogger(__name__)
 
 PBOOK = 'recorded_future_alert_test'
 
+
 class RfAlertDataLookupTests(RfTests):
     """Test cases for ip reputation action."""
 
@@ -20,18 +21,18 @@ class RfAlertDataLookupTests(RfTests):
         """Setup test environment."""
         RfTests.setUp(self, PBOOK)
 
-    def test_ok_alert_data_lookup(self):
+    def test_ok_single_alert_data_lookup(self):
         """Test behavior when passing alert query parameters returning data."""
 
         testdata = {
-            'alertruleid':          'VNPVFc',
-            'alertrulelabel':       'alert rule id',
-            'alertruletimeframe':   'anytime',
-            'alertrulename':        'recordedfuture.com Leaked Credentials Document'
+            'alertruleid': 'VNPVFc',
+            'alertrulelabel': 'alert rule id',
+            'alertruletimeframe': 'anytime',
+            'alertrulename': 'recordedfuture.com Leaked Credentials Document'
         }
 
         container_id = self._create_event_and_artifact(
-            'Test Event Domain Reputation',
+            'Test Event for single alert data lookup',
             cs1=testdata['alertruleid'],
             cs1Label=testdata['alertrulelabel'],
             cs2=testdata['alertruletimeframe'])
@@ -54,21 +55,31 @@ class RfAlertDataLookupTests(RfTests):
         self.assertEqual(ares['data'][0]['result_data'][0]['status'], 'success')
 
         # Assert summary has required fields of correct type
-        self.assertIsInstance(ares['data'][0]['result_data'][0]['summary']['returned_number_of_alerts'], int)
-        self.assertIsInstance(ares['data'][0]['result_data'][0]['summary']['total_number_of_alerts'], int)
-        self.assertIsInstance(ares['data'][0]['result_data'][0]['summary']['rule_name'], unicode)
-        self.assertIsInstance(ares['data'][0]['result_data'][0]['summary']['rule_id'], unicode)
+        self.assertIsInstance(ares['data'][0]['result_data'][0]['summary'][
+                                  'returned_number_of_alerts'], int)
+        self.assertIsInstance(ares['data'][0]['result_data'][0]['summary'][
+                                  'total_number_of_alerts'], int)
+        self.assertIsInstance(
+            ares['data'][0]['result_data'][0]['summary']['rule_name'], unicode)
+        self.assertIsInstance(
+            ares['data'][0]['result_data'][0]['summary']['rule_id'], unicode)
 
         # Assert rule values in summary
-        self.assertEquals(ares['data'][0]['result_data'][0]['summary']['rule_id'], testdata['alertruleid'])
-        self.assertEquals(ares['data'][0]['result_data'][0]['summary']['rule_name'], testdata['alertrulename'])
+        self.assertEquals(
+            ares['data'][0]['result_data'][0]['summary']['rule_id'],
+            testdata['alertruleid'])
+        self.assertEquals(
+            ares['data'][0]['result_data'][0]['summary']['rule_name'],
+            testdata['alertrulename'])
 
         # Assert data properties if data is returned
         if len(ares['data'][0]['result_data'][0]['data']) > 0:
             # Assert alerts
-            self.assertIsInstance(ares['data'][0]['result_data'][0]['data'][0]['alerts'], list)
+            self.assertIsInstance(
+                ares['data'][0]['result_data'][0]['data'][0]['alerts'], list)
 
-            alert = ares['data'][0]['result_data'][0]['data'][0]['alerts'][0]['alert']
+            alert = ares['data'][0]['result_data'][0]['data'][0]['alerts'][0][
+                'alert']
             self.assertIsInstance(alert['content'], dict)
             self.assertIsInstance(alert['entities'], dict)
             self.assertIsInstance(alert['alertTitle'], unicode)
@@ -76,7 +87,8 @@ class RfAlertDataLookupTests(RfTests):
             self.assertIsInstance(alert['triggered'], unicode)
 
             # Assert rule
-            self.assertIsInstance(ares['data'][0]['result_data'][0]['data'][0]['rule'], dict)
+            self.assertIsInstance(
+                ares['data'][0]['result_data'][0]['data'][0]['rule'], dict)
 
             rule = ares['data'][0]['result_data'][0]['data'][0]['rule']
             self.assertEquals(rule['id'], testdata['alertruleid'])
@@ -84,20 +96,23 @@ class RfAlertDataLookupTests(RfTests):
 
     @unittest.skip
     def test_neg_alert_data_lookup_no_match(self):
-        """Test behavior when passing alert query parameters that do not return data."""
+        """Test behavior when passing alert query parameters that do not
+        return data.
+        """
 
         testdata = {
-            'alertruleid':          'KALLE',
-            'alertrulelabel':       'alert rule id',
-            'alertruletimeframe':   'anytime'
+            'alertruleid': 'KALLE',
+            'alertrulelabel': 'alert rule id',
+            'alertruletimeframe': 'anytime'
         }
 
         artifact = ph_artifact(cs1=testdata['alertruleid'],
                                cs1Label=testdata['alertrulelabel'],
                                cs2=testdata['alertruletimeframe'])
 
-        container = ph_container("Neg Alert Data event (bad rule id)",
-                                 [artifact])
+        container = ph_container(
+            "Test Event for alert data event (bad rule id)",
+            [artifact])
 
         res = self._rest_call('post', 'container', container)
 
@@ -112,24 +127,28 @@ class RfAlertDataLookupTests(RfTests):
         ares = self._poll_for_success(self._action_result, jres['id'])
 
         # Assert we get empty values
-        self.assertEqual(ares['data'][0]['result_data'][0]['summary']['total_number_of_alerts'], 0)
+        self.assertEqual(ares['data'][0]['result_data'][0]['summary'][
+                             'total_number_of_alerts'], 0)
 
     # @unittest.skip("Skipping due to https://recordedfuture.atlassian.net/browse/RF-41776")
     def test_neg_alert_data_lookup_invalid_timeframe(self):
-        """Test behavior when passing alert query parameters with invalid timeframe."""
+        """Test behavior when passing alert query parameters with invalid
+        timeframe.
+        """
 
         testdata = {
-            'alertruleid':          'VNPVFc',
-            'alertrulelabel':       'alert rule id',
-            'alertruletimeframe':   'kalle'
+            'alertruleid': 'VNPVFc',
+            'alertrulelabel': 'alert rule id',
+            'alertruletimeframe': 'kalle'
         }
 
         artifact = ph_artifact(cs1=testdata['alertruleid'],
                                cs1Label=testdata['alertrulelabel'],
                                cs2=testdata['alertruletimeframe'])
 
-        container = ph_container("Neg Alert Data event (bad time range)",
-                                 [artifact])
+        container = ph_container(
+            "Test Event for alert data event (bad time range)",
+            [artifact])
 
         res = self._rest_call('post', 'container', container)
 

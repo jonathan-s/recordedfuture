@@ -3,6 +3,7 @@ import logging
 import requests
 from phantom_ops import *
 from test_harness import RfTests
+import unittest
 
 # disable certificate warnings for self signed certificates
 requests.packages.urllib3.disable_warnings()
@@ -12,10 +13,10 @@ LOGGER = logging.getLogger(__name__)
 
 PBOOK = 'recorded_future_alert_test'
 TARGETS = [
-    # ('recordedfuture.com Leaked Credentials Document', ['VNPVFc']),
-    ('Recorded', [u'Ya4pFB', u'YcKufV', u'Vp5IXy', u'VNPVFc', u'VKhgWu',
-                  u'Vp5IXx', u'YcKufW', u'Ya9Aof', u'YbYAKE'
-                  ])
+    ('recordedfuture.com Leaked Credentials Document', ['VNPVFc']),
+    # ('Recorded', [u'Ya4pFB', u'YcKufV', u'Vp5IXy', u'VNPVFc', u'VKhgWu',
+    #               u'Vp5IXx', u'YcKufW', u'Ya9Aof', u'YbYAKE'
+    #               ])
 ]
 
 
@@ -46,6 +47,7 @@ class RfRuleIdLookupTests(RfTests):
         for freetext, rule_id_list in TARGETS:
             self._test_alert_fule_id_lookup_rule_id(freetext, rule_id_list)
 
+    @unittest.skip
     def test_no_match_rule_id_lookup(self):
         """Verify that a freetext search without any match returns empty list.
         """
