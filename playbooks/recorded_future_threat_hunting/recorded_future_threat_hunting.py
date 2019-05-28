@@ -1,5 +1,5 @@
 """
-This use can be spawned manually or through high fidelity correlation searches.
+This playbook searches through Splunk logs for entities that have been found by Recorded Future to be related to an IP address with a high risk score. The playbook should be spawned manually or through high fidelity correlation searches.
 """
 
 import phantom.rules as phantom
@@ -31,12 +31,12 @@ def ip_reputation_1(action=None, success=None, container=None, results=None, han
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("ip reputation", parameters=parameters, assets=['recorded future app'], callback=Process_Risk_90_Plus, name="ip_reputation_1")
+    phantom.act("ip reputation", parameters=parameters, assets=['recorded-future'], callback=filter_for_risk_score_above_90, name="ip_reputation_1")
 
     return
 
-def Process_Risk_90_Plus(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('Process_Risk_90_Plus() called')
+def filter_for_risk_score_above_90(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('filter_for_risk_score_above_90() called')
 
     # check for 'if' condition 1
     matched_artifacts_1, matched_results_1 = phantom.condition(

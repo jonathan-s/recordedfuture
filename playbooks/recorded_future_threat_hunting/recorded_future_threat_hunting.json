@@ -7,7 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "This playbook searches through Splunk logs for entities that have been found by Recorded Future to be related to an IP address with a high risk score. The playbook should be spawned manually or through high fidelity correlation searches.",
-            "hash": "8c5187a6e1c0bf5b374c7a3a5595e35a1ec99553",
+            "hash": "106e45384c60272bf11978f1754667fb659937a3",
             "joint": {
                 "cells": [
                     {
@@ -2436,7 +2436,7 @@
                                 }
                             },
                             "g.delete": {
-                                "display": "block"
+                                "display": "none"
                             },
                             "g.delete image": {
                                 "x": 5
@@ -2666,7 +2666,7 @@
                                 "id": 7,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recorded future app",
+                                "name": "recorded-future",
                                 "output": [
                                     {
                                         "column_name": "ip",
@@ -2859,7 +2859,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_reputation_1() called')\n\n    # collect data for 'ip_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip reputation\", parameters=parameters, assets=['recorded future app'], callback=filter_for_risk_score_above_90, name=\"ip_reputation_1\")\n\n    return",
+                        "block_code": "def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_reputation_1() called')\n\n    # collect data for 'ip_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip reputation\", parameters=parameters, assets=['recorded-future'], callback=filter_for_risk_score_above_90, name=\"ip_reputation_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -6858,7 +6858,7 @@
                                 "opacity": 1
                             },
                             "g.delete": {
-                                "display": "block"
+                                "display": "none"
                             },
                             "g.error": {
                                 "opacity": 0
@@ -7185,7 +7185,7 @@
         "schema": 3,
         "version": "4.2.7532"
     },
-    "create_time": "2019-05-27T12:43:27.638307+00:00",
+    "create_time": "2019-05-28T19:56:13.759439+00:00",
     "draft_mode": false,
     "labels": [
         "events"

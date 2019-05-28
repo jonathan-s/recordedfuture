@@ -1,5 +1,5 @@
 """
-This playbook is called from a correlation search in Splunk ES
+This playbook checks the reputation of an IP address and, based on its Risk Score, forwards it to Phantom and Splunk plus sends out an alert email.
 """
 
 import phantom.rules as phantom
@@ -31,7 +31,7 @@ def ip_reputation_1(action=None, success=None, container=None, results=None, han
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("ip reputation", parameters=parameters, assets=['recorded future app'], callback=filter_for_risk_score_above_90, name="ip_reputation_1")
+    phantom.act("ip reputation", parameters=parameters, assets=['recorded-future'], callback=filter_for_risk_score_above_90, name="ip_reputation_1")
 
     return
 

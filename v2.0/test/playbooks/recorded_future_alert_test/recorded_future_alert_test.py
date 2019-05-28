@@ -61,7 +61,7 @@ def alert_data_lookup_1(action=None, success=None, container=None, results=None,
                 'context': {'artifact_id': container_item[2]},
             })
 
-    phantom.act("alert data lookup", parameters=parameters, assets=['recordedfuture'], callback=format_1, name="alert_data_lookup_1")
+    phantom.act("alert data lookup", parameters=parameters, assets=['recorded-future'], callback=format_1, name="alert_data_lookup_1")
 
     return
 
@@ -107,7 +107,7 @@ def alert_rule_lookup_1(action=None, success=None, container=None, results=None,
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("alert rule lookup", parameters=parameters, assets=['recordedfuture'], callback=format_2, name="alert_rule_lookup_1")
+    phantom.act("alert rule lookup", parameters=parameters, assets=['recorded-future'], callback=format_2, name="alert_rule_lookup_1")
 
     return
 

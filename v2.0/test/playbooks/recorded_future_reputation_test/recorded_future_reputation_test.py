@@ -98,7 +98,7 @@ def ip_reputation_1(action=None, success=None, container=None, results=None, han
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("ip reputation", parameters=parameters, assets=['recordedfuture'], name="ip_reputation_1")
+    phantom.act("ip reputation", parameters=parameters, assets=['recorded-future'], name="ip_reputation_1")
 
     return
 
@@ -119,7 +119,7 @@ def file_reputation_1(action=None, success=None, container=None, results=None, h
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("file reputation", parameters=parameters, assets=['recordedfuture'], name="file_reputation_1")
+    phantom.act("file reputation", parameters=parameters, assets=['recorded-future'], name="file_reputation_1")
 
     return
 
@@ -140,7 +140,7 @@ def domain_reputation_1(action=None, success=None, container=None, results=None,
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("domain reputation", parameters=parameters, assets=['recordedfuture'], name="domain_reputation_1")
+    phantom.act("domain reputation", parameters=parameters, assets=['recorded-future'], name="domain_reputation_1")
 
     return
 
@@ -161,7 +161,7 @@ def vulnerability_reputation_1(action=None, success=None, container=None, result
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("vulnerability reputation", parameters=parameters, assets=['recordedfuture'], name="vulnerability_reputation_1")
+    phantom.act("vulnerability reputation", parameters=parameters, assets=['recorded-future'], name="vulnerability_reputation_1")
 
     return
 
@@ -182,7 +182,7 @@ def url_reputation_1(action=None, success=None, container=None, results=None, ha
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("url reputation", parameters=parameters, assets=['recordedfuture'], name="url_reputation_1")
+    phantom.act("url reputation", parameters=parameters, assets=['recorded-future'], name="url_reputation_1")
 
     return
 

@@ -1,5 +1,5 @@
 """
-Show's enrichment with decision based off Risk Score.  This playbook is typically used for artifact enrichment.
+This playbook was created to show how to obtain intelligence for IP address with a high Risk Score. It is typically used for artifact enrichment.
 """
 
 import phantom.rules as phantom
@@ -9,20 +9,20 @@ from datetime import datetime, timedelta
 def on_start(container):
     phantom.debug('on_start() called')
     
-    # call 'ip_reputation_1' block
-    ip_reputation_1(container=container)
+    # call 'ip_intelligence_1' block
+    ip_intelligence_1(container=container)
 
     return
 
-def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('ip_reputation_1() called')
+def ip_intelligence_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('ip_intelligence_1() called')
 
-    # collect data for 'ip_reputation_1' call
+    # collect data for 'ip_intelligence_1' call
     container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])
 
     parameters = []
     
-    # build parameters list for 'ip_reputation_1' call
+    # build parameters list for 'ip_intelligence_1' call
     for container_item in container_data:
         if container_item[0]:
             parameters.append({
@@ -31,13 +31,10 @@ def ip_reputation_1(action=None, success=None, container=None, results=None, han
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("ip reputation", parameters=parameters, assets=['recorded future app'], callback=filter_for_risk_score_above_90, name="ip_reputation_1")
+    phantom.act("ip intelligence", parameters=parameters, assets=['recorded-future'], callback=filter_for_risk_score_above_90, name="ip_intelligence_1")
 
     return
 
-"""
-Match IP address against Recorded Future's Risk List for any IP addresses with a risk score of 90 or above.
-"""
 def filter_for_risk_score_above_90(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
     phantom.debug('filter_for_risk_score_above_90() called')
 
@@ -46,8 +43,8 @@ def filter_for_risk_score_above_90(action=None, success=None, container=None, re
         container=container,
         action_results=results,
         conditions=[
-            ["ip_reputation_1:action_result.data.*.risk.score", ">=", 90],
-            ["ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.rule", "in", "Current C&C Server"],
+            ["ip_intelligence_1:action_result.data.*.risk.score", ">=", 90],
+            ["ip_intelligence_1:action_result.data.*.risk.evidenceDetails.*.rule", "in", "Current C&C Server"],
         ],
         logical_operator='and')
 
@@ -114,13 +111,13 @@ More information about:
 
     # parameter list for template variable replacement
     parameters = [
-        "ip_reputation_1:action_result.parameter.ip",
-        "ip_reputation_1:action_result.data.*.risk.score",
-        "ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.evidenceString",
-        "ip_reputation_1:action_result.data.*.risk.riskSummary",
-        "ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.rule",
-        "ip_reputation_1:action_result.data.*.intelCard",
-        "ip_reputation_1:action_result.data.*.relatedEntities.*.type",
+        "ip_intelligence_1:action_result.parameter.ip",
+        "ip_intelligence_1:action_result.data.*.risk.score",
+        "ip_intelligence_1:action_result.data.*.risk.evidenceDetails.*.evidenceString",
+        "ip_intelligence_1:action_result.data.*.risk.riskSummary",
+        "ip_intelligence_1:action_result.data.*.risk.rules",
+        "ip_intelligence_1:action_result.data.*.intelCard",
+        "ip_reputation_1:action_result.data.*.relatedEntities.*.entities.*.type",
         "ip_reputation_1:action_result.data.*.relatedEntities.*.entities.*.entity.name",
         "ip_reputation_1:action_result.data.*.relatedEntities.*.entities.*.entity.type",
     ]

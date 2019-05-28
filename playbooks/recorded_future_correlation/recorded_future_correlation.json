@@ -7,7 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "This playbook checks the reputation of an IP address and, based on its Risk Score, forwards it to Phantom and Splunk plus sends out an alert email.",
-            "hash": "b620082d7b6247fdc7a25f7ef2e9285e8cea71ba",
+            "hash": "6a5caa0c2f13f6ccf1ad03e08f17272e190d500b",
             "joint": {
                 "cells": [
                     {
@@ -1528,7 +1528,7 @@
                                 "id": 7,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recorded future app",
+                                "name": "recorded-future",
                                 "output": [
                                     {
                                         "column_name": "ip",
@@ -1721,7 +1721,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_reputation_1() called')\n\n    # collect data for 'ip_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip reputation\", parameters=parameters, assets=['recorded future app'], callback=filter_for_risk_score_above_90, name=\"ip_reputation_1\")\n\n    return",
+                        "block_code": "def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_reputation_1() called')\n\n    # collect data for 'ip_reputation_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_reputation_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip reputation\", parameters=parameters, assets=['recorded-future'], callback=filter_for_risk_score_above_90, name=\"ip_reputation_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -2530,7 +2530,7 @@
         "schema": 3,
         "version": "4.2.7532"
     },
-    "create_time": "2019-05-27T12:31:41.310218+00:00",
+    "create_time": "2019-05-28T19:50:33.321829+00:00",
     "draft_mode": false,
     "labels": [
         "events"

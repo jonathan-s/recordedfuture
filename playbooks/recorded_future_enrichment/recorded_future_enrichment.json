@@ -7,7 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "This playbook was created to show how to obtain intelligence for IP address with a high Risk Score. It is typically used for artifact enrichment.",
-            "hash": "0f5e19b760af5a964ea50e360fdc0b43db27c003",
+            "hash": "06ba267b897d208edb72847ab2354d3436857ee9",
             "joint": {
                 "cells": [
                     {
@@ -1046,7 +1046,7 @@
                                 "id": 7,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recorded future app",
+                                "name": "recorded-future",
                                 "output": [
                                     {
                                         "column_name": "ip",
@@ -1383,7 +1383,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def ip_intelligence_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_intelligence_1() called')\n\n    # collect data for 'ip_intelligence_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_intelligence_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip intelligence\", parameters=parameters, assets=['recorded future app'], callback=filter_for_risk_score_above_90, name=\"ip_intelligence_1\")\n\n    return",
+                        "block_code": "def ip_intelligence_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_intelligence_1() called')\n\n    # collect data for 'ip_intelligence_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_intelligence_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip intelligence\", parameters=parameters, assets=['recorded-future'], callback=filter_for_risk_score_above_90, name=\"ip_intelligence_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -1475,7 +1475,7 @@
                             "y": 60
                         },
                         "previous_function": "",
-                        "previous_name": "ip_reputation_1",
+                        "previous_name": "ip_intelligence_1",
                         "required_params": {
                             "ip": true
                         },
@@ -1489,7 +1489,7 @@
                         "status": "",
                         "title": "Investigate",
                         "type": "coa.Action",
-                        "warn": "",
+                        "warn": false,
                         "z": 112
                     },
                     {
@@ -1541,7 +1541,7 @@
                         "callback_code": "# read-only block view not available",
                         "callback_start": 1,
                         "callsback": false,
-                        "connected_to_start": false,
+                        "connected_to_start": true,
                         "connection_name": "",
                         "connection_type": "",
                         "custom_callback": "",
@@ -2045,7 +2045,7 @@
                         "title": "format",
                         "type": "coa.Format",
                         "warn": false,
-                        "z": 123
+                        "z": 124
                     }
                 ]
             },
@@ -2054,7 +2054,7 @@
         "schema": 3,
         "version": "4.2.7532"
     },
-    "create_time": "2019-05-27T12:53:31.687606+00:00",
+    "create_time": "2019-05-28T19:54:05.050829+00:00",
     "draft_mode": false,
     "labels": [
         "events"
