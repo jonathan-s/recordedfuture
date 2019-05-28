@@ -1,6 +1,8 @@
 """Test suite for domain reputation action"""
 import logging
 import requests
+from testdata.common.not_found import testdata_404_reputation
+import unittest
 from test_harness import RfTests
 
 # disable certificate warnings for self signed certificates
@@ -40,3 +42,32 @@ class RfIpReputationTests(RfTests):
         # Call the test for each target
         for ioc, target_risk_score in targets:
             self._test_ip_reputation_score(ioc, target_risk_score)
+
+    def test_neg_ip_reputation_not_existing(self):
+        """Test behavior when a non-existing ip is passed."""
+
+        testdata = {
+            'ioc': '1.2.3.4'
+        }
+
+        # Create container and artifact.
+        container_id = self._create_event_and_artifact(
+            'Test Event IP Reputation - not existing', destinationAddress=testdata['ioc'])
+
+        # Fetch the result of the automatic run.
+        ares = self._poll_for_success(self._action_result, container_id)
+
+        LOGGER.debug("ares: %s", ares)
+
+        # ConnectAPI return 404 on these, but we return success with an empty list
+        self.assertEqual(ares['data'][0]['status'], 'success')
+
+        # Assert we get success and sets the response as expected
+        result_data = ares['data'][0]['result_data']
+        for rd in result_data:
+            # Assert success
+            self.assertEqual(rd['status'], 'success')
+            # Assert message is as should
+            self.assertEqual(rd['message'], testdata_404_reputation['message'])
+            # Assert data
+            self.assertEqual(rd['data'], testdata_404_reputation['data'])
