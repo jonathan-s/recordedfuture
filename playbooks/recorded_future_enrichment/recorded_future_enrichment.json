@@ -1011,7 +1011,7 @@
                             "ip": "artifact:*.cef.destinationAddress"
                         },
                         "angle": 0,
-                        "app": "recordedfuture",
+                        "app": "Recorded Future",
                         "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
                         "approver": "",
                         "assets": [
@@ -1033,7 +1033,7 @@
                                     "test connectivity"
                                 ],
                                 "active": true,
-                                "app_name": "recordedfuture",
+                                "app_name": "Recorded Future",
                                 "app_version": "2.0.0",
                                 "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
                                 "asset_name": "recorded future app",
@@ -1309,7 +1309,7 @@
                                         "value_list": []
                                     }
                                 },
-                                "product_name": "Recorded Future for Splunk Phantom",
+                                "product_name": "Recorded Future App for Phantom",
                                 "product_vendor": "Recorded Future, Inc",
                                 "targets": "7",
                                 "type": "reputation"

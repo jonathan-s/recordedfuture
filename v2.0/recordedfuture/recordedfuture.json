@@ -1,6 +1,6 @@
 {
   "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-  "name": "recordedfuture",
+  "name": "Recorded Future",
   "description": "This app implements lookups for quick reputation information, contextual threat intelligence and external threat alerts.",
   "type": "reputation",
   "product_vendor": "Recorded Future, Inc",
