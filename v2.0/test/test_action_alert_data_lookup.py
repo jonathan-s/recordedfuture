@@ -1,6 +1,7 @@
 """Test suite for ip reputation action"""
 import logging
 import requests
+import re
 from phantom_ops import *
 from test_harness import RfTests
 import unittest
@@ -36,17 +37,6 @@ class RfAlertDataLookupTests(RfTests):
             cs1=testdata['alertruleid'],
             cs1Label=testdata['alertrulelabel'],
             cs2=testdata['alertruletimeframe'])
-
-        # container = ph_container("Test Event alert aata lookup", [artifact])
-        #
-        # res = self._rest_call('post', 'container', container)
-        #
-        # # Check that it was a success.
-        # self.assertEqual(res.status_code, 200)
-        #
-        # # Check the Phantom status
-        # jres = res.json()
-        # self.assertEqual(jres['success'], True)
 
         # Pass self._action_result to poll with container id as argument
         ares = self._poll_for_success(self._action_result, container_id)
@@ -163,3 +153,9 @@ class RfAlertDataLookupTests(RfTests):
 
         # Assert we get a status failed
         self.assertEqual(ares['data'][0]['status'], 'failed')
+
+        # Assert we get the server error message and status code included in the response
+        self.assertIsNotNone(re.search("Failed parsing filter condition triggered = kalle.+400",ares['data'][0]
+        ['result_data'][0]['message']))
+
+
