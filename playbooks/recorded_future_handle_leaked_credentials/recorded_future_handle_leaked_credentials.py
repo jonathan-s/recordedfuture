@@ -22,7 +22,7 @@ def alert_data_lookup_1(action=None, success=None, container=None, results=None,
     
     # build parameters list for 'alert_data_lookup_1' call
     parameters.append({
-        'rule_id': "VNPVFc",
+        'rule_id': "",
         'timeframe': "-24h to now",
     })
 
