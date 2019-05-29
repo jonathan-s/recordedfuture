@@ -1,12 +1,14 @@
 PACKAGES := recorded_future_correlation.tgz \
 			recorded_future_enrichment.tgz \
+			recorded_future_handle_leaked_credentials.tgz \
 			recorded_future_threat_hunting.tgz
 DIST_DIR := pkg_build
 PKG_TARGETS := $(addprefix $(DIST_DIR)/,$(PACKAGES))
 # COPYFILE prevents tar on Macos to add virtual files for file permissions to archive.
 # Phantom can't deal with those files.
 COPYFILE := $(shell if [ "x`tar --version | cut -d' ' -f1`" = "xbsdtar" -a "x`uname`" = "xDarwin" ]; then echo --disable-copyfile; fi)
-PRIVATE_KEYWORDS := 'recfut|@recordedfuture|splunk-ps'
+# VNPVFc is a leaked credentials rule id used during dev (all fake data so not sensitive but still)
+PRIVATE_KEYWORDS := 'recfut|@recordedfuture|splunk-ps|VNPVFc'
 
 all:
 	@echo "Handle Phantom playbook packages"
