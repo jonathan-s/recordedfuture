@@ -1,10 +1,8 @@
 """Test suite for url reputation action"""
 import logging
 import requests
-from phantom_ops import *
 from test_harness import RfTests
 from testdata.common.not_found import testdata_404_reputation
-import unittest
 
 # disable certificate warnings for self signed certificates
 requests.packages.urllib3.disable_warnings()
@@ -18,7 +16,7 @@ PBOOK = 'recorded_future_reputation_test'
 class RfUrlReputationTests(RfTests):
     """Test cases for url reputation action."""
 
-    def setUp(self):
+    def setUp(self, playbook=None):
         """Setup test environment."""
         RfTests.setUp(self, PBOOK)
 
@@ -54,14 +52,16 @@ class RfUrlReputationTests(RfTests):
 
         # Create container and artifact.
         container_id = self._create_event_and_artifact(
-            'Test Event Url Reputation - not existing', requestURL=testdata['ioc'])
+            'Test Event Url Reputation - not existing',
+            requestURL=testdata['ioc'])
 
         # Fetch the result of the automatic run.
         ares = self._poll_for_success(self._action_result, container_id)
 
         LOGGER.debug("ares: %s", ares)
 
-        # ConnectAPI return 404 on these, but we return success with an empty list
+        # ConnectAPI return 404 on these, but we return success with an
+        # empty list
         self.assertEqual(ares['data'][0]['status'], 'success')
 
         # Assert we get success and sets the response as expected
@@ -70,6 +70,7 @@ class RfUrlReputationTests(RfTests):
             # Assert success
             self.assertEqual(rd['status'], 'success')
             # Assert message is as should
-            self.assertEqual(rd['message'], testdata_404_reputation['message'])
+            self.assertEqual(rd['message'],
+                             testdata_404_reputation['message'])
             # Assert data
             self.assertEqual(rd['data'], testdata_404_reputation['data'])

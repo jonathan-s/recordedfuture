@@ -1,9 +1,8 @@
 """Test suite for domain reputation action"""
 import logging
 import requests
-from testdata.common.not_found import testdata_404_reputation
-import unittest
 from test_harness import RfTests
+from testdata.common.not_found import testdata_404_reputation
 
 # disable certificate warnings for self signed certificates
 requests.packages.urllib3.disable_warnings()
@@ -17,15 +16,16 @@ PBOOK = 'recorded_future_reputation_test'
 class RfIpReputationTests(RfTests):
     """Test cases for ip reputation action."""
 
-    def setUp(self):
+    def setUp(self, playbook=None):
         """Setup test environment."""
         RfTests.setUp(self, PBOOK)
 
-    def _test_ip_reputation_score(self, ioc, target_risk_score):
+    def _test_ip_reputation_score(self, ioc, target_risk_score, cname):
         """Test behavior when an ip is supplied."""
         # Create container and artifact.
         container_id = self._create_event_and_artifact(
-            'Test Event IP Reputation', destinationAddress=ioc)
+            cname,
+            destinationAddress=ioc)
 
         # Fetch the result of the automatic run.
         ares = self._poll_for_success(self._action_result, container_id)
@@ -41,25 +41,27 @@ class RfIpReputationTests(RfTests):
 
         # Call the test for each target
         for ioc, target_risk_score in targets:
-            self._test_ip_reputation_score(ioc, target_risk_score)
+            self._test_ip_reputation_score(ioc, target_risk_score,
+                                           'Test Event IP Reputation')
 
     def test_neg_ip_reputation_not_existing(self):
         """Test behavior when a non-existing ip is passed."""
-
         testdata = {
             'ioc': '1.2.3.4'
         }
 
         # Create container and artifact.
         container_id = self._create_event_and_artifact(
-            'Test Event IP Reputation - not existing', destinationAddress=testdata['ioc'])
+            'Test Event IP Reputation - not existing',
+            destinationAddress=testdata['ioc'])
 
         # Fetch the result of the automatic run.
         ares = self._poll_for_success(self._action_result, container_id)
 
         LOGGER.debug("ares: %s", ares)
 
-        # ConnectAPI return 404 on these, but we return success with an empty list
+        # ConnectAPI return 404 on these, but we return success with an
+        # empty list
         self.assertEqual(ares['data'][0]['status'], 'success')
 
         # Assert we get success and sets the response as expected
@@ -68,6 +70,7 @@ class RfIpReputationTests(RfTests):
             # Assert success
             self.assertEqual(rd['status'], 'success')
             # Assert message is as should
-            self.assertEqual(rd['message'], testdata_404_reputation['message'])
+            self.assertEqual(rd['message'],
+                             testdata_404_reputation['message'])
             # Assert data
             self.assertEqual(rd['data'], testdata_404_reputation['data'])

@@ -1,10 +1,8 @@
 """Test suite for file reputation action"""
 import logging
 import requests
-from phantom_ops import *
 from test_harness import RfTests
 from testdata.common.not_found import testdata_404_reputation
-import unittest
 
 # disable certificate warnings for self signed certificates
 requests.packages.urllib3.disable_warnings()
@@ -18,7 +16,7 @@ PBOOK = 'recorded_future_reputation_test'
 class RfDomainReputationTests(RfTests):
     """Test cases for file reputation action."""
 
-    def setUp(self):
+    def setUp(self, playbook=None):
         """Setup test environment."""
         RfTests.setUp(self, PBOOK)
 

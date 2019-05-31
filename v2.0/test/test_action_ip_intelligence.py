@@ -2,7 +2,6 @@
 import logging
 import requests
 from test_harness import RfTests
-import unittest
 from testdata.common.not_found import testdata_404_intelligence_ip
 
 # disable certificate warnings for self signed certificates
@@ -17,7 +16,7 @@ PBOOK = 'recorded_future_intelligence_test'
 class RfIpReputationTests(RfTests):
     """Test cases for ip intelligence action."""
 
-    def setUp(self):
+    def setUp(self, playbook=None):
         """Setup test environment."""
         RfTests.setUp(self, PBOOK)
 
@@ -56,14 +55,16 @@ class RfIpReputationTests(RfTests):
 
         # Create container and artifact.
         container_id = self._create_event_and_artifact(
-            'Test Event IP Intelligence - not existing', destinationAddress=testdata['ioc'])
+            'Test Event IP Intelligence - not existing',
+            destinationAddress=testdata['ioc'])
 
         # Fetch the result of the automatic run.
         ares = self._poll_for_success(self._action_result, container_id)
 
         LOGGER.debug("ares: %s", ares)
 
-        # ConnectAPI return 404 on these, but we return success with an empty list
+        # ConnectAPI return 404 on these, but we return success with an
+        # empty list
         self.assertEqual(ares['data'][0]['status'], 'success')
 
         # Assert we get success and sets the response as expected
@@ -72,6 +73,7 @@ class RfIpReputationTests(RfTests):
             # Assert success
             self.assertEqual(rd['status'], 'success')
             # Assert message is as should
-            self.assertEqual(rd['message'], testdata_404_intelligence_ip['message'])
+            self.assertEqual(rd['message'],
+                             testdata_404_intelligence_ip['message'])
             # Assert data property
             self.assertEqual(rd['data'], testdata_404_intelligence_ip['data'])

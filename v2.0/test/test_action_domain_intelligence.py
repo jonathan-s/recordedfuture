@@ -1,9 +1,7 @@
 """Test suite for domain intelligence action"""
 import logging
 import requests
-from phantom_ops import *
 from test_harness import RfTests
-import unittest
 from testdata.common.not_found import testdata_404_intelligence_domain
 
 # disable certificate warnings for self signed certificates
@@ -18,7 +16,7 @@ PBOOK = 'recorded_future_intelligence_test'
 class RfDomainIntelligenceTests(RfTests):
     """Test cases for domain intelligence action."""
 
-    def setUp(self):
+    def setUp(self, playbook=None):
         """Setup test environment."""
         RfTests.setUp(self, PBOOK)
 
@@ -65,7 +63,8 @@ class RfDomainIntelligenceTests(RfTests):
 
         LOGGER.debug("ares: %s", ares)
 
-        # ConnectAPI return 404 on these, but we return success with an empty list
+        # ConnectAPI return 404 on these, but we return success with an
+        # empty list
         self.assertEqual(ares['data'][0]['status'], 'success')
 
         # Assert we get success and sets the response as expected
@@ -74,7 +73,9 @@ class RfDomainIntelligenceTests(RfTests):
             # Assert success
             self.assertEqual(rd['status'], 'success')
             # Assert message is as should
-            self.assertEqual(rd['message'], testdata_404_intelligence_domain['message'])
+            self.assertEqual(rd['message'],
+                             testdata_404_intelligence_domain['message'])
             # Assert data property
-            self.assertEqual(rd['data'], testdata_404_intelligence_domain['data'])
+            self.assertEqual(rd['data'],
+                             testdata_404_intelligence_domain['data'])
 

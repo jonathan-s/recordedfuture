@@ -1,9 +1,7 @@
 """Test suite for file intelligence action"""
 import logging
 import requests
-from phantom_ops import *
 from test_harness import RfTests
-import unittest
 from testdata.common.not_found import testdata_404_intelligence_file
 
 # disable certificate warnings for self signed certificates
@@ -18,7 +16,7 @@ PBOOK = 'recorded_future_intelligence_test'
 class RfDomainIntelligenceTests(RfTests):
     """Test cases for file intelligence action."""
 
-    def setUp(self):
+    def setUp(self, playbook=None):
         """Setup test environment."""
         RfTests.setUp(self, PBOOK)
 

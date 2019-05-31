@@ -2,9 +2,7 @@
 import logging
 import requests
 import re
-from phantom_ops import *
 from test_harness import RfTests
-import unittest
 
 # disable certificate warnings for self signed certificates
 requests.packages.urllib3.disable_warnings()
@@ -18,7 +16,7 @@ PBOOK = 'recorded_future_alert_test'
 class RfAlertDataLookupTests(RfTests):
     """Test cases for ip reputation action."""
 
-    def setUp(self):
+    def setUp(self, playbook=None):
         """Setup test environment."""
         RfTests.setUp(self, PBOOK)
 
@@ -89,73 +87,50 @@ class RfAlertDataLookupTests(RfTests):
         return data.
         """
 
+        # Create container and artifact.
         testdata = {
             'alertruleid': 'KALLE',
             'alertrulelabel': 'alert rule id',
             'alertruletimeframe': 'anytime'
         }
-
-        artifact = ph_artifact(cs1=testdata['alertruleid'],
-                               cs1Label=testdata['alertrulelabel'],
-                               cs2=testdata['alertruletimeframe'])
-
-        container = ph_container(
+        container_id = self._create_event_and_artifact(
             "Test Event for alert data event (bad rule id)",
-            [artifact])
-
-        res = self._rest_call('post', 'container', container)
-
-        # Check that it was a success.
-        self.assertEqual(res.status_code, 200)
-
-        # Check the Phantom status
-        jres = res.json()
-        self.assertEqual(jres['success'], True)
+            cs1=testdata['alertruleid'],
+            cs1Label=testdata['alertrulelabel'],
+            cs2=testdata['alertruletimeframe'])
 
         # Get action result
-        ares = self._poll_for_success(self._action_result, jres['id'])
+        ares = self._poll_for_success(self._action_result, container_id)
 
         # Assert we get empty values
         self.assertEqual(ares['data'][0]['result_data'][0]['summary'][
                              'total_number_of_alerts'], 0)
 
-    # @unittest.skip("Skipping due to https://recordedfuture.atlassian.net/browse/RF-41776")
     def test_neg_alert_data_lookup_invalid_timeframe(self):
         """Test behavior when passing alert query parameters with invalid
         timeframe.
         """
 
+        # Create container and artifact.
         testdata = {
             'alertruleid': 'VNPVFc',
             'alertrulelabel': 'alert rule id',
             'alertruletimeframe': 'kalle'
         }
-
-        artifact = ph_artifact(cs1=testdata['alertruleid'],
-                               cs1Label=testdata['alertrulelabel'],
-                               cs2=testdata['alertruletimeframe'])
-
-        container = ph_container(
-            "Test Event for alert data event (bad time range)",
-            [artifact])
-
-        res = self._rest_call('post', 'container', container)
-
-        # Check that it was a success.
-        self.assertEqual(res.status_code, 200)
-
-        # Check the Phantom status
-        jres = res.json()
-        self.assertEqual(jres['success'], True)
+        container_id = self._create_event_and_artifact(
+            "Test Event for alert data event (bad rule id)",
+            cs1=testdata['alertruleid'],
+            cs1Label=testdata['alertrulelabel'],
+            cs2=testdata['alertruletimeframe'])
 
         # Get action result
-        ares = self._poll_for_success(self._action_result, jres['id'])
+        ares = self._poll_for_success(self._action_result, container_id)
 
         # Assert we get a status failed
         self.assertEqual(ares['data'][0]['status'], 'failed')
 
-        # Assert we get the server error message and status code included in the response
-        self.assertIsNotNone(re.search("Failed parsing filter condition triggered = kalle.+400",ares['data'][0]
-        ['result_data'][0]['message']))
-
-
+        # Assert we get the server error message and status code included
+        # in the response
+        self.assertIsNotNone(re.search(
+            "Failed parsing filter condition triggered = kalle.+400",
+            ares['data'][0]['result_data'][0]['message']))
