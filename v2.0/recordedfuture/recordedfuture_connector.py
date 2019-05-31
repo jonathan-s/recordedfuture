@@ -317,12 +317,16 @@ class RecordedfutureConnector(BaseConnector):
         url = self._base_url + endpoint
 
         # Create a HTTP_USER_AGENT header
+        # container_id is added to track actions associated with an event in
+        # order to improve the app
         platform = 'Phantom_%s' % self.get_product_version()
-        user_agent = '{app_name} ({platform}) {pkg_name}/{pkg_version}'.format(
-            app_name=os.path.basename(__file__),
-            pkg_name='phantom',
-            pkg_version=version,
-            platform=platform)
+        pdict = dict(app_name=os.path.basename(__file__),
+                     pkg_name='phantom',
+                     pkg_version=version,
+                     platform=platform,
+                     container_id=self.get_container_id())
+        user_agent = '{app_name}/{container_id} ({platform}) ' \
+                     '{pkg_name}/{pkg_version}'.format(**pdict)
 
         # headers
         api_key = config.get('recordedfuture_api_token')
