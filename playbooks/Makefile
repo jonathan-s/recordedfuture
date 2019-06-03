@@ -25,7 +25,7 @@ $(DIST_DIR):
 info_security:
 
 $(DIST_DIR)/%.tgz: dist_dirs
-	@if [ "x`egrep -rl $(PRIVATE_KEYWORDS) $(@F:.tgz=)`" != "x" ]; then \
+	if [ "x`egrep -rl $(PRIVATE_KEYWORDS) $(@F:.tgz=)`" != "x" ]; then \
 		echo The playbook $(@F:.tgz=) contains internal emails or hosts.; \
 		echo `egrep -r $(PRIVATE_KEYWORDS) $(@F:.tgz=)`; \
 		exit 1; \
