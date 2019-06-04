@@ -9,29 +9,8 @@ from datetime import datetime, timedelta
 def on_start(container):
     phantom.debug('on_start() called')
     
-    # call 'ip_reputation_1' block
-    ip_reputation_1(container=container)
-
-    return
-
-def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('ip_reputation_1() called')
-
-    # collect data for 'ip_reputation_1' call
-    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])
-
-    parameters = []
-    
-    # build parameters list for 'ip_reputation_1' call
-    for container_item in container_data:
-        if container_item[0]:
-            parameters.append({
-                'ip': container_item[0],
-                # context (artifact id) is added to associate results with the artifact
-                'context': {'artifact_id': container_item[1]},
-            })
-
-    phantom.act("ip reputation", parameters=parameters, assets=['recorded-future'], callback=filter_for_risk_score_above_90, name="ip_reputation_1")
+    # call 'ip_intelligence_1' block
+    ip_intelligence_1(container=container)
 
     return
 
@@ -43,15 +22,12 @@ def filter_for_risk_score_above_90(action=None, success=None, container=None, re
         container=container,
         action_results=results,
         conditions=[
-            ["ip_reputation_1:action_result.data.*.risk.score", ">=", 90],
+            ["ip_intelligence_1:action_result.data.*.risk.score", ">=", 90],
         ])
 
     # call connected blocks if condition 1 matched
     if matched_artifacts_1 or matched_results_1:
-        query_for_related_ips(action=action, success=success, container=container, results=results, handle=handle)
-        query_for_related_domains(action=action, success=success, container=container, results=results, handle=handle)
-        query_for_related_files(action=action, success=success, container=container, results=results, handle=handle)
-        query_for_related_vulns(action=action, success=success, container=container, results=results, handle=handle)
+        Entity_Type_Filter(action=action, success=success, container=container, results=results, handle=handle)
         return
 
     # call connected blocks for 'else' condition 2
@@ -65,8 +41,8 @@ def query_for_related_ips(action=None, success=None, container=None, results=Non
 
     # parameter list for template variable replacement
     parameters = [
-        "ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.name",
-        "ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
+        "filtered-data:Entity_Type_Filter:condition_3:ip_intelligence_1:action_result.data.*.relatedEntities.*.entities.*.entity.name",
+        "filtered-data:Entity_Type_Filter:condition_3:ip_intelligence_1:action_result.data.*.relatedEntities.*.entities.*.count",
     ]
 
     phantom.format(container=container, template=template, parameters=parameters, name="query_for_related_ips")
@@ -91,7 +67,7 @@ def format_list_of_ip(action=None, success=None, container=None, results=None, h
         'display': "",
     })
 
-    phantom.act("run query", parameters=parameters, assets=['splunk-server'], callback=search_splunk_for_ips, name="format_list_of_ip")
+    phantom.act("run query", parameters=parameters, assets=['splunk'], callback=search_splunk_for_ips, name="format_list_of_ip")
 
     return
 
@@ -110,7 +86,7 @@ def search_splunk_for_ips(action=None, success=None, container=None, results=Non
         'display': "",
     })
 
-    phantom.act("run query", parameters=parameters, assets=['splunk-server'], callback=search_splunk_for_ips_callback, name="search_splunk_for_ips", parent_action=action)
+    phantom.act("run query", parameters=parameters, assets=['splunk'], callback=search_splunk_for_ips_callback, name="search_splunk_for_ips", parent_action=action)
 
     return
 
@@ -279,8 +255,8 @@ IPs: {2}"""
 
     # parameter list for template variable replacement
     parameters = [
-        "ip_reputation_1:action_result.parameter.ip",
-        "ip_reputation_1:action_result.data.*.risk.score",
+        "ip_intelligence_1:action_result.parameter.ip",
+        "ip_intelligence_1:action_result.data.*.risk.score",
         "search_splunk_for_ips:action_result.data.*.IP",
     ]
 
@@ -323,8 +299,8 @@ def query_for_related_domains(action=None, success=None, container=None, results
 
     # parameter list for template variable replacement
     parameters = [
-        "ip_reputation_1:action_result.data.*.relatedEntities.RelatedInternetDomainName.*.name",
-        "ip_reputation_1:action_result.data.*.relatedEntities.RelatedIpAddress.*.refCount",
+        "filtered-data:Entity_Type_Filter:condition_4:ip_intelligence_1:action_result.data.*.relatedEntities.*.entities.*.entity.name",
+        "filtered-data:Entity_Type_Filter:condition_4:ip_intelligence_1:action_result.data.*.relatedEntities.*.entities.*.count",
     ]
 
     phantom.format(container=container, template=template, parameters=parameters, name="query_for_related_domains")
@@ -349,7 +325,7 @@ def format_list_of_domains(action=None, success=None, container=None, results=No
         'display': "",
     })
 
-    phantom.act("run query", parameters=parameters, assets=['splunk-server'], callback=search_splunk_for_domains, name="format_list_of_domains")
+    phantom.act("run query", parameters=parameters, assets=['splunk'], callback=search_splunk_for_domains, name="format_list_of_domains")
 
     return
 
@@ -360,8 +336,8 @@ def query_for_related_files(action=None, success=None, container=None, results=N
 
     # parameter list for template variable replacement
     parameters = [
-        "ip_reputation_1:action_result.data.*.relatedEntities.RelatedHash.*.name",
-        "ip_reputation_1:action_result.data.*.relatedEntities.RelatedHash.*.refCount",
+        "filtered-data:Entity_Type_Filter:condition_1:ip_intelligence_1:action_result.data.*.relatedEntities.*.entities.*.entity.name",
+        "filtered-data:Entity_Type_Filter:condition_1:ip_intelligence_1:action_result.data.*.relatedEntities.*.entities.*.count",
     ]
 
     phantom.format(container=container, template=template, parameters=parameters, name="query_for_related_files")
@@ -386,7 +362,7 @@ def format_list_of_file_hashes(action=None, success=None, container=None, result
         'display': "",
     })
 
-    phantom.act("run query", parameters=parameters, assets=['splunk-server'], callback=search_splunk_for_files, name="format_list_of_file_hashes")
+    phantom.act("run query", parameters=parameters, assets=['splunk'], callback=search_splunk_for_files, name="format_list_of_file_hashes")
 
     return
 
@@ -397,8 +373,8 @@ def query_for_related_vulns(action=None, success=None, container=None, results=N
 
     # parameter list for template variable replacement
     parameters = [
-        "ip_reputation_1:action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.name",
-        "ip_reputation_1:action_result.data.*.relatedEntities.RelatedCyberVulnerability.*.refCount",
+        "filtered-data:Entity_Type_Filter:condition_2:ip_intelligence_1:action_result.data.*.relatedEntities.*.entities.*.entity.name",
+        "filtered-data:Entity_Type_Filter:condition_2:ip_intelligence_1:action_result.data.*.relatedEntities.*.entities.*.count",
     ]
 
     phantom.format(container=container, template=template, parameters=parameters, name="query_for_related_vulns")
@@ -423,7 +399,7 @@ def format_list_of_vulns(action=None, success=None, container=None, results=None
         'display': "",
     })
 
-    phantom.act("run query", parameters=parameters, assets=['splunk-server'], callback=search_splunk_for_vulns, name="format_list_of_vulns")
+    phantom.act("run query", parameters=parameters, assets=['splunk'], callback=search_splunk_for_vulns, name="format_list_of_vulns")
 
     return
 
@@ -442,7 +418,7 @@ def search_splunk_for_domains(action=None, success=None, container=None, results
         'display': "",
     })
 
-    phantom.act("run query", parameters=parameters, assets=['splunk-server'], callback=join_Send_email_if_related_entities_are_found, name="search_splunk_for_domains", parent_action=action)
+    phantom.act("run query", parameters=parameters, assets=['splunk'], callback=join_Send_email_if_related_entities_are_found, name="search_splunk_for_domains", parent_action=action)
 
     return
 
@@ -461,7 +437,7 @@ def search_splunk_for_files(action=None, success=None, container=None, results=N
         'display': "",
     })
 
-    phantom.act("run query", parameters=parameters, assets=['splunk-server'], callback=join_Send_email_if_related_entities_are_found, name="search_splunk_for_files", parent_action=action)
+    phantom.act("run query", parameters=parameters, assets=['splunk'], callback=join_Send_email_if_related_entities_are_found, name="search_splunk_for_files", parent_action=action)
 
     return
 
@@ -480,7 +456,88 @@ def search_splunk_for_vulns(action=None, success=None, container=None, results=N
         'display': "",
     })
 
-    phantom.act("run query", parameters=parameters, assets=['splunk-server'], callback=join_Send_email_if_related_entities_are_found, name="search_splunk_for_vulns", parent_action=action)
+    phantom.act("run query", parameters=parameters, assets=['splunk'], callback=join_Send_email_if_related_entities_are_found, name="search_splunk_for_vulns", parent_action=action)
+
+    return
+
+def ip_intelligence_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('ip_intelligence_1() called')
+
+    # collect data for 'ip_intelligence_1' call
+    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])
+
+    parameters = []
+    
+    # build parameters list for 'ip_intelligence_1' call
+    for container_item in container_data:
+        if container_item[0]:
+            parameters.append({
+                'ip': container_item[0],
+                # context (artifact id) is added to associate results with the artifact
+                'context': {'artifact_id': container_item[1]},
+            })
+
+    phantom.act("ip intelligence", parameters=parameters, assets=['recorded-future'], callback=filter_for_risk_score_above_90, name="ip_intelligence_1")
+
+    return
+
+"""
+Filter on Entity Type
+"""
+def Entity_Type_Filter(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('Entity_Type_Filter() called')
+
+    # collect filtered artifact ids for 'if' condition 1
+    matched_artifacts_1, matched_results_1 = phantom.condition(
+        container=container,
+        action_results=results,
+        conditions=[
+            ["ip_intelligence_1:action_result.data.*.relatedEntities.*.entities.*.entity.type", "==", "Hash"],
+        ],
+        name="Entity_Type_Filter:condition_1")
+
+    # call connected blocks if filtered artifacts or results
+    if matched_artifacts_1 or matched_results_1:
+        query_for_related_files(action=action, success=success, container=container, results=results, handle=handle, filtered_artifacts=matched_artifacts_1, filtered_results=matched_results_1)
+
+    # collect filtered artifact ids for 'if' condition 2
+    matched_artifacts_2, matched_results_2 = phantom.condition(
+        container=container,
+        action_results=results,
+        conditions=[
+            ["ip_intelligence_1:action_result.data.*.relatedEntities.*.entities.*.entity.type", "==", "CyberVulnerability"],
+        ],
+        name="Entity_Type_Filter:condition_2")
+
+    # call connected blocks if filtered artifacts or results
+    if matched_artifacts_2 or matched_results_2:
+        query_for_related_vulns(action=action, success=success, container=container, results=results, handle=handle, filtered_artifacts=matched_artifacts_2, filtered_results=matched_results_2)
+
+    # collect filtered artifact ids for 'if' condition 3
+    matched_artifacts_3, matched_results_3 = phantom.condition(
+        container=container,
+        action_results=results,
+        conditions=[
+            ["ip_intelligence_1:action_result.data.*.relatedEntities.*.entities.*.entity.type", "==", "IpAddress"],
+        ],
+        name="Entity_Type_Filter:condition_3")
+
+    # call connected blocks if filtered artifacts or results
+    if matched_artifacts_3 or matched_results_3:
+        query_for_related_ips(action=action, success=success, container=container, results=results, handle=handle, filtered_artifacts=matched_artifacts_3, filtered_results=matched_results_3)
+
+    # collect filtered artifact ids for 'if' condition 4
+    matched_artifacts_4, matched_results_4 = phantom.condition(
+        container=container,
+        action_results=results,
+        conditions=[
+            ["ip_intelligence_1:action_result.data.*.relatedEntities.*.entities.*.entity.type", "==", "InternetDomainName"],
+        ],
+        name="Entity_Type_Filter:condition_4")
+
+    # call connected blocks if filtered artifacts or results
+    if matched_artifacts_4 or matched_results_4:
+        query_for_related_domains(action=action, success=success, container=container, results=results, handle=handle, filtered_artifacts=matched_artifacts_4, filtered_results=matched_results_4)
 
     return
 
