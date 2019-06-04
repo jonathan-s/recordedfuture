@@ -3,7 +3,7 @@ BUILDID := $(shell svn info --show-item revision)
 BUILD_DIR := pkg_build
 SRC_DIR := recordedfuture
 PACKAGE := recordedfuture-$(RELEASE).tgz
-RFUSERARG := $(if ${RFLDAP},"-l ${RFLDAP}","")
+RFUSERARG := $(if ${RFLDAP},"-l ${RFLDAP}",)
 
 RSYNC := env RSYNC_RSH=ssh rsync -rav
 LOCAL_RSYNC := rsync

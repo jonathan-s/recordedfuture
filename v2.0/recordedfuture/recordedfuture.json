@@ -86,7 +86,10 @@
         },
         {
           "data_path": "action_result.parameter.timeframe",
-          "data_type": "string"
+          "data_type": "string",
+          "example_values": [
+            "anytime"
+          ]
         },
         {
           "data_path": "action_result.data.*.alert.alertTitle",
@@ -144,6 +147,151 @@
         },
         {
           "data_path": "action_result.summary.returned_number_of_alerts",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.triggered",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.title",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.url",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.review.note",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.review.status",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.review.noteDate",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.review.assignee",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.review.noteAuthor",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.rule.url",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.rule.id",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.rule.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.entities.*.documents.*.url",
+          "data_type": "string",
+          "contains": [
+            "url"
+          ]
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.entities.*.documents.*.source.type",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.entities.*.documents.*.source.id",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.entities.*.documents.*.source.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.entities.*.documents.*.references.*.fragment",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.entities.*.documents.*.references.*.entities.*.type",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.entities.*.documents.*.references.*.entities.*.id",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.entities.*.documents.*.references.*.entities.*.name",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.entities.*.documents.*.references.*.language",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.entities.*.documents.*.title",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.entities.*.entity",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.counts.entities",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.counts.documents",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.counts.references",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.type",
+          "data_type": "string",
+          "example_values": [
+            "REFERENCE"
+          ]
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.content.id",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.entities.Document",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.entities.EmailAddress",
+          "data_type": "string",
+          "contains": [
+            "email"
+          ]
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.alertTitle",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.alertUrl",
+          "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.alerts.*.alert.triggered",
+          "data_type": "string"
+        },
+        {
+          "data_path": "summary.total_objects",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "summary.total_objects_successful",
           "data_type": "numeric"
         },
         {
