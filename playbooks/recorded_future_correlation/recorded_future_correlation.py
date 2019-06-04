@@ -9,29 +9,8 @@ from datetime import datetime, timedelta
 def on_start(container):
     phantom.debug('on_start() called')
     
-    # call 'ip_reputation_1' block
-    ip_reputation_1(container=container)
-
-    return
-
-def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('ip_reputation_1() called')
-
-    # collect data for 'ip_reputation_1' call
-    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])
-
-    parameters = []
-    
-    # build parameters list for 'ip_reputation_1' call
-    for container_item in container_data:
-        if container_item[0]:
-            parameters.append({
-                'ip': container_item[0],
-                # context (artifact id) is added to associate results with the artifact
-                'context': {'artifact_id': container_item[1]},
-            })
-
-    phantom.act("ip reputation", parameters=parameters, assets=['recorded-future'], callback=filter_for_risk_score_above_90, name="ip_reputation_1")
+    # call 'ip_intelligence_1' block
+    ip_intelligence_1(container=container)
 
     return
 
@@ -46,7 +25,7 @@ def filter_for_risk_score_above_90(action=None, success=None, container=None, re
         container=container,
         action_results=results,
         conditions=[
-            ["ip_reputation_1:action_result.data.*.risk.score", ">=", 90],
+            ["ip_intelligence_1:action_result.data.*.risk.score", ">=", 90],
         ])
 
     # call connected blocks if condition 1 matched
@@ -63,7 +42,7 @@ def filter_for_risk_score_above_90(action=None, success=None, container=None, re
 def add_bad_ip_to_list(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
     phantom.debug('add_bad_ip_to_list() called')
 
-    results_data_1 = phantom.collect2(container=container, datapath=['ip_reputation_1:action_result.parameter.ip'], action_results=results)
+    results_data_1 = phantom.collect2(container=container, datapath=['ip_intelligence_1:action_result.parameter.ip'], action_results=results)
 
     results_item_1_0 = [item[0] for item in results_data_1]
 
@@ -82,16 +61,16 @@ Evidence={4}"""
 
     # parameter list for template variable replacement
     parameters = [
-        "ip_reputation_1:action_result.parameter.ip",
-        "ip_reputation_1:action_result.data.*.risk.score",
-        "ip_reputation_1:action_result.data.*.risk.riskSummary",
-        "ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.rule",
-        "ip_reputation_1:action_result.data.*.risk.evidenceDetails.*.evidenceString",
+        "ip_intelligence_1:action_result.parameter.ip",
+        "ip_intelligence_1:action_result.data.*.risk.score",
+        "ip_intelligence_1:action_result.data.*.risk.riskSummary",
+        "ip_intelligence_1:action_result.data.*.risk.evidenceDetails.*.rule",
+        "ip_intelligence_1:action_result.data.*.risk.evidenceDetails.*.evidenceString",
     ]
 
     phantom.format(container=container, template=template, parameters=parameters, name="format_info")
 
-    send_info_to_splunk(container=container)
+    post_data_1(container=container)
 
     return
 
@@ -102,9 +81,9 @@ def format_email(action=None, success=None, container=None, results=None, handle
 
     # parameter list for template variable replacement
     parameters = [
-        "ip_reputation_1:action_result.parameter.ip",
-        "ip_reputation_1:action_result.data.*.risk.score",
-        "ip_reputation_1:action_result.data.*.intelCard",
+        "ip_intelligence_1:action_result.parameter.ip",
+        "ip_intelligence_1:action_result.data.*.risk.score",
+        "ip_intelligence_1:action_result.data.*.intelCard",
     ]
 
     phantom.format(container=container, template=template, parameters=parameters, name="format_email")
@@ -130,9 +109,9 @@ def send_email(action=None, success=None, container=None, results=None, handle=N
     # build parameters list for 'send_email' call
     parameters.append({
         'body': formatted_data_1,
-        'from': "sender@example.com",
+        'from': "phantom@example.com",
         'attachments': "",
-        'to': "recipient@example.com",
+        'to': "security@example.com",
         'cc': "",
         'bcc': "",
         'headers': "",
@@ -143,30 +122,47 @@ def send_email(action=None, success=None, container=None, results=None, handle=N
 
     return
 
-"""
+def ip_intelligence_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('ip_intelligence_1() called')
 
+    # collect data for 'ip_intelligence_1' call
+    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])
 
-"""
-def send_info_to_splunk(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('send_info_to_splunk() called')
+    parameters = []
+    
+    # build parameters list for 'ip_intelligence_1' call
+    for container_item in container_data:
+        if container_item[0]:
+            parameters.append({
+                'ip': container_item[0],
+                # context (artifact id) is added to associate results with the artifact
+                'context': {'artifact_id': container_item[1]},
+            })
+
+    phantom.act("ip intelligence", parameters=parameters, assets=['recorded-future'], callback=filter_for_risk_score_above_90, name="ip_intelligence_1")
+
+    return
+
+def post_data_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('post_data_1() called')
     
     #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
     
-    # collect data for 'send_info_to_splunk' call
+    # collect data for 'post_data_1' call
     formatted_data_1 = phantom.get_format_data(name='format_info')
 
     parameters = []
     
-    # build parameters list for 'send_info_to_splunk' call
+    # build parameters list for 'post_data_1' call
     parameters.append({
-        'index': "",
-        'host': "",
         'data': formatted_data_1,
+        'host': "localhost",
         'source': "Phantom",
         'source_type': "Automation/Orchestration Platform",
+        'index': "",
     })
 
-    phantom.act("post data", parameters=parameters, assets=['splunk-server'], name="send_info_to_splunk")
+    phantom.act("post data", parameters=parameters, assets=['splunk'], name="post_data_1")
 
     return
 
