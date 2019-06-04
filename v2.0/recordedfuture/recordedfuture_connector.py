@@ -20,6 +20,7 @@ import requests
 import urllib
 import json
 import hashlib
+import platform
 from bs4 import BeautifulSoup
 
 # Phantom App imports
@@ -319,15 +320,18 @@ class RecordedfutureConnector(BaseConnector):
         # Create a HTTP_USER_AGENT header
         # container_id is added to track actions associated with an event in
         # order to improve the app
-        platform = 'Phantom_%s' % self.get_product_version()
+        platform_id = 'Phantom_%s' % self.get_product_version()
         pdict = dict(app_name=os.path.basename(__file__),
+                     container_id=self.get_container_id(),
+                     os_id=platform.platform(),
                      pkg_name='phantom',
                      pkg_version=version,
-                     platform=platform,
-                     container_id=self.get_container_id())
-        user_agent = '{app_name}/{container_id} ({platform}) ' \
-                     '{pkg_name}/{pkg_version}'.format(**pdict)
-
+                     requests_id=requests.__version__,
+                     platform_id=platform_id)
+        user_agent_tplt = '{app_name}/{container_id} ({os_id}) ' \
+                          '{pkg_name}/{pkg_version} ' \
+                          'python-requests/{requests_id} ({platform_id})'
+        user_agent = user_agent_tplt.format(**pdict)
         # headers
         api_key = config.get('recordedfuture_api_token')
         my_headers = {
