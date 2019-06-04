@@ -98,7 +98,7 @@ def ip_intelligence_1(action=None, success=None, container=None, results=None, h
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("ip intelligence", parameters=parameters, assets=['recordedfuture'], name="ip_intelligence_1")
+    phantom.act("ip intelligence", parameters=parameters, assets=['recorded-future'], name="ip_intelligence_1")
 
     return
 
@@ -119,7 +119,7 @@ def file_intelligence_1(action=None, success=None, container=None, results=None,
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("file intelligence", parameters=parameters, assets=['recordedfuture'], name="file_intelligence_1")
+    phantom.act("file intelligence", parameters=parameters, assets=['recorded-future'], name="file_intelligence_1")
 
     return
 
@@ -140,7 +140,7 @@ def domain_intelligence_1(action=None, success=None, container=None, results=Non
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("domain intelligence", parameters=parameters, assets=['recordedfuture'], name="domain_intelligence_1")
+    phantom.act("domain intelligence", parameters=parameters, assets=['recorded-future'], name="domain_intelligence_1")
 
     return
 
@@ -161,7 +161,7 @@ def vulnerability_intelligence_1(action=None, success=None, container=None, resu
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("vulnerability intelligence", parameters=parameters, assets=['recordedfuture'], name="vulnerability_intelligence_1")
+    phantom.act("vulnerability intelligence", parameters=parameters, assets=['recorded-future'], name="vulnerability_intelligence_1")
 
     return
 
@@ -182,7 +182,7 @@ def url_intelligence_1(action=None, success=None, container=None, results=None, 
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("url intelligence", parameters=parameters, assets=['recordedfuture'], name="url_intelligence_1")
+    phantom.act("url intelligence", parameters=parameters, assets=['recorded-future'], name="url_intelligence_1")
 
     return
 

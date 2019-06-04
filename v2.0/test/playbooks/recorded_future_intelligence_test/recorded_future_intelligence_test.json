@@ -7,7 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "Playbook used to test the intelligence methods of the Recorded Future app.",
-            "hash": "bd3196244975da11b54586ac76fe12d426d5dcec",
+            "hash": "ea201b64a5f005596429f8fdf05e6a343668659d",
             "joint": {
                 "cells": [
                     {
@@ -20,11 +20,11 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#818D99"
+                                "fill": "#000000",
+                                "stroke": "#5C6773"
                             },
                             ".color-band": {
-                                "fill": "#171D21"
+                                "fill": "#3C444D"
                             },
                             ".outPorts>.port-out": {
                                 "ref": ".background",
@@ -162,11 +162,11 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#818D99"
+                                "fill": "#000000",
+                                "stroke": "#5C6773"
                             },
                             ".color-band": {
-                                "fill": "#171D21"
+                                "fill": "#3C444D"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -298,7 +298,7 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#FFFFFF",
+                                "fill": "#000000",
                                 "stroke": "#637282",
                                 "transform": "rotate(45 30 70)"
                             },
@@ -663,7 +663,7 @@
                                 "id": 6,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recordedfuture",
+                                "name": "recorded-future",
                                 "output": [
                                     {
                                         "column_name": "ip",
@@ -937,11 +937,11 @@
                                 "text": "ip intelligence"
                             },
                             ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#818D99"
+                                "fill": "#000000",
+                                "stroke": "#5C6773"
                             },
                             ".color-band": {
-                                "fill": "#171D21"
+                                "fill": "#3C444D"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -1000,7 +1000,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def ip_intelligence_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_intelligence_1() called')\n\n    # collect data for 'ip_intelligence_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_intelligence_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip intelligence\", parameters=parameters, assets=['recordedfuture'], name=\"ip_intelligence_1\")\n\n    return",
+                        "block_code": "def ip_intelligence_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_intelligence_1() called')\n\n    # collect data for 'ip_intelligence_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_intelligence_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip intelligence\", parameters=parameters, assets=['recorded-future'], name=\"ip_intelligence_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -1275,7 +1275,7 @@
                                 "id": 6,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recordedfuture",
+                                "name": "recorded-future",
                                 "output": [
                                     {
                                         "column_name": "hash",
@@ -1539,11 +1539,11 @@
                                 "text": "file intelligence"
                             },
                             ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#818D99"
+                                "fill": "#000000",
+                                "stroke": "#5C6773"
                             },
                             ".color-band": {
-                                "fill": "#171D21"
+                                "fill": "#3C444D"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -1602,7 +1602,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def file_intelligence_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('file_intelligence_1() called')\n\n    # collect data for 'file_intelligence_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.fileHash', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'file_intelligence_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'hash': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"file intelligence\", parameters=parameters, assets=['recordedfuture'], name=\"file_intelligence_1\")\n\n    return",
+                        "block_code": "def file_intelligence_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('file_intelligence_1() called')\n\n    # collect data for 'file_intelligence_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.fileHash', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'file_intelligence_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'hash': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"file intelligence\", parameters=parameters, assets=['recorded-future'], name=\"file_intelligence_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -1795,7 +1795,7 @@
                                 "id": 6,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recordedfuture",
+                                "name": "recorded-future",
                                 "output": [
                                     {
                                         "column_name": "domain",
@@ -2039,11 +2039,11 @@
                                 "text": "domain intelligence"
                             },
                             ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#818D99"
+                                "fill": "#000000",
+                                "stroke": "#5C6773"
                             },
                             ".color-band": {
-                                "fill": "#171D21"
+                                "fill": "#3C444D"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -2102,7 +2102,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def domain_intelligence_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('domain_intelligence_1() called')\n\n    # collect data for 'domain_intelligence_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationDnsDomain', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'domain_intelligence_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'domain': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"domain intelligence\", parameters=parameters, assets=['recordedfuture'], name=\"domain_intelligence_1\")\n\n    return",
+                        "block_code": "def domain_intelligence_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('domain_intelligence_1() called')\n\n    # collect data for 'domain_intelligence_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationDnsDomain', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'domain_intelligence_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'domain': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"domain intelligence\", parameters=parameters, assets=['recorded-future'], name=\"domain_intelligence_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -2336,7 +2336,7 @@
                                 "id": 6,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recordedfuture",
+                                "name": "recorded-future",
                                 "output": [
                                     {
                                         "column_name": "vulnerability",
@@ -2630,11 +2630,11 @@
                                 "text": "vulnerability intelligence"
                             },
                             ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#818D99"
+                                "fill": "#000000",
+                                "stroke": "#5C6773"
                             },
                             ".color-band": {
-                                "fill": "#171D21"
+                                "fill": "#3C444D"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -2693,7 +2693,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def vulnerability_intelligence_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('vulnerability_intelligence_1() called')\n\n    # collect data for 'vulnerability_intelligence_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs1', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'vulnerability_intelligence_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'vulnerability': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"vulnerability intelligence\", parameters=parameters, assets=['recordedfuture'], name=\"vulnerability_intelligence_1\")\n\n    return",
+                        "block_code": "def vulnerability_intelligence_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('vulnerability_intelligence_1() called')\n\n    # collect data for 'vulnerability_intelligence_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.cs1', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'vulnerability_intelligence_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'vulnerability': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"vulnerability intelligence\", parameters=parameters, assets=['recorded-future'], name=\"vulnerability_intelligence_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -2927,7 +2927,7 @@
                                 "id": 6,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recordedfuture",
+                                "name": "recorded-future",
                                 "output": [
                                     {
                                         "column_name": "url",
@@ -3169,11 +3169,11 @@
                                 "text": "url intelligence"
                             },
                             ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#818D99"
+                                "fill": "#000000",
+                                "stroke": "#5C6773"
                             },
                             ".color-band": {
-                                "fill": "#171D21"
+                                "fill": "#3C444D"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -3232,7 +3232,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def url_intelligence_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('url_intelligence_1() called')\n\n    # collect data for 'url_intelligence_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.requestURL', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'url_intelligence_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'url': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"url intelligence\", parameters=parameters, assets=['recordedfuture'], name=\"url_intelligence_1\")\n\n    return",
+                        "block_code": "def url_intelligence_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('url_intelligence_1() called')\n\n    # collect data for 'url_intelligence_1' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.requestURL', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'url_intelligence_1' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'url': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"url intelligence\", parameters=parameters, assets=['recorded-future'], name=\"url_intelligence_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -3468,8 +3468,8 @@
                         "angle": 0,
                         "attrs": {
                             ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#818D99",
+                                "fill": "#000000",
+                                "stroke": "#5C6773",
                                 "transform": "rotate(45 30 70)"
                             },
                             ".inPorts>.port-0>.port-body": {
@@ -3506,6 +3506,9 @@
                             },
                             "g.notes": {
                                 "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
                             }
                         },
                         "block_code": "def filter_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('filter_1() called')\n    \n    tags_param = container.get('tags', None)\n\n    # collect filtered artifact ids for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        conditions=[\n            [tags_param, \"==\", ['recorded_future_intelligence_test']],\n        ],\n        name=\"filter_1:condition_1\")\n\n    # call connected blocks if filtered artifacts or results\n    if matched_artifacts_1 or matched_results_1:\n        decision_1(action=action, success=success, container=container, results=results, handle=handle, filtered_artifacts=matched_artifacts_1, filtered_results=matched_results_1)\n\n    return",
@@ -3621,7 +3624,7 @@
                         "state": "filter",
                         "status": "",
                         "type": "coa.Filter",
-                        "warn": "",
+                        "warn": false,
                         "z": 26
                     }
                 ]
@@ -3631,7 +3634,7 @@
         "schema": 3,
         "version": "4.2.7532"
     },
-    "create_time": "2019-05-23T09:49:26.159029+00:00",
+    "create_time": "2019-06-04T06:51:59.314688+00:00",
     "draft_mode": false,
     "labels": [
         "*"
