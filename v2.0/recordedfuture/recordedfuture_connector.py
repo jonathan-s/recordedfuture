@@ -162,13 +162,12 @@ class RecordedfutureConnector(BaseConnector):
                 },
                 "risk": {
                     "criticalityLabel": "None",
-                    "rules": 0,
+                    "rules": None,
                     "evidenceDetails": [],
-                    "riskSummary": "No Risk Rules are currently "
-                                   "observed.",
-                    "criticality": 0,
+                    "riskSummary": "No information available.",
+                    "criticality": None,
                     "riskString": "",
-                    "score": 0
+                    "score": None
                 }
             }
         }
@@ -181,32 +180,7 @@ class RecordedfutureConnector(BaseConnector):
         if 'location' in fields:
             resp_json['data']['location'] = {}
         if 'metrics' in fields:
-            resp_json['data']['metrics'] = [
-                {"type": "pasteHits",
-                 "value": 0},
-                {"type": "darkWebHits",
-                 "value": 0},
-                {"type": "criticality",
-                 "value": 0},
-                {"type": "undergroundForumHits",
-                 "value": 0},
-                {"type": "maliciousHits",
-                 "value": 0},
-                {"type": "technicalReportingHits",
-                 "value": 0},
-                {"type": "infoSecHits",
-                 "value": 0},
-                {"type": "totalHits",
-                 "value": 0},
-                {"type": "sixtyDaysHits",
-                 "value": 0},
-                {"type": "oneDayHits",
-                 "value": 0},
-                {"type": "socialMediaHits",
-                 "value": 0},
-                {"type": "sevenDaysHits",
-                 "value": 0}
-            ]
+            resp_json['data']['metrics'] = []
         return resp_json
 
     def _process_json_response(self, resp, action_result, **kwargs):
