@@ -191,7 +191,13 @@ a:visited {
 {% endif %}
   <td>{{ result.data.timestamps.firstSeen }}</td>
   <td>{{ result.data.timestamps.lastSeen }}</td>
-  <td><a href="{{ result.data.intelCard }}" target="new">Browse to Intel Card</a></td>
+  <td>
+    {% if result.data.intelCard %}
+      <a href="{{ result.data.intelCard }}" target="new">Browse to Intel Card</a>
+    {% elif result.intelCard %}
+      <a href="{{ result.intelCard }}" target="new">Browse to Intel Card</a>
+    {% endif %}
+  </td>
 </tr>
 </table>
 <br>

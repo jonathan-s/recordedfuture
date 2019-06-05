@@ -14,10 +14,18 @@
 # -----------------------------------------
 # Recorded Future App View python file
 # -----------------------------------------
+APP_URL = 'https://app.recordedfuture.com/live/sc/entity/%s%%3A%s'
 
 
 def format_result(result, all_data=False):
     retval = {'param': result.get_param()}
+
+    if 'ip' in retval['param']:
+        retval['intelCard'] = APP_URL % ('ip', retval['param']['ip'])
+    elif 'hash' in retval['param']:
+        retval['intelCard'] = APP_URL % ('hash', retval['param']['hash'])
+    elif 'domain' in retval['param']:
+        retval['intelCard'] = APP_URL % ('idn', retval['param']['domain'])
 
     data = result.get_data()
     if (data):
