@@ -20,19 +20,21 @@ APP_URL = 'https://app.recordedfuture.com/live/sc/entity/%s%%3A%s'
 def format_result(result, all_data=False):
     retval = {'param': result.get_param()}
 
-    if 'ip' in retval['param']:
-        retval['intelCard'] = APP_URL % ('ip', retval['param']['ip'])
-    elif 'hash' in retval['param']:
-        retval['intelCard'] = APP_URL % ('hash', retval['param']['hash'])
-    elif 'domain' in retval['param']:
-        retval['intelCard'] = APP_URL % ('idn', retval['param']['domain'])
-
     data = result.get_data()
     if (data):
         if all_data:
             retval['data'] = data[0]
         else:
             retval['data'] = data[0]
+
+    if 'risk' in retval['data'] \
+            and retval['data']['risk']['score'] is not None:
+        if 'ip' in retval['param']:
+            retval['intelCard'] = APP_URL % ('ip', retval['param']['ip'])
+        elif 'hash' in retval['param']:
+            retval['intelCard'] = APP_URL % ('hash', retval['param']['hash'])
+        elif 'domain' in retval['param']:
+            retval['intelCard'] = APP_URL % ('idn', retval['param']['domain'])
 
     summary = result.get_summary()
     if (summary):
