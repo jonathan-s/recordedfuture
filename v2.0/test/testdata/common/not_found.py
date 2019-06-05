@@ -9,11 +9,11 @@ testdata_404_reputation = {'data': [
             'firstSeen': 'never'
         },
         'risk': {
-            'riskSummary': 'No Risk Rules are currently observed.',
-            'criticality': 0,
-            'rules': 0,
+            'riskSummary': 'No information available.',
+            'criticality': None,
+            'rules': None,
             'riskString': '',
-            'score': 0,
+            'score': None,
             'criticalityLabel': 'None',
             'evidenceDetails': []
         },
@@ -22,7 +22,7 @@ testdata_404_reputation = {'data': [
         }
     }
 ],
-    'message': 'Risksummary: No Risk Rules are currently observed., '
+    'message': 'Risksummary: No information available., '
                'Criticalitylabel: None, Lastseen: never'
 }
 
@@ -34,67 +34,18 @@ testdata_404_intelligence_file = {'data': [
     {
         'threatLists': [],
         'risk': {
-            'riskSummary': 'No Risk Rules are currently observed.',
-            'criticality': 0,
-            'rules': 0,
+            'riskSummary': 'No information available.',
+            'criticality': None,
+            'rules': None,
             'riskString': '',
-            'score': 0,
+            'score': None,
             'criticalityLabel': 'None',
             'evidenceDetails': []
         },
         'entity': {
             'name': ''
         },
-        'metrics': [
-            {
-                'type': 'pasteHits',
-                'value': 0
-            },
-            {
-                'type': 'darkWebHits',
-                'value': 0
-            },
-            {
-                'type': 'criticality',
-                'value': 0
-            },
-            {
-                'type': 'undergroundForumHits',
-                'value': 0
-            },
-            {
-                'type': 'maliciousHits',
-                'value': 0
-            },
-            {
-                'type': 'technicalReportingHits',
-                'value': 0
-            },
-            {
-                'type': 'infoSecHits',
-                'value': 0
-            },
-            {
-                'type': 'totalHits',
-                'value': 0
-            },
-            {
-                'type': 'sixtyDaysHits',
-                'value': 0
-            },
-            {
-                'type': 'oneDayHits',
-                'value': 0
-            },
-            {
-                'type': 'socialMediaHits',
-                'value': 0
-            },
-            {
-                'type': 'sevenDaysHits',
-                'value': 0
-            }
-        ],
+        'metrics': [],
         'intelCard': '',
         'timestamps': {
             'lastSeen': 'never',
@@ -103,7 +54,7 @@ testdata_404_intelligence_file = {'data': [
         'relatedEntities': []
     }
 ],
-    'message': 'Risksummary: No Risk Rules are currently observed., '
+    'message': 'Risksummary: No information available., '
                'Criticalitylabel: None, Lastseen: never'
 }
 
@@ -114,63 +65,14 @@ testdata_404_intelligence_domain = testdata_404_intelligence_file
 testdata_404_intelligence_url = {
     'data': [
         {
-            'metrics': [
-                {
-                    'type': 'pasteHits',
-                    'value': 0
-                },
-                {
-                    'type': 'darkWebHits',
-                    'value': 0
-                },
-                {
-                    'type': 'criticality',
-                    'value': 0
-                },
-                {
-                    'type': 'undergroundForumHits',
-                    'value': 0
-                },
-                {
-                    'type': 'maliciousHits',
-                    'value': 0
-                },
-                {
-                    'type': 'technicalReportingHits',
-                    'value': 0
-                },
-                {
-                    'type': 'infoSecHits',
-                    'value': 0
-                },
-                {
-                    'type': 'totalHits',
-                    'value': 0
-                },
-                {
-                    'type': 'sixtyDaysHits',
-                    'value': 0
-                },
-                {
-                    'type': 'oneDayHits',
-                    'value': 0
-                },
-                {
-                    'type': 'socialMediaHits',
-                    'value': 0
-                },
-                {
-                    'type': 'sevenDaysHits',
-                    'value': 0
-                }
-            ],
+            'metrics': [],
             'timestamps': {
                 'lastSeen': 'never',
                 'firstSeen': 'never'
             },
             'relatedEntities': [],
             'risk': {
-                'riskSummary': 'No Risk Rules are currently observed.',
+                'riskSummary': 'No information available.',
                 'criticality': 0,
                 'rules': 0,
                 'riskString': '',
@@ -184,7 +86,7 @@ testdata_404_intelligence_url = {
         }
     ],
 
-    'message': 'Risksummary: No Risk Rules are currently observed., '
+    'message': 'Risksummary: No information available., '
                'Criticalitylabel: None, Lastseen: never'
 }
 
@@ -193,7 +95,7 @@ testdata_404_intelligence_vulnerability = {
         {
             'threatLists': [],
             'risk': {
-                'riskSummary': 'No Risk Rules are currently observed.',
+                'riskSummary': 'No information available.',
                 'criticality': 0,
                 'rules': 0,
                 'riskString': '',
@@ -204,56 +106,7 @@ testdata_404_intelligence_vulnerability = {
             'entity': {
                 'name': ''
             },
-            'metrics': [
-                {
-                    'type': 'pasteHits',
-                    'value': 0
-                },
-                {
-                    'type': 'darkWebHits',
-                    'value': 0
-                },
-                {
-                    'type': 'criticality',
-                    'value': 0
-                },
-                {
-                    'type': 'undergroundForumHits',
-                    'value': 0
-                },
-                {
-                    'type': 'maliciousHits',
-                    'value': 0
-                },
-                {
-                    'type': 'technicalReportingHits',
-                    'value': 0
-                },
-                {
-                    'type': 'infoSecHits',
-                    'value': 0
-                },
-                {
-                    'type': 'totalHits',
-                    'value': 0
-                },
-                {
-                    'type': 'sixtyDaysHits',
-                    'value': 0
-                },
-                {
-                    'type': 'oneDayHits',
-                    'value': 0
-                },
-                {
-                    'type': 'socialMediaHits',
-                    'value': 0
-                },
-                {
-                    'type': 'sevenDaysHits',
-                    'value': 0
-                }
-            ],
+            'metrics': [],
             'intelCard': '',
             'timestamps': {
                 'lastSeen': 'never',
@@ -262,7 +115,7 @@ testdata_404_intelligence_vulnerability = {
             'relatedEntities': []
         }
     ],
-    'message': 'Risksummary: No Risk Rules are currently observed., '
+    'message': 'Risksummary: No information available., '
                'Criticalitylabel: None, Lastseen: never'
 }
 
@@ -271,7 +124,7 @@ testdata_404_intelligence_ip = {
         {
             'threatLists': [],
             'risk': {
-                'riskSummary': 'No Risk Rules are currently observed.',
+                'riskSummary': 'No information available.',
                 'criticality': 0,
                 'rules': 0,
                 'riskString': '',
@@ -282,56 +135,7 @@ testdata_404_intelligence_ip = {
             'entity': {
                 'name': ''
             },
-            'metrics': [
-                {
-                    'type': 'pasteHits',
-                    'value': 0
-                },
-                {
-                    'type': 'darkWebHits',
-                    'value': 0
-                },
-                {
-                    'type': 'criticality',
-                    'value': 0
-                },
-                {
-                    'type': 'undergroundForumHits',
-                    'value': 0
-                },
-                {
-                    'type': 'maliciousHits',
-                    'value': 0
-                },
-                {
-                    'type': 'technicalReportingHits',
-                    'value': 0
-                },
-                {
-                    'type': 'infoSecHits',
-                    'value': 0
-                },
-                {
-                    'type': 'totalHits',
-                    'value': 0
-                },
-                {
-                    'type': 'sixtyDaysHits',
-                    'value': 0
-                },
-                {
-                    'type': 'oneDayHits',
-                    'value': 0
-                },
-                {
-                    'type': 'socialMediaHits',
-                    'value': 0
-                },
-                {
-                    'type': 'sevenDaysHits',
-                    'value': 0
-                }
-            ],
+            'metrics': [],
             'intelCard': '',
             'location': {},
             'timestamps': {
@@ -341,6 +145,6 @@ testdata_404_intelligence_ip = {
             'relatedEntities': []
         }
     ],
-    'message': 'Risksummary: No Risk Rules are currently observed., '
+    'message': 'Risksummary: No information available., '
                'Criticalitylabel: None, Lastseen: never'
 }
