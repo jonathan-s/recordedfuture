@@ -80,7 +80,7 @@ def alert_data_lookup_3(action=None, success=None, container=None, results=None,
         'timeframe': "-24h to now",
     })
 
-    phantom.act("alert data lookup", parameters=parameters, assets=['recordedfuture'], callback=format_1, name="alert_data_lookup_3")
+    phantom.act("alert data lookup", parameters=parameters, assets=['recorded-future'], callback=format_1, name="alert_data_lookup_3")
 
     return
 
