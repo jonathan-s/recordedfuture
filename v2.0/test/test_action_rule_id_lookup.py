@@ -13,7 +13,7 @@ PBOOK = 'recorded_future_alert_test'
 TARGETS = [
     ('recordedfuture.com Leaked Credentials Document', ['VNPVFc']),
     ('Recorded', [u'Ya4pFB', u'YcKufV', u'Vp5IXy', u'VNPVFc', u'VKhgWu',
-                  u'Vp5IXx', u'YcKufW', u'Ya9Aof', u'YbYAKE'
+                  u'Vp5IXx', u'YcKufW', u'Ya9Aof', u'YbYAKE', u'aRE2MK'
                   ])
 ]
 
