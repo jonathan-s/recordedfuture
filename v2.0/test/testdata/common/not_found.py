@@ -73,10 +73,10 @@ testdata_404_intelligence_url = {
             'relatedEntities': [],
             'risk': {
                 'riskSummary': 'No information available.',
-                'criticality': 0,
-                'rules': 0,
+                'criticality': None,
+                'rules': None,
                 'riskString': '',
-                'score': 0,
+                'score': None,
                 'criticalityLabel': 'None',
                 'evidenceDetails': []
             },
@@ -96,10 +96,10 @@ testdata_404_intelligence_vulnerability = {
             'threatLists': [],
             'risk': {
                 'riskSummary': 'No information available.',
-                'criticality': 0,
-                'rules': 0,
+                'criticality': None,
+                'rules': None,
                 'riskString': '',
-                'score': 0,
+                'score': None,
                 'criticalityLabel': 'None',
                 'evidenceDetails': []
             },
@@ -125,10 +125,10 @@ testdata_404_intelligence_ip = {
             'threatLists': [],
             'risk': {
                 'riskSummary': 'No information available.',
-                'criticality': 0,
-                'rules': 0,
+                'criticality': None,
+                'rules': None,
                 'riskString': '',
-                'score': 0,
+                'score': None,
                 'criticalityLabel': 'None',
                 'evidenceDetails': []
             },
