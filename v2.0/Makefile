@@ -3,7 +3,8 @@ BUILDID := $(shell svn info --show-item revision)
 BUILD_DIR := pkg_build
 SRC_DIR := recordedfuture
 PACKAGE := recordedfuture-$(RELEASE).tgz
-RFUSERARG := $(if ${RFLDAP},"-l ${RFLDAP}",)
+RFUSERARG := $(if ${RFLDAP},-l ${RFLDAP},)
+SCPHOST := $(if ${RFLDAP},${RFLDAP}@${PH},${PH})
 
 RSYNC := env RSYNC_RSH=ssh rsync -rav
 LOCAL_RSYNC := rsync
@@ -97,7 +98,7 @@ setup_ssh:
 		echo Environment variable PH must contain the hostname of the phantom server.;\
 		exit 1; \
 	fi
-	scp ~/.ssh/id_rsa.pub $(PH):/tmp/
+	scp ~/.ssh/id_rsa.pub $(SCPHOST):/tmp/
 	$(SSHRAW) $(PH) "sudo -u phantom mkdir -p ~phantom/.ssh; \
 	                 sudo -u phantom chmod go= ~phantom/.ssh; \
 	                 sudo -u phantom cp /tmp/id_rsa.pub ~phantom/.ssh/authorized_keys; \
