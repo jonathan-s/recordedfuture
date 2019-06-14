@@ -9,11 +9,14 @@ from datetime import datetime, timedelta
 def on_start(container):
     phantom.debug('on_start() called')
     
-    # call 'ip_intelligence_1' block
-    ip_intelligence_1(container=container)
+    # call 'ip_reputation_1' block
+    ip_reputation_1(container=container)
 
     return
 
+"""
+Filter IPs with a risk score of 90 and above
+"""
 def filter_for_risk_score_above_90(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
     phantom.debug('filter_for_risk_score_above_90() called')
 
@@ -22,15 +25,15 @@ def filter_for_risk_score_above_90(action=None, success=None, container=None, re
         container=container,
         action_results=results,
         conditions=[
-            ["ip_intelligence_1:action_result.data.*.risk.score", ">=", 90],
+            ["ip_reputation_1:action_result.data.*.risk.score", "<", 90],
         ])
 
     # call connected blocks if condition 1 matched
     if matched_artifacts_1 or matched_results_1:
-        Entity_Type_Filter(action=action, success=success, container=container, results=results, handle=handle)
         return
 
     # call connected blocks for 'else' condition 2
+    ip_intelligence_1(action=action, success=success, container=container, results=results, handle=handle)
 
     return
 
@@ -281,10 +284,10 @@ def send_email_1(action=None, success=None, container=None, results=None, handle
         'body': formatted_data_1,
         'from': "sender@example.com",
         'attachments': "",
-        'to': "recipient@example.com",
+        'headers': "",
         'cc': "",
         'bcc': "",
-        'headers': "",
+        'to': "recipient@example.com",
         'subject': "Malicous IP with related entities found in Splunk",
     })
 
@@ -462,7 +465,9 @@ def search_splunk_for_vulns(action=None, success=None, container=None, results=N
 
 def ip_intelligence_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
     phantom.debug('ip_intelligence_1() called')
-
+    
+    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
+    
     # collect data for 'ip_intelligence_1' call
     container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])
 
@@ -477,7 +482,7 @@ def ip_intelligence_1(action=None, success=None, container=None, results=None, h
                 'context': {'artifact_id': container_item[1]},
             })
 
-    phantom.act("ip intelligence", parameters=parameters, assets=['recorded-future'], callback=filter_for_risk_score_above_90, name="ip_intelligence_1")
+    phantom.act("ip intelligence", parameters=parameters, assets=['recorded-future'], callback=Entity_Type_Filter, name="ip_intelligence_1")
 
     return
 
@@ -538,6 +543,30 @@ def Entity_Type_Filter(action=None, success=None, container=None, results=None, 
     # call connected blocks if filtered artifacts or results
     if matched_artifacts_4 or matched_results_4:
         query_for_related_domains(action=action, success=success, container=container, results=results, handle=handle, filtered_artifacts=matched_artifacts_4, filtered_results=matched_results_4)
+
+    return
+
+"""
+Quick IP reputation to get the Risk Score
+"""
+def ip_reputation_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('ip_reputation_1() called')
+
+    # collect data for 'ip_reputation_1' call
+    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])
+
+    parameters = []
+    
+    # build parameters list for 'ip_reputation_1' call
+    for container_item in container_data:
+        if container_item[0]:
+            parameters.append({
+                'ip': container_item[0],
+                # context (artifact id) is added to associate results with the artifact
+                'context': {'artifact_id': container_item[1]},
+            })
+
+    phantom.act("ip reputation", parameters=parameters, assets=['recorded-future'], callback=filter_for_risk_score_above_90, name="ip_reputation_1")
 
     return
 
