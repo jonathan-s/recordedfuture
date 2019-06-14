@@ -14,7 +14,9 @@ testdata_404_reputation = {
                 u'level': None
             },
             u'entity': {
-                u'name': u''
+                u'name': u'',
+                u'id': None,
+                u'type': None
             }
         }
     ],
@@ -38,7 +40,9 @@ testdata_404_intelligence_file = {'data': [
             'evidenceDetails': []
         },
         'entity': {
-            'name': ''
+            'name': '',
+            'id': None,
+            'type': None
         },
         'metrics': [],
         'intelCard': '',
@@ -76,7 +80,9 @@ testdata_404_intelligence_url = {
                 'evidenceDetails': []
             },
             'entity': {
-                'name': ''
+                'name': '',
+                'id': None,
+                'type': None
             }
         }
     ],
@@ -99,7 +105,9 @@ testdata_404_intelligence_vulnerability = {
                 'evidenceDetails': []
             },
             'entity': {
-                'name': ''
+                'name': '',
+                'id': None,
+                'type': None
             },
             'metrics': [],
             'intelCard': '',
@@ -128,7 +136,9 @@ testdata_404_intelligence_ip = {
                 'evidenceDetails': []
             },
             'entity': {
-                'name': ''
+                'name': '',
+                'id': None,
+                'type': None
             },
             'metrics': [],
             'intelCard': '',

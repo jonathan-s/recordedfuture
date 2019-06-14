@@ -21,18 +21,22 @@ import urllib
 import json
 import hashlib
 import platform
+# noinspection PyUnresolvedReferences
 from bs4 import BeautifulSoup
 
 # Phantom App imports
+# noinspection PyUnresolvedReferences
 import phantom.app as phantom
+# noinspection PyUnresolvedReferences
 from phantom.base_connector import BaseConnector
+# noinspection PyUnresolvedReferences
 from phantom.action_result import ActionResult
 
 # Usage of the consts file is recommended
 from recordedfuture_consts import *
 
 # These dicts map which path_info, which fields, what the Recorded Future
-# category is called aand whether to quote the entity or not.
+# category is called and whether to quote the entity or not.
 # They are used to make the reputation/intelligence method parameterized.
 # (path_info template, fields, quote parameter)
 REPUTATION_MAP = {
@@ -155,6 +159,8 @@ class RecordedfutureConnector(BaseConnector):
             "data": {
                 "entity": {
                     "name": '',
+                    'type': None,
+                    'id': None
                 },
                 "timestamps": {
                     "firstSeen": "never",
@@ -410,7 +416,11 @@ class RecordedfutureConnector(BaseConnector):
             else:
                 max_count = int(legacy['risk']['riskString'].split('/')[1])
             res = {
-                'entity': legacy['entity'],
+                'entity': {
+                    'id': legacy['entity']['id'],
+                    'name': legacy['entity']['name'],
+                    'type': legacy['entity']['type']
+                },
                 'risk': {
                     'score': legacy['risk']['score'],
                     'level': legacy['risk']['criticality'],
@@ -442,7 +452,8 @@ class RecordedfutureConnector(BaseConnector):
         else:
             if 'risk' in res:
                 if 'criticalityLabel' in res['risk']:
-                    summary['criticalityLabel'] = res['risk']['criticalityLabel']
+                    summary['criticalityLabel'] = res['risk'][
+                        'criticalityLabel']
                 if 'riskSummary' in res['risk']:
                     summary['riskSummary'] = res['risk']['riskSummary']
             if 'timestamps' in res:
@@ -681,7 +692,7 @@ class RecordedfutureConnector(BaseConnector):
 
 
 if __name__ == '__main__':
-
+    # noinspection PyUnresolvedReferences
     import pudb
     import argparse
 
@@ -739,6 +750,7 @@ if __name__ == '__main__':
 
         if session_id is not None:
             in_json['user_session_token'] = session_id
+            # noinspection PyProtectedMember
             connector._set_csrf_info(csrftoken, headers['Referer'])
 
         ret_val = connector._handle_action(json.dumps(in_json), None)
