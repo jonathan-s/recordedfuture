@@ -1058,6 +1058,9 @@
           "data_path": "action_result.data.*.entity.name",
           "data_type": "string",
           "contains": [
+            "hash",
+            "sha256",
+            "sha1",
             "md5"
           ]
         },
@@ -1416,9 +1419,6 @@
         {
           "data_path": "action_result.parameter.domain",
           "data_type": "string",
-          "example_values": [
-            "avast-mail-security.download"
-          ],
           "contains": [
             "domain"
           ]
@@ -1739,9 +1739,6 @@
         {
           "data_path": "action_result.parameter.ip",
           "data_type": "string",
-          "example_values": [
-            "146.185.171.227"
-          ],
           "contains": [
             "ip"
           ]
