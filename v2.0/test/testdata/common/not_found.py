@@ -2,28 +2,25 @@
 
 # Response in the result_data objects data property for reputation actions
 # when we pass a value not existing in RF
-testdata_404_reputation = {'data': [
-    {
-        'timestamps': {
-            'lastSeen': 'never',
-            'firstSeen': 'never'
-        },
-        'risk': {
-            'riskSummary': 'No information available.',
-            'criticality': None,
-            'rules': None,
-            'riskString': '',
-            'score': None,
-            'criticalityLabel': 'None',
-            'evidenceDetails': []
-        },
-        'entity': {
-            'name': ''
+testdata_404_reputation = {
+    'data': [
+        {
+            u'risk': {
+                u'score': None,
+                u'rule': {
+                    u'maxCount': None,
+                    u'count': None
+                },
+                u'level': None
+            },
+            u'entity': {
+                u'name': u'',
+                u'id': None,
+                u'type': None
+            }
         }
-    }
-],
-    'message': 'Risksummary: No information available., '
-               'Criticalitylabel: None, Lastseen: never'
+    ],
+    'message': u'Score: None, Type: None, Level: None'
 }
 
 # Response in the result_data object's data property for intelligence actions
@@ -43,7 +40,9 @@ testdata_404_intelligence_file = {'data': [
             'evidenceDetails': []
         },
         'entity': {
-            'name': ''
+            'name': '',
+            'id': None,
+            'type': None
         },
         'metrics': [],
         'intelCard': '',
@@ -81,7 +80,9 @@ testdata_404_intelligence_url = {
                 'evidenceDetails': []
             },
             'entity': {
-                'name': ''
+                'name': '',
+                'id': None,
+                'type': None
             }
         }
     ],
@@ -104,7 +105,9 @@ testdata_404_intelligence_vulnerability = {
                 'evidenceDetails': []
             },
             'entity': {
-                'name': ''
+                'name': '',
+                'id': None,
+                'type': None
             },
             'metrics': [],
             'intelCard': '',
@@ -133,7 +136,9 @@ testdata_404_intelligence_ip = {
                 'evidenceDetails': []
             },
             'entity': {
-                'name': ''
+                'name': '',
+                'id': None,
+                'type': None
             },
             'metrics': [],
             'intelCard': '',

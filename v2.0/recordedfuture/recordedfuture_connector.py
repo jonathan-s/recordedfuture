@@ -21,18 +21,22 @@ import urllib
 import json
 import hashlib
 import platform
+# noinspection PyUnresolvedReferences
 from bs4 import BeautifulSoup
 
 # Phantom App imports
+# noinspection PyUnresolvedReferences
 import phantom.app as phantom
+# noinspection PyUnresolvedReferences
 from phantom.base_connector import BaseConnector
+# noinspection PyUnresolvedReferences
 from phantom.action_result import ActionResult
 
 # Usage of the consts file is recommended
 from recordedfuture_consts import *
 
 # These dicts map which path_info, which fields, what the Recorded Future
-# category is called aand whether to quote the entity or not.
+# category is called and whether to quote the entity or not.
 # They are used to make the reputation/intelligence method parameterized.
 # (path_info template, fields, quote parameter)
 REPUTATION_MAP = {
@@ -155,6 +159,8 @@ class RecordedfutureConnector(BaseConnector):
             "data": {
                 "entity": {
                     "name": '',
+                    'type': None,
+                    'id': None
                 },
                 "timestamps": {
                     "firstSeen": "never",
@@ -363,7 +369,7 @@ class RecordedfutureConnector(BaseConnector):
         self.save_progress("Test Connectivity Passed")
         return action_result.set_status(phantom.APP_SUCCESS)
 
-    def _handle_reputation(self, param, path_info, fields):
+    def _handle_reputation(self, param, path_info, fields, operation_type):
 
         # Implement the handler here
         # use self.save_progress(...) to send progress messages back to the
@@ -398,20 +404,62 @@ class RecordedfutureConnector(BaseConnector):
         #    return action_result.set_status(phantom.APP_SUCCESS)
 
         # Now post process the data,  uncomment code as you deem fit
-        res = response['data']
+        ####################################################
+        #
+        # This section emulates upcoming high throughput API
+        #
+        if operation_type == 'reputation':
+            legacy = response['data']  # [0]['result_data'][0]
+            self.save_progress('Legacy {}', legacy)
+            if legacy['risk']['score'] is None:
+                max_count = None
+            else:
+                max_count = int(legacy['risk']['riskString'].split('/')[1])
+            res = {
+                'entity': {
+                    'id': legacy['entity']['id'],
+                    'name': legacy['entity']['name'],
+                    'type': legacy['entity']['type']
+                },
+                'risk': {
+                    'score': legacy['risk']['score'],
+                    'level': legacy['risk']['criticality'],
+                    'rule': {
+                        'count': legacy['risk']['rules'],
+                        'maxCount': max_count
+                    }
+                }
+            }
+
+        #
+        # End emulation
+        #
+        else:
+            res = response['data']
+        #
+        # End original functionality
+        #
+        ####################################################
         action_result.add_data(res)
         self.save_progress('Added data with keys {}', res.keys())
 
         # Update the summary
         summary = action_result.get_summary()
-        if 'risk' in res:
-            if 'criticalityLabel' in res['risk']:
-                summary['criticalityLabel'] = res['risk']['criticalityLabel']
-            if 'riskSummary' in res['risk']:
-                summary['riskSummary'] = res['risk']['riskSummary']
-        if 'timestamps' in res:
-            if 'lastSeen' in res['timestamps']:
-                summary['lastSeen'] = res['timestamps']['lastSeen']
+        if operation_type == 'reputation':
+            summary['type'] = res['entity'].get('type', None)
+            summary['score'] = res['risk']['score']
+            summary['level'] = res['risk']['level']
+        else:
+            if 'risk' in res:
+                if 'criticalityLabel' in res['risk']:
+                    summary['criticalityLabel'] = res['risk'][
+                        'criticalityLabel']
+                if 'riskSummary' in res['risk']:
+                    summary['riskSummary'] = res['risk']['riskSummary']
+            if 'timestamps' in res:
+                if 'lastSeen' in res['timestamps']:
+                    summary['lastSeen'] = res['timestamps']['lastSeen']
+
         action_result.set_summary(summary)
 
         # Return success, no need to set the message, only the status
@@ -602,7 +650,8 @@ class RecordedfutureConnector(BaseConnector):
                 path_info = path_info_tmplt % urllib.quote_plus(param[tag])
             else:
                 path_info = path_info_tmplt % param[tag]
-            my_ret_val = self._handle_reputation(param, path_info, fields)
+            my_ret_val = self._handle_reputation(param, path_info, fields,
+                                                 operation_type)
 
         elif action_id == 'rule_id_lookup':
             my_ret_val = self._handle_rule_id_lookup(param)
@@ -643,7 +692,7 @@ class RecordedfutureConnector(BaseConnector):
 
 
 if __name__ == '__main__':
-
+    # noinspection PyUnresolvedReferences
     import pudb
     import argparse
 
@@ -701,6 +750,7 @@ if __name__ == '__main__':
 
         if session_id is not None:
             in_json['user_session_token'] = session_id
+            # noinspection PyProtectedMember
             connector._set_csrf_info(csrftoken, headers['Referer'])
 
         ret_val = connector._handle_action(json.dumps(in_json), None)

@@ -532,83 +532,49 @@
         }
       },
       "render": {
-        "type": "custom",
-        "view": "recordedfuture_view.reputation_results",
-        "title": "Threat Intelligence for URL"
+        "type": "table",
+        "width": 6,
+        "height": 5,
+        "title": "URL reputation",
+        "menu_name": "url reputation"
       },
       "output": [
         {
           "data_path": "action_result.status",
-          "data_type": "string",
-          "example_values": [
-            "success"
-          ]
-        },
-        {
-          "data_path": "action_result.data.*.timestamps.lastSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.timestamps.firstSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.riskSummary",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.criticality",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.rules",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.riskString",
           "data_type": "string"
         },
         {
           "data_path": "action_result.data.*.risk.score",
-          "data_type": "numeric"
+          "data_type": "numeric",
+          "column_name": "Risk Score",
+          "column_order": 2
         },
         {
-          "data_path": "action_result.data.*.risk.criticalityLabel",
-          "data_type": "string"
+          "data_path": "action_result.data.*.risk.rule.count",
+          "data_type": "numeric",
+          "column_name": "Triggered Rules",
+          "column_order": 4
         },
         {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
-          "data_type": "numeric"
+          "data_path": "action_result.data.*.risk.rule.maxCount",
+          "data_type": "numeric",
+          "column_name": "Total Rules",
+          "column_order": 5
         },
         {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.timestamp",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.mitigationString",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
-          "data_type": "string",
-          "example_values": [
-            "Very Malicious",
-            "Malicious",
-            "Suspicious",
-            "Unusual"
-          ]
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
-          "data_type": "string"
+          "data_path": "action_result.data.*.risk.level",
+          "data_type": "numeric",
+          "column_name": "Risk Level",
+          "column_order": 3
         },
         {
           "data_path": "action_result.data.*.entity.type",
-          "data_type": "string"
+          "data_type": "string",
+          "column_name": "Type",
+          "column_order": 0,
+          "example_values": [
+            "URL"
+          ]
         },
         {
           "data_path": "action_result.data.*.entity.id",
@@ -617,6 +583,8 @@
         {
           "data_path": "action_result.data.*.entity.name",
           "data_type": "string",
+          "column_name": "URL",
+          "column_order": 1,
           "contains": [
             "url"
           ]
@@ -633,22 +601,19 @@
           ]
         },
         {
-          "data_path": "action_result.summary.riskSummary",
-          "data_type": "string"
+          "data_path": "action_result.summary.score",
+          "data_type": "numeric"
         },
         {
-          "data_path": "action_result.summary.lastSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.summary.criticalityLabel",
+          "data_path": "action_result.summary.type",
           "data_type": "string",
           "example_values": [
-            "Very Malicious",
-            "Malicious",
-            "Suspicious",
-            "Unusual"
+            "URL"
           ]
+        },
+        {
+          "data_path": "action_result.summary.level",
+          "data_type": "numeric"
         },
         {
           "data_path": "summary.total_objects",
@@ -904,80 +869,47 @@
           "data_type": "string"
         },
         {
-          "data_path": "action_result.data.*.timestamps.lastSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.timestamps.firstSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.riskSummary",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.criticality",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.rules",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.riskString",
-          "data_type": "string"
-        },
-        {
           "data_path": "action_result.data.*.risk.score",
-          "data_type": "numeric"
+          "data_type": "numeric",
+          "column_name": "Risk Score",
+          "column_order": 2
         },
         {
-          "data_path": "action_result.data.*.risk.criticalityLabel",
-          "data_type": "string",
-          "example_values": [
-            "Very Critical",
-            "None"
-          ]
+          "data_path": "action_result.data.*.risk.rule.count",
+          "data_type": "numeric",
+          "column_name": "Triggered Rules",
+          "column_order": 4
         },
         {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
-          "data_type": "numeric"
+          "data_path": "action_result.data.*.risk.rule.maxCount",
+          "data_type": "numeric",
+          "column_name": "Total Rules",
+          "column_order": 5
         },
         {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.timestamp",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.mitigationString",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
-          "data_type": "string"
+          "data_path": "action_result.data.*.risk.level",
+          "data_type": "numeric",
+          "column_name": "Triggered Rules",
+          "column_order": 3
         },
         {
           "data_path": "action_result.data.*.entity.type",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.entity.description",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.entity.name",
-          "data_type": "string"
+          "data_type": "string",
+          "column_name": "Type",
+          "column_order": 0,
+          "example_values": [
+            "CyberVulnerability"
+          ]
         },
         {
           "data_path": "action_result.data.*.entity.id",
           "data_type": "string"
+        },
+        {
+          "data_path": "action_result.data.*.entity.name",
+          "data_type": "string",
+          "column_name": "Vulnerability",
+          "column_order": 1
         },
         {
           "data_path": "action_result.message",
@@ -986,21 +918,22 @@
         {
           "data_path": "action_result.parameter.vulnerability",
           "data_type": "string",
-          "contains": [
-            "vulnerability"
+          "contains": ["vulnerability"]
+        },
+        {
+          "data_path": "action_result.summary.score",
+          "data_type": "numeric"
+        },
+        {
+          "data_path": "action_result.summary.type",
+          "data_type": "string",
+          "example_values": [
+            "CyberVulnerability"
           ]
         },
         {
-          "data_path": "action_result.summary.riskSummary",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.summary.lastSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.summary.criticalityLabel",
-          "data_type": "string"
+          "data_path": "action_result.summary.level",
+          "data_type": "numeric"
         },
         {
           "data_path": "summary.total_objects",
@@ -1125,6 +1058,9 @@
           "data_path": "action_result.data.*.entity.name",
           "data_type": "string",
           "contains": [
+            "hash",
+            "sha256",
+            "sha1",
             "md5"
           ]
         },
@@ -1235,70 +1171,37 @@
           "data_type": "string"
         },
         {
-          "data_path": "action_result.data.*.timestamps.lastSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.timestamps.firstSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.riskSummary",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.criticality",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.rules",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.riskString",
-          "data_type": "string"
-        },
-        {
           "data_path": "action_result.data.*.risk.score",
-          "data_type": "numeric"
+          "data_type": "numeric",
+          "column_name": "Risk Score",
+          "column_order": 2
         },
         {
-          "data_path": "action_result.data.*.risk.criticalityLabel",
-          "data_type": "string",
-          "example_values": [
-            "Malicious"
-          ]
+          "data_path": "action_result.data.*.risk.rule.count",
+          "data_type": "numeric",
+          "column_name": "Triggered Rules",
+          "column_order": 4
         },
         {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
-          "data_type": "numeric"
+          "data_path": "action_result.data.*.risk.rule.maxCount",
+          "data_type": "numeric",
+          "column_name": "Total Rules",
+          "column_order": 5
         },
         {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.timestamp",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.mitigationString",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
-          "data_type": "string",
-          "example_values": [
-            "Unusual"
-          ]
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
-          "data_type": "string"
+          "data_path": "action_result.data.*.risk.level",
+          "data_type": "numeric",
+          "column_name": "Risk Level",
+          "column_order": 3
         },
         {
           "data_path": "action_result.data.*.entity.type",
-          "data_type": "string"
+          "data_type": "string",
+          "column_name": "Type",
+          "column_order": 0,
+          "example_values": [
+            "Hash"
+          ]
         },
         {
           "data_path": "action_result.data.*.entity.id",
@@ -1306,7 +1209,12 @@
         },
         {
           "data_path": "action_result.data.*.entity.name",
-          "data_type": "string"
+          "data_type": "string",
+          "column_name": "Hash",
+          "column_order": 1,
+          "contains": [
+            "md5"
+          ]
         },
         {
           "data_path": "action_result.message",
@@ -1323,19 +1231,19 @@
           ]
         },
         {
-          "data_path": "action_result.summary.riskSummary",
-          "data_type": "string"
+          "data_path": "action_result.summary.score",
+          "data_type": "numeric"
         },
         {
-          "data_path": "action_result.summary.lastSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.summary.criticalityLabel",
+          "data_path": "action_result.summary.type",
           "data_type": "string",
           "example_values": [
-            "Malicious"
+            "Hash"
           ]
+        },
+        {
+          "data_path": "action_result.summary.level",
+          "data_type": "numeric"
         },
         {
           "data_path": "summary.total_objects",
@@ -1511,9 +1419,6 @@
         {
           "data_path": "action_result.parameter.domain",
           "data_type": "string",
-          "example_values": [
-            "avast-mail-security.download"
-          ],
           "contains": [
             "domain"
           ]
@@ -1576,70 +1481,37 @@
           "data_type": "string"
         },
         {
-          "data_path": "action_result.data.*.timestamps.lastSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.timestamps.firstSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.riskSummary",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.criticality",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.rules",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.riskString",
-          "data_type": "string"
-        },
-        {
           "data_path": "action_result.data.*.risk.score",
-          "data_type": "numeric"
+          "data_type": "numeric",
+          "column_name": "Risk Score",
+          "column_order": 2
         },
         {
-          "data_path": "action_result.data.*.risk.criticalityLabel",
-          "data_type": "string",
-          "example_values": [
-            "Very Malicious"
-          ]
+          "data_path": "action_result.data.*.risk.rule.count",
+          "data_type": "numeric",
+          "column_name": "Triggered Rules",
+          "column_order": 4
         },
         {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
-          "data_type": "numeric"
+          "data_path": "action_result.data.*.risk.rule.maxCount",
+          "data_type": "numeric",
+          "column_name": "Total Rules",
+          "column_order": 5
         },
         {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.timestamp",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.mitigationString",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
-          "data_type": "string",
-          "example_values": [
-            "Unusual"
-          ]
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
-          "data_type": "string"
+          "data_path": "action_result.data.*.risk.level",
+          "data_type": "numeric",
+          "column_name": "Risk Level",
+          "column_order": 3
         },
         {
           "data_path": "action_result.data.*.entity.type",
-          "data_type": "string"
+          "data_type": "string",
+          "column_name": "Type",
+          "column_order": 0,
+          "example_values": [
+            "InternetDomainName"
+          ]
         },
         {
           "data_path": "action_result.data.*.entity.id",
@@ -1647,7 +1519,9 @@
         },
         {
           "data_path": "action_result.data.*.entity.name",
-          "data_type": "string"
+          "data_type": "string",
+          "column_name": "Domain",
+          "column_order": 1
         },
         {
           "data_path": "action_result.message",
@@ -1656,27 +1530,24 @@
         {
           "data_path": "action_result.parameter.domain",
           "data_type": "string",
-          "example_values": [
-            "avast-mail-security.download"
-          ],
           "contains": [
             "domain"
           ]
         },
         {
-          "data_path": "action_result.summary.riskSummary",
-          "data_type": "string"
+          "data_path": "action_result.summary.score",
+          "data_type": "numeric"
         },
         {
-          "data_path": "action_result.summary.lastSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.summary.criticalityLabel",
+          "data_path": "action_result.summary.type",
           "data_type": "string",
           "example_values": [
-            "Very Malicious"
+            "InternetDomainName"
           ]
+        },
+        {
+          "data_path": "action_result.summary.level",
+          "data_type": "numeric"
         },
         {
           "data_path": "summary.total_objects",
@@ -1868,9 +1739,6 @@
         {
           "data_path": "action_result.parameter.ip",
           "data_type": "string",
-          "example_values": [
-            "146.185.171.227"
-          ],
           "contains": [
             "ip"
           ]
@@ -1933,64 +1801,37 @@
           "data_type": "string"
         },
         {
-          "data_path": "action_result.data.*.timestamps.lastSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.timestamps.firstSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.riskSummary",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.criticality",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.rules",
-          "data_type": "numeric"
-        },
-        {
-          "data_path": "action_result.data.*.risk.riskString",
-          "data_type": "string"
-        },
-        {
           "data_path": "action_result.data.*.risk.score",
-          "data_type": "numeric"
+          "data_type": "numeric",
+          "column_name": "Risk Score",
+          "column_order": 2
         },
         {
-          "data_path": "action_result.data.*.risk.criticalityLabel",
-          "data_type": "string"
+          "data_path": "action_result.data.*.risk.rule.count",
+          "data_type": "numeric",
+          "column_name": "Triggered Rules",
+          "column_order": 4
         },
         {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
-          "data_type": "numeric"
+          "data_path": "action_result.data.*.risk.rule.maxCount",
+          "data_type": "numeric",
+          "column_name": "Total Rules",
+          "column_order": 5
         },
         {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.timestamp",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.mitigationString",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
-          "data_type": "string"
+          "data_path": "action_result.data.*.risk.level",
+          "data_type": "numeric",
+          "column_name": "Risk Level",
+          "column_order": 3
         },
         {
           "data_path": "action_result.data.*.entity.type",
-          "data_type": "string"
+          "data_type": "string",
+          "column_name": "Type",
+          "column_order": 0,
+          "example_values": [
+            "IpAddress"
+          ]
         },
         {
           "data_path": "action_result.data.*.entity.id",
@@ -1998,7 +1839,12 @@
         },
         {
           "data_path": "action_result.data.*.entity.name",
-          "data_type": "string"
+          "data_type": "string",
+          "column_name": "IP Address",
+          "column_order": 1,
+          "contains": [
+            "ip"
+          ]
         },
         {
           "data_path": "action_result.message",
@@ -2012,19 +1858,19 @@
           ]
         },
         {
-          "data_path": "action_result.summary.riskSummary",
-          "data_type": "string"
+          "data_path": "action_result.summary.score",
+          "data_type": "numeric"
         },
         {
-          "data_path": "action_result.summary.lastSeen",
-          "data_type": "string"
-        },
-        {
-          "data_path": "action_result.summary.criticalityLabel",
+          "data_path": "action_result.summary.type",
           "data_type": "string",
           "example_values": [
-            "Very Malicious"
+            "IpAddress"
           ]
+        },
+        {
+          "data_path": "action_result.summary.level",
+          "data_type": "numeric"
         },
         {
           "data_path": "summary.total_objects",
