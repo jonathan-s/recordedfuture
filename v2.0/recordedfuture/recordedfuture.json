@@ -945,9 +945,11 @@
         }
       ],
       "render": {
-        "type": "custom",
-        "view": "recordedfuture_view.reputation_results",
-        "title": "Threat Intelligence for Vulnerability"
+        "type": "table",
+        "width": 6,
+        "height": 5,
+        "title": "Vulnerability reputation",
+        "menu_name": "vulnerability reputation"
       },
       "versions": "EQ(*)"
     },
@@ -1255,9 +1257,11 @@
         }
       ],
       "render": {
-        "type": "custom",
-        "view": "recordedfuture_view.reputation_results",
-        "title": "Threat Intelligence for File Hash"
+        "type": "table",
+        "width": 6,
+        "height": 5,
+        "title": "File reputation",
+        "menu_name": "file reputation"
       },
       "versions": "EQ(*)"
     },
@@ -1559,9 +1563,11 @@
         }
       ],
       "render": {
-        "type": "custom",
-        "view": "recordedfuture_view.reputation_results",
-        "title": "Reputation for Domain"
+        "type": "table",
+        "width": 6,
+        "height": 5,
+        "title": "Domain reputation",
+        "menu_name": "domain reputation"
       },
       "versions": "EQ(*)"
     },
@@ -1882,9 +1888,11 @@
         }
       ],
       "render": {
-        "type": "custom",
-        "view": "recordedfuture_view.reputation_results",
-        "title": "Reputation for IP Address"
+        "type": "table",
+        "width": 6,
+        "height": 5,
+        "title": "Ip reputation",
+        "menu_name": "ip reputation"
       },
       "versions": "EQ(*)"
     }

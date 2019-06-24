@@ -2,7 +2,7 @@
 import logging
 import requests
 from test_harness import RfTests
-from testdata.common.not_found import testdata_404_reputation
+import testdata.common.not_found as nf
 
 # disable certificate warnings for self signed certificates
 requests.packages.urllib3.disable_warnings()
@@ -31,13 +31,12 @@ class RfDomainReputationTests(RfTests):
         ares = self._poll_for_success(self._action_result, container_id)
 
         # Check correct risk score.
-        self.assertCorrectRiskScore(ares, target_risk_score,
-                                    'result: %s' % ares)
+        self.assertCorrectRiskScore(ares, target_risk_score)
 
     def test_domain_reputation(self):
         """Test behavior when a domain is supplied."""
-        targets = self.high_risk_iocs_by_category('domain', 5, fields=['entity',
-                                                                       'risk'])
+        targets = self.high_risk_iocs_by_category('domain', 5,
+                                                  fields=['entity', 'risk'])
 
         # Call the test for each target
         for ioc, target_risk_score in targets:
@@ -64,12 +63,13 @@ class RfDomainReputationTests(RfTests):
         self.assertEqual(ares['data'][0]['status'], 'success')
 
         # Assert we get success and sets the response as expected
+        response, message = nf.testdata_reputation_wo_risk(
+            'my.nonexistingdomain.nu', 'domain')
         result_data = ares['data'][0]['result_data']
         for rd in result_data:
             # Assert success
             self.assertEqual(rd['status'], 'success')
             # Assert message is as should
-            self.assertEqual(rd['message'], testdata_404_reputation['message'])
+            self.assertEqual(rd['message'], message)
             # Assert data
-            self.assertEqual(rd['data'], testdata_404_reputation['data'])
-
+            self.assertEqual(rd['data'], response)

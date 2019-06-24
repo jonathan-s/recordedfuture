@@ -369,16 +369,11 @@ class RecordedfutureConnector(BaseConnector):
         self.save_progress("Test Connectivity Passed")
         return action_result.set_status(phantom.APP_SUCCESS)
 
-    def _handle_reputation(self, param, path_info, fields, operation_type):
-
-        # Implement the handler here
-        # use self.save_progress(...) to send progress messages back to the
-        # platform
+    def _handle_intelligence(self, param, path_info, fields, operation_type):
+        """Return intelligence for an entity."""
         self.save_progress(
             "In action handler for: {0}".format(self.get_action_identifier()))
 
-        # Add an action result object to self (BaseConnector) to represent
-        # the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         # Params for the API call
@@ -391,7 +386,54 @@ class RecordedfutureConnector(BaseConnector):
                                                     action_result,
                                                     params=params)
 
-        self.debug_print('_handle_reputation', {'path_info': path_info,
+        self.debug_print('_handle_intelligence',
+                         {'path_info': path_info,
+                          'action_result': action_result,
+                          'params': params,
+                          'my_ret_val': my_ret_val,
+                          'response': response})
+
+        if phantom.is_fail(my_ret_val):
+            return action_result.get_status()
+
+        res = response['data']
+        action_result.add_data(res)
+        self.save_progress('Added data with keys {}', res.keys())
+
+        # Update the summary
+        summary = action_result.get_summary()
+        if 'risk' in res:
+            if 'criticalityLabel' in res['risk']:
+                summary['criticalityLabel'] = res['risk'][
+                    'criticalityLabel']
+            if 'riskSummary' in res['risk']:
+                summary['riskSummary'] = res['risk']['riskSummary']
+        if 'timestamps' in res:
+            if 'lastSeen' in res['timestamps']:
+                summary['lastSeen'] = res['timestamps']['lastSeen']
+
+        action_result.set_summary(summary)
+
+        return action_result.set_status(phantom.APP_SUCCESS)
+
+    def _handle_reputation(self, param, category, entity):
+        """Return reputation information."""
+        self.save_progress(
+            "In action handler for: {0}".format(self.get_action_identifier()))
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        # Params for the API call
+        params = {
+                category: entity
+        }
+
+        # make rest call
+        my_ret_val, response = self._make_rest_call('/htplookup/',
+                                                    action_result,
+                                                    json=params,
+                                                    method='post')
+
+        self.debug_print('_handle_reputation', {'path_info': entity,
                                                 'action_result': action_result,
                                                 'params': params,
                                                 'my_ret_val': my_ret_val,
@@ -400,65 +442,31 @@ class RecordedfutureConnector(BaseConnector):
         if phantom.is_fail(my_ret_val):
             return action_result.get_status()
 
-        # if response == {}:
-        #    return action_result.set_status(phantom.APP_SUCCESS)
-
-        # Now post process the data,  uncomment code as you deem fit
-        ####################################################
-        #
-        # This section emulates upcoming high throughput API
-        #
-        if operation_type == 'reputation':
-            legacy = response['data']  # [0]['result_data'][0]
-            self.save_progress('Legacy {}', legacy)
-            if legacy['risk']['score'] is None:
-                max_count = None
-            else:
-                max_count = int(legacy['risk']['riskString'].split('/')[1])
+        if len(response['data'].get('results', [])) != 0:
+            res = response['data']['results'][0]
+        else:
             res = {
-                'entity': {
-                    'id': legacy['entity']['id'],
-                    'name': legacy['entity']['name'],
-                    'type': legacy['entity']['type']
+                "entity": {
+                    "id": None,
+                    "name": u'',
+                    "type": None
                 },
-                'risk': {
-                    'score': legacy['risk']['score'],
-                    'level': legacy['risk']['criticality'],
-                    'rule': {
-                        'count': legacy['risk']['rules'],
-                        'maxCount': max_count
-                    }
+                "risk": {
+                    "level": None,
+                    "rule": {
+                        "count": None
+                    },
+                    "score": None
                 }
             }
-
-        #
-        # End emulation
-        #
-        else:
-            res = response['data']
-        #
-        # End original functionality
-        #
-        ####################################################
         action_result.add_data(res)
         self.save_progress('Added data with keys {}', res.keys())
 
         # Update the summary
         summary = action_result.get_summary()
-        if operation_type == 'reputation':
-            summary['type'] = res['entity'].get('type', None)
-            summary['score'] = res['risk']['score']
-            summary['level'] = res['risk']['level']
-        else:
-            if 'risk' in res:
-                if 'criticalityLabel' in res['risk']:
-                    summary['criticalityLabel'] = res['risk'][
-                        'criticalityLabel']
-                if 'riskSummary' in res['risk']:
-                    summary['riskSummary'] = res['risk']['riskSummary']
-            if 'timestamps' in res:
-                if 'lastSeen' in res['timestamps']:
-                    summary['lastSeen'] = res['timestamps']['lastSeen']
+        summary['type'] = res['entity'].get('type', None)
+        summary['score'] = res['risk']['score']
+        summary['level'] = res['risk']['level']
 
         action_result.set_summary(summary)
 
@@ -641,17 +649,20 @@ class RecordedfutureConnector(BaseConnector):
         if action_id == 'test_connectivity':
             my_ret_val = self._handle_test_connectivity(param)
 
-        elif operation_type in ['reputation', 'intelligence']:
-            # Use the dicts to calculate parameters
-            omap = {'reputation': REPUTATION_MAP,
-                    'intelligence': INTELLIGENCE_MAP}[operation_type]
+        elif operation_type == 'intelligence':
+            omap = INTELLIGENCE_MAP
             path_info_tmplt, fields, tag, do_quote = omap[entity_type]
             if do_quote:
                 path_info = path_info_tmplt % urllib.quote_plus(param[tag])
             else:
                 path_info = path_info_tmplt % param[tag]
-            my_ret_val = self._handle_reputation(param, path_info, fields,
-                                                 operation_type)
+            my_ret_val = self._handle_intelligence(param, path_info, fields,
+                                                   operation_type)
+        elif operation_type == 'reputation':
+            # Use the dicts to calculate parameters
+            omap = REPUTATION_MAP
+            tag = omap[entity_type][2]
+            my_ret_val = self._handle_reputation(param, tag, param[tag])
 
         elif action_id == 'rule_id_lookup':
             my_ret_val = self._handle_rule_id_lookup(param)

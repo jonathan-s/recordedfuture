@@ -2,7 +2,7 @@
 import logging
 import requests
 from test_harness import RfTests
-from testdata.common.not_found import testdata_404_reputation
+import testdata.common.not_found as nf
 
 # disable certificate warnings for self signed certificates
 requests.packages.urllib3.disable_warnings()
@@ -47,7 +47,7 @@ class RfIpReputationTests(RfTests):
     def test_neg_ip_reputation_not_existing(self):
         """Test behavior when a non-existing ip is passed."""
         testdata = {
-            'ioc': '1.2.3.4'
+            'ioc': '129.16.1.4'
         }
 
         # Create container and artifact.
@@ -65,12 +65,13 @@ class RfIpReputationTests(RfTests):
         self.assertEqual(ares['data'][0]['status'], 'success')
 
         # Assert we get success and sets the response as expected
+        response, message = nf.testdata_reputation_wo_risk(
+            testdata['ioc'], 'ip')
         result_data = ares['data'][0]['result_data']
         for rd in result_data:
             # Assert success
             self.assertEqual(rd['status'], 'success')
             # Assert message is as should
-            self.assertEqual(rd['message'],
-                             testdata_404_reputation['message'])
+            self.assertEqual(rd['message'],message)
             # Assert data
-            self.assertEqual(rd['data'], testdata_404_reputation['data'])
+            self.assertEqual(rd['data'], response)

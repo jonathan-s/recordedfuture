@@ -31,7 +31,7 @@ class RfUrlIntelligenceTests(RfTests):
         ares = self._poll_for_success(self._action_result, container_id)
 
         # Check correct risk score.
-        self.assertCorrectRiskScore(ares, target_risk_score,
+        self.assertCorrectIntelligenceRiskScore(ares, target_risk_score,
                                     'result: %s' % ares)
 
         # Check that we have metrics data

@@ -62,7 +62,7 @@ def reputation_results(provides, all_app_runs, context):
             if (not formatted):
                 continue
             results.append(formatted)
-    return 'reputation_results.html'
+    return 'intelligence_results.html'
 
 
 def format_alert_result(result):

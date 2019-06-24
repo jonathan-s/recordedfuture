@@ -135,7 +135,21 @@ class RfTests(unittest.TestCase):
         raise Exception(
             'Max tries %s exceeded when polling for request success' % maxtries)
 
-    def assertCorrectRiskScore(self, result, target_risk_score, *args):
+    def assertCorrectRiskScore(self, result, target_risk_score,
+                                           *args):
+        """Assert that the risk score matches the target."""
+        try:
+            risk_score = result['data'][0]['result_data'][0]['data'][0][
+                'risk']['score']
+        except Exception as err:
+            LGR.error('result %s', result['data'])
+            raise
+        self.assertEqual(risk_score, target_risk_score,
+                         'Target risk score %d differ from actual %d'
+                         % (target_risk_score, risk_score))
+
+    def assertCorrectIntelligenceRiskScore(self, result, target_risk_score,
+                                           *args):
         """Assert that the risk score matches the target."""
         try:
             risk_score = result['data'][0]['result_data'][0]['data'][0][
