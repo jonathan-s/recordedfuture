@@ -21,6 +21,7 @@ import urllib
 import json
 import hashlib
 import platform
+import ipaddress
 # noinspection PyUnresolvedReferences
 from bs4 import BeautifulSoup
 
@@ -153,6 +154,7 @@ class RecordedfutureConnector(BaseConnector):
         # If an IOC has no data in Recorded Future's API it returns 404.
         # While this is correct in REST semantics it's not what our app
         # needs. We will create an empty response instead.
+
         self.debug_print('_process_json_response kwargs: ', kwargs)
         if 'fields' in kwargs.get('params', {}):
             fields = kwargs['params']['fields'].split(',')
@@ -162,12 +164,20 @@ class RecordedfutureConnector(BaseConnector):
 
                 return RetVal(phantom.APP_SUCCESS, resp_json)
 
+        msg = "No data found"
+
+        if resp_json.get('message'):
+            msg = resp_json.get('message')
+
+        if resp_json.get('error').get('message'):
+            if msg:
+                msg = "{} and {}".format(msg, resp_json.get('error').get('message'))
+            else:
+                msg = resp_json.get('error').get('message')
+
         # You should process the error returned in the json
         message = "Error from server. Status Code: {0} " \
-                  "Data from server: {1}".format(resp.status_code,
-                                                 resp.text.replace(
-                                                     u'{',
-                                                     '{{').replace(u'}', '}}'))
+                  "Data from server: {1}".format(resp.status_code, msg)
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message),
                       None)
@@ -227,7 +237,6 @@ class RecordedfutureConnector(BaseConnector):
             a RetVal:       see above.
         """
         # **kwargs can be any additional parameters that requests.request
-        # accepts
         config = self.get_config()
 
         resp_json = None
@@ -327,6 +336,10 @@ class RecordedfutureConnector(BaseConnector):
         # the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
+        try:
+            path_info.encode("utf-8")
+        except:
+            return action_result.set_status(phantom.APP_ERROR, "Parameter value failed validation. Enter a valid value.")
         # Params for the API call
         params = {
             'fields': ','.join(fields)
@@ -607,6 +620,22 @@ class RecordedfutureConnector(BaseConnector):
 
         return my_ret_val
 
+    def _is_ip(self, input_ip_address):
+        """ Function that checks given address and return True if address is valid IPv4 or IPV6 address.
+
+        :param input_ip_address: IP address
+        :return: status (success/failure)
+        """
+
+        ip_address_input = input_ip_address
+
+        try:
+            ipaddress.ip_address(unicode(ip_address_input))
+        except:
+            return False
+
+        return True
+
     def initialize(self):
 
         # Load the state in initialize, use it to store data
@@ -627,6 +656,8 @@ class RecordedfutureConnector(BaseConnector):
         """
 
         self._base_url = config.get('recordedfuture_base_url')
+
+        self.set_validator('ipv6', self._is_ip)
 
         return phantom.APP_SUCCESS
 
