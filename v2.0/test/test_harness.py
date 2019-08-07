@@ -141,12 +141,13 @@ class RfTests(unittest.TestCase):
         try:
             risk_score = result['data'][0]['result_data'][0]['data'][0][
                 'risk']['score']
+            parameter = result['data'][0]['result_data'][0]['parameter']
         except Exception as err:
             LGR.error('result %s', result['data'])
             raise
         self.assertEqual(risk_score, target_risk_score,
-                         'Target risk score %d differ from actual %d'
-                         % (target_risk_score, risk_score))
+                         'Target risk score %d differ from actual %d (%s)'
+                         % (target_risk_score, risk_score, parameter))
 
     def assertCorrectIntelligenceRiskScore(self, result, target_risk_score,
                                            *args):

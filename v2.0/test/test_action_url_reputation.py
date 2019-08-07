@@ -35,8 +35,15 @@ class RfUrlReputationTests(RfTests):
 
     def test_url_reputation(self):
         """Test behavior when a url is supplied."""
-        targets = self.high_risk_iocs_by_category('url', 5, fields=['entity',
-                                                                    'risk'])
+        # targets = self.high_risk_iocs_by_category('url', 5, fields=['entity',
+        #                                                             'risk'])
+
+        targets = [
+            ("http://down7047.yyk2.com/?/74394/pc6/%CE%BE%CF%B7%D5%BD%C6%BD%CC%A8.exe", 5),
+            ("http://cdd.net.ua/apothecary/shopping_cart.php?osCsid=4e24988fb404907b731701c72e82f13b", 5),
+            ("https://themwebis.com/images/docusign17/index.php", 5),
+            ("http://down.zmnds.com/cx/180806/4/cad2007%E6%B3%A8@19_432704WrsQS.exe", 65),
+            ("http://bd10.52lishi.com/bd70818.zip", 65)]
 
         # Call the test for each target
         for ioc, target_risk_score in targets:

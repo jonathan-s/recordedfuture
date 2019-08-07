@@ -21,6 +21,7 @@ import urllib
 import json
 import hashlib
 import platform
+import ipaddress
 # noinspection PyUnresolvedReferences
 from bs4 import BeautifulSoup
 
@@ -34,60 +35,6 @@ from phantom.action_result import ActionResult
 
 # Usage of the consts file is recommended
 from recordedfuture_consts import *
-
-# These dicts map which path_info, which fields, what the Recorded Future
-# category is called and whether to quote the entity or not.
-# They are used to make the reputation/intelligence method parameterized.
-# (path_info template, fields, quote parameter)
-REPUTATION_MAP = {
-    'ip': ('/ip/%s',
-           ['entity', 'risk', 'timestamps'],
-           'ip',
-           False),
-    'domain': ('/domain/idn:%s',
-               ['entity', 'risk', 'timestamps'],
-               'domain',
-               False),
-    'file': ('/hash/%s',
-             ['entity', 'risk', 'timestamps'],
-             'hash',
-             False),
-    'vulnerability': ('/vulnerability/%s',
-                      ['entity', 'risk', 'timestamps'],
-                      'vulnerability',
-                      False),
-    'url': ('/url/%s',
-            ['entity', 'risk', 'timestamps'],
-            'url',
-            True),
-}
-INTELLIGENCE_MAP = {
-    'ip': ('/ip/%s',
-           ['entity', 'risk', 'timestamps', "threatLists", "intelCard",
-            "metrics", "location", "relatedEntities"],
-           'ip',
-           False),
-    'domain': ('/domain/idn:%s',
-               ['entity', 'risk', 'timestamps', "threatLists",
-                "intelCard", "metrics", "relatedEntities"],
-               'domain',
-               False),
-    'file': ('/hash/%s',
-             ['entity', 'risk', 'timestamps', "threatLists", "intelCard",
-              "metrics", "hashAlgorithm", "relatedEntities"],
-             'hash',
-             False),
-    'vulnerability': ('/vulnerability/%s',
-                      ['entity', 'risk', 'timestamps', "threatLists",
-                       "intelCard",
-                       "metrics", "cvss", "nvdDescription", "relatedEntities"],
-                      'vulnerability',
-                      False),
-    'url': ('/url/%s',
-            ['entity', 'risk', 'timestamps', "metrics", "relatedEntities"],
-            'url',
-            True),
-}
 
 
 class RetVal(tuple):
@@ -216,12 +163,20 @@ class RecordedfutureConnector(BaseConnector):
 
                 return RetVal(phantom.APP_SUCCESS, resp_json)
 
+        msg = "No data found"
+
+        if resp_json.get('message'):
+            msg = resp_json.get('message')
+
+        if resp_json.get('error').get('message'):
+            if msg:
+                msg = "{} and {}".format(msg, resp_json.get('error').get('message'))
+            else:
+                msg = resp_json.get('error').get('message')
+
         # You should process the error returned in the json
         message = "Error from server. Status Code: {0} " \
-                  "Data from server: {1}".format(resp.status_code,
-                                                 resp.text.replace(
-                                                     u'{',
-                                                     '{{').replace(u'}', '}}'))
+                  "Data from server: {1}".format(resp.status_code, msg)
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message),
                       None)
@@ -376,6 +331,12 @@ class RecordedfutureConnector(BaseConnector):
 
         action_result = self.add_action_result(ActionResult(dict(param)))
 
+        # Validate path_info
+        try:
+            path_info.encode("utf-8")
+        except:
+            return action_result.set_status(phantom.APP_ERROR, "Parameter value failed validation. Enter a valid value.")
+
         # Params for the API call
         params = {
             'fields': ','.join(fields)
@@ -454,7 +415,8 @@ class RecordedfutureConnector(BaseConnector):
                 "risk": {
                     "level": None,
                     "rule": {
-                        "count": None
+                        "count": None,
+                        "maxCount": None
                     },
                     "score": None
                 }
@@ -672,6 +634,22 @@ class RecordedfutureConnector(BaseConnector):
 
         return my_ret_val
 
+    def _is_ip(self, input_ip_address):
+        """ Function that checks given address and return True if address is valid IPv4 or IPV6 address.
+
+        :param input_ip_address: IP address
+        :return: status (success/failure)
+        """
+
+        ip_address_input = input_ip_address
+
+        try:
+            ipaddress.ip_address(unicode(ip_address_input))
+        except:
+            return False
+
+        return True
+
     def initialize(self):
 
         # Load the state in initialize, use it to store data
@@ -691,7 +669,9 @@ class RecordedfutureConnector(BaseConnector):
         optional_config_name = config.get('optional_config_name')
         """
 
-        self._base_url = config.get('recordedfuture_api_basename')
+        self._base_url = config.get('recordedfuture_base_url')
+
+        self.set_validator('ipv6', self._is_ip)
 
         return phantom.APP_SUCCESS
 

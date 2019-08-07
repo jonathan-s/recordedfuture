@@ -35,8 +35,14 @@ class RfDomainReputationTests(RfTests):
 
     def test_domain_reputation(self):
         """Test behavior when a domain is supplied."""
-        targets = self.high_risk_iocs_by_category('domain', 5,
-                                                  fields=['entity', 'risk'])
+        # targets = self.high_risk_iocs_by_category('domain', 5,
+        #                                           fields=['entity', 'risk'])
+        targets = [
+            ("cntaim.com", 5),
+            ("mffgroup.com", 5),
+            ("ncoding-gogole-connecting.com", 5),
+            ("achievinghealth.uk", 5),
+            ("acompanyofwriters.uk", 5)]
 
         # Call the test for each target
         for ioc, target_risk_score in targets:

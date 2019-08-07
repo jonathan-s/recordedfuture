@@ -13,29 +13,32 @@ def testdata_reputation_wo_risk(entity, category):
         'url': 'url:'
     }[category]
     ctype = {
-        'ip': 'IpAddress',
-        'domain': 'InternetDomainName',
+        'ip': u'IpAddress',
+        'domain': u'InternetDomainName',
         'hash': 'Hash',
         'vulnerability': 'CyberVulnerability',
         'url': 'URL',
     }[category]
-    return (
-        [
-            {
-                u'risk': {
-                    u'score': 0,
-                    u'rule': {
-                        u'count': 0
-                    },
-                    u'level': 0
+    res = [
+        {
+            u'risk': {
+                u'score': 0,
+                u'rule': {
+                    u'count': 0,
                 },
-                u'entity': {
-                    u'name': entity,
-                    u'id': '%s%s' % (prefix, entity),
-                    u'type': ctype
-                }
+                u'level': 0
+            },
+            u'entity': {
+                u'name': u'%s' % entity,
+                u'id': '%s%s' % (prefix, entity),
+                u'type': ctype
             }
-        ],
+        }
+    ]
+    if category == 'ip':
+        res[0]['risk']['rule']['maxCount'] = 52
+    return (
+        res,
         u'Score: 0.0, Type: %s, Level: 0.0' % ctype
     )
 

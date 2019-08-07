@@ -132,5 +132,5 @@ class RfAlertDataLookupTests(RfTests):
         # Assert we get the server error message and status code included
         # in the response
         self.assertIsNotNone(re.search(
-            "Failed parsing filter condition triggered = kalle.+400",
+            "Failed parsing filter condition triggered = kalle",
             ares['data'][0]['result_data'][0]['message']))

@@ -36,8 +36,14 @@ class RfIpReputationTests(RfTests):
 
     def test_ip_reputation(self):
         """Test behavior when a single ip is supplied."""
-        targets = self.high_risk_iocs_by_category('ip', 5, fields=['entity',
-                                                                   'risk'])
+        # targets = self.high_risk_iocs_by_category('ip', 5, fields=['entity',
+        #                                                           'risk'])
+        targets = [
+            ("184.53.48.252", 5),
+            ("14.177.126.193", 23),
+            ("105.156.186.187", 18),
+            ("160.177.196.170", 18),
+            ("2.141.179.222", 18)]
 
         # Call the test for each target
         for ioc, target_risk_score in targets:
@@ -72,6 +78,6 @@ class RfIpReputationTests(RfTests):
             # Assert success
             self.assertEqual(rd['status'], 'success')
             # Assert message is as should
-            self.assertEqual(rd['message'],message)
+            self.assertEqual(rd['message'], message)
             # Assert data
             self.assertEqual(rd['data'], response)
