@@ -29,6 +29,13 @@
             "data_type": "password",
             "required": true,
             "order": 1
+        },
+        "recordedfuture_verify_ssl": {
+          "description": "Verify SSL certificates",
+          "data_type": "boolean",
+          "required": true,
+          "default": true,
+          "order": 2
         }
     },
     "actions": [

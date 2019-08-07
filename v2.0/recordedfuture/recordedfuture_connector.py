@@ -288,7 +288,7 @@ class RecordedfutureConnector(BaseConnector):
             resp = request_func(
                 url,
                 headers=my_headers,
-                verify=config.get('verify_server_cert', False),
+                verify=config.get('recordedfuture_verify_ssl', False),
                 **kwargs)
         except Exception as err:
             return RetVal(action_result.set_status(
