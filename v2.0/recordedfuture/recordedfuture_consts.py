@@ -22,28 +22,7 @@ buildid = '%BUILDID%'
 # category is called and whether to quote the entity or not.
 # They are used to make the reputation/intelligence method parameterized.
 # (path_info template, fields, quote parameter)
-REPUTATION_MAP = {
-    'ip': ('/ip/%s',
-           ['entity', 'risk', 'timestamps'],
-           'ip',
-           False),
-    'domain': ('/domain/idn:%s',
-               ['entity', 'risk', 'timestamps'],
-               'domain',
-               False),
-    'file': ('/hash/%s',
-             ['entity', 'risk', 'timestamps'],
-             'hash',
-             False),
-    'vulnerability': ('/vulnerability/%s',
-                      ['entity', 'risk', 'timestamps'],
-                      'vulnerability',
-                      False),
-    'url': ('/url/%s',
-            ['entity', 'risk', 'timestamps'],
-            'url',
-            True),
-}
+
 INTELLIGENCE_MAP = {
     'ip': ('/ip/%s',
            ['entity', 'risk', 'timestamps', "threatLists", "intelCard",

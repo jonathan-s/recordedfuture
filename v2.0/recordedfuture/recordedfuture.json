@@ -368,7 +368,7 @@
         {
             "action": "url intelligence",
             "identifier": "url_intelligence",
-            "description": "Get threat intel context for a URL",
+            "description": "Get threat intelligence for a URL",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
@@ -383,11 +383,6 @@
                     ],
                     "order": 0
                 }
-            },
-            "render": {
-                "type": "custom",
-                "view": "recordedfuture_view.reputation_results",
-                "title": "Threat Intel Context for URL"
             },
             "output": [
                 {
@@ -523,6 +518,11 @@
                     "data_type": "numeric"
                 }
             ],
+            "render": {
+                "type": "custom",
+                "view": "recordedfuture_view.intelligence_results",
+                "title": "Threat Intelligence for URL"
+            },
             "versions": "EQ(*)"
         },
         {
@@ -557,21 +557,12 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.parameter.url",
-                    "data_type": "string",
-                    "contains": [
-                        "url"
-                    ]
-                },
-                {
                     "data_path": "action_result.data.*.entity.id",
                     "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.entity.name",
                     "data_type": "string",
-                    "column_name": "URL",
-                    "column_order": 1,
                     "contains": [
                         "url"
                     ]
@@ -579,39 +570,56 @@
                 {
                     "data_path": "action_result.data.*.entity.type",
                     "data_type": "string",
-                    "column_name": "Type",
-                    "column_order": 0,
                     "example_values": [
                         "URL"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.risk.level",
-                    "data_type": "numeric",
-                    "column_name": "Risk Level",
-                    "column_order": 3
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "action_result.data.*.risk.rule.count",
-                    "data_type": "numeric",
-                    "column_name": "Triggered Rules",
-                    "column_order": 4
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.timestamp",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.mitigation",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.description",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.rule",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.level",
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "action_result.data.*.risk.rule.maxCount",
-                    "data_type": "numeric",
-                    "column_name": "Total Rules",
-                    "column_order": 5
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "action_result.data.*.risk.score",
-                    "data_type": "numeric",
-                    "column_name": "Risk Score",
-                    "column_order": 2
+                    "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.summary.level",
-                    "data_type": "numeric"
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.hash",
+                    "data_type": "string",
+                    "contains": [
+                        "url"
+                    ]
                 },
                 {
                     "data_path": "action_result.summary.score",
@@ -625,8 +633,8 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.message",
-                    "data_type": "string"
+                    "data_path": "action_result.summary.level",
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "summary.total_objects",
@@ -637,12 +645,17 @@
                     "data_type": "numeric"
                 }
             ],
+            "render": {
+                "type": "custom",
+                "view": "recordedfuture_view.reputation_results",
+                "title": "Threat Reputation of a URL"
+            },
             "versions": "EQ(*)"
         },
         {
             "action": "vulnerability intelligence",
             "identifier": "vulnerability_intelligence",
-            "description": "Get threat intel context for a vulnerability",
+            "description": "Get threat intelligence for a vulnerability",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
@@ -851,8 +864,8 @@
             ],
             "render": {
                 "type": "custom",
-                "view": "recordedfuture_view.reputation_results",
-                "title": "Threat Intel Context for Vulnerability"
+                "view": "recordedfuture_view.intelligence_results",
+                "title": "Threat Intelligence for Vulnerability"
             },
             "versions": "EQ(*)"
         },
@@ -878,13 +891,9 @@
             "output": [
                 {
                     "data_path": "action_result.status",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.parameter.vulnerability",
                     "data_type": "string",
-                    "contains": [
-                        "recordedfuture vulnerability id"
+                    "example_values": [
+                        "success"
                     ]
                 },
                 {
@@ -894,48 +903,63 @@
                 {
                     "data_path": "action_result.data.*.entity.name",
                     "data_type": "string",
-                    "column_name": "Vulnerability",
-                    "column_order": 1,
                     "contains": [
-                      "recordedfuture vulnerability id"
-                  ]
+                        "recordedfuture vulnerability id"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.entity.type",
                     "data_type": "string",
-                    "column_name": "Type",
-                    "column_order": 0,
                     "example_values": [
                         "CyberVulnerability"
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.entity.description",
+                    "data_type": "string"
+                },
+                {
                     "data_path": "action_result.data.*.risk.level",
-                    "data_type": "numeric",
-                    "column_name": "Triggered Rules",
-                    "column_order": 3
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "action_result.data.*.risk.rule.count",
-                    "data_type": "numeric",
-                    "column_name": "Triggered Rules",
-                    "column_order": 4
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.timestamp",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.description",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.rule",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.level",
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "action_result.data.*.risk.rule.maxCount",
-                    "data_type": "numeric",
-                    "column_name": "Total Rules",
-                    "column_order": 5
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "action_result.data.*.risk.score",
-                    "data_type": "numeric",
-                    "column_name": "Risk Score",
-                    "column_order": 2
+                    "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.summary.level",
-                    "data_type": "numeric"
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.vulnerability",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture vulnerability id"
+                    ]
                 },
                 {
                     "data_path": "action_result.summary.score",
@@ -949,8 +973,8 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.message",
-                    "data_type": "string"
+                    "data_path": "action_result.summary.level",
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "summary.total_objects",
@@ -964,14 +988,14 @@
             "render": {
                 "type": "custom",
                 "view": "recordedfuture_view.reputation_results",
-                "title": "Threat Intelligence for Vulnerability"
+                "title": "Threat Reputation of a Vulnerability"
             },
             "versions": "EQ(*)"
         },
         {
             "action": "file intelligence",
             "identifier": "file_intelligence",
-            "description": "Get threat intel context for a file identified by its hash",
+            "description": "Get threat intelligence for a file identified by its hash",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
@@ -1151,8 +1175,8 @@
             ],
             "render": {
                 "type": "custom",
-                "view": "recordedfuture_view.reputation_results",
-                "title": "Threat Intel Context for File Hash"
+                "view": "recordedfuture_view.intelligence_results",
+                "title": "Threat Intelligence for File Hash"
             },
             "versions": "EQ(*)"
         },
@@ -1184,7 +1208,11 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.parameter.hash",
+                    "data_path": "action_result.data.*.entity.id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.entity.name",
                     "data_type": "string",
                     "contains": [
                         "hash",
@@ -1194,57 +1222,61 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entity.id",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.entity.name",
-                    "data_type": "string",
-                    "column_name": "Hash",
-                    "column_order": 1,
-                    "contains": [
-                      "hash",
-                      "sha256",
-                      "sha1",
-                      "md5"
-                  ]
-                },
-                {
                     "data_path": "action_result.data.*.entity.type",
                     "data_type": "string",
-                    "column_name": "Type",
-                    "column_order": 0,
                     "example_values": [
                         "Hash"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.risk.level",
-                    "data_type": "numeric",
-                    "column_name": "Risk Level",
-                    "column_order": 3
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "action_result.data.*.risk.rule.count",
-                    "data_type": "numeric",
-                    "column_name": "Triggered Rules",
-                    "column_order": 4
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.timestamp",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.mitigation",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.description",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.rule",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.level",
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "action_result.data.*.risk.rule.maxCount",
-                    "data_type": "numeric",
-                    "column_name": "Total Rules",
-                    "column_order": 5
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "action_result.data.*.risk.score",
-                    "data_type": "numeric",
-                    "column_name": "Risk Score",
-                    "column_order": 2
+                    "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.summary.level",
-                    "data_type": "numeric"
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.hash",
+                    "data_type": "string",
+                    "contains": [
+                        "hash",
+                        "sha256",
+                        "sha1",
+                        "md5"
+                    ]
                 },
                 {
                     "data_path": "action_result.summary.score",
@@ -1258,8 +1290,8 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.message",
-                    "data_type": "string"
+                    "data_path": "action_result.summary.level",
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "summary.total_objects",
@@ -1273,14 +1305,14 @@
             "render": {
                 "type": "custom",
                 "view": "recordedfuture_view.reputation_results",
-                "title": "Threat Intelligence for File Hash"
+                "title": "Threat Reputation of a File Hash"
             },
             "versions": "EQ(*)"
         },
         {
             "action": "domain intelligence",
             "identifier": "domain_intelligence",
-            "description": "Get threat intel context for a domain",
+            "description": "Get threat intelligence for a domain",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
@@ -1466,8 +1498,8 @@
             ],
             "render": {
                 "type": "custom",
-                "view": "recordedfuture_view.reputation_results",
-                "title": "Threat Intel Context for Domain"
+                "view": "recordedfuture_view.intelligence_results",
+                "title": "Threat Intelligence for Domain"
             },
             "versions": "EQ(*)"
         },
@@ -1496,61 +1528,66 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.parameter.domain",
-                    "data_type": "string",
-                    "contains": [
-                        "domain"
-                    ]
-                },
-                {
                     "data_path": "action_result.data.*.entity.id",
                     "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.entity.name",
-                    "data_type": "string",
-                    "column_name": "Domain",
-                    "column_order": 1,
-                    "contains": [
-                      "domain"
-                  ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.entity.type",
                     "data_type": "string",
-                    "column_name": "Type",
-                    "column_order": 0,
                     "example_values": [
                         "InternetDomainName"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.risk.level",
-                    "data_type": "numeric",
-                    "column_name": "Risk Level",
-                    "column_order": 3
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "action_result.data.*.risk.rule.count",
-                    "data_type": "numeric",
-                    "column_name": "Triggered Rules",
-                    "column_order": 4
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.timestamp",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.mitigation",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.description",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.rule",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.level",
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "action_result.data.*.risk.rule.maxCount",
-                    "data_type": "numeric",
-                    "column_name": "Total Rules",
-                    "column_order": 5
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "action_result.data.*.risk.score",
-                    "data_type": "numeric",
-                    "column_name": "Risk Score",
-                    "column_order": 2
+                    "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.summary.level",
-                    "data_type": "numeric"
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.domain",
+                    "data_type": "string",
+                    "contains": [
+                        "domain"
+                    ]
                 },
                 {
                     "data_path": "action_result.summary.score",
@@ -1564,8 +1601,8 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.message",
-                    "data_type": "string"
+                    "data_path": "action_result.summary.level",
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "summary.total_objects",
@@ -1579,14 +1616,14 @@
             "render": {
                 "type": "custom",
                 "view": "recordedfuture_view.reputation_results",
-                "title": "Reputation for Domain"
+                "title": "Threat Reputation of a Domain"
             },
             "versions": "EQ(*)"
         },
         {
             "action": "ip intelligence",
             "identifier": "ip_intelligence",
-            "description": "Get threat intel context for an IP address",
+            "description": "Get threat intelligence for an IP address",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
@@ -1788,8 +1825,8 @@
             ],
             "render": {
                 "type": "custom",
-                "view": "recordedfuture_view.reputation_results",
-                "title": "Threat Intel Context for IP Address"
+                "view": "recordedfuture_view.intelligence_results",
+                "title": "Threat Intelligence for IP Address"
             },
             "versions": "EQ(*)"
         },
@@ -1819,63 +1856,69 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.parameter.ip",
-                    "data_type": "string",
-                    "contains": [
-                        "ip",
-                        "ipv6"
-                    ]
-                },
-                {
                     "data_path": "action_result.data.*.entity.id",
                     "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.entity.name",
                     "data_type": "string",
-                    "column_name": "IP Address",
-                    "column_order": 1,
                     "contains": [
-                        "ip",
-                        "ipv6"
+                        "ip"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.entity.type",
                     "data_type": "string",
-                    "column_name": "Type",
-                    "column_order": 0,
                     "example_values": [
                         "IpAddress"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.risk.level",
-                    "data_type": "numeric",
-                    "column_name": "Risk Level",
-                    "column_order": 3
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "action_result.data.*.risk.rule.count",
-                    "data_type": "numeric",
-                    "column_name": "Triggered Rules",
-                    "column_order": 4
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.timestamp",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.mitigation",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.description",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.rule",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.risk.rule.evidence.*.level",
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "action_result.data.*.risk.rule.maxCount",
-                    "data_type": "numeric",
-                    "column_name": "Total Rules",
-                    "column_order": 5
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "action_result.data.*.risk.score",
-                    "data_type": "numeric",
-                    "column_name": "Risk Score",
-                    "column_order": 2
+                    "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.summary.level",
-                    "data_type": "numeric"
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.ip",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
                 },
                 {
                     "data_path": "action_result.summary.score",
@@ -1889,8 +1932,8 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.message",
-                    "data_type": "string"
+                    "data_path": "action_result.summary.level",
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "summary.total_objects",
@@ -1904,7 +1947,7 @@
             "render": {
                 "type": "custom",
                 "view": "recordedfuture_view.reputation_results",
-                "title": "Reputation for IP Address"
+                "title": "Threat Reputation of an IP Address"
             },
             "versions": "EQ(*)"
         }

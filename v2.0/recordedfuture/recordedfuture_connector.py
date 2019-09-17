@@ -395,6 +395,7 @@ class RecordedfutureConnector(BaseConnector):
                                                     method='post')
 
         self.debug_print('_handle_reputation', {'path_info': entity,
+                                                'endpoint': '/htplookup/',
                                                 'action_result': action_result,
                                                 'params': params,
                                                 'my_ret_val': my_ret_val,
@@ -409,18 +410,28 @@ class RecordedfutureConnector(BaseConnector):
             res = {
                 "entity": {
                     "id": None,
-                    "name": u'',
+                    "name": 'u',
                     "type": None
                 },
                 "risk": {
                     "level": None,
                     "rule": {
                         "count": None,
+                        "evidence": {
+                            "category": {
+                                "timestamp": None,
+                                "description": None,
+                                "rule": None,
+                                "mitigation": None,
+                                "level": None
+                            },
+                        },
                         "maxCount": None
                     },
                     "score": None
-                }
+                },
             }
+
         action_result.add_data(res)
         self.save_progress('Added data with keys {}', res.keys())
 
@@ -621,9 +632,11 @@ class RecordedfutureConnector(BaseConnector):
             my_ret_val = self._handle_intelligence(param, path_info, fields,
                                                    operation_type)
         elif operation_type == 'reputation':
-            # Use the dicts to calculate parameters
-            omap = REPUTATION_MAP
-            tag = omap[entity_type][2]
+            # phantom entity type file has to be changed to hash
+            if entity_type == 'file':
+                tag = 'hash'
+            else:
+                tag = entity_type
             my_ret_val = self._handle_reputation(param, tag, param[tag])
 
         elif action_id == 'rule_id_lookup':
