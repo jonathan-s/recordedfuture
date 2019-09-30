@@ -615,7 +615,7 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.parameter.hash",
+                    "data_path": "action_result.parameter.url",
                     "data_type": "string",
                     "contains": [
                         "url"
@@ -891,64 +891,66 @@
             "output": [
                 {
                     "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.entity.id",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.entity.name",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture vulnerability id"
-                    ]
+                    "data_path": "action_result.data.*.name",
+                    "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.entity.type",
+                    "data_path": "action_result.data.*.id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.type",
                     "data_type": "string",
                     "example_values": [
                         "CyberVulnerability"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entity.description",
+                    "data_path": "action_result.data.*.description",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.level",
+                    "data_path": "action_result.data.*.riskscore",
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.count",
+                    "data_path": "action_result.data.*.risklevel",
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.timestamp",
+                    "data_path": "action_result.data.*.rulecount",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.maxrules",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.*.description",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.description",
+                    "data_path": "action_result.data.*.evidence.*.level",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.*.timestamp",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.rule",
+                    "data_path": "action_result.data.*.evidence.*.ruleid",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.level",
-                    "data_type": "numeric"
+                    "data_path": "action_result.data.*.evidence.*.rule",
+                    "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.maxCount",
-                    "data_type": "numeric"
-                },
-                {
-                    "data_path": "action_result.data.*.risk.score",
-                    "data_type": "numeric"
+                    "data_path": "action_result.data.*.evidence.*.mitigation",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -1528,55 +1530,59 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.entity.id",
+                    "data_path": "action_result.data.*.name",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.entity.name",
+                    "data_path": "action_result.data.*.id",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.entity.type",
+                    "data_path": "action_result.data.*.type",
                     "data_type": "string",
                     "example_values": [
                         "InternetDomainName"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.risk.level",
+                    "data_path": "action_result.data.*.riskscore",
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.count",
+                    "data_path": "action_result.data.*.risklevel",
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.timestamp",
+                    "data_path": "action_result.data.*.rulecount",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.maxrules",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.*.description",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.mitigation",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.description",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.rule",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.level",
+                    "data_path": "action_result.data.*.evidence.*.level",
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.maxCount",
-                    "data_type": "numeric"
+                    "data_path": "action_result.data.*.evidence.*.timestamp",
+                    "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.score",
-                    "data_type": "numeric"
+                    "data_path": "action_result.data.*.evidence.*.ruleid",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.*.rule",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.*.mitigation",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -1856,57 +1862,61 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.entity.id",
+                    "data_path": "action_result.data.*.id",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.entity.name",
+                    "data_path": "action_result.data.*.name",
                     "data_type": "string",
                     "contains": [
                         "ip"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entity.type",
+                    "data_path": "action_result.data.*.type",
                     "data_type": "string",
                     "example_values": [
                         "IpAddress"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.risk.level",
+                    "data_path": "action_result.data.*.risklevel",
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.count",
+                    "data_path": "action_result.data.*.rulecount",
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.timestamp",
+                    "data_path": "action_result.data.*.evidence.ruleid",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.mitigation",
+                    "data_path": "action_result.data.*.evidence.timestamp",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.description",
+                    "data_path": "action_result.data.*.evidence.mitigation",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.rule",
+                    "data_path": "action_result.data.*.evidence.description",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.level",
+                    "data_path": "action_result.data.*.evidence.rule",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.level",
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.maxCount",
+                    "data_path": "action_result.data.*.maxcount",
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.score",
+                    "data_path": "action_result.data.*.riskscore",
                     "data_type": "numeric"
                 },
                 {
@@ -1917,7 +1927,8 @@
                     "data_path": "action_result.parameter.ip",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "ip",
+                        "ipv6"
                     ]
                 },
                 {

@@ -385,17 +385,17 @@ class RecordedfutureConnector(BaseConnector):
 
         # Params for the API call
         params = {
-                category: entity
+            category: entity
         }
 
         # make rest call
-        my_ret_val, response = self._make_rest_call('/htplookup/',
+        my_ret_val, response = self._make_rest_call('/soar/enrichment',
                                                     action_result,
                                                     json=params,
                                                     method='post')
 
         self.debug_print('_handle_reputation', {'path_info': entity,
-                                                'endpoint': '/htplookup/',
+                                                'endpoint': '/soar/enrichment',
                                                 'action_result': action_result,
                                                 'params': params,
                                                 'my_ret_val': my_ret_val,
@@ -404,32 +404,49 @@ class RecordedfutureConnector(BaseConnector):
         if phantom.is_fail(my_ret_val):
             return action_result.get_status()
 
-        if len(response['data'].get('results', [])) != 0:
-            res = response['data']['results'][0]
+        if response['data'].get('results', []):
+
+            item = response['data']['results'][0]
+            risk = item['risk']
+            rule = risk['rule']
+            evidence_list = rule['evidence']
+
+            evidence = [{
+                'ruleid': evidence_id,
+                'timestamp': evidence_list[evidence_id]['timestamp'],
+                'description': evidence_list[evidence_id]['description'],
+                'rule': evidence_list[evidence_id]['rule'],
+                'level': evidence_list[evidence_id]['level'],
+                'mitigation': evidence_list[evidence_id].get('mitigation', None)}
+                for evidence_id in evidence_list.keys()]
+
+            res = {
+                'id': item['entity']['id'],
+                'name': item['entity']['name'],
+                'type': item['entity']['type'],
+                'risklevel': risk['level'],
+                'riskscore': risk['score'],
+                'rulecount': rule['count'],
+                'maxrules': rule['maxCount'],
+                'evidence': evidence,
+                'description':
+                    item['entity'].get('description', None)
+            }
+
+            if 'description' in item['entity']:
+                res['description'] = item['entity']['description']
+
         else:
             res = {
-                "entity": {
-                    "id": None,
-                    "name": 'u',
-                    "type": None
-                },
-                "risk": {
-                    "level": None,
-                    "rule": {
-                        "count": None,
-                        "evidence": {
-                            "category": {
-                                "timestamp": None,
-                                "description": None,
-                                "rule": None,
-                                "mitigation": None,
-                                "level": None
-                            },
-                        },
-                        "maxCount": None
-                    },
-                    "score": None
-                },
+                "id": None,
+                "name": u"",
+                "type": None,
+                "description": None,
+                "risklevel": None,
+                "riskscore": None,
+                "rulecount": None,
+                "maxrules": None,
+                "evidence": []
             }
 
         action_result.add_data(res)
@@ -437,9 +454,12 @@ class RecordedfutureConnector(BaseConnector):
 
         # Update the summary
         summary = action_result.get_summary()
-        summary['type'] = res['entity'].get('type', None)
-        summary['score'] = res['risk']['score']
-        summary['level'] = res['risk']['level']
+        summary['Risk Score'] = res['riskscore']
+        summary['Risk Level'] = res['risklevel']
+        summary['Entity Type'] = res['type']
+        # riskSummary = str(res['rulecount']) " of " + str(res['maxrules']) + \
+        #                                    " Risk Rules currently observed"
+        # summary['Risk Summary'] = riskSummary
 
         action_result.set_summary(summary)
 
@@ -603,6 +623,7 @@ class RecordedfutureConnector(BaseConnector):
 
     def handle_action(self, param):
         """Handle a call to the app, switch depending on action."""
+        # TODO api call for vulnerabilities appear to be case sensitive
         my_ret_val = phantom.APP_SUCCESS
 
         # Get the action that we are supposed to execute for this App Run
