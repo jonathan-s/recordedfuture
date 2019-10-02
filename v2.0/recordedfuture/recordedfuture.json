@@ -544,17 +544,17 @@
                     "order": 0
                 }
             },
-            "render": {
-                "type": "table",
-                "width": 6,
-                "height": 5,
-                "title": "URL reputation",
-                "menu_name": "url reputation"
-            },
             "output": [
                 {
                     "data_path": "action_result.status",
                     "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.url",
+                    "data_type": "string",
+                    "contains": [
+                        "url"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.entity.id",
@@ -569,10 +569,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.entity.type",
-                    "data_type": "string",
-                    "example_values": [
-                        "URL"
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.risk.level",
@@ -615,22 +612,12 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.parameter.url",
-                    "data_type": "string",
-                    "contains": [
-                        "url"
-                    ]
-                },
-                {
                     "data_path": "action_result.summary.score",
                     "data_type": "numeric"
                 },
                 {
                     "data_path": "action_result.summary.type",
-                    "data_type": "string",
-                    "example_values": [
-                        "URL"
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.summary.level",
