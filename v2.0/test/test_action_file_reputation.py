@@ -35,14 +35,9 @@ class RfDomainReputationTests(RfTests):
 
     def test_file_reputation(self):
         """Test behavior when a file is supplied."""
-        # targets = self.high_risk_iocs_by_category('hash', 5, fields=['entity',
-        #                                                              'risk'])
-        targets = [
-            ("73017643a89cc5c961494b84feb60751", 70),
-            ("31617dce34ae7dcba3296f2be55d91756f1f878a0b1878304c8adda8b28e0a90", 70),
-            ("bb85b1c9f2006db588690e6c38802f97", 70),
-            ("667a56c7014dce3351f63a9b1c1957e6a29977b8736fa5a6f0e0192ac6c147d7", 65),
-            ("057942b64c3f3fe5eb8f1856f0c860f9036f9c87", 25)]
+
+        targets = self.high_risk_iocs_by_category('hash', 5, fields=['entity',
+                                                                      'risk'])
 
         # Call the test for each target
         for ioc, target_risk_score in targets:
