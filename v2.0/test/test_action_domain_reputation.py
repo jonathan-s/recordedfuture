@@ -69,7 +69,7 @@ class RfDomainReputationTests(RfTests):
         self.assertEqual(ares['data'][0]['status'], 'success')
 
         # Assert we get success and sets the response as expected
-        response, message = nf.testdata_reputation_wo_risk(
+        response, message = nf.testdata_reputation_na(
             'my.nonexistingdomain.nu', 'domain')
         result_data = ares['data'][0]['result_data']
         for rd in result_data:

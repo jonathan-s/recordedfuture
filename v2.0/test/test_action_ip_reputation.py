@@ -39,19 +39,22 @@ class RfIpReputationTests(RfTests):
         # targets = self.high_risk_iocs_by_category('ip', 5, fields=['entity',
         #                                                           'risk'])
         targets = [
-            ("184.53.48.252", 5),
+            ("184.53.48.252", 19),
             ("14.177.126.193", 23),
             ("105.156.186.187", 18),
-            ("160.177.196.170", 18),
-            ("2.141.179.222", 18)]
+            ("160.177.196.170", 5),
+            ("2.141.179.222", 18),
+            ("36.89.85.103", 99)]
 
+        #targets = self.high_risk_iocs_by_category('ip', 5, fields=['entity',
+        #                                                            'risk'])
         # Call the test for each target
         for ioc, target_risk_score in targets:
             self._test_ip_reputation_score(ioc, target_risk_score,
                                            'Test Event IP Reputation')
 
-    def test_neg_ip_reputation_not_existing(self):
-        """Test behavior when a non-existing ip is passed."""
+    def test_ip_reputation_without_risk(self):
+        """Test behavior when ip exists but has no risk."""
         testdata = {
             'ioc': '129.16.1.4'
         }
@@ -68,11 +71,45 @@ class RfIpReputationTests(RfTests):
 
         # ConnectAPI return 404 on these, but we return success with an
         # empty list
-        self.assertEqual(ares['data'][0]['status'], 'success')
+        self.assertEqual(ares['data'][0]['result_data'][0]['status'], 'success')
 
         # Assert we get success and sets the response as expected
         response, message = nf.testdata_reputation_wo_risk(
             testdata['ioc'], 'ip')
+        # tagit bort [0] i listan
+        result_data = ares['data'][0]['result_data']
+        for rd in result_data:
+            # Assert success
+            self.assertEqual(rd['status'], 'success')
+            # Assert message is as should
+            self.assertEqual(rd['message'], message)
+            # Assert data
+            self.assertEqual(rd['data'], response)
+
+    def test_ip_reputation_not_existing(self):
+        """Test behavior for an ip that does not exist in our database."""
+        testdata = {
+            'ioc': '129.16.1.234'
+        }
+
+        # Create container and artifact.
+        container_id = self._create_event_and_artifact(
+            'Test Event IP Reputation - not existing',
+            destinationAddress=testdata['ioc'])
+
+        # Fetch the result of the automatic run.
+        ares = self._poll_for_success(self._action_result, container_id)
+
+        LOGGER.debug("ares: %s", ares)
+
+        # ConnectAPI return 404 on these, but we return success with an
+        # empty list
+        self.assertEqual(ares['data'][0]['result_data'][0]['status'], 'success')
+
+        # Assert we get success and sets the response as expected
+        response, message = nf.testdata_reputation_na(
+            testdata['ioc'], 'ip')
+        # tagit bort [0] i listan
         result_data = ares['data'][0]['result_data']
         for rd in result_data:
             # Assert success

@@ -42,7 +42,7 @@ class RfUrlReputationTests(RfTests):
             ("http://down7047.yyk2.com/?/74394/pc6/%CE%BE%CF%B7%D5%BD%C6%BD%CC%A8.exe", 5),
             ("http://cdd.net.ua/apothecary/shopping_cart.php?osCsid=4e24988fb404907b731701c72e82f13b", 5),
             ("https://themwebis.com/images/docusign17/index.php", 5),
-            ("http://down.zmnds.com/cx/180806/4/cad2007%E6%B3%A8@19_432704WrsQS.exe", 65),
+            ("http://down.zmnds.com/cx/180806/4/cad2007%E6%B3%A8@19_432704WrsQS.exe", 5),
             ("http://bd10.52lishi.com/bd70818.zip", 65)]
 
         # Call the test for each target
@@ -71,7 +71,7 @@ class RfUrlReputationTests(RfTests):
         self.assertEqual(ares['data'][0]['status'], 'success')
 
         # Assert we get success and sets the response as expected
-        response, message = nf.testdata_reputation_wo_risk(
+        response, message = nf.testdata_reputation_na(
             testdata['ioc'], 'url')
         result_data = ares['data'][0]['result_data']
         for rd in result_data:

@@ -19,64 +19,49 @@ def testdata_reputation_wo_risk(entity, category):
         'vulnerability': 'CyberVulnerability',
         'url': 'URL',
     }[category]
+    rules_per_category = {
+        'ip': 51,
+        'domain': 22,
+        'hash': 0,
+        'vulnerability': 22,
+        'url': 0,
+    }[category]
     res = [
         {
-            u'risk': {
-                u'score': 0,
-                u'rule': {
-                    u'count': 0,
-                },
-                u'level': 0
-            },
-            u'entity': {
-                u'name': u'%s' % entity,
-                u'id': '%s%s' % (prefix, entity),
-                u'type': ctype
-            }
+            u'id': '%s%s' % (prefix, entity),
+            u'name': u'%s' % entity,
+            u'type': ctype,
+            u'risklevel': 0,
+            u'riskscore': 0,
+            u'rulecount': 0,
+            u'maxrules': rules_per_category,
+            u'description': None,
+            u'evidence': []
         }
     ]
-    if category == 'ip':
-        res[0]['risk']['rule']['maxCount'] = 52
+    # currently only used for IP addresses vulnerability rules: 22, domain: 36
+
     return (
         res,
-        u'Score: 0.0, Type: %s, Level: 0.0' % ctype
+        u'Entity type: IpAddress, Risk score: 0.0, Risk level: 0.0'
     )
 
 def testdata_reputation_na(entity, category):
     """Create result for entities that don't exist."""
-    prefix = {
-        'ip': 'ip:',
-        'domain': 'idn:',
-        'hash': 'hash:',
-        'vulnerability': '',
-        'url': 'url:'
-    }[category]
-    ctype = {
-        'ip': 'IpAddress',
-        'domain': 'InternetDomainName',
-        'hash': 'Hash',
-        'vulnerability': 'CyberVulnerability',
-        'url': 'URL',
-    }[category]
     return (
         [
             {
-                u'risk': {
-                    u'score': None,
-                    u'rule': {
-                        u'count': None,
-                        u'maxCount': None
-                    },
-                    u'level': None
-                },
-                u'entity': {
-                    u'name': u'',
-                    u'id': None,
-                    u'type': None
-                }
+                u'id': None,
+                u'name': u'',
+                u'type': None,
+                u'risklevel': None,
+                u'riskscore': None,
+                u'rulecount': None,
+                u'maxrules': None,
+                u'description': u''
             }
         ],
-        u'Score: None, Type: None, Level: None'
+        u'Risk score: No information available.'
     )
 
 

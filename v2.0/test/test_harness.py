@@ -140,7 +140,7 @@ class RfTests(unittest.TestCase):
         """Assert that the risk score matches the target."""
         try:
             risk_score = result['data'][0]['result_data'][0]['data'][0][
-                'risk']['score']
+                'riskscore']
             parameter = result['data'][0]['result_data'][0]['parameter']
         except Exception as err:
             LGR.error('result %s', result['data'])

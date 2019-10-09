@@ -406,19 +406,22 @@ class RecordedfutureConnector(BaseConnector):
 
         if response['data'].get('results', []):
 
+            summary = action_result.get_summary()
             item = response['data']['results'][0]
             risk = item['risk']
             rule = risk['rule']
-            evidence_list = rule['evidence']
-
-            evidence = [{
-                'ruleid': evidence_id,
-                'timestamp': evidence_list[evidence_id]['timestamp'],
-                'description': evidence_list[evidence_id]['description'],
-                'rule': evidence_list[evidence_id]['rule'],
-                'level': evidence_list[evidence_id]['level'],
-                'mitigation': evidence_list[evidence_id].get('mitigation', None)}
-                for evidence_id in evidence_list.keys()]
+            if 'evidence' in rule:
+                evidence_list = rule['evidence']
+                evidence = [{
+                    'ruleid': evidence_id,
+                    'timestamp': evidence_list[evidence_id]['timestamp'],
+                    'description': evidence_list[evidence_id]['description'],
+                    'rule': evidence_list[evidence_id]['rule'],
+                    'level': evidence_list[evidence_id]['level'],
+                    'mitigation': evidence_list[evidence_id].get('mitigation', None)}
+                    for evidence_id in evidence_list.keys()]
+            else:
+                evidence = []
 
             res = {
                 'id': item['entity']['id'],
@@ -436,30 +439,28 @@ class RecordedfutureConnector(BaseConnector):
             if 'description' in item['entity']:
                 res['description'] = item['entity']['description']
 
+            # Update the summary
+                summary = action_result.get_summary()
+            summary['Risk Score'] = res['riskscore']
+            summary['Risk Level'] = res['risklevel']
+            summary['Entity Type'] = res['type']
+
         else:
             res = {
                 "id": None,
-                "name": u"",
+                "name": '',
                 "type": None,
-                "description": None,
+                "description": '',
                 "risklevel": None,
                 "riskscore": None,
                 "rulecount": None,
                 "maxrules": None,
-                "evidence": []
             }
+            summary = action_result.get_summary()
+            summary['Risk Score'] = "No information available."
 
         action_result.add_data(res)
         self.save_progress('Added data with keys {}', res.keys())
-
-        # Update the summary
-        summary = action_result.get_summary()
-        summary['Risk Score'] = res['riskscore']
-        summary['Risk Level'] = res['risklevel']
-        summary['Entity Type'] = res['type']
-        # riskSummary = str(res['rulecount']) " of " + str(res['maxrules']) + \
-        #                                    " Risk Rules currently observed"
-        # summary['Risk Summary'] = riskSummary
 
         action_result.set_summary(summary)
 
@@ -623,7 +624,6 @@ class RecordedfutureConnector(BaseConnector):
 
     def handle_action(self, param):
         """Handle a call to the app, switch depending on action."""
-        # TODO api call for vulnerabilities appear to be case sensitive
         my_ret_val = phantom.APP_SUCCESS
 
         # Get the action that we are supposed to execute for this App Run
