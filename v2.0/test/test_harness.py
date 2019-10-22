@@ -107,6 +107,7 @@ class RfTests(unittest.TestCase):
         for attempt in range(maxtries):
             # Call passed in function with passed params
             res = fn(params)
+            #LGR.debug('res: %s' % res)
             try:
                 assert (len(res['data']) > 0)  # wait for any results
                 LGR.info('len: %s', len(res['data']))
@@ -134,6 +135,17 @@ class RfTests(unittest.TestCase):
 
         raise Exception(
             'Max tries %s exceeded when polling for request success' % maxtries)
+
+    def alertRuleIdsByFreetext(self, freetext):
+        """Get ids for the alert rules for a specific freetext search using ConnectAPI"""
+        api = ConnectApiClient()
+        res = api.get_alert_rule(freetext, 30)
+
+        if len(res.result['data']['results']) == 0:
+            raise Exception(
+                'No rules found for passed freetext: %s' % freetext)
+
+        return [rule['id'] for rule in res.result['data']['results']]
 
     def assertCorrectRiskScore(self, result, target_risk_score,
                                            *args):

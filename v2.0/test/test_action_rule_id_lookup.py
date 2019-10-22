@@ -12,8 +12,7 @@ LOGGER = logging.getLogger(__name__)
 PBOOK = 'recorded_future_alert_test'
 TARGETS = [
     ('Global Trends, Trending Targets', ['Y7HDdC']),
-    ('recordedfuture.com Leaked Credentials Document', ['VNPVFc']),
-    ('Recorded', [u'Ya4pFB', u'VNPVFc', u'VKhgWu',u'Vp5IXx'])
+    ('recordedfuture.com Leaked Credentials Document', ['VNPVFc'])
 ]
 
 
@@ -23,6 +22,10 @@ class RfRuleIdLookupTests(RfTests):
     def setUp(self, playbook=None):
         """Setup test environment."""
         RfTests.setUp(self, PBOOK)
+
+        # Fetch currently existing rule ids for a specific freetext
+        freetext = 'Recorded'
+        TARGETS.append((freetext, self.alertRuleIdsByFreetext(freetext)))
 
     def _test_alert_fule_id_lookup_rule_id(self, freetext, rule_id_list, cname):
         """Verify that the freetext search yields the right set of rule ids."""
