@@ -11,10 +11,9 @@ LOGGER = logging.getLogger(__name__)
 
 PBOOK = 'recorded_future_alert_test'
 TARGETS = [
+    ('Global Trends, Trending Targets', ['Y7HDdC']),
     ('recordedfuture.com Leaked Credentials Document', ['VNPVFc']),
-    ('Recorded', [u'Ya4pFB', u'YcKufV', u'Vp5IXy', u'VNPVFc', u'VKhgWu',
-                  u'Vp5IXx', u'YcKufW', u'Ya9Aof', u'YbYAKE', u'aRE2MK'
-                  ])
+    ('Recorded', [u'Ya4pFB', u'VNPVFc', u'VKhgWu',u'Vp5IXx'])
 ]
 
 
@@ -34,8 +33,15 @@ class RfRuleIdLookupTests(RfTests):
         # Fetch the result of the automatic run.
         ares = self._poll_for_success(self._action_result, container_id)
 
+        #  TODO remove
+        print('troubleshooting ares', ares)
+
         result_data = ares['data'][0]['result_data'][0]['data']
         result_rule_id_list = [result['rule']['id'] for result in result_data]
+
+        #  TODO remove
+        print('troubleshooting', result_rule_id_list)
+
         self.assertEqual(set(rule_id_list), set(result_rule_id_list))
 
     def test_rule_id_lookup(self):
