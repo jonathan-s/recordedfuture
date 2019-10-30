@@ -67,40 +67,22 @@ def send_email(action=None, success=None, container=None, results=None, handle=N
 def format_email(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
     phantom.debug('format_email() called')
     
-    template = """The IP {0}  is has a risk score of {1} 
+    template = """IP address *{0}*  is has a risk score of *{1}*
 
-The rules triggered for this IP are:
-
-{3}
-
-{4}
+The rules triggered for this IP are *{2}*
 
 The Evidence Details are:
+{3}
 
-{2}
-
-Related Entities:
-
-{6}
-
-{7}
-
-{8}
-
-More information about:
-{5}"""
+More information about the entity:{4}"""
 
     # parameter list for template variable replacement
     parameters = [
         "ip_intelligence_2:action_result.parameter.ip",
         "ip_intelligence_2:action_result.data.*.risk.score",
+        "ip_intelligence_2:action_result.data.*.risk.evidenceDetails.*.rule",
         "ip_intelligence_2:action_result.data.*.risk.evidenceDetails.*.evidenceString",
-        "ip_intelligence_2:action_result.data.*.risk.riskSummary",
-        "ip_intelligence_2:action_result.data.*.risk.rules",
         "ip_intelligence_2:action_result.data.*.intelCard",
-        "ip_intelligence_2:action_result.data.*.relatedEntities.*.entities.*.entity.name",
-        "ip_intelligence_2:action_result.data.*.relatedEntities.*.entities.*.count",
-        "ip_intelligence_2:action_result.data.*.relatedEntities.*.entities.*.entity.type",
     ]
 
     phantom.format(container=container, template=template, parameters=parameters, name="format_email")

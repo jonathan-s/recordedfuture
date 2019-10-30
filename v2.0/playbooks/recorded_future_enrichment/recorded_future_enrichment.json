@@ -7,7 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "This playbook was created to show how to obtain intelligence for IP address with a high Risk Score. It is typically used for artifact enrichment.\n\nThe playbook has been updated to work in conjunction with Recorded Future App for Phantom v2.0.",
-            "hash": "91720c0e15994cd5e61d8f1f3f90811a52e20562",
+            "hash": "85577c69a2d79b8d6a531b82ac78a09dbbcc11c6",
             "joint": {
                 "cells": [
                     {
@@ -73,8 +73,8 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 157,
-                        "line_start": 144,
+                        "line_end": 139,
+                        "line_start": 126,
                         "name": "",
                         "notes": "",
                         "number": 0,
@@ -919,8 +919,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 144,
-                        "line_start": 123,
+                        "line_end": 126,
+                        "line_start": 105,
                         "message": "Configuring now",
                         "name": "ip intelligence",
                         "notes": "",
@@ -1050,7 +1050,7 @@
                                 }
                             },
                             "g.delete": {
-                                "display": "block"
+                                "display": "none"
                             },
                             "g.error": {
                                 "opacity": 0
@@ -1300,8 +1300,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 123,
-                        "line_start": 112,
+                        "line_end": 105,
+                        "line_start": 94,
                         "message": "Configuring now",
                         "name": "add list",
                         "notes": "",
@@ -1440,7 +1440,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def format_email(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('format_email() called')\n    \n    template = \"\"\"The IP {0}  is has a risk score of {1} \n\nThe rules triggered for this IP are:\n\n{3}\n\n{4}\n\nThe Evidence Details are:\n\n{2}\n\nRelated Entities:\n\n{6}\n\n{7}\n\n{8}\n\nMore information about:\n{5}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"ip_intelligence_2:action_result.parameter.ip\",\n        \"ip_intelligence_2:action_result.data.*.risk.score\",\n        \"ip_intelligence_2:action_result.data.*.risk.evidenceDetails.*.evidenceString\",\n        \"ip_intelligence_2:action_result.data.*.risk.riskSummary\",\n        \"ip_intelligence_2:action_result.data.*.risk.rules\",\n        \"ip_intelligence_2:action_result.data.*.intelCard\",\n        \"ip_intelligence_2:action_result.data.*.relatedEntities.*.entities.*.entity.name\",\n        \"ip_intelligence_2:action_result.data.*.relatedEntities.*.entities.*.count\",\n        \"ip_intelligence_2:action_result.data.*.relatedEntities.*.entities.*.entity.type\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"format_email\")\n\n    send_email(container=container)\n\n    return",
+                        "block_code": "def format_email(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('format_email() called')\n    \n    template = \"\"\"IP address *{0}*  is has a risk score of *{1}*\n\nThe rules triggered for this IP are *{2}*\n\nThe Evidence Details are:\n{3}\n\nMore information about the entity:{4}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"ip_intelligence_2:action_result.parameter.ip\",\n        \"ip_intelligence_2:action_result.data.*.risk.score\",\n        \"ip_intelligence_2:action_result.data.*.risk.evidenceDetails.*.rule\",\n        \"ip_intelligence_2:action_result.data.*.risk.evidenceDetails.*.evidenceString\",\n        \"ip_intelligence_2:action_result.data.*.intelCard\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"format_email\")\n\n    send_email(container=container)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
@@ -1464,7 +1464,7 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 141,
-                        "line_end": 112,
+                        "line_end": 94,
                         "line_start": 67,
                         "message": "Configuring now",
                         "name": "format",
@@ -1486,39 +1486,19 @@
                                 "value": "ip_intelligence_2:action_result.data.*.risk.score"
                             },
                             {
-                                "position": 2,
+                                "position": 3,
                                 "type": "",
-                                "value": "ip_intelligence_2:action_result.data.*.risk.evidenceDetails.*.evidenceString"
+                                "value": "ip_intelligence_2:action_result.data.*.risk.evidenceDetails.*.rule"
                             },
                             {
                                 "position": 3,
                                 "type": "",
-                                "value": "ip_intelligence_2:action_result.data.*.risk.riskSummary"
-                            },
-                            {
-                                "position": 4,
-                                "type": "",
-                                "value": "ip_intelligence_2:action_result.data.*.risk.rules"
+                                "value": "ip_intelligence_2:action_result.data.*.risk.evidenceDetails.*.evidenceString"
                             },
                             {
                                 "position": 5,
                                 "type": "",
                                 "value": "ip_intelligence_2:action_result.data.*.intelCard"
-                            },
-                            {
-                                "position": 6,
-                                "type": "",
-                                "value": "ip_intelligence_2:action_result.data.*.relatedEntities.*.entities.*.entity.name"
-                            },
-                            {
-                                "position": 7,
-                                "type": "",
-                                "value": "ip_intelligence_2:action_result.data.*.relatedEntities.*.entities.*.count"
-                            },
-                            {
-                                "position": 8,
-                                "type": "",
-                                "value": "ip_intelligence_2:action_result.data.*.relatedEntities.*.entities.*.entity.type"
                             }
                         ],
                         "ports": {
@@ -1586,11 +1566,11 @@
                         },
                         "state": "format",
                         "status": "",
-                        "template": "The IP {0}  is has a risk score of {1} \n\n\nThe rules triggered for this IP are:\n\n{3}\n\n{4}\n\nThe Evidence Details are:\n\n{2}\n\nRelated Entities:\n\n{6}\n\n{7}\n\n{8}\n\nMore information about:\n{5}",
+                        "template": "IP address *{0}*  is has a risk score of *{1}*\n\nThe rules triggered for this IP are *{2}*\n\nThe Evidence Details are:\n{3}\n\nMore information about the entity:{4}",
                         "title": "format",
                         "type": "coa.Format",
                         "warn": false,
-                        "z": 149
+                        "z": 153
                     },
                     {
                         "action": "send email",
@@ -1986,7 +1966,7 @@
                         "title": "Generic",
                         "type": "coa.Action",
                         "warn": "",
-                        "z": 151
+                        "z": 155
                     }
                 ]
             },
@@ -1995,7 +1975,7 @@
         "schema": 3,
         "version": "4.5.15922"
     },
-    "create_time": "2019-10-25T11:43:58.318695+00:00",
+    "create_time": "2019-10-30T14:29:33.878429+00:00",
     "draft_mode": false,
     "labels": [
         "events"
