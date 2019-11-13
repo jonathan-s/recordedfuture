@@ -357,8 +357,19 @@ class RecordedfutureConnector(BaseConnector):
         if phantom.is_fail(my_ret_val):
             return action_result.get_status()
 
+        # datastructure to iterate over different types of related entities
+        if response['data']['relatedEntities']:
+            relatedEntityTypes = {}
+
+            for entity_types in response['data']['relatedEntities']:
+                type = entity_types['type']
+                relatedEntityTypes[type] = entity_types['entities']
+
+            response['data']['relatedEntityTypes'] = relatedEntityTypes
+
         res = response['data']
         action_result.add_data(res)
+
         self.save_progress('Added data with keys {}', res.keys())
 
         # Update the summary

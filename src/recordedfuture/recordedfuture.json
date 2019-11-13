@@ -1875,27 +1875,27 @@
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.evidence.ruleid",
+                    "data_path": "action_result.data.*.evidence.*.ruleid",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.evidence.timestamp",
+                    "data_path": "action_result.data.*.evidence.*.timestamp",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.evidence.mitigation",
+                    "data_path": "action_result.data.*.evidence.*.mitigation",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.evidence.description",
+                    "data_path": "action_result.data.*.evidence.*.description",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.evidence.rule",
+                    "data_path": "action_result.data.*.evidence.*.rule",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.evidence.level",
+                    "data_path": "action_result.data.*.evidence.*.level",
                     "data_type": "numeric"
                 },
                 {
