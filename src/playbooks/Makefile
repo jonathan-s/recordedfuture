@@ -3,9 +3,7 @@ PACKAGES := recorded_future_correlation.tgz \
 			recorded_future_handle_leaked_credentials.tgz \
  			recorded_future_correlation_slack.tgz \
                         recorded_future_enrichment_slack.tgz \
-                        recorded_future_handle_leaked_credentials_slack.tgz \
-			recorded_future_threat_hunting.tgz \
-			recorded_future_threat_hunting_slack.tgz
+                        recorded_future_handle_leaked_credentials_slack.tgz
 DIST_DIR := pkg_build
 PKG_TARGETS := $(addprefix $(DIST_DIR)/,$(PACKAGES))
 # COPYFILE prevents tar on Macos to add virtual files for file permissions to archive.
