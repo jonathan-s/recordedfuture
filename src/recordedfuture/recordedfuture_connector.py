@@ -452,9 +452,9 @@ class RecordedfutureConnector(BaseConnector):
 
             # Update the summary
             summary = action_result.get_summary()
-            summary['Risk Score'] = res['riskscore']
-            summary['Risk Level'] = res['risklevel']
-            summary['Entity Type'] = res['type']
+            summary['riskscore'] = res['riskscore']
+            summary['risklevel'] = res['risklevel']
+            summary['type'] = res['type']
 
         else:
             res = {

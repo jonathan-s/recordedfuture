@@ -557,54 +557,51 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entity.id",
+                    "data_path": "action_result.data.*.name",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.entity.name",
-                    "data_type": "string",
-                    "contains": [
-                        "url"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.entity.type",
+                    "data_path": "action_result.data.*.id",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.level",
+                    "data_path": "action_result.data.*.type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.riskscore",
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.count",
+                    "data_path": "action_result.data.*.risklevel",
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.timestamp",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.mitigation",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.description",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.rule",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.level",
+                    "data_path": "action_result.data.*.rulecount",
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.maxCount",
+                    "data_path": "action_result.data.*.maxrules",
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.score",
+                    "data_path": "action_result.data.*.evidence.*.timestamp",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.*.mitigation",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.*.description",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.*.rule",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.*.level",
                     "data_type": "numeric"
                 },
                 {
@@ -612,7 +609,7 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.summary.score",
+                    "data_path": "action_result.summary.riskscore",
                     "data_type": "numeric"
                 },
                 {
@@ -620,7 +617,7 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.summary.level",
+                    "data_path": "action_result.summary.risklevel",
                     "data_type": "numeric"
                 },
                 {
@@ -951,7 +948,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.score",
+                    "data_path": "action_result.summary.riskscore",
                     "data_type": "numeric"
                 },
                 {
@@ -962,7 +959,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.level",
+                    "data_path": "action_result.summary.risklevel",
                     "data_type": "numeric"
                 },
                 {
@@ -1197,60 +1194,54 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.entity.id",
+                    "data_path": "action_result.data.*.name",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.entity.name",
-                    "data_type": "string",
-                    "contains": [
-                        "hash",
-                        "sha256",
-                        "sha1",
-                        "md5"
-                    ]
+                    "data_path": "action_result.data.*.id",
+                    "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.entity.type",
+                    "data_path": "action_result.data.*.type",
                     "data_type": "string",
                     "example_values": [
                         "Hash"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.risk.level",
+                    "data_path": "action_result.data.*.riskscore",
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.count",
+                    "data_path": "action_result.data.*.risklevel",
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.timestamp",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.mitigation",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.description",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.rule",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.risk.rule.evidence.*.level",
+                    "data_path": "action_result.data.*.rulecount",
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.rule.maxCount",
+                    "data_path": "action_result.data.*.maxrules",
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.risk.score",
+                    "data_path": "action_result.data.*.evidence.*.timestamp",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.*.mitigation",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.*.description",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.*.rule",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.*.level",
                     "data_type": "numeric"
                 },
                 {
@@ -1268,7 +1259,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.score",
+                    "data_path": "action_result.summary.riskscore",
                     "data_type": "numeric"
                 },
                 {
@@ -1279,7 +1270,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.level",
+                    "data_path": "action_result.summary.risklevel",
                     "data_type": "numeric"
                 },
                 {
@@ -1583,7 +1574,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.score",
+                    "data_path": "action_result.summary.riskscore",
                     "data_type": "numeric"
                 },
                 {
@@ -1594,7 +1585,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.level",
+                    "data_path": "action_result.summary.risklevel",
                     "data_type": "numeric"
                 },
                 {
@@ -1899,7 +1890,7 @@
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.maxcount",
+                    "data_path": "action_result.data.*.maxrules",
                     "data_type": "numeric"
                 },
                 {
@@ -1919,7 +1910,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.score",
+                    "data_path": "action_result.summary.riskscore",
                     "data_type": "numeric"
                 },
                 {
@@ -1930,7 +1921,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.level",
+                    "data_path": "action_result.summary.risklevel",
                     "data_type": "numeric"
                 },
                 {
