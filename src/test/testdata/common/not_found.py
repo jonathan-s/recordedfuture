@@ -43,7 +43,7 @@ def testdata_reputation_wo_risk(entity, category):
 
     return (
         res,
-        u'Entity type: IpAddress, Risk score: 0.0, Risk level: 0.0'
+        u'Risklevel: 0.0, Type: IpAddress, Riskscore: 0.0'
     )
 
 def testdata_reputation_na(entity, category):
@@ -61,7 +61,7 @@ def testdata_reputation_na(entity, category):
                 u'description': u''
             }
         ],
-        u'Risk score: No information available.'
+        u'Riskscore: No information available.'
     )
 
 

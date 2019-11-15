@@ -457,7 +457,7 @@ class RecordedfutureConnector(BaseConnector):
                 "maxrules": None,
             }
             summary = action_result.get_summary()
-            summary['Risk Score'] = "No information available."
+            summary['riskscore'] = "No information available."
 
         action_result.add_data(res)
         self.save_progress('Added data with keys {}', res.keys())
