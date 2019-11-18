@@ -612,7 +612,7 @@
                                 "app_name": "Recorded Future",
                                 "app_version": "2.0.0",
                                 "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-                                "asset_name": "recorded-future ",
+                                "asset_name": "recorded-future",
                                 "config_type": "asset",
                                 "count": 0,
                                 "fields": {
@@ -622,7 +622,7 @@
                                 "id": 8,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recorded-future ",
+                                "name": "recorded-future",
                                 "output": [
                                     {
                                         "data_path": "action_result.status",
@@ -986,7 +986,7 @@
                                 "app_name": "Recorded Future",
                                 "app_version": "2.0.0",
                                 "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-                                "asset_name": "recorded-future ",
+                                "asset_name": "recorded-future",
                                 "config_type": "asset",
                                 "count": 0,
                                 "fields": {
@@ -996,7 +996,7 @@
                                 "id": 8,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recorded-future ",
+                                "name": "recorded-future",
                                 "output": [
                                     {
                                         "data_path": "action_result.status",
@@ -1362,7 +1362,7 @@
                                 "app_name": "Recorded Future",
                                 "app_version": "2.0.0",
                                 "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-                                "asset_name": "recorded-future ",
+                                "asset_name": "recorded-future",
                                 "config_type": "asset",
                                 "count": 0,
                                 "fields": {
@@ -1372,7 +1372,7 @@
                                 "id": 8,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recorded-future ",
+                                "name": "recorded-future",
                                 "output": [
                                     {
                                         "data_path": "action_result.status",
@@ -1740,7 +1740,7 @@
                                 "app_name": "Recorded Future",
                                 "app_version": "2.0.0",
                                 "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-                                "asset_name": "recorded-future ",
+                                "asset_name": "recorded-future",
                                 "config_type": "asset",
                                 "count": 0,
                                 "fields": {
@@ -1750,7 +1750,7 @@
                                 "id": 8,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recorded-future ",
+                                "name": "recorded-future",
                                 "output": [
                                     {
                                         "data_path": "action_result.status",
@@ -2064,7 +2064,7 @@
                                 "app_name": "Recorded Future",
                                 "app_version": "2.0.0",
                                 "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-                                "asset_name": "recorded-future ",
+                                "asset_name": "recorded-future",
                                 "config_type": "asset",
                                 "count": 0,
                                 "fields": {
@@ -2074,7 +2074,7 @@
                                 "id": 8,
                                 "loaded": false,
                                 "missing": false,
-                                "name": "recorded-future ",
+                                "name": "recorded-future",
                                 "output": [
                                     {
                                         "data_path": "action_result.status",
