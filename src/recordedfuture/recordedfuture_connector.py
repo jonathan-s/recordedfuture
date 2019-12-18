@@ -14,6 +14,19 @@
 # Phantom Recorded Future Connector python file
 # ---------------------------------------------
 
+''' List of things to do in order to implement the new action verdict:
+    1: Implement function in recordedfuture_connector.py
+        Create the new function _handle_verdict(?)  - copied _handle_reputation
+            - todo: where is the post message formatted?
+            - todo: parse the result
+            - todo: add empty structure if there is nothing in the response
+        Add it as an option in function handle_action - Added!
+    2: todo: create and implement verdict_results.html for the presentation of data in the Phantom case view
+    3: todo: Add the input and output of the new verdict function in recordedfuture.json
+    4: todo: Format the output of the new verdict functio in recordedfuture_view.py
+
+'''
+
 # Global imports
 import os
 import requests
@@ -469,6 +482,100 @@ class RecordedfutureConnector(BaseConnector):
         # dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
 
+    def _handle_verdict(self, param, category, entity):
+        # todo: check name verdict
+        """Return reputation information."""
+        self.save_progress(
+            "In action handler for: {0}".format(self.get_action_identifier()))
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        # Params for the API call
+        params = {
+            category: entity
+        }
+
+        # make rest call
+        my_ret_val, response = self._make_rest_call('/soar/enrichment',
+                                                    action_result,
+                                                    json=params,
+                                                    method='post')
+
+        # todo: check name verdict plus endpoint path
+        self.debug_print('_handle_verdict', {'path_info': entity,
+                                                'endpoint': '/soar/verdict',
+                                                'action_result': action_result,
+                                                'params': params,
+                                                'my_ret_val': my_ret_val,
+                                                'response': response})
+
+        if phantom.is_fail(my_ret_val):
+            return action_result.get_status()
+
+        if response['data'].get('results', []):
+
+            summary = action_result.get_summary()
+            item = response['data']['results'][0]
+            risk = item['risk']
+            rule = risk['rule']
+            if 'evidence' in rule:
+                evidence_list = rule['evidence']
+                evidence = [{
+                    'ruleid': evidence_id,
+                    'timestamp': evidence_list[evidence_id]['timestamp'],
+                    'description': evidence_list[evidence_id]['description'],
+                    'rule': evidence_list[evidence_id]['rule'],
+                    'level': evidence_list[evidence_id]['level'],
+                    'mitigation': evidence_list[evidence_id].get('mitigation', None)}
+                    for evidence_id in evidence_list.keys()]
+            else:
+                evidence = []
+
+            res = {
+                'id': item['entity']['id'],
+                'name': item['entity']['name'],
+                'type': item['entity']['type'],
+                'risklevel': risk['level'],
+                'riskscore': risk['score'],
+                'rulecount': rule['count'],
+                'maxrules': rule['maxCount'],
+                'evidence': evidence,
+                'description':
+                    item['entity'].get('description', None)
+            }
+
+            if 'description' in item['entity']:
+                res['description'] = item['entity']['description']
+
+            # Update the summary
+            summary = action_result.get_summary()
+            summary['riskscore'] = res['riskscore']
+            summary['risklevel'] = res['risklevel']
+            summary['type'] = res['type']
+
+        else:
+            res = {
+                "id": None,
+                "name": '',
+                "type": None,
+                "description": '',
+                "risklevel": None,
+                "riskscore": None,
+                "rulecount": None,
+                "maxrules": None,
+            }
+            summary = action_result.get_summary()
+            summary['riskscore'] = "No information available."
+
+        action_result.add_data(res)
+        self.save_progress('Added data with keys {}', res.keys())
+
+        action_result.set_summary(summary)
+
+        # Return success, no need to set the message, only the status
+        # BaseConnector will create a textual message based off of the summary
+        # dictionary
+        return action_result.set_status(phantom.APP_SUCCESS)
+
     def _parse_rule_data(self, res):
         """Reformat entities returned by the alert verb."""
         from collections import defaultdict
@@ -659,6 +766,11 @@ class RecordedfutureConnector(BaseConnector):
             else:
                 tag = entity_type
             my_ret_val = self._handle_reputation(param, tag, param[tag])
+
+        elif action_id == 'verdict':
+            # todo: need to check the in-parameters
+            # todo: check name verdict
+            my_ret_val = self._handle_verdict(param)
 
         elif action_id == 'rule_id_lookup':
             my_ret_val = self._handle_rule_id_lookup(param)
