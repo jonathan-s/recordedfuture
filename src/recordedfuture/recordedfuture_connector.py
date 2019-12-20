@@ -14,16 +14,16 @@
 # Phantom Recorded Future Connector python file
 # ---------------------------------------------
 
-''' List of things to do in order to implement the new action verdict:
+''' List of things to do in order to implement the new action triage:
     1: Implement function in recordedfuture_connector.py
-        Create the new function _handle_verdict(?)  - copied _handle_reputation
+        Create the new function _handle_triage(?)  - copied _handle_reputation
             - todo: where is the post message formatted?
             - todo: parse the result
-            - todo: add empty structure if there is nothing in the response
+            - todo: add empty structure if there is nothing in the response - wait until the API format is decided
         Add it as an option in function handle_action - Added!
-    2: todo: create and implement verdict_results.html for the presentation of data in the Phantom case view
-    3: todo: Add the input and output of the new verdict function in recordedfuture.json
-    4: todo: Format the output of the new verdict functio in recordedfuture_view.py
+    2: todo: create and implement triage_results.html for the presentation of data in the Phantom case view - wait until API is finished.
+    3: todo: Add the input and output of the new triage function in recordedfuture.json - wait until the API is definitely decided
+    4: todo: Format the output of the new triage function in recordedfuture_view.py - wait until the API is cast om stone
 
 '''
 
@@ -234,7 +234,7 @@ class RecordedfutureConnector(BaseConnector):
         return RetVal(action_result.set_status(phantom.APP_ERROR, message),
                       None)
 
-    def _make_rest_call(self, endpoint, action_result, method="get", **kwargs):
+    def _make_rest_call(self, endpoint, action_result, method="get", **kwargs):t
         """Make a REST call to Recorded Future's ConnectAPI.
 
         Parameters:
@@ -482,14 +482,13 @@ class RecordedfutureConnector(BaseConnector):
         # dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
 
-    def _handle_verdict(self, param, category, entity):
-        # todo: check name verdict
-        """Return reputation information."""
+    def _handle_triage(self, param, category, entity):
+        """Return triage information."""
         self.save_progress(
             "In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        # Params for the API call
+        # Params for the API call - need to become a list
         params = {
             category: entity
         }
@@ -500,9 +499,9 @@ class RecordedfutureConnector(BaseConnector):
                                                     json=params,
                                                     method='post')
 
-        # todo: check name verdict plus endpoint path
-        self.debug_print('_handle_verdict', {'path_info': entity,
-                                                'endpoint': '/soar/verdict',
+        # todo: check name triage plus endpoint path
+        self.debug_print('_handle_triage', {'path_info': entity,
+                                                'endpoint': '/soar/triage',
                                                 'action_result': action_result,
                                                 'params': params,
                                                 'my_ret_val': my_ret_val,
@@ -767,10 +766,9 @@ class RecordedfutureConnector(BaseConnector):
                 tag = entity_type
             my_ret_val = self._handle_reputation(param, tag, param[tag])
 
-        elif action_id == 'verdict':
+        elif action_id == 'triage':
             # todo: need to check the in-parameters
-            # todo: check name verdict
-            my_ret_val = self._handle_verdict(param)
+            my_ret_val = self._handle_triage(param)
 
         elif action_id == 'rule_id_lookup':
             my_ret_val = self._handle_rule_id_lookup(param)
