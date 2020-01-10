@@ -234,7 +234,7 @@ class RecordedfutureConnector(BaseConnector):
         return RetVal(action_result.set_status(phantom.APP_ERROR, message),
                       None)
 
-    def _make_rest_call(self, endpoint, action_result, method="get", **kwargs):t
+    def _make_rest_call(self, endpoint, action_result, method="get", **kwargs):
         """Make a REST call to Recorded Future's ConnectAPI.
 
         Parameters:
