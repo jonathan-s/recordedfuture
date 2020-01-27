@@ -1,5 +1,5 @@
 RELEASE := 2.0.0
-BUILDID := $(shell svn info --show-item revision)
+BUILDID := $(if $(SVN_REVISION), $(SVN_REVISION), $(shell git rev-list --count HEAD))
 BUILD_DIR := pkg_build
 SRC_DIR := recordedfuture
 PACKAGE := recordedfuture-$(RELEASE).tgz
