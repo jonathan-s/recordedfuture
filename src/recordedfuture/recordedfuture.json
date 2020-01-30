@@ -1939,6 +1939,200 @@
                 "title": "Threat Reputation of an IP Address"
             },
             "versions": "EQ(*)"
+        },
+        {
+            "action": "context triage",
+            "identifier": "context_triage",
+            "description": "Get an indicator of the risk based on context",
+            "verbose": "",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "context": {
+                    "description": "Context to use",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "order": 0
+                },
+                "ip": {
+                    "description": "IP to query",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": false,
+                    "contains": [
+                        "ip",
+                        "ipv6"
+                    ],
+                    "order": 0
+                },
+                "domain": {
+                    "description": "Domain to query",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": false,
+                    "contains": [
+                        "domain"
+                    ],
+                    "order": 0
+                },
+                "url": {
+                    "description": "URL to query",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": false,
+                    "contains": [
+                        "url"
+                    ],
+                    "order": 0
+                },
+                "hash": {
+                    "description": "Hash to query",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": false,
+                    "contains": [
+                        "hash",
+                        "sha256",
+                        "sha1",
+                        "md5"
+                    ],
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.name",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "IpAddress"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.risklevel",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.rulecount",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.ruleid",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.timestamp",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.mitigation",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.description",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.rule",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.evidence.level",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.maxrules",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.riskscore",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.context",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.ip",
+                    "data_type": "string",
+                    "contains": [
+                        "ip",
+                        "ipv6"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.domain",
+                    "data_type": "string",
+                    "contains": [
+                        "domain"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.url",
+                    "data_type": "string",
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.hash",
+                    "data_type": "string",
+                    "contains": [
+                        "hash",
+                        "sha256",
+                        "sha1",
+                        "md5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.riskscore",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.summary.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "IpAddress"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.risklevel",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "render": {
+                "type": "custom",
+                "view": "recordedfuture_view.reputation_results",
+                "title": "Threat Reputation of an IP Address"
+            },
+            "versions": "EQ(*)"
         }
     ]
 }

@@ -21,10 +21,10 @@
             - todo: parse the result
             - todo: add empty structure if there is nothing in the response - wait until the API format is decided
         Add it as an option in function handle_action - Added!
-    2: todo: create and implement triage_results.html for the presentation of data in the Phantom case view - wait until API is finished.
-    3: todo: Add the input and output of the new triage function in recordedfuture.json - wait until the API is definitely decided
-    4: todo: Format the output of the new triage function in recordedfuture_view.py - wait until the API is cast om stone
 
+    3: todo: Add the input and output of the new triage function in recordedfuture.json
+    4: todo: Format the output of the new triage function in recordedfuture_view.py - wait until the API is cast om stone
+    7: todo: create and implement triage_results.html for the presentation of data in the Phantom case view - wait until API is finished.
 '''
 
 # Global imports
@@ -488,7 +488,7 @@ class RecordedfutureConnector(BaseConnector):
             "In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        # Params for the API call - need to become a list
+        # Params for the API call
         params = {
             category: entity
         }
@@ -499,9 +499,8 @@ class RecordedfutureConnector(BaseConnector):
                                                     json=params,
                                                     method='post')
 
-        # todo: check name triage plus endpoint path
-        self.debug_print('_handle_triage', {'path_info': entity,
-                                                'endpoint': '/soar/triage',
+        self.debug_print('_handle_reputation', {'path_info': entity,
+                                                'endpoint': '/soar/enrichment',
                                                 'action_result': action_result,
                                                 'params': params,
                                                 'my_ret_val': my_ret_val,
@@ -742,7 +741,7 @@ class RecordedfutureConnector(BaseConnector):
             entity_type, operation_type = action_id.split('_')
         else:
             entity_type, operation_type = None, None
-        self.debug_print('entity_type, operation_type = %s, %s'
+        self.debug_print('XXXX entity_type, operation_type = %s, %s'
                          % (entity_type, operation_type))
 
         # Switch depending on action
@@ -766,9 +765,12 @@ class RecordedfutureConnector(BaseConnector):
                 tag = entity_type
             my_ret_val = self._handle_reputation(param, tag, param[tag])
 
-        elif action_id == 'triage':
+        elif action_id == 'context_triage':
+            self.save_progress('XXXX calling _handle_triage')
+            tag = 'ip'
+            ip = '37.48.83.137'
             # todo: need to check the in-parameters
-            my_ret_val = self._handle_triage(param)
+            my_ret_val = self._handle_reputation(param, tag, ip)
 
         elif action_id == 'rule_id_lookup':
             my_ret_val = self._handle_rule_id_lookup(param)
