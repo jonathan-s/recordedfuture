@@ -482,16 +482,21 @@ class RecordedfutureConnector(BaseConnector):
         # dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
 
-    def _handle_triage(self, param, category, entity):
-        """Return triage information."""
+    def _handle_triage(self, param):
+        """Return threat triage information."""
         self.save_progress(
             "In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         # Params for the API call
-        params = {
-            category: entity
-        }
+        param_types = ['ip', 'domain', 'url', 'hash']
+        params = {}
+        for i in param.keys():
+            if i in param_types:
+                self.save_progress('found parameter!! %s %s' % (i, param[i]))
+                params[i] = param[i]
+
+        self.save_progress(params)
 
         # make rest call
         my_ret_val, response = self._make_rest_call('/soar/enrichment',
@@ -499,8 +504,8 @@ class RecordedfutureConnector(BaseConnector):
                                                     json=params,
                                                     method='post')
 
-        self.debug_print('_handle_reputation', {'path_info': entity,
-                                                'endpoint': '/soar/enrichment',
+        self.debug_print('_handle_reputation', {'path_info': 'triage',
+                                                'endpoint': '/soar/triage',
                                                 'action_result': action_result,
                                                 'params': params,
                                                 'my_ret_val': my_ret_val,
@@ -509,63 +514,86 @@ class RecordedfutureConnector(BaseConnector):
         if phantom.is_fail(my_ret_val):
             return action_result.get_status()
 
-        if response['data'].get('results', []):
-
+        if response:
+            res = response
             summary = action_result.get_summary()
-            item = response['data']['results'][0]
-            risk = item['risk']
-            rule = risk['rule']
-            if 'evidence' in rule:
-                evidence_list = rule['evidence']
-                evidence = [{
-                    'ruleid': evidence_id,
-                    'timestamp': evidence_list[evidence_id]['timestamp'],
-                    'description': evidence_list[evidence_id]['description'],
-                    'rule': evidence_list[evidence_id]['rule'],
-                    'level': evidence_list[evidence_id]['level'],
-                    'mitigation': evidence_list[evidence_id].get('mitigation', None)}
-                    for evidence_id in evidence_list.keys()]
-            else:
-                evidence = []
-
-            res = {
-                'id': item['entity']['id'],
-                'name': item['entity']['name'],
-                'type': item['entity']['type'],
-                'risklevel': risk['level'],
-                'riskscore': risk['score'],
-                'rulecount': rule['count'],
-                'maxrules': rule['maxCount'],
-                'evidence': evidence,
-                'description':
-                    item['entity'].get('description', None)
-            }
-
-            if 'description' in item['entity']:
-                res['description'] = item['entity']['description']
-
-            # Update the summary
-            summary = action_result.get_summary()
-            summary['riskscore'] = res['riskscore']
-            summary['risklevel'] = res['risklevel']
-            summary['type'] = res['type']
+            summary['riskscore'] = "Found Info."
+            action_result.add_data(res)
+            self.save_progress('Added data with keys {}', res.keys())
 
         else:
+            scores = {
+                "max": None,
+                "min": None
+            }
             res = {
-                "id": None,
-                "name": '',
-                "type": None,
-                "description": '',
-                "risklevel": None,
-                "riskscore": None,
-                "rulecount": None,
-                "maxrules": None,
+                "entities": None,
+                "threshold_type": None,
+                "context": None,
+                "verdict": None,
+                "threshold": None,
+                "scores": scores
             }
             summary = action_result.get_summary()
             summary['riskscore'] = "No information available."
 
         action_result.add_data(res)
         self.save_progress('Added data with keys {}', res.keys())
+
+        action_result.set_summary(summary)
+
+        # Return success, no need to set the message, only the status
+        # BaseConnector will create a textual message based off of the summary
+        # dictionary
+        return action_result.set_status(phantom.APP_SUCCESS)
+
+    def _handle_triage_contexts(self, param):
+        """Return triage contexts information."""
+        # NOTE: test connectivity does _NOT_ take any parameters
+        # i.e. the param dictionary passed to this handler will be empty.
+
+        action_result = self.add_action_result(ActionResult(dict(param)))
+        self.save_progress(
+            "In action handler for: {0}".format(self.get_action_identifier()))
+
+        # make rest call
+        my_ret_val, response = self._make_rest_call('/soar/triage/contexts',
+                                                            action_result)
+
+        self.debug_print('_handle_triage_contexts',
+                         {'action_result': action_result,
+                          'my_ret_val': my_ret_val,
+                          'response': response})
+
+        if phantom.is_fail(my_ret_val):
+            self.save_progress("API call to retrieve triage contexts failed.")
+            return action_result.get_status()
+
+        if response:
+            self.save_progress('Added data with keys {}', response.keys())
+
+            summary = action_result.get_summary()
+            summary_statement = ''
+            for triage_context in response.keys():
+                # Assemble summary
+                if summary_statement == '':
+                    summary_statement = triage_context
+                else:
+                    summary_statement = summary_statement + ', ' + triage_context
+
+                action_result.add_data({
+                    "context": triage_context,
+                    "name": response[triage_context]['name'],
+                    "default_threshold_type": response[triage_context]['default_threshold_type'],
+                    "default_threshold": response[triage_context]['default_threshold'],
+                    "datagroup": response[triage_context]['datagroup']
+                })
+
+            summary['triage_contexts_available'] = summary_statement
+
+        else:
+            self.save_progress("API call failed to retrieve any information.")
+            summary = 'API call to retrieve triage contexts failed'
 
         action_result.set_summary(summary)
 
@@ -733,7 +761,7 @@ class RecordedfutureConnector(BaseConnector):
 
         # Get the action that we are supposed to execute for this App Run
         action_id = self.get_action_identifier()
-        self.debug_print("action_id", action_id)
+        self.debug_print('DEBUG: action_id = %s' % action_id)
 
         # Try to split on _ in order to handle reputation/intelligence and
         # ip/domain/file/vulnerability/url permutation.
@@ -741,7 +769,7 @@ class RecordedfutureConnector(BaseConnector):
             entity_type, operation_type = action_id.split('_')
         else:
             entity_type, operation_type = None, None
-        self.debug_print('XXXX entity_type, operation_type = %s, %s'
+        self.debug_print('DEBUG: entity_type, operation_type = %s, %s'
                          % (entity_type, operation_type))
 
         # Switch depending on action
@@ -765,12 +793,13 @@ class RecordedfutureConnector(BaseConnector):
                 tag = entity_type
             my_ret_val = self._handle_reputation(param, tag, param[tag])
 
-        elif action_id == 'context_triage':
-            self.save_progress('XXXX calling _handle_triage')
-            tag = 'ip'
-            ip = '37.48.83.137'
+        elif action_id == 'threat_triage':
             # todo: need to check the in-parameters
-            my_ret_val = self._handle_reputation(param, tag, ip)
+            my_ret_val = self._handle_triage(param)
+
+        elif action_id == 'triage_contexts':
+            # todo: need to check the in-parameters
+            my_ret_val = self._handle_triage_contexts(param)
 
         elif action_id == 'rule_id_lookup':
             my_ret_val = self._handle_rule_id_lookup(param)

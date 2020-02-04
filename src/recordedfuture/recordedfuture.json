@@ -1941,18 +1941,18 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "context triage",
-            "identifier": "context_triage",
+            "action": "threat triage",
+            "identifier": "threat_triage",
             "description": "Get an indicator of the risk based on context",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
             "parameters": {
-                "context": {
+                "threat_context": {
                     "description": "Context to use",
                     "data_type": "string",
-                    "required": true,
-                    "primary": true,
+                    "required": false,
+                    "primary": false,
                     "order": 0
                 },
                 "ip": {
@@ -2068,7 +2068,7 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.parameter.context",
+                    "data_path": "action_result.parameter.threat_context",
                     "data_type": "string"
                 },
                 {
@@ -2130,6 +2130,64 @@
             "render": {
                 "type": "custom",
                 "view": "recordedfuture_view.reputation_results",
+                "title": "Threat Reputation of an IP Address"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "triage contexts",
+            "identifier": "triage_contexts",
+            "description": "Get a list of possible contexts to use in theat triage",
+            "verbose": "",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.context",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.default_theshold",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.default_threshold_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.default_threshold_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.triage_contexts_available",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "render": {
+                "type": "custom",
+                "view": "recordedfuture_view.contexts_results",
                 "title": "Threat Reputation of an IP Address"
             },
             "versions": "EQ(*)"
