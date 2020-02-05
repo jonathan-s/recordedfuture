@@ -1941,8 +1941,8 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "threat triage",
-            "identifier": "threat_triage",
+            "action": "threat assessment",
+            "identifier": "threat_assessment",
             "description": "Get an indicator of the risk based on context",
             "verbose": "",
             "type": "investigate",
@@ -1960,44 +1960,62 @@
                     "data_type": "string",
                     "required": false,
                     "primary": false,
+                    "allow_list": true,
                     "contains": [
                         "ip",
                         "ipv6"
                     ],
-                    "order": 0
+                    "order": 1
                 },
                 "domain": {
                     "description": "Domain to query",
                     "data_type": "string",
                     "required": false,
                     "primary": false,
+                    "allow_list": true,
                     "contains": [
                         "domain"
                     ],
-                    "order": 0
+                    "order": 2
                 },
                 "url": {
                     "description": "URL to query",
                     "data_type": "string",
                     "required": false,
                     "primary": false,
+                    "allow_list": true,
                     "contains": [
                         "url"
                     ],
-                    "order": 0
+                    "order": 3
                 },
                 "hash": {
                     "description": "Hash to query",
                     "data_type": "string",
                     "required": false,
                     "primary": false,
+                    "allow_list": true,
                     "contains": [
                         "hash",
                         "sha256",
                         "sha1",
                         "md5"
                     ],
-                    "order": 0
+                    "order": 4
+                },
+                "threshold": {
+                    "description": "Threshold to use if different from the default",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": false,
+                    "order": 5
+                },
+                "threshold_type": {
+                    "description": "Threshold type to use unless different from the default",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": false,
+                    "order": 6
                 }
             },
             "output": [
@@ -2104,6 +2122,14 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.parameter.threshold",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.threshold_type",
+                    "data_type": "string"
+                },
+                {
                     "data_path": "action_result.summary.riskscore",
                     "data_type": "numeric"
                 },
@@ -2129,14 +2155,14 @@
             ],
             "render": {
                 "type": "custom",
-                "view": "recordedfuture_view.reputation_results",
+                "view": "recordedfuture_view.threat_assessment_results",
                 "title": "Threat Reputation of an IP Address"
             },
             "versions": "EQ(*)"
         },
         {
-            "action": "triage contexts",
-            "identifier": "triage_contexts",
+            "action": "list contexts",
+            "identifier": "list_contexts",
             "description": "Get a list of possible contexts to use in theat triage",
             "verbose": "",
             "type": "investigate",

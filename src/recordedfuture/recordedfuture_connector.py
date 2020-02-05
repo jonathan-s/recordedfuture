@@ -483,7 +483,7 @@ class RecordedfutureConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_triage(self, param):
-        """Return threat triage information."""
+        """Return threat assessment information."""
         self.save_progress(
             "In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
@@ -491,64 +491,76 @@ class RecordedfutureConnector(BaseConnector):
         # Params for the API call
         param_types = ['ip', 'domain', 'url', 'hash']
         params = {}
+        threshold = ['format=phantom']
         for i in param.keys():
             if i in param_types:
-                self.save_progress('found parameter!! %s %s' % (i, param[i]))
                 params[i] = param[i]
+            elif i == 'threshold':
+                threshold.append('threshold=%s' % param[i])
+            elif i == 'threshold_type':
+                threshold.append('threshold_type=%s' % param[i])
 
-        self.save_progress(params)
+        self.save_progress('Params found to triage: %s' % params)
 
         # make rest call
-        my_ret_val, response = self._make_rest_call('/soar/enrichment',
+        my_ret_val, response = self._make_rest_call('/soar/triage/contexts/%s?%s' % (param['threat_context'], '&'.join(threshold)),
                                                     action_result,
                                                     json=params,
                                                     method='post')
 
-        self.debug_print('_handle_reputation', {'path_info': 'triage',
-                                                'endpoint': '/soar/triage',
-                                                'action_result': action_result,
-                                                'params': params,
-                                                'my_ret_val': my_ret_val,
-                                                'response': response})
+        self.debug_print('_handle_triage', {'path_info': 'triage',
+                                            'endpoint': '/soar/triage',
+                                            'action_result': action_result,
+                                            'params': params,
+                                            'my_ret_val': my_ret_val,
+                                            'response': response})
+
+        self.save_progress('Obtained API response')
 
         if phantom.is_fail(my_ret_val):
             return action_result.get_status()
 
+        # there will always be a response with data, how best represent this?
         if response:
-            res = response
-            summary = action_result.get_summary()
-            summary['riskscore'] = "Found Info."
-            action_result.add_data(res)
-            self.save_progress('Added data with keys {}', res.keys())
 
-        else:
-            scores = {
-                "max": None,
-                "min": None
-            }
+            summary = action_result.get_summary()
+            # restructure json
             res = {
-                "entities": None,
-                "threshold_type": None,
-                "context": None,
-                "verdict": None,
-                "threshold": None,
-                "scores": scores
+                'context': response['context'],
+                'verdict': response['verdict'],
+                'threshold': response['threshold'],
+                'threshold_type': response['threshold_type'],
+                'max_riskscore': response['scores']['max'],
+                'min_riskscore': response['scores']['min'],
+                'entities': [{
+                    'id': entity['id'],
+                    'name': entity['name'],
+                    'type': entity['type'],
+                    'score': entity['score'],
+                    'evidence': entity['rule']['evidence']}
+                    for entity in response['entities']]
             }
-            summary = action_result.get_summary()
-            summary['riskscore'] = "No information available."
 
+        self.save_progress('almost done')
         action_result.add_data(res)
-        self.save_progress('Added data with keys {}', res.keys())
+
+        # set summary
+        if response['verdict']:
+            summary['verdict'] = ' Entities are likely to be malicious'
+        else:
+            summary['verdict'] = ' Entities are not likely to be malicious'
+        summary['max_riskscore'] = response['scores']['max']
 
         action_result.set_summary(summary)
+        self.save_progress('Added data with keys {}', res.keys())
 
         # Return success, no need to set the message, only the status
         # BaseConnector will create a textual message based off of the summary
         # dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
 
-    def _handle_triage_contexts(self, param):
-        """Return triage contexts information."""
+    def _handle_list_contexts(self, param):
+        """List available contexts"""
         # NOTE: test connectivity does _NOT_ take any parameters
         # i.e. the param dictionary passed to this handler will be empty.
 
@@ -793,11 +805,11 @@ class RecordedfutureConnector(BaseConnector):
                 tag = entity_type
             my_ret_val = self._handle_reputation(param, tag, param[tag])
 
-        elif action_id == 'threat_triage':
+        elif action_id == 'threat_assessment':
             # todo: need to check the in-parameters
             my_ret_val = self._handle_triage(param)
 
-        elif action_id == 'triage_contexts':
+        elif action_id == 'list_contexts':
             # todo: need to check the in-parameters
             my_ret_val = self._handle_triage_contexts(param)
 
