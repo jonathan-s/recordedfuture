@@ -35,7 +35,8 @@ def format_result(result, all_data=False):
         elif 'url' in retval['param']:
             retval['intelCard'] = APP_URL % ('url', retval['param']['url'])
         elif 'vulnerability' in retval['param']:
-            retval['intelCard'] = APP_URL % ('vulnerability', retval['param']['vulnerability'])
+            retval['intelCard'] = APP_URL % ('vulnerability',
+                                             retval['param']['vulnerability'])
 
     summary = result.get_summary()
     if (summary):
@@ -71,7 +72,8 @@ def format_reputation_result(result, all_data=False):
         elif 'url' in retval['param']:
             retval['intelCard'] = APP_URL % ('url', retval['param']['url'])
         elif 'vulnerability' in retval['param']:
-            retval['intelCard'] = APP_URL % ('vulnerability', retval['param']['vulnerability'])
+            retval['intelCard'] = APP_URL % ('vulnerability',
+                                             retval['param']['vulnerability'])
 
     summary = result.get_summary()
     if (summary):
@@ -144,7 +146,7 @@ def contexts_results(provides, all_app_runs, context):
         for result in action_results:
 
             formatted = format_contexts_result(result)
-            if (not formatted):
+            if not formatted:
                 continue
             results.append(formatted)
     return 'contexts_results.html'
@@ -171,3 +173,45 @@ def alert_results(provides, all_app_runs, context):
             results.append(formatted)
 
     return 'alert_results.html'
+
+
+def format_threat_assessment_result(result, all_data=False):
+    retval = {'param': result.get_param()}
+
+    data = result.get_data()
+    if data:
+        retval['data'] = data[0]
+    else:
+        retval['data'] = 'NO DATA'
+
+    summary = result.get_summary()
+    if (summary):
+        retval['summary'] = summary
+
+    status = result.get_status()
+    if (status):
+        retval['status'] = 'Success'
+    else:
+        retval['status'] = 'Failure'
+
+    message = result.get_message()
+    if (message):
+        retval['message'] = message
+
+    return retval
+
+
+def threat_assessment_results(provides, all_app_runs, context):
+    """Setup the view for Threat Assessment results."""
+    context['results'] = results = []
+    for summary, action_results in all_app_runs:
+        for result in action_results:
+
+            formatted = format_threat_assessment_result(result)
+            if (not formatted):
+                continue
+            results.append(formatted)
+            # retval = {'param': result.get_param()}
+            # retval['data'] = {'riskscore': 90}
+            # results.append(retval)
+    return 'threat_assessment_results.html'

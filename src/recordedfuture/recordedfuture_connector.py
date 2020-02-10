@@ -494,7 +494,8 @@ class RecordedfutureConnector(BaseConnector):
         threshold = ['format=phantom']
         for i in param.keys():
             if i in param_types:
-                params[i] = param[i]
+                params[i] = [entry.strip() for entry in param[i].split(',')
+                             if entry != 'None']
             elif i == 'threshold':
                 threshold.append('threshold=%s' % param[i])
             elif i == 'threshold_type':
@@ -572,7 +573,7 @@ class RecordedfutureConnector(BaseConnector):
         my_ret_val, response = self._make_rest_call('/soar/triage/contexts',
                                                             action_result)
 
-        self.debug_print('_handle_triage_contexts',
+        self.debug_print('_handle_list_contexts',
                          {'action_result': action_result,
                           'my_ret_val': my_ret_val,
                           'response': response})
@@ -811,7 +812,7 @@ class RecordedfutureConnector(BaseConnector):
 
         elif action_id == 'list_contexts':
             # todo: need to check the in-parameters
-            my_ret_val = self._handle_triage_contexts(param)
+            my_ret_val = self._handle_list_contexts(param)
 
         elif action_id == 'rule_id_lookup':
             my_ret_val = self._handle_rule_id_lookup(param)

@@ -30,59 +30,58 @@ of Recorded Future.
 
 <style>
 
-a:hover {
-  text-decoration:underline;
-}
+  a:hover {
+    text-decoration: underline;
+  }
 
-.wf-table-vertical {
-  width: initial;
-  font-size: 12px;
-}
+  .rf-verdict-box {
+    width: 100%;
+    padding: 10px;
+    margin: 5px;
+  }
 
-.wf-table-vertical td {
-  padding: 5px;
-  border: 1px solid rgb(234, 234, 234);
-}
+  .highlighted {
+    font-weight: bold;
+  }
 
-.wf-table-horizontal {
-  width: initial;
-  border: 1px solid rgb(234, 234, 234);
-  font-size: 12px;
-  width:90%;
-  margin-left:5%;
-  margin-right:5%;
-}
+  .non-highlighted {
+    font-size: xx-small;
+  }
 
-.wf-table-horizontal th {
-  text-align: center;
-  border: 1px solid rgb(234, 234, 234);
-  text-transform: uppercase;
-  font-weight: normal;
-  color: rgb(108, 129, 139);
-  padding: 5px;
-}
+  .rf-verdict-box th {
+    text-align: left;
+  }
 
-.wf-table-horizontal td {
-  border: 1px solid rgb(234, 234, 234);
-  padding: 5px;
-  padding-left: 4px;
-}
+  .rf-verdict-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 5px;
+    padding: 10px;
+  }
 
-.wf-h3-style {
-  font-size : 20px
-}
+  .rf-verdict-table td {
+    vertical-align: text-top;
+    padding: 10px;
+  }
 
-.wf-h4-style {
-  font-size : 16px
-}
-
-.wf-h5-style {
-  font-size : 14px
-}
-.wf-subheader-style {
-  font-size : 12px
-}
-
+  /*.rf-evidence-crit4 {*/
+  /*  border-left-color: red;*/
+  /*  border-left-style: solid;*/
+  /*  border-left-width: 3px;*/
+  /*}*/
+  /*.rf-evidence-crit3 {*/
+  /*  border-left-color: orange;*/
+  /*  border-left-style: solid;*/
+  /*  border-left-width: 3px;*/
+  /*}*/
+  /*.rf-evidence-crit2 {*/
+  /*  border-left-color: yellow;*/
+  /*  border-left-style: solid;*/
+  /*  border-left-width: 3px;*/
+  /*}*/
+  /*.rf-evidence-crit1 {*/
+  /*  border-left-width: 0px;*/
+  /*}*/
 </style>
 <div style="overflow: auto; width: 100%; height: 100%; padding-left:10px; padding-right:10px">
   <!-- Main Div -->
@@ -90,51 +89,75 @@ a:hover {
     <br>
 
     <!------------------- For each Result ---------------------->
-
+    <div class="rf-vertict-backdrop">
     {% if result.data %} <!-- else case will handle errors and no data found responses -->
       <!-- <h3 class="wf-h3-style">Info</h3> -->
-      <table class="wf-table-horizontal">
-        <tr>
-          <th>Context</th>
-          <th>Verdict</th>
-          <th>Threshold Type</th>
-          <th>Threshold</th>
-          <th>Number of Entities</th>
-        </tr>
-        <tr>
-          <td>{{ result.data.riskscore }}</td>
-          <td>{{ result.data.risklevel }}</td>
-          <td>{{ result.data.rulecount }}</td>
-          <td>{{ result.data.maxrules }}</td>
-        </tr>
-      </table>
-      <br>
-
+      <div class="rf-verdict-verdict rf-verdict-box">
+        {{ result.data.context|title }}
+        Threat Assessment:
+        {% if result.data.verdict %}
+        <span class="highlighted">Malicious</span>
+        {% else %}
+        <span class="highlighted">Non-malicious</span>
+        {% endif %}
+      </div>
+      <div class="rf-verdict-context rf-verdict-box">
+        {{ result.data.context|title }} Score:
+        {% if result.data.threshold_type == 'max' %}
+        {{ result.data.max_riskscore }}
+        {% else %}
+        {{ result.data.min_riskscore }}
+        {% endif %}
+        <br/>
+        {% if result.data.threshold_type == 'max' %}
+        <span class="non-highlighted">Threshold: {{ result.data.threshold }}
+          (max)</span>
+        {% else %}
+        <span class="non-highlighted">Threshold: {{ result.data.threshold }}
+          (min)</span>
+        {% endif %}
+        <span class="rf-hover-info non-highlighted"
+            title="Threshold max signifies that one entity must have a risk score that is at least equal to the threshold. Min signifies that all entities must have a risk score at least equal to the threshold."> [?] </span>
+      </div>
 
       <!-- Entities and their evidence -->
-      {% if result.data.evidence %}
-        <table class="wf-table-horizontal">
-          <tr><th colspan="5">Risk Rules Triggered</th></tr>
-          <tr>
-            <td>Name</td>
-            <td>Description</td>
-            <td>Mitigation</td>
-            <td>Level</td>
-            <td>Timestamp</td>
-          </tr>
-          {% for rule in result.data.evidence %}
-            <tr>
-              <td> {{ rule.rule }} </td>
-              <td> {{ rule.description }} </td>
-              <td> {{ rule.mitigation }} </td>
-              <td> {{ rule.level }} </td>
-              <td> {{ rule.timestamp }} </td>
-            </tr>
-          {% endfor %}
-        </table>
-        <br>
-      {% endif %}
+      {% for entry in result.data.entities %} <!-- loop for each result -->
 
+        <table class="rf-verdict-table">
+          <tr>
+            <td colspan="3">
+              <span class="non-highlighted">{{ entry.type }}</span> <br/>
+              {{ entry.name }}
+            </td>
+            <td>
+              <span class="non-highlighted">Risk Score</span> <br/>
+              {{ entry.score }}
+            </td>
+          </tr>
+          {% if entry.evidence %}
+            {% for evidence in entry.evidence %}
+            <tr>
+              <td class="rf-evidence-crit{{evidence.level}}">
+                <span class="non-highlighted">Criticality</span> <br/>
+                {{ evidence.level }}
+              </td>
+              <td>
+                <span class="non-highlighted">Rule</span> <br/>
+                {{ evidence.rule }}
+              </td>
+              <td>
+                <span class="non-highlighted">Evidence</span> <br/>
+                {{ evidence.description }}
+              </td>
+              <td>
+                <span class="non-highlighted">Timestamp</span> <br/>
+                {{ evidence.timestamp }}
+              </td>
+            </tr>
+            {% endfor %}
+          {% endif %}
+        </table>
+      {% endfor %}
     {% else %} <!-- handle no data responses -->
       <table class="wf-table-horizontal">
         <tr>
@@ -149,7 +172,7 @@ a:hover {
     {% endif %}
 
   <!------------------- For each Result END ---------------------->
-
+    </div>
   {% endfor %} <!-- loop for each result end -->
 </div> <!-- Main Div -->
 
