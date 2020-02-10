@@ -11,6 +11,13 @@ from rfapi import RawApiClient, ConnectApiClient
 
 LGR = logging.getLogger(__name__)
 
+COND = [
+    ('PHOST', 'This variable must contain the name of a development '
+              'phantom server (ex phantom-dev-xx-01)'),
+    ('PTOK', 'This variable must contain an automation token.'),
+    ('RF_TOKEN', 'This variable must contain a valid API key.')
+]
+
 
 class RfTests(unittest.TestCase):
     """Test cases for all reputation actions."""
@@ -21,15 +28,16 @@ class RfTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Verify pre-conditions."""
-        if 'PHOST' not in os.environ:
-            raise Exception('This test script must be called with the '
-                            'environment variable PHOST set. This variable '
-                            'must contain the name of a development '
-                            'phantom server (ex phantom-dev-xx-01).')
-        if 'PTOK' not in os.environ:
-            raise Exception('This test script must be called with the '
-                            'environment variable PTOK set. This variable '
-                            'must contain an automation token.')
+
+        issues = []
+        for variable, msg in COND:
+            if variable not in os.environ:
+                issues.append('This test script must be called with the '
+                              'environment variable %s set. %s'
+                              % (variable, msg))
+
+        if issues:
+            raise Exception(r'\r'.join(issues))
 
     def setUp(self, playbook):
         """Setup test environment."""
