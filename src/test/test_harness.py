@@ -194,48 +194,38 @@ class RfTests(unittest.TestCase):
         return [(entity['entity']['name'], entity['risk']['score'])
                 for entity in res.entities]
 
-    # def get_test_data_by_ioc_type_and_risk_score(self, type, rs_min, rs_max,
-    #                                              limit):
-    #     """Function that queries RawAPI for IOCs for a specific data group
-    #     and risk score .
-    #     """
-    #     api = RawApiClient()
-    #
-    #     query = {
-    #         "cluster": {
-    #             "data_group": type,
-    #             "limit": limit,
-    #             "attributes": [
-    #                 {
-    #                     "name": "stats.metrics.riskScore",
-    #                     "range": {
-    #                         "gt": rs_min
-    #                     }
-    #                 },
-    #                 {
-    #                     "name": "stats.metrics.riskScore",
-    #                     "range": {
-    #                         "lt": rs_max
-    #                     }
-    #                 }
-    #             ]
-    #         },
-    #         "output": {
-    #             "exclude": [
-    #                 "stats.entity_lists"
-    #             ],
-    #             "inline_entities": True
-    #         }
-    #     }
-    #
-    #     res = api.query(query)
-    #
-    #     self.assertEquals(res.result['status'], 'SUCCESS');
-    #
-    #     targets = []
-    #     for event in res.result['events']:
-    #         ip = event['attributes']['entities'][0]['name']
-    #         riskScore = event['stats']['metrics']['riskScore']
-    #         targets.append((ip, riskScore))
-    #
-    #     return targets
+    def _get_triage_entities_by_group(self, datagroup, sub_score, limit,
+                                      gt, lt):
+        """Entity id's with a specified sub score and a specified datagroup.
+
+           Returns a list of limit number of matching id's."""
+        if datagroup == 'ip':
+            target = 'IpAddress'
+        elif datagroup == 'domain':
+            target = 'InternetDomainName'
+        elif datagroup == 'hash':
+            target = 'Hash'
+        elif datagroup == 'vulnerability':
+            target = 'CyberVulnerability'
+        else:  # datagroup == 'url'
+            target = 'URL'
+
+        query = {
+            "from": target,
+            "where": {
+                "field": 'stats.metrics.' + sub_score,
+                "where": {
+                    "gt": gt,
+                    "lt": lt
+                }
+            },
+            "limit": limit
+        }
+
+        api = RawApiClient(auth=os.environ['RF_TOKEN'],
+                           app_name='phantom_unittests')
+        entity_ids = []
+        response = api.query(query)
+        for item in response.result['result']['items']:
+            entity_ids += item['attributes']['entities']
+        return entity_ids
