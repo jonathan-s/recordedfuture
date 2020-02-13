@@ -48,9 +48,9 @@ class RfAlertDataLookupTests(RfTests):
         self.assertIsInstance(ares['data'][0]['result_data'][0]['summary'][
                                   'total_number_of_alerts'], int)
         self.assertIsInstance(
-            ares['data'][0]['result_data'][0]['summary']['rule_name'], unicode)
+            ares['data'][0]['result_data'][0]['summary']['rule_name'], str)
         self.assertIsInstance(
-            ares['data'][0]['result_data'][0]['summary']['rule_id'], unicode)
+            ares['data'][0]['result_data'][0]['summary']['rule_id'], str)
 
         # Assert rule values in summary
         self.assertEquals(
@@ -70,9 +70,9 @@ class RfAlertDataLookupTests(RfTests):
                 'alert']
             self.assertIsInstance(alert['content'], dict)
             self.assertIsInstance(alert['entities'], dict)
-            self.assertIsInstance(alert['alertTitle'], unicode)
-            self.assertIsInstance(alert['alertUrl'], unicode)
-            self.assertIsInstance(alert['triggered'], unicode)
+            self.assertIsInstance(alert['alertTitle'], str)
+            self.assertIsInstance(alert['alertUrl'], str)
+            self.assertIsInstance(alert['triggered'], str)
 
             # Assert rule
             self.assertIsInstance(
