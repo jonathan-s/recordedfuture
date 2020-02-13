@@ -2,6 +2,7 @@
 import os
 import logging
 import unittest
+import copy
 import requests
 from test_harness import RfTests
 import rfapi
@@ -100,22 +101,42 @@ class RfThreatAssessmentTests(RfTests):
                                                 target, threshold,
                                                 threshold_type)
 
-    def _create_threat_assessment_event(self,
-                                        context, datagroup, target,
-                                        threshold, threshold_type):
+    def test_threat_assessment_negative_verdict(self):
+        """Check that entities without sufficient risk yields negative verdict.
+
+        Use the default testdata without adding any risky entities.
+        Run the playbook. Examine result."""
+        conapi = rfapi.ConnectApiClient(auth=os.environ['RF_TOKEN'],
+                                        app_name='phantom_unittests')
+        ctxlist = conapi._query('soar/triage/contexts')
+        print('contexts: %s' % CTXLIST)
+        for context in CTXLIST:
+            datagroups = ctxlist.result[context]['datagroup'].keys()
+            # threshold = ctxlist.result[context]['default_threshold']
+            threshold = THRESHOLD
+            threshold_type = 'max'
+
+            print('datagroups %s: %s' % (context, datagroups))
+            for datagroup in datagroups:
+                self._test_negative_verdict(context, datagroup, threshold,
+                                            threshold_type)
+
+    def _create_threat_assessment_event(self, label, context, datagroup,
+                                        threshold, threshold_type, target=None):
         """Create a threat assessment event for testing.
 
         The event is expected to be consumed by the
         recorded_future_threat_assessment_test playbook."""
         # Make a copy of the test_data
-        test_data = dict(**TESTDATA)
+        test_data = copy.deepcopy(TESTDATA)
         test_data['cs1'] = context
         test_data['cs1Label'] = 'Threat Assessment Context'
         test_data['cs2'] = threshold
         test_data['cs2Label'] = 'Threshold'
         test_data['cs3'] = threshold_type
         test_data['cs3Label'] = 'Threshold Type'
-        test_data[DGTOCEF[datagroup]].append(target)
+        if target:
+            test_data[DGTOCEF[datagroup]].append(target)
 
         # Reformat lists into comma separated strings
         for key in ['ip', 'domain', 'hash', 'url']:
@@ -128,10 +149,7 @@ class RfThreatAssessmentTests(RfTests):
                                           ))
 
         # Create container with artifact
-        container_id = self._create_event_and_artifact(
-            'Test Event Threat Assessment (%s/%s)'
-            % (context, datagroup),
-            **test_data)
+        container_id = self._create_event_and_artifact(label, **test_data)
 
         # Wait for finished playbook run and collect result.
         ares = self._poll_for_success(self._action_result,
@@ -143,11 +161,27 @@ class RfThreatAssessmentTests(RfTests):
                                threshold, threshold_type):
         """Test positive verdict."""
         # Create event and collect playbook result
-        ares = self._create_threat_assessment_event(context, datagroup,
-                                                    target, threshold,
-                                                    threshold_type)
+        label = 'Positive Test Event Threat Assessment (%s/%s)' % (context,
+                                                                   datagroup)
+        ares = self._create_threat_assessment_event(label, context, datagroup,
+                                                    threshold, threshold_type,
+                                                    target)
         # Verify the verdict
         verdict = ares['data'][0]['result_data'][0]['data'][0][
             'verdict']
         self.assertEqual(verdict, True, '%s/%s did not yield true verdict'
+                         % (context, datagroup))
+
+    def _test_negative_verdict(self,
+                               context, datagroup, threshold, threshold_type):
+        """Test negative verdict."""
+        # Create event and collect playbook result
+        label = 'Negative Test Event Threat Assessment (%s/%s)' % (context,
+                                                                   datagroup)
+        ares = self._create_threat_assessment_event(label, context, datagroup,
+                                                    threshold, threshold_type)
+        # Verify the verdict
+        verdict = ares['data'][0]['result_data'][0]['data'][0][
+            'verdict']
+        self.assertEqual(verdict, False, '%s/%s did not yield false verdict'
                          % (context, datagroup))
