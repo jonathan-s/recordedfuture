@@ -2042,6 +2042,10 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.verdict",
+                    "data_type": "boolean"
+                },
+                {
                     "data_path": "action_result.data.*.risklevel",
                     "data_type": "numeric"
                 },

@@ -14,19 +14,6 @@
 # Phantom Recorded Future Connector python file
 # ---------------------------------------------
 
-''' List of things to do in order to implement the new action triage:
-    1: Implement function in recordedfuture_connector.py
-        Create the new function _handle_triage(?)  - copied _handle_reputation
-            - todo: where is the post message formatted?
-            - todo: parse the result
-            - todo: add empty structure if there is nothing in the response - wait until the API format is decided
-        Add it as an option in function handle_action - Added!
-
-    3: todo: Add the input and output of the new triage function in recordedfuture.json
-    4: todo: Format the output of the new triage function in recordedfuture_view.py - wait until the API is cast om stone
-    7: todo: create and implement triage_results.html for the presentation of data in the Phantom case view - wait until API is finished.
-'''
-
 # Global imports
 import os
 import requests
