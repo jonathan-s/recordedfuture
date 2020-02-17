@@ -7,7 +7,6 @@ The playbook has been updated to work in conjunction with Recorded Future App fo
 import phantom.rules as phantom
 import json
 from datetime import datetime, timedelta
-
 def on_start(container):
     phantom.debug('on_start() called')
     
@@ -25,7 +24,7 @@ def filter_for_risk_score_above_90(action=None, success=None, container=None, re
         action_results=results,
         conditions=[
             ["ip_intelligence_2:action_result.data.*.risk.score", ">=", 90],
-            ["ip_intelligence_2:action_result.data.*.risk.evidenceDetails.*.rule", "in", "Current C&C Server"],
+            ["ip_intelligence_2:action_result.data.*.risk.evidenceDetails.*.rule", "in", "Actively Communicating C&C Server"],
         ],
         logical_operator='and')
 
@@ -53,10 +52,10 @@ def send_email(action=None, success=None, container=None, results=None, handle=N
         'body': formatted_data_1,
         'from': "phantom@example.com",
         'attachments': "",
-        'to': "",
+        'headers': "",
         'cc': "",
         'bcc': "",
-        'headers': "",
+        'to': "",
         'subject': "Alert from Recorded Futures App for Phantom - enrichment playbook",
     })
 
@@ -126,7 +125,7 @@ def ip_intelligence_2(action=None, success=None, container=None, results=None, h
 def on_finish(container, summary):
     phantom.debug('on_finish() called')
     # This function is called after all actions are completed.
-    # summary of all the action and/or all detals of actions 
+    # summary of all the action and/or all detals of actions
     # can be collected here.
 
     # summary_json = phantom.get_summary()

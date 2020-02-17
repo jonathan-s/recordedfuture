@@ -25,7 +25,7 @@ def filter_for_risk_score_above_90(action=None, success=None, container=None, re
         action_results=results,
         conditions=[
             ["ip_intelligence_2:action_result.data.*.risk.score", ">=", 90],
-            ["ip_intelligence_2:action_result.data.*.risk.evidenceDetails.*.rule", "in", "Current C&C Server"],
+            ["ip_intelligence_2:action_result.data.*.risk.evidenceDetails.*.rule", "in", "Actively Communicating C&C Server"],
         ],
         logical_operator='and')
 
