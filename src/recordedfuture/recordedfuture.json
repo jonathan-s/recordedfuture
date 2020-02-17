@@ -2082,7 +2082,11 @@
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.riskscore",
+                    "data_path": "action_result.data.*.max_riskscore",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.min_riskscore",
                     "data_type": "numeric"
                 },
                 {

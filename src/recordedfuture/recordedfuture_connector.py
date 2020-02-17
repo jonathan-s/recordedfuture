@@ -529,7 +529,6 @@ class RecordedfutureConnector(BaseConnector):
                     for entity in response['entities']]
             }
 
-        self.save_progress('almost done')
         action_result.add_data(res)
 
         # set summary
@@ -549,8 +548,6 @@ class RecordedfutureConnector(BaseConnector):
 
     def _handle_list_contexts(self, param):
         """List available contexts"""
-        # NOTE: test connectivity does _NOT_ take any parameters
-        # i.e. the param dictionary passed to this handler will be empty.
 
         action_result = self.add_action_result(ActionResult(dict(param)))
         self.save_progress(
