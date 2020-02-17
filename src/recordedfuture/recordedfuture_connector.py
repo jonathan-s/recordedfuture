@@ -513,6 +513,7 @@ class RecordedfutureConnector(BaseConnector):
 
             summary = action_result.get_summary()
             # restructure json
+            threshold_type = response['threshold_type']
             res = {
                 'context': response['context'],
                 'verdict': response['verdict'],
@@ -520,6 +521,7 @@ class RecordedfutureConnector(BaseConnector):
                 'threshold_type': response['threshold_type'],
                 'max_riskscore': response['scores']['max'],
                 'min_riskscore': response['scores']['min'],
+                'triage_riskscore': response['scores'][threshold_type],
                 'entities': [{
                     'id': entity['id'],
                     'name': entity['name'],

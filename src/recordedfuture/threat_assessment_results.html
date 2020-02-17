@@ -103,19 +103,10 @@ of Recorded Future.
       </div>
       <div class="rf-verdict-context rf-verdict-box">
         {{ result.data.context|title }} Score:
-        {% if result.data.threshold_type == 'max' %}
-        {{ result.data.max_riskscore }}
-        {% else %}
-        {{ result.data.min_riskscore }}
-        {% endif %}
+        {{ result.data.triage_riskscore }}
         <br/>
-        {% if result.data.threshold_type == 'max' %}
         <span class="non-highlighted">Threshold: {{ result.data.threshold }}
-          (max)</span>
-        {% else %}
-        <span class="non-highlighted">Threshold: {{ result.data.threshold }}
-          (min)</span>
-        {% endif %}
+          ({{result.data.threshold_type}})</span>
         <span class="rf-hover-info non-highlighted"
             title="Threshold max signifies that one entity must have a risk score that is at least equal to the threshold. Min signifies that all entities must have a risk score at least equal to the threshold."> [?] </span>
       </div>
@@ -125,11 +116,11 @@ of Recorded Future.
 
         <table class="rf-verdict-table">
           <tr>
-            <td colspan="3">
+            <td width=75%>
               <span class="non-highlighted">{{ entry.type }}</span> <br/>
               {{ entry.name }}
             </td>
-            <td>
+            <td width=25%>
               <span class="non-highlighted">Risk Score</span> <br/>
               {{ entry.score }}
             </td>

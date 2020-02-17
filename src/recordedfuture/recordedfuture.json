@@ -2090,6 +2090,10 @@
                     "data_type": "numeric"
                 },
                 {
+                    "data_path": "action_result.data.*.triage_riskscore",
+                    "data_type": "numeric"
+                },
+                {
                     "data_path": "action_result.message",
                     "data_type": "string"
                 },
