@@ -86,84 +86,84 @@ of Recorded Future.
 <div style="overflow: auto; width: 100%; height: 100%; padding-left:10px; padding-right:10px">
   <!-- Main Div -->
   {% for result in results %} <!-- loop for each result -->
-    <br>
+  <br>
 
-    <!------------------- For each Result ---------------------->
-    <div class="rf-vertict-backdrop">
+  <!------------------- For each Result ---------------------->
+  <div class="rf-vertict-backdrop">
     {% if result.data %} <!-- else case will handle errors and no data found responses -->
-      <!-- <h3 class="wf-h3-style">Info</h3> -->
-      <div class="rf-verdict-verdict rf-verdict-box">
-        {{ result.data.context|title }}
-        Threat Assessment:
-        {% if result.data.verdict %}
-        <span class="highlighted">Malicious</span>
-        {% else %}
-        <span class="highlighted">Non-malicious</span>
-        {% endif %}
-      </div>
-      <div class="rf-verdict-context rf-verdict-box">
-        {{ result.data.context|title }} Score:
-        {{ result.data.triage_riskscore }}
-        <br/>
-        <span class="non-highlighted">Threshold: {{ result.data.threshold }}
+    <!-- <h3 class="wf-h3-style">Info</h3> -->
+    <div class="rf-verdict-verdict rf-verdict-box">
+      {{ result.data.context|title }}
+      Threat Assessment:
+      {% if result.data.verdict %}
+      <span class="highlighted">Malicious</span>
+      {% else %}
+      <span class="highlighted">Non-malicious</span>
+      {% endif %}
+    </div>
+    <div class="rf-verdict-context rf-verdict-box">
+      {{ result.data.context|title }} Score:
+      {{ result.data.triage_riskscore }}
+      <br/>
+      <span class="non-highlighted">Threshold: {{ result.data.threshold }}
           ({{result.data.threshold_type}})</span>
-        <span class="rf-hover-info non-highlighted"
+      <span class="rf-hover-info non-highlighted"
             title="Threshold max signifies that one entity must have a risk score that is at least equal to the threshold. Min signifies that all entities must have a risk score at least equal to the threshold."> [?] </span>
-      </div>
+    </div>
 
-      <!-- Entities and their evidence -->
-      {% for entry in result.data.entities %} <!-- loop for each result -->
+    <!-- Entities and their evidence -->
+    {% for entry in result.data.entities %} <!-- loop for each result -->
 
-        <table class="rf-verdict-table" width=75%>
-          <tr>
-            <td width=75%>
-              <span class="non-highlighted">{{ entry.type }}</span> <br/>
-              {{ entry.name }}
-            </td>
-            <td width=25%>
-              <span class="non-highlighted">Risk Score</span> <br/>
-              {{ entry.score }}
-            </td>
-          </tr>
-          {% if entry.evidence %}
-            {% for evidence in entry.evidence %}
-            <tr>
-              <td class="rf-evidence-crit{{evidence.level}}">
-                <span class="non-highlighted">Criticality</span> <br/>
-                {{ evidence.level }}
-              </td>
-              <td>
-                <span class="non-highlighted">Rule</span> <br/>
-                {{ evidence.rule }}
-              </td>
-              <td>
-                <span class="non-highlighted">Evidence</span> <br/>
-                {{ evidence.description }}
-              </td>
-              <td>
-                <span class="non-highlighted">Timestamp</span> <br/>
-                {{ evidence.timestamp }}
-              </td>
-            </tr>
-            {% endfor %}
-          {% endif %}
-        </table>
+    <table class="rf-verdict-table" width=75%>
+      <tr>
+        <td width=75%>
+          <span class="non-highlighted">{{ entry.type }}</span> <br/>
+          {{ entry.name }}
+        </td>
+        <td width=25%>
+          <span class="non-highlighted">Risk Score</span> <br/>
+          {{ entry.score }}
+        </td>
+      </tr>
+      {% if entry.evidence %}
+      {% for evidence in entry.evidence %}
+      <tr>
+        <td class="rf-evidence-crit{{evidence.level}}">
+          <span class="non-highlighted">Criticality</span> <br/>
+          {{ evidence.level }}
+        </td>
+        <td>
+          <span class="non-highlighted">Rule</span> <br/>
+          {{ evidence.rule }}
+        </td>
+        <td>
+          <span class="non-highlighted">Evidence</span> <br/>
+          {{ evidence.description }}
+        </td>
+        <td>
+          <span class="non-highlighted">Timestamp</span> <br/>
+          {{ evidence.timestamp }}
+        </td>
+      </tr>
       {% endfor %}
+      {% endif %}
+    </table>
+    {% endfor %}
     {% else %} <!-- handle no data responses -->
-      <table class="wf-table-horizontal">
-        <tr>
-          <th>Status</th>
-          <th>Message</th>
-        </tr>
-        <tr>
-          <td>{{ result.status }}</td>
-          <td>{{ result.message }}</td>
-        </tr>
-      </table>
+    <table class="wf-table-horizontal">
+      <tr>
+        <th>Status</th>
+        <th>Message</th>
+      </tr>
+      <tr>
+        <td>{{ result.status }}</td>
+        <td>{{ result.message }}</td>
+      </tr>
+    </table>
     {% endif %}
 
-  <!------------------- For each Result END ---------------------->
-    </div>
+    <!------------------- For each Result END ---------------------->
+  </div>
   {% endfor %} <!-- loop for each result end -->
 </div> <!-- Main Div -->
 
