@@ -2167,15 +2167,15 @@
             ],
             "render": {
                 "type": "custom",
-                "view": "recordedfuture_view.threat_assessment_results2",
-                "title": "Threat Reputation of an IP Address"
+                "view": "recordedfuture_view.threat_assessment_results",
+                "title": "Threat Summary for a collection of entities"
             },
             "versions": "EQ(*)"
         },
         {
             "action": "list contexts",
             "identifier": "list_contexts",
-            "description": "Get a list of possible contexts to use in theat triage",
+            "description": "Get a list of possible contexts to use in threat triage",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
@@ -2226,7 +2226,7 @@
             "render": {
                 "type": "custom",
                 "view": "recordedfuture_view.contexts_results",
-                "title": "Threat Reputation of an IP Address"
+                "title": "List of available contexts"
             },
             "versions": "EQ(*)"
         }
