@@ -54,7 +54,6 @@ a:hover {
 }
 
 .wf-table-horizontal th {
-  text-align: center;
   border: 1px solid rgb(234, 234, 234);
   text-transform: uppercase;
   font-weight: normal;
@@ -106,10 +105,8 @@ a:hover {
           {% elif result.param.vulnerability %}
             <th>Vulnerability</th>
           {% endif %}
-          <th>RiskScore</th>
-          <th>Risk Level</th>
-          <th>Risk Rules Triggered</th>
-          <th>Total Number of Risk Rules</th>
+          <th>Risk Score</th>
+          <th>Risk Summary</th>
           <th>Recorded Future</th>
         </tr>
         <tr>
@@ -127,14 +124,12 @@ a:hover {
             {% endif %}
           </td>
           <td>{{ result.data.riskscore }}</td>
-          <td>{{ result.data.risklevel }}</td>
-          <td>{{ result.data.rulecount }}</td>
-          <td>{{ result.data.maxrules }}</td>
+          <td>{{ result.data.rulecount }} rules triggered of {{ result.data.maxrules }}</td>
           <td>
             {% if result.data.intelCard %}
               <a href="{{ result.data.intelCard }}" target="new">Browse to Intel Card</a>
             {% elif result.intelCard %}
-              <a href="{{ result.intelCard }}" target="new">Browse to Intel Card</a>
+              <a href="{{ result.intelCard }}" target="new">Intelligence Card</a>
             {% endif %}
           </td>
         </tr>
@@ -160,15 +155,13 @@ a:hover {
             <td>Name</td>
             <td>Description</td>
             <td>Mitigation</td>
-            <td>Level</td>
             <td>Timestamp</td>
           </tr>
-          {% for rule in result.data.evidence %}
+          {% for rule in result.data.evidence|dictsortreversed:"level" %}
             <tr>
               <td> {{ rule.rule }} </td>
               <td> {{ rule.description }} </td>
               <td> {{ rule.mitigation }} </td>
-              <td> {{ rule.level }} </td>
               <td> {{ rule.timestamp }} </td>
             </tr>
           {% endfor %}

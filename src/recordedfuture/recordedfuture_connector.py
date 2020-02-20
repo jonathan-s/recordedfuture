@@ -535,10 +535,10 @@ class RecordedfutureConnector(BaseConnector):
 
         # set summary
         if response['verdict']:
-            summary['verdict'] = ' Entities are likely to be malicious'
+            summary['assessment'] = 'Suspected to be malicious'
         else:
-            summary['verdict'] = ' Entities are not likely to be malicious'
-        summary['max_riskscore'] = response['scores']['max']
+            summary['assessment'] = 'Not found to be malicious'
+        summary['riskscore / Threshold'] = '{:.0f}/{:.0f}'.format(response['scores'][threshold_type], response['threshold'])
 
         action_result.set_summary(summary)
         self.save_progress('Added data with keys {}', res.keys())

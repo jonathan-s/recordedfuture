@@ -38,6 +38,7 @@ of Recorded Future.
     width: 100%;
     padding: 10px;
     margin: 5px;
+    font-size: 12px;
   }
 
   .highlighted {
@@ -62,6 +63,35 @@ of Recorded Future.
   .rf-verdict-table td {
     vertical-align: text-top;
     padding: 10px;
+  }
+
+  .wf-table-vertical td {
+    padding: 5px;
+    border: 1px solid rgb(234, 234, 234);
+  }
+
+  .wf-table-horizontal {
+    width: initial;
+    border: 1px solid rgb(234, 234, 234);
+    font-size: 12px;
+    width:90%;
+    margin-left:5%;
+    margin-right:5%;
+  }
+
+  .wf-table-horizontal th {
+    text-align: center;
+    border: 1px solid rgb(234, 234, 234);
+    text-transform: uppercase;
+    font-weight: normal;
+    color: rgb(108, 129, 139);
+    padding: 5px;
+  }
+
+  .wf-table-horizontal td {
+    border: 1px solid rgb(234, 234, 234);
+    padding: 5px;
+    padding-left: 4px;
   }
 
   /*.rf-evidence-crit4 {*/
@@ -93,61 +123,50 @@ of Recorded Future.
     {% if result.data %} <!-- else case will handle errors and no data found responses -->
       <!-- <h3 class="wf-h3-style">Info</h3> -->
       <div class="rf-verdict-verdict rf-verdict-box">
-        {{ result.data.context|title }}
-        Threat Assessment:
+        {{ result.data.context|title }} Threat Assessment:
         {% if result.data.verdict %}
-        <span class="highlighted">Malicious</span>
+        <span class="highlighted">Suspected Malicious</span>
         {% else %}
         <span class="highlighted">Non-malicious</span>
         {% endif %}
-      </div>
-      <div class="rf-verdict-context rf-verdict-box">
-        {{ result.data.context|title }} Score:
-        {{ result.data.triage_riskscore }}
-        <br/>
+        with score: {{ result.data.triage_riskscore }}
+        <br>
         <span class="non-highlighted">Threshold: {{ result.data.threshold }}
           ({{result.data.threshold_type}})</span>
         <span class="rf-hover-info non-highlighted"
-            title="Threshold max signifies that one entity must have a risk score that is at least equal to the threshold. Min signifies that all entities must have a risk score at least equal to the threshold."> [?] </span>
+              title="Threshold max signifies that one entity must have a risk score that is at least equal to the threshold. Min signifies that all entities must have a risk score at least equal to the threshold."> [?] </span>
       </div>
 
       <!-- Entities and their evidence -->
-      {% for entry in result.data.entities %} <!-- loop for each result -->
-
-        <table class="rf-verdict-table" width=75%>
-          <tr>
-            <td width=75%>
-              <span class="non-highlighted">{{ entry.type }}</span> <br/>
-              {{ entry.name }}
-            </td>
-            <td width=25%>
-              <span class="non-highlighted">Risk Score</span> <br/>
-              {{ entry.score }}
-            </td>
-          </tr>
+      {% for entry in result.data.entities|dictsortreversed:"score" %} <!-- loop for each result -->
+        {% if entry.score %}
+        <div class="rf-verdict-verdict rf-verdict-box">
+          {{ entry.type }}
+          <span class="highlighted">{{ entry.name }}</span>
+          riskscore
+          <span class="highlighted">{{ entry.score }}</span>
           {% if entry.evidence %}
-            {% for evidence in entry.evidence %}
-            <tr>
-              <td class="rf-evidence-crit{{evidence.level}}">
-                <span class="non-highlighted">Criticality</span> <br/>
-                {{ evidence.level }}
-              </td>
-              <td>
-                <span class="non-highlighted">Rule</span> <br/>
-                {{ evidence.rule }}
-              </td>
-              <td>
-                <span class="non-highlighted">Evidence</span> <br/>
-                {{ evidence.description }}
-              </td>
-              <td>
-                <span class="non-highlighted">Timestamp</span> <br/>
-                {{ evidence.timestamp }}
-              </td>
-            </tr>
-            {% endfor %}
-          {% endif %}
-        </table>
+            <table class="rf-verdict-table">
+              {% for evidence in entry.evidence %}
+              <tr>
+                <td>
+                  <span class="non-highlighted">Rule</span> <br/>
+                  {{ evidence.rule }}
+                </td>
+                <td>
+                  <span class="non-highlighted">Evidence</span> <br/>
+                  {{ evidence.description }}
+                </td>
+                <td>
+                  <span class="non-highlighted">Timestamp</span> <br/>
+                  {{ evidence.timestamp }}
+                </td>
+              </tr>
+              {% endfor %}
+            </table>
+            {% endif %}
+          </div>
+        {% endif %}
       {% endfor %}
     {% else %} <!-- handle no data responses -->
       <table class="wf-table-horizontal">

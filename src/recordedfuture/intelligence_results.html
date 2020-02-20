@@ -34,38 +34,34 @@ a:hover {
   text-decoration:underline;
 }
 
-.wf-table-vertical {
-  width: initial;
-  font-size: 12px;
+.rf-verdict-box {
+  width: 100%;
+  padding: 10px;
+  margin: 5px;
 }
 
-.wf-table-vertical td {
-  padding: 5px;
-  border: 1px solid rgb(234, 234, 234);
+.highlighted {
+  font-weight: bold;
 }
 
-.wf-table-horizontal {
-  width: initial;
-  border: 1px solid rgb(234, 234, 234);
-  font-size: 12px;
-  width:90%;
-  margin-left:5%;
-  margin-right:5%;
+.non-highlighted {
+  font-size: xx-small;
 }
 
-.wf-table-horizontal th {
-  text-align: center;
-  border: 1px solid rgb(234, 234, 234);
-  text-transform: uppercase;
-  font-weight: normal;
-  color: rgb(108, 129, 139);
-  padding: 5px;
+.rf-verdict-box th {
+  text-align: left;
 }
 
-.wf-table-horizontal td {
-  border: 1px solid rgb(234, 234, 234);
-  padding: 5px;
-  padding-left: 4px;
+.rf-verdict-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 5px;
+  padding: 10px;
+}
+
+.rf-verdict-table td {
+  vertical-align: text-top;
+  padding: 10px;
 }
 
 .wf-h3-style {
@@ -92,7 +88,7 @@ a:hover {
 
 {% if result.data %} <!-- else case will handle errors and no data found responses -->
 <!-- <h3 class="wf-h3-style">Info</h3> -->
-<table class="wf-table-horizontal">
+<table class="wf-verdict-table">
 {% if result.param.domain %}
 <tr>
   <th>Domain</th>
@@ -198,7 +194,7 @@ a:hover {
 <br>
     <!-- NVD CVSS -->
       {% if result.data.nvdDescription %}
-      <table class="wf-table-horizontal">
+      <table class="wf-verdict-table">
         <tr><th>NVD Vulnerability Description</th></tr>
         <tr>
           <td> {{ result.data.nvdDescription }} </td>
@@ -209,7 +205,7 @@ a:hover {
 
     <!-- Risk Rules Triggered -->
       {% if result.data.risk.evidenceDetails %}
-      <table class="wf-table-horizontal">
+      <table class="wf-verdict-table">
         <tr><th colspan="4">Risk Rules Triggered</th></tr>
         <tr>
           <td>Criticality</td>
@@ -231,7 +227,7 @@ a:hover {
 
     <!-- NVD CVSS -->
       {% if result.data.cvss %}
-      <table class="wf-table-horizontal">
+      <table class="wf-verdict-table">
         <tr><th colspan="2">CVSS Vulnerability Metrics</th></tr>
         <tr>
           <td> Score </td>
@@ -275,7 +271,7 @@ a:hover {
 
     <!-- Threat Lists -->
       {% if result.data.threatLists %}
-      <table class="wf-table-horizontal">
+      <table class="wf-verdict-table">
         <tr><th>Threat Lists</th></tr>
         {% for threatList in result.data.threatLists %}
         <tr>
@@ -288,7 +284,7 @@ a:hover {
 
     <!-- Location -->
       {% if result.data.location %}
-      <table class="wf-table-horizontal">
+      <table class="wf-verdict-table">
         <tr><th colspan="5">ASN and Geolocation</th></tr>
         <tr>
           <td>AS Number</td>
@@ -310,7 +306,7 @@ a:hover {
 
     <!-- Metrics -->
       {% if result.data.metrics %}
-      <table class="wf-table-horizontal">
+      <table class="wf-verdict-table">
         <tr><th colspan="2">Metrics</th></tr>
         {% for metric in result.data.metrics %}
         <tr>
@@ -324,7 +320,7 @@ a:hover {
 
 {% else %} <!-- handle no data responses -->
 
-<table class="wf-table-horizontal">
+<table class="wf-verdict-table">
   <tr>
     <th>Status</th>
     <th>Message</th>
