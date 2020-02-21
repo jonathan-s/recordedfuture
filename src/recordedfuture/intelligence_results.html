@@ -180,8 +180,8 @@ a:hover {
   <td>{{ result.data.risk.criticalityLabel }}</td>
   <td>{{ result.data.risk.riskSummary }}</td>
 {% endif %}
-  <td>{{ result.data.timestamps.firstSeen }}</td>
-  <td>{{ result.data.timestamps.lastSeen }}</td>
+  <td>{{ result.data.timestamps.firstSeenShort }}</td>
+  <td>{{ result.data.timestamps.lastSeenShort }}</td>
   <td>
     {% if result.data.intelCard %}
       <a href="{{ result.data.intelCard }}" target="new">Intelligence Card</a>

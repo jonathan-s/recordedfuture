@@ -38,6 +38,9 @@ def format_result(result, all_data=False):
         elif 'vulnerability' in retval['param']:
             retval['intelCard'] = VULN_APP_URL % (retval['data']['id'])
 
+    retval['data']['timestamps']['firstSeenShort'] = retval['data']['timestamps']['firstSeen'][:10]
+    retval['data']['timestamps']['lastSeenShort'] = retval['data']['timestamps']['lastSeen'][:10]
+
     summary = result.get_summary()
     if (summary):
         retval['summary'] = summary
