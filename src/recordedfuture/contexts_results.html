@@ -100,7 +100,7 @@ a:hover {
           <th>Default Threshold</th>
           <th>Default Threshold Type</th>
         </tr>
-        {% for entry in result.data %} <!-- loop for each context -->
+        {% for entry in result.data|dictsort:"context" %} <!-- loop for each context -->
           <tr>
             <td> {{ entry.context }} </td>
             <td> {{ entry.name }} </td>

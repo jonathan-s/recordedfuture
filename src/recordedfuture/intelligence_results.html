@@ -213,7 +213,7 @@ a:hover {
           <td>Evidence</td>
           <td>Timestamp</td>
         </tr>
-        {% for rule in result.data.risk.evidenceDetails %}
+        {% for rule in result.data.risk.evidenceDetails|dictsortreversed:"criticality" %}
         <tr>
           <td> {{ rule.criticalityLabel }} </td>
           <td> {{ rule.rule }} </td>
@@ -308,7 +308,7 @@ a:hover {
       {% if result.data.metrics %}
       <table class="wf-verdict-table">
         <tr><th colspan="2">Metrics</th></tr>
-        {% for metric in result.data.metrics %}
+        {% for metric in result.data.metrics|dictsort:"type" %}
         <tr>
           <td> {{ metric.type }} </td>
           <td> {{ metric.value }} </td>
