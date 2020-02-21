@@ -66,39 +66,23 @@ of Recorded Future.
     padding: 10px;
   }
 
-  td.rf-criticality-level-4 {
-    background: red;
+  td.rf-criticality-level-4, td.rf-criticality-level-5 {
+    background: #cf0a2c;
   }
   td.rf-criticality-level-3 {
-    background: orange;
+    background: #ff6b00;
   }
   td.rf-criticality-level-2 {
-    background: yellow;
+    background: #ffce00;
   }
   td.rf-criticality-level-1 {
-    background: lightgray;
+    background: #cccccc;
   }
-  /*.rf-evidence-crit4 {*/
-  /*  border-left-color: red;*/
-  /*  border-left-style: solid;*/
-  /*  border-left-width: 3px;*/
-  /*}*/
-  /*.rf-evidence-crit3 {*/
-  /*  border-left-color: orange;*/
-  /*  border-left-style: solid;*/
-  /*  border-left-width: 3px;*/
-  /*}*/
-  /*.rf-evidence-crit2 {*/
-  /*  border-left-color: yellow;*/
-  /*  border-left-style: solid;*/
-  /*  border-left-width: 3px;*/
-  /*}*/
-  /*.rf-evidence-crit1 {*/
-  /*  border-left-width: 0px;*/
-  /*}*/
+
   .rf-hover-info {
     font-weight: normal;
   }
+
   .rf-hover-info:hover {
     font-weight: bold;
   }
@@ -156,7 +140,9 @@ of Recorded Future.
                 </td>
                 <td>
                   <span class="non-highlighted">Timestamp</span> <br/>
-                  {{ evidence.timestamp }}
+                  <span title="{{ evidence.timestamp }}">
+                    {{ evidence.timestamp|slice:"0:10" }}
+                  </span>
                 </td>
               </tr>
               {% endfor %}

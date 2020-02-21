@@ -36,10 +36,23 @@ def format_result(result, all_data=False):
         elif 'url' in retval['param']:
             retval['intelCard'] = APP_URL % ('url', retval['param']['url'])
         elif 'vulnerability' in retval['param']:
-            retval['intelCard'] = VULN_APP_URL % (retval['data']['id'])
+            retval['intelCard'] = VULN_APP_URL \
+                                  % (retval['data']['entity']['id'])
 
-    retval['data']['timestamps']['firstSeenShort'] = retval['data']['timestamps']['firstSeen'][:10]
-    retval['data']['timestamps']['lastSeenShort'] = retval['data']['timestamps']['lastSeen'][:10]
+        for rule in retval['data']['risk']['evidenceDetails']:
+            rule['timestampShort'] = rule['timestamp'][:10]
+
+    if data and 'cvss' in retval['data'] \
+            and 'published' in retval['data']['cvss']:
+        retval['data']['cvss']['publishedShort'] = \
+            retval['data']['cvss']['published'][:10]
+        retval['data']['cvss']['lastModifiedShort'] = \
+            retval['data']['cvss']['lastModified'][:10]
+
+    retval['data']['timestamps']['firstSeenShort'] = \
+        retval['data']['timestamps']['firstSeen'][:10]
+    retval['data']['timestamps']['lastSeenShort'] = \
+        retval['data']['timestamps']['lastSeen'][:10]
 
     summary = result.get_summary()
     if (summary):
