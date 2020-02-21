@@ -15,6 +15,7 @@
 # Recorded Future App View python file
 # -----------------------------------------
 APP_URL = 'https://app.recordedfuture.com/live/sc/entity/%s%%3A%s'
+VULN_APP_URL = 'https://app.recordedfuture.com/live/sc/entity/%s'
 
 
 def format_result(result, all_data=False):
@@ -35,8 +36,7 @@ def format_result(result, all_data=False):
         elif 'url' in retval['param']:
             retval['intelCard'] = APP_URL % ('url', retval['param']['url'])
         elif 'vulnerability' in retval['param']:
-            retval['intelCard'] = APP_URL % ('vulnerability',
-                                             retval['param']['vulnerability'])
+            retval['intelCard'] = VULN_APP_URL % (retval['data']['id'])
 
     summary = result.get_summary()
     if (summary):
@@ -72,8 +72,7 @@ def format_reputation_result(result, all_data=False):
         elif 'url' in retval['param']:
             retval['intelCard'] = APP_URL % ('url', retval['param']['url'])
         elif 'vulnerability' in retval['param']:
-            retval['intelCard'] = APP_URL % ('vulnerability',
-                                             retval['param']['vulnerability'])
+            retval['intelCard'] = VULN_APP_URL % (retval['data']['id'])
 
     summary = result.get_summary()
     if (summary):
