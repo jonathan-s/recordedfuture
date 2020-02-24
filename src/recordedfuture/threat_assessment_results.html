@@ -31,7 +31,7 @@ of Recorded Future.
 <style>
 
   a:hover {
-    text-decoration: underline;
+    text-decoration:underline;
   }
 
   .rf-verdict-box {
@@ -61,22 +61,30 @@ of Recorded Future.
     font-size: 12px;
   }
 
+  td.rf-criticality-level-3, td.rf-criticality-level-4,
+  td.rf-criticality-level-5 {
+    background: #cf0a2c;
+    width: 0 !important;
+    padding: 0 2px 0 3px !important;
+  }
+  td.rf-criticality-level-2 {
+    background: #ffce00;
+    width: 0 !important;
+    padding: 0 2px 0 3px !important;
+  }
+  td.rf-criticality-level-1 {
+    background: #cccccc;
+    width: 0 !important;
+    padding: 0 2px 0 3px !important;
+  }
+
   .rf-verdict-table td {
     vertical-align: text-top;
     padding: 10px;
   }
 
-  td.rf-criticality-level-4, td.rf-criticality-level-5 {
-    background: #cf0a2c;
-  }
-  td.rf-criticality-level-3 {
-    background: #ff6b00;
-  }
-  td.rf-criticality-level-2 {
-    background: #ffce00;
-  }
-  td.rf-criticality-level-1 {
-    background: #cccccc;
+  td.rf-timestamp {
+    min-width: 13ex !important;
   }
 
   .rf-hover-info {

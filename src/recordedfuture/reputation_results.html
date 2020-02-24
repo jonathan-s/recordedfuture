@@ -29,7 +29,6 @@ of Recorded Future.
 -->
 
 <style>
-
   a:hover {
     text-decoration: underline;
   }
@@ -61,22 +60,32 @@ of Recorded Future.
     font-size: 12px;
   }
 
+  td.rf-criticality-level-3, td.rf-criticality-level-4,
+  td.rf-criticality-level-5 {
+    background: #cf0a2c;
+    width: 0 !important;
+    padding: 0 2px 0 3px !important;
+  }
+
+  td.rf-criticality-level-2 {
+    background: #ffce00;
+    width: 0 !important;
+    padding: 0 2px 0 3px !important;
+  }
+
+  td.rf-criticality-level-1 {
+    background: #cccccc;
+    width: 0 !important;
+    padding: 0 2px 0 3px !important;
+  }
+
   .rf-verdict-table td {
     vertical-align: text-top;
     padding: 10px;
   }
 
-  td.rf-criticality-level-4, td.rf-criticality-level-5 {
-    background: #cf0a2c;
-  }
-  td.rf-criticality-level-3 {
-    background: #ff6b00;
-  }
-  td.rf-criticality-level-2 {
-    background: #ffce00;
-  }
-  td.rf-criticality-level-1 {
-    background: #cccccc;
+  td.rf-timestamp {
+    min-width: 13ex !important;
   }
 
   .rf-hover-info {
@@ -98,27 +107,25 @@ of Recorded Future.
     <div class="rf-verdict-box">
       <table class="rf-verdict-table">
         <tr>
-          <td colspan="4">{{ result.message }}</td>
-        </tr>
-        <tr>
-          <td>
-            {% if result.param.domain %}
-              <span class="non-highlighted">Domain</span> <br/>
-              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['domain'], 'value': '{{ result.param.domain }}' }], 0, {{ container.id }}, null, false);">{{ result.param.domain }}&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span></a>
+          <td colspan="3">{% if result.param.domain %}
+            <span class="non-highlighted">Domain</span> <br/>
+            <a href="javascript:;" onclick="context_menu(this, [{'contains': ['domain'], 'value': '{{ result.param.domain }}' }], 0, {{ container.id }}, null, false);">{{ result.param.domain }}&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span></a>
             {% elif result.param.ip %}
-              <span class="non-highlighted">IP</span> <br/>
-              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ result.param.ip }}' }], 0, {{ container.id }}, null, false);">{{ result.param.ip }}&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span></a>
+            <span class="non-highlighted">IP</span> <br/>
+            <a href="javascript:;" onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ result.param.ip }}' }], 0, {{ container.id }}, null, false);">{{ result.param.ip }}&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span></a>
             {% elif result.param.hash %}
-              <span class="non-highlighted">Hash</span> <br/>
-              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['hash'], 'value': '{{ result.param.hash }}' }], 0, {{ container.id }}, null, false);">{{ result.param.hash }}&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span></a>
+            <span class="non-highlighted">Hash</span> <br/>
+            <a href="javascript:;" onclick="context_menu(this, [{'contains': ['hash'], 'value': '{{ result.param.hash }}' }], 0, {{ container.id }}, null, false);">{{ result.param.hash }}&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span></a>
             {% elif result.param.url %}
-              <span class="non-highlighted">URL</span> <br/>
-              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['url'], 'value': '{{ result.param.url }}' }], 0, {{ container.id }}, null, false);">{{ result.param.url }}&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span></a>
+            <span class="non-highlighted">URL</span> <br/>
+            <a href="javascript:;" onclick="context_menu(this, [{'contains': ['url'], 'value': '{{ result.param.url }}' }], 0, {{ container.id }}, null, false);">{{ result.param.url }}&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span></a>
             {% elif result.param.vulnerability %}
-              <span class="non-highlighted">Vulnerability</span> <br/>
-              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['vulnerability'], 'value': '{{ result.param.vulnerability }}' }], 0, {{ container.id }}, null, false);">{{ result.param.vulnerability }}&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span></a>
+            <span class="non-highlighted">Vulnerability</span> <br/>
+            <a href="javascript:;" onclick="context_menu(this, [{'contains': ['vulnerability'], 'value': '{{ result.param.vulnerability }}' }], 0, {{ container.id }}, null, false);">{{ result.param.vulnerability }}&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span></a>
             {% endif %}
           </td>
+        </tr>
+        <tr>
           <td><span class="non-highlighted">Risk Score</span> <br/>
             {{ result.data.riskscore }}</td>
           <td>

@@ -54,11 +54,28 @@ a:hover {
 }
 
 .rf-verdict-table {
-    width: 98%;
+  width: 98%;
   border-collapse: collapse;
-    margin: 5px 5px 5px 0;
+  margin: 5px 5px 5px 0;
   padding: 10px;
-    font-size: 12px;
+  font-size: 12px;
+}
+
+td.rf-criticality-level-3, td.rf-criticality-level-4,
+td.rf-criticality-level-5 {
+  background: #cf0a2c;
+  width: 0 !important;
+  padding: 0 2px 0 3px !important;
+}
+td.rf-criticality-level-2 {
+  background: #ffce00;
+  width: 0 !important;
+  padding: 0 2px 0 3px !important;
+}
+td.rf-criticality-level-1 {
+  background: #cccccc;
+  width: 0 !important;
+  padding: 0 2px 0 3px !important;
 }
 
 .rf-verdict-table td {
@@ -66,24 +83,15 @@ a:hover {
   padding: 10px;
 }
 
-td.rf-criticality-level-4, td.rf-criticality-level-5 {
-    background: #cf0a2c;
+td.rf-timestamp {
+  min-width: 13ex !important;
 }
-  td.rf-criticality-level-3 {
-    background: #ff6b00;
-}
-  td.rf-criticality-level-2 {
-    background: #ffce00;
-  }
-  td.rf-criticality-level-1 {
-    background: #cccccc;
-  }
 
-  .rf-hover-info {
+.rf-hover-info {
     font-weight: normal;
 }
 
-  .rf-hover-info:hover {
+.rf-hover-info:hover {
     font-weight: bold;
 }
 </style>
@@ -97,70 +105,55 @@ td.rf-criticality-level-4, td.rf-criticality-level-5 {
       <div class="rf-verdict-box">
         <table class="rf-verdict-table">
           <tr>
-            <td colspan="7">
-              <span class="highlighted">
-                {{ result.data.risk.criticalityLabel|title }}
-              </span> entity with a Risk Score of
-              <span class="highlighted">
-                {{ result.data.risk.score }}
-              </span>.
+            <td colspan="5">
+              {% if result.param.ip %}
+              <span class="highlighted">{{ result.data.risk.criticalityLabel }}</span>
+              <span> IP </span>
+              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ result.param.ip }}' }], 0, {{ container.id }}, null, false);"><span class="highlighted">{{ result.param.ip }}</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
+              </a>
+            {% endif %}
+            {% if result.param.domain %}
+              <span class="highlighted">{{ result.data.risk.criticalityLabel }}</span>
+              <span> Domain </span>
+              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['domain'], 'value': '{{ result.param.domain }}' }], 0, {{ container.id }}, null, false);"><span class="highlighted">{{ result.param.domain }}</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
+              </a>
+            {% endif %}
+            {% if result.param.hash %}
+              <span class="highlighted">{{ result.data.risk.criticalityLabel }}</span>
+              <span> Hash ({{ result.data.hashAlgorithm }}) </span>
+              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['hash'], 'value': '{{ result.param.hash }}' }], 0, {{ container.id }}, null, false);"><span class="highlighted">{{ result.param.hash }}</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
+              </a>
+            {% endif %}
+            {% if result.param.url %}
+              <span class="highlighted">{{ result.data.risk.criticalityLabel }}</span>
+              <span> URL </span>
+              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['url'], 'value': '{{ result.param.url }}' }], 0, {{ container.id }}, null, false);"><span class="highlighted">{{ result.param.url }}</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
+              </a>
+            {% endif %}
+            {% if result.param.vulnerability %}
+              <span class="highlighted">{{ result.data.risk.criticalityLabel }}</span>
+              <span> Vulnerability </span>
+              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['vulnerability'], 'value': '{{ result.param.vulnerability }}' }], 0, {{ container.id }}, null, false);"><span class="highlighted">{{ result.param.vulnerability }}</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
+              </a>
+            {% endif %}
             </td>
           </tr>
           <tr>
-            {% if result.param.ip %}
-            <td>
-              <span class="non-highlighted">IP</span> <br/>
-              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ result.param.ip }}' }], 0, {{ container.id }}, null, false);">{{ result.param.ip }}&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
-              </a>
-            </td>
-            {% endif %}
-            {% if result.param.domain %}
-            <td>
-              <span class="non-highlighted">Domain</span> <br/>
-              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['domain'], 'value': '{{ result.param.domain }}' }], 0, {{ container.id }}, null, false);">{{ result.param.domain }}&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
-              </a>
-            </td>
-            {% endif %}
-            {% if result.param.hash %}
-            <td>
-              <span class="non-highlighted">Hash ({{ result.data.hashAlgorithm }})</span> <br/>
-              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['hash'], 'value': '{{ result.param.hash }}' }], 0, {{ container.id }}, null, false);">{{ result.param.hash }}&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
-              </a>
-            </td>
-            {% endif %}
-            {% if result.param.url %}
-            <td>
-              <span class="non-highlighted">URL</span> <br/>
-              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['url'], 'value': '{{ result.param.url }}' }], 0, {{ container.id }}, null, false);">{{ result.param.url }}&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
-              </a>
-            </td>
-            {% endif %}
-            {% if result.param.vulnerability %}
-            <td>
-              <span class="non-highlighted">Vulnerability</span> <br/>
-              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['vulnerability'], 'value': '{{ result.param.vulnerability }}' }], 0, {{ container.id }}, null, false);">{{ result.param.vulnerability }}&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
-              </a>
-            </td>
-            {% endif %}
             <td>
               <span class="non-highlighted">Risk Score</span> <br/>
               {{ result.data.risk.score }}
             </td>
             <td>
-              <span class="non-highlighted">Criticality</span> <br/>
-              {{ result.data.risk.criticalityLabel }}
-            </td>
-            <td>
               <span class="non-highlighted">Summary</span> <br/>
               {{ result.data.risk.riskSummary }}
             </td>
-            <td>
+            <td class="rf-timestamp">
               <span class="non-highlighted">First Seen</span> <br/>
               <span title="{{ result.data.timestamps.firstSeen }}">
                 {{ result.data.timestamps.firstSeenShort }}
               </span>
             </td>
-            <td>
+            <td class="rf-timestamp">
               <span class="non-highlighted">Last Seen</span> <br/>
               <span title="{{ result.data.timestamps.lastSeen }}">
                 {{ result.data.timestamps.lastSeenShort }}
@@ -209,9 +202,11 @@ td.rf-criticality-level-4, td.rf-criticality-level-5 {
             <span class="non-highlighted">Evidence</span> <br/>
             {{ rule.evidenceString }}
           </td>
-          <td>
+          <td class="rf-timestamp">
             <span class="non-highlighted">Timestamp</span> <br/>
-            <span title="{{ rule.timestamp }}">{{ rule.timestampShort }}</span>
+            <span title="{{ rule.timestamp }}">
+              {{ rule.timestampShort }}
+            </span>
           </td>
         </tr>
         {% endfor %}
