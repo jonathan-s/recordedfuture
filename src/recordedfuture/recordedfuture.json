@@ -2024,18 +2024,18 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.id",
+                    "data_path": "action_result.data.*.entities.*.id",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.name",
+                    "data_path": "action_result.data.*.entities.*.name",
                     "data_type": "string",
                     "contains": [
                         "ip"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.type",
+                    "data_path": "action_result.data.*.entities.*.type",
                     "data_type": "string",
                     "example_values": [
                         "IpAddress"
@@ -2054,27 +2054,27 @@
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.evidence.ruleid",
+                    "data_path": "action_result.data.*.entities.*.evidence.*.ruleid",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.evidence.timestamp",
+                    "data_path": "action_result.data.*.entities.*.evidence.*.timestamp",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.evidence.mitigation",
+                    "data_path": "action_result.data.*.entities.*.evidence.*.mitigation",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.evidence.description",
+                    "data_path": "action_result.data.*.entities.*.evidence.*.description",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.evidence.rule",
+                    "data_path": "action_result.data.*.entities.*.evidence.*.rule",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.evidence.level",
+                    "data_path": "action_result.data.*.entities.*.evidence.*.level",
                     "data_type": "numeric"
                 },
                 {
