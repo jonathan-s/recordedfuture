@@ -441,9 +441,8 @@ class RecordedfutureConnector(BaseConnector):
 
             # Update the summary
             summary = action_result.get_summary()
-            summary['riskscore'] = res['riskscore']
-            summary['risklevel'] = res['risklevel']
-            summary['type'] = res['type']
+            summary['risk score'] = res['riskscore']
+            summary['risk summary'] = '%s rules triggered of %s' % (res['rulecount'], res['maxrules'])
 
         else:
             res = {

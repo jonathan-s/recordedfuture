@@ -321,21 +321,6 @@ td.rf-criticality-level-4, td.rf-criticality-level-5 {
       </div>
       {% endif %}
 
-      <!-- Metrics -->
-      {% if result.data.metrics %}
-      <div class="rf-verdict-box">
-        <table class="rf-verdict-table">
-        <tr><td colspan="2">Metrics</td></tr>
-        {% for metric in result.data.metrics|dictsort:"type" %}
-        <tr>
-          <td> {{ metric.type }} </td>
-          <td> {{ metric.value }} </td>
-        </tr>
-        {% endfor %}
-      </table>
-      </div>
-      {% endif %}
-
     {% else %} <!-- handle no data responses -->
 
       <table class="wf-verdict-table">
