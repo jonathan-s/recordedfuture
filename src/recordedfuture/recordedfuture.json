@@ -1837,11 +1837,13 @@
             "output": [
                 {
                     "data_path": "action_result.status",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["recordedfuture result status"]
                 },
                 {
                     "data_path": "action_result.data.*.id",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["recordedfuture entity id"]
                 },
                 {
                     "data_path": "action_result.data.*.name",
@@ -1855,51 +1857,63 @@
                     "data_type": "string",
                     "example_values": [
                         "IpAddress"
-                    ]
+                    ],
+                    "contains": ["recordedfuture entity type"]
                 },
                 {
                     "data_path": "action_result.data.*.risklevel",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture risk level"]
                 },
                 {
                     "data_path": "action_result.data.*.rulecount",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture rule count"]
                 },
                 {
                     "data_path": "action_result.data.*.evidence.ruleid",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["recordedfuture risk rule id"]
                 },
                 {
                     "data_path": "action_result.data.*.evidence.timestamp",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["recordedfuture evidence timestamp"]
                 },
                 {
                     "data_path": "action_result.data.*.evidence.mitigation",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["recordedfuture evidence mitigation"]
                 },
                 {
                     "data_path": "action_result.data.*.evidence.description",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["recordedfuture evidence description"]
                 },
                 {
                     "data_path": "action_result.data.*.evidence.rule",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["recordedfuture risk rule"]
                 },
                 {
                     "data_path": "action_result.data.*.evidence.level",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture evidence level"]
                 },
                 {
                     "data_path": "action_result.data.*.maxrules",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture max rules"]
                 },
                 {
                     "data_path": "action_result.data.*.riskscore",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture risk score"]
                 },
                 {
                     "data_path": "action_result.message",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["recordedfuture result message"]
                 },
                 {
                     "data_path": "action_result.parameter.ip",
@@ -1911,26 +1925,31 @@
                 },
                 {
                     "data_path": "action_result.summary.riskscore",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture risk score"]
                 },
                 {
                     "data_path": "action_result.summary.type",
                     "data_type": "string",
                     "example_values": [
                         "IpAddress"
-                    ]
+                    ],
+                    "contains": ["recordedfuture entity type"]
                 },
                 {
                     "data_path": "action_result.summary.risklevel",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture risk level"]
                 },
                 {
                     "data_path": "summary.total_objects",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture total objects"]
                 },
                 {
                     "data_path": "summary.total_objects_successful",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture total objects successful"]
                 }
             ],
             "render": {
@@ -1953,7 +1972,8 @@
                     "data_type": "string",
                     "required": false,
                     "primary": false,
-                    "order": 0
+                    "order": 0,
+                    "contains": ["recordedfuture threat assessment context"]
                 },
                 "ip": {
                     "description": "IP to query",
@@ -2008,98 +2028,137 @@
                     "data_type": "string",
                     "required": false,
                     "primary": false,
-                    "order": 5
+                    "order": 5,
+                    "contains": ["recordedfuture threat assessment threshold"]
                 },
                 "threshold_type": {
                     "description": "Threshold type to use unless different from the default",
                     "data_type": "string",
                     "required": false,
                     "primary": false,
-                    "order": 6
+                    "order": 6,
+                    "contains": ["recordedfuture threat assessment threshold type"]
                 }
             },
             "output": [
                 {
                     "data_path": "action_result.status",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ],
+                    "contains": ["action result status"]
                 },
                 {
                     "data_path": "action_result.data.*.entities.*.id",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["recorded future entity id"]
                 },
                 {
                     "data_path": "action_result.data.*.entities.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "ip",
+                        "domain",
+                        "hash",
+                        "sha1",
+                        "md5",
+                        "sha256",
+                        "url"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.entities.*.type",
                     "data_type": "string",
                     "example_values": [
-                        "IpAddress"
-                    ]
+                        "IpAddress",
+                        "InternetDomainName"
+                    ],
+                    "contains": ["recordedfuture entity type"]
                 },
                 {
                     "data_path": "action_result.data.*.verdict",
-                    "data_type": "boolean"
+                    "data_type": "boolean",
+                    "example_values": [
+                        false,
+                        true
+                    ],
+                    "contains": ["recordedfuture threat assessment verdict"]
                 },
                 {
                     "data_path": "action_result.data.*.risklevel",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture threat assessment risk level"]
                 },
                 {
                     "data_path": "action_result.data.*.rulecount",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture threat assessmewnt rule count"]
                 },
                 {
                     "data_path": "action_result.data.*.entities.*.evidence.*.ruleid",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["recordedfuture risk rule id"]
                 },
                 {
                     "data_path": "action_result.data.*.entities.*.evidence.*.timestamp",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["recordedfuture evidence timestamp"]
                 },
                 {
                     "data_path": "action_result.data.*.entities.*.evidence.*.mitigation",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["recordedfuture evidence mitigation"]
                 },
                 {
                     "data_path": "action_result.data.*.entities.*.evidence.*.description",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["recordedfuture evidence description"]
                 },
                 {
                     "data_path": "action_result.data.*.entities.*.evidence.*.rule",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["recorded future risk rule"]
                 },
                 {
                     "data_path": "action_result.data.*.entities.*.evidence.*.level",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "example_values": [1, 2, 3, 4, 5],
+                    "contains": ["recordedfuture risk rule level"]
                 },
                 {
                     "data_path": "action_result.data.*.maxrules",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture threat assessment max rules"]
                 },
                 {
                     "data_path": "action_result.data.*.max_riskscore",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture threat assessment max risk score"]
                 },
                 {
                     "data_path": "action_result.data.*.min_riskscore",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture threat assessment min risk score"]
                 },
                 {
                     "data_path": "action_result.data.*.triage_riskscore",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture threat assessment risk score"]
                 },
                 {
                     "data_path": "action_result.message",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["action result message"]
                 },
                 {
                     "data_path": "action_result.parameter.threat_context",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "c2",
+                        "phishing"
+                        ],
+                    "contains": ["recordedfuture threat assessment context"]
                 },
                 {
                     "data_path": "action_result.parameter.ip",
@@ -2135,34 +2194,88 @@
                 },
                 {
                     "data_path": "action_result.parameter.threshold",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["recordedfuture threat assessment threshold"]
                 },
                 {
                     "data_path": "action_result.parameter.threshold_type",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "max",
+                        "min"
+                    ],
+                    "contains": ["recordedfuture threat assessment threshold type"]
                 },
                 {
                     "data_path": "action_result.summary.riskscore",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture threat assessment risk score"]
                 },
                 {
                     "data_path": "action_result.summary.type",
                     "data_type": "string",
                     "example_values": [
                         "IpAddress"
-                    ]
+                    ],
+                    "contains": ["recordedfuture entity type"]
                 },
                 {
                     "data_path": "action_result.summary.risklevel",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture risk level"]
                 },
                 {
                     "data_path": "summary.total_objects",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture total objects"]
                 },
                 {
                     "data_path": "summary.total_objects_successful",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recodedfuture total objects successful"]
+                },
+                {
+                    "data_path": "action_result.data.*.threshold_type",
+                    "data_type": "string",
+                    "example_values": [
+                        "max",
+                        "min"
+                    ],
+                    "contains": ["recordedfuture threat assessment threshold type"]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.score",
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture risk score"]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.evidence.*.name",
+                    "data_type": "string",
+                    "contains": ["recordedfuture evidence name"]
+                },
+                {
+                    "data_path": "action_result.data.*.context",
+                    "data_type": "string",
+                    "example_values": [
+                        "c2",
+                        "phishing"
+                    ],
+                    "contains": ["recordedfuture threat assessment context"]
+                },
+                {
+                    "data_path": "action_result.data.*.threshold",
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture threat assessment threshold"]
+                },
+                {
+                    "data_path": "action_result.summary.riskscore",
+                    "data_type": "string",
+                    "contains": ["recordedfuture threat assessment risk score"]
+                },
+                {
+                    "data_path": "action_result.summary.assessment",
+                    "data_type": "string",
+                    "contains": ["recordedfuture threat assessment summary"]
                 }
             ],
             "render": {
@@ -2184,43 +2297,48 @@
             "output": [
                 {
                     "data_path": "action_result.status",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["recordedfuture result string"]
                 },
                 {
                     "data_path": "action_result.data.*.context",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["recordedfuture threat assessment context"]
                 },
                 {
                     "data_path": "action_result.data.*.name",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["ip", "domain", "hash", "sha1", "sha256", "md5", "vulnerability"]
                 },
                 {
-                    "data_path": "action_result.data.*.default_theshold",
-                    "data_type": "string"
+                    "data_path": "action_result.data.*.default_threshold",
+                    "data_type": "string",
+                    "contains": ["recordedfuture threat assessment threshold"]
                 },
                 {
                     "data_path": "action_result.data.*.default_threshold_type",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.default_threshold_type",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["recordedfuture threat assessment algorithm"]
                 },
                 {
                     "data_path": "action_result.message",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "contains": ["recordedfuture threat assessment result message"]
                 },
                 {
                     "data_path": "action_result.summary.triage_contexts_available",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture threat assessment contexts count"]
                 },
                 {
                     "data_path": "summary.total_objects",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture threat assessment total objects"]
                 },
                 {
                     "data_path": "summary.total_objects_successful",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": ["recordedfuture threat assessment total objects successful"]
                 }
             ],
             "render": {
