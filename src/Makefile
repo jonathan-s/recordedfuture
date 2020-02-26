@@ -101,5 +101,5 @@ setup_ssh:
 	scp ~/.ssh/id_rsa.pub $(SCPHOST):/tmp/
 	$(SSHRAW) $(PH) "sudo -u phantom mkdir -p ~phantom/.ssh; \
 	                 sudo -u phantom chmod go= ~phantom/.ssh; \
-	                 sudo -u phantom mv /tmp/id_rsa.pub ~phantom/.ssh/authorized_keys; \
+	                 sudo mv /tmp/id_rsa.pub ~phantom/.ssh/authorized_keys; \
 	                 sudo chown phantom ~phantom/.ssh/authorized_keys"
