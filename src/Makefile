@@ -5,7 +5,11 @@ SRC_DIR := recordedfuture
 PACKAGE := recordedfuture-$(RELEASE).tgz
 RFUSERARG := $(if ${RFLDAP},-l ${RFLDAP},)
 SCPHOST := $(if ${RFLDAP},${RFLDAP}@${PH},${PH})
-
+RESULT_FILES := reputation_results.html \
+	contexts_results.html
+STYLESHEET := recordedfuture_style.css
+RF_SRC := $(addprefix $(SRC_DIR)/,$(RESULT_FILES))
+RF_DEST := $(addprefix $(BUILD_DIR)/,$(RESULT_FILES))
 RSYNC := env RSYNC_RSH=ssh rsync -rav
 LOCAL_RSYNC := rsync
 SSH := ssh -l phantom
@@ -29,14 +33,21 @@ all:
 # Targets related to build
 #
 ##########################################
-build: build_rsync build_json build_readme build_consts
+build: build_rsync build_style build_json build_readme build_consts
 
 build_rsync: build_dirs
 	$(LOCAL_RSYNC) -ra recordedfuture/ $(BUILD_DIR)/ \
 		--exclude=recordedfuture.json \
 		--exclude=recordedfuture_consts.py \
 		--exclude=readme.html \
-		--exclude=*.pyc
+        --exclude=*.pyc \
+        --exclude=*results.html \
+        --exclude=recordedfuture_style.css
+
+build_style: $(RF_DEST)
+
+$(BUILD_DIR)/%.html: $(SRC_DIR)/%.html
+	$(SED) -e "/$(STYLESHEET)/r $(SRC_DIR)/$(STYLESHEET)" < $^ > $@
 
 build_json: $(BUILD_DIR)/recordedfuture.json build_dirs
 
