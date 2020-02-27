@@ -6,7 +6,10 @@ PACKAGE := recordedfuture-$(RELEASE).tgz
 RFUSERARG := $(if ${RFLDAP},-l ${RFLDAP},)
 SCPHOST := $(if ${RFLDAP},${RFLDAP}@${PH},${PH})
 RESULT_FILES := reputation_results.html \
-	contexts_results.html
+	intelligence_results.html \
+	threat_assessment_results.html \
+	contexts_results.html \
+	alert_results.html
 STYLESHEET := recordedfuture_style.css
 RF_SRC := $(addprefix $(SRC_DIR)/,$(RESULT_FILES))
 RF_DEST := $(addprefix $(BUILD_DIR)/,$(RESULT_FILES))
