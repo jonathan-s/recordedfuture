@@ -1,0 +1,75 @@
+<style>
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .rf-widget {
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    padding-left:10px;
+    padding-right:10px;
+  }
+
+  .rf-box {
+    width: 98%;
+    padding: 5px 10px 5px 10px;
+    margin: 0 5px;
+    font-size: 12px;
+  }
+
+  .highlighted {
+    font-weight: bold;
+  }
+
+  .non-highlighted {
+    font-size: xx-small;
+  }
+
+  .rf-box th {
+    text-align: left;
+  }
+
+  .rf-table {
+    width: 98%;
+    border-collapse: collapse;
+    margin: 5px 5px 5px 0;
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  td.rf-criticality-level-3, td.rf-criticality-level-4,
+  td.rf-criticality-level-5 {
+    background: #cf0a2c;
+    width: 0 !important;
+    padding: 0 2px 0 3px !important;
+  }
+  td.rf-criticality-level-2 {
+    background: #ffce00;
+    width: 0 !important;
+    padding: 0 2px 0 3px !important;
+  }
+  td.rf-criticality-level-1 {
+    background: #cccccc;
+    width: 0 !important;
+    padding: 0 2px 0 3px !important;
+  }
+
+  .rf-table td {
+    vertical-align: text-top;
+    padding: 10px;
+  }
+
+  td.rf-timestamp {
+    min-width: 13ex !important;
+  }
+
+  .rf-hover-info {
+    font-weight: normal;
+  }
+
+  .rf-hover-info:hover {
+    font-weight: bold;
+  }
+</style>
+
