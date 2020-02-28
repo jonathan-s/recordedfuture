@@ -2288,8 +2288,8 @@
                 "threat_context": {
                     "description": "Context to use",
                     "data_type": "string",
-                    "required": false,
-                    "primary": false,
+                    "required": true,
+                    "primary": true,
                     "order": 0,
                     "contains": ["recordedfuture threat assessment context"]
                 },
@@ -2340,22 +2340,6 @@
                         "md5"
                     ],
                     "order": 4
-                },
-                "threshold": {
-                    "description": "Threshold to use if different from the default",
-                    "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "order": 5,
-                    "contains": ["recordedfuture threat assessment threshold"]
-                },
-                "threshold_type": {
-                    "description": "Threshold type to use unless different from the default",
-                    "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "order": 6,
-                    "contains": ["recordedfuture threat assessment threshold type"]
                 }
             },
             "output": [
@@ -2450,17 +2434,7 @@
                     "contains": ["recordedfuture threat assessment max rules"]
                 },
                 {
-                    "data_path": "action_result.data.*.max_riskscore",
-                    "data_type": "numeric",
-                    "contains": ["recordedfuture threat assessment max risk score"]
-                },
-                {
-                    "data_path": "action_result.data.*.min_riskscore",
-                    "data_type": "numeric",
-                    "contains": ["recordedfuture threat assessment min risk score"]
-                },
-                {
-                    "data_path": "action_result.data.*.triage_riskscore",
+                    "data_path": "action_result.data.*.assessment_riskscore",
                     "data_type": "numeric",
                     "contains": ["recordedfuture threat assessment risk score"]
                 },
@@ -2511,20 +2485,6 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.threshold",
-                    "data_type": "string",
-                    "contains": ["recordedfuture threat assessment threshold"]
-                },
-                {
-                    "data_path": "action_result.parameter.threshold_type",
-                    "data_type": "string",
-                    "example_values": [
-                        "max",
-                        "min"
-                    ],
-                    "contains": ["recordedfuture threat assessment threshold type"]
-                },
-                {
                     "data_path": "action_result.summary.riskscore",
                     "data_type": "numeric",
                     "contains": ["recordedfuture threat assessment risk score"]
@@ -2553,15 +2513,6 @@
                     "contains": ["recodedfuture total objects successful"]
                 },
                 {
-                    "data_path": "action_result.data.*.threshold_type",
-                    "data_type": "string",
-                    "example_values": [
-                        "max",
-                        "min"
-                    ],
-                    "contains": ["recordedfuture threat assessment threshold type"]
-                },
-                {
                     "data_path": "action_result.data.*.entities.*.score",
                     "data_type": "numeric",
                     "contains": ["recordedfuture risk score"]
@@ -2579,11 +2530,6 @@
                         "phishing"
                     ],
                     "contains": ["recordedfuture threat assessment context"]
-                },
-                {
-                    "data_path": "action_result.data.*.threshold",
-                    "data_type": "numeric",
-                    "contains": ["recordedfuture threat assessment threshold"]
                 },
                 {
                     "data_path": "action_result.summary.riskscore",
@@ -2627,16 +2573,6 @@
                     "data_path": "action_result.data.*.name",
                     "data_type": "string",
                     "contains": ["ip", "domain", "hash", "sha1", "sha256", "md5", "vulnerability"]
-                },
-                {
-                    "data_path": "action_result.data.*.default_threshold",
-                    "data_type": "string",
-                    "contains": ["recordedfuture threat assessment threshold"]
-                },
-                {
-                    "data_path": "action_result.data.*.default_threshold_type",
-                    "data_type": "string",
-                    "contains": ["recordedfuture threat assessment algorithm"]
                 },
                 {
                     "data_path": "action_result.message",

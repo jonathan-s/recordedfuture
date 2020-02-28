@@ -199,8 +199,6 @@ def format_threat_assessment_result(result, all_data=False):
         ret_data = {key: data[0][key]
                     for key in data[0].keys()
                     if key != 'entities'}
-        ret_data['triage_riskscore'] = data[0][
-            '%s_riskscore' % data[0]['threshold_type']]
 
         entities = data[0]['entities']
         entities.sort(key=lambda x: int(x.get('score', "0")))

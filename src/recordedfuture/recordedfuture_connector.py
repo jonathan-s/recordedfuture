@@ -477,20 +477,15 @@ class RecordedfutureConnector(BaseConnector):
         # Params for the API call
         param_types = ['ip', 'domain', 'url', 'hash']
         params = {}
-        threshold = ['format=phantom']
         for i in param.keys():
             if i in param_types:
                 params[i] = [entry.strip() for entry in param[i].split(',')
                              if entry != 'None']
-            elif i == 'threshold':
-                threshold.append('threshold=%s' % param[i])
-            elif i == 'threshold_type':
-                threshold.append('threshold_type=%s' % param[i])
 
         self.save_progress('Params found to triage: %s' % params)
 
         # make rest call
-        my_ret_val, response = self._make_rest_call('/soar/triage/contexts/%s?%s' % (param['threat_context'], '&'.join(threshold)),
+        my_ret_val, response = self._make_rest_call('/soar/triage/contexts/%s?%s' % (param['threat_context'], '&format=phantom'),
                                                     action_result,
                                                     json=params,
                                                     method='post')
@@ -512,15 +507,10 @@ class RecordedfutureConnector(BaseConnector):
 
             summary = action_result.get_summary()
             # restructure json
-            threshold_type = response['threshold_type']
             res = {
                 'context': response['context'],
                 'verdict': response['verdict'],
-                'threshold': response['threshold'],
-                'threshold_type': response['threshold_type'],
-                'max_riskscore': response['scores']['max'],
-                'min_riskscore': response['scores']['min'],
-                'triage_riskscore': response['scores'][threshold_type],
+                'assessment_riskscore': response['scores']['max'],
                 'entities': [{
                     'id': entity['id'],
                     'name': entity['name'],
@@ -537,7 +527,7 @@ class RecordedfutureConnector(BaseConnector):
             summary['assessment'] = 'Suspected to be malicious'
         else:
             summary['assessment'] = 'Not found to be malicious'
-        summary['riskscore / Threshold'] = '{:.0f}/{:.0f}'.format(response['scores'][threshold_type], response['threshold'])
+        summary['riskscore'] = response['scores']['max']
 
         action_result.set_summary(summary)
         self.save_progress('Added data with keys {}', res.keys())
@@ -582,8 +572,6 @@ class RecordedfutureConnector(BaseConnector):
                 action_result.add_data({
                     "context": triage_context,
                     "name": response[triage_context]['name'],
-                    "default_threshold_type": response[triage_context]['default_threshold_type'],
-                    "default_threshold": response[triage_context]['default_threshold'],
                     "datagroup": response[triage_context]['datagroup']
                 })
 
