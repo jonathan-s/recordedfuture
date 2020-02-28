@@ -21,8 +21,8 @@ import urllib
 import json
 import hashlib
 import platform
+# noinspection PyCompatibility
 import ipaddress
-# noinspection PyUnresolvedReferences
 from bs4 import BeautifulSoup
 
 # Phantom App imports
@@ -170,7 +170,8 @@ class RecordedfutureConnector(BaseConnector):
 
         if resp_json.get('error').get('message'):
             if msg:
-                msg = "{} and {}".format(msg, resp_json.get('error').get('message'))
+                msg = "{} and {}".format(msg,
+                                         resp_json.get('error').get('message'))
             else:
                 msg = resp_json.get('error').get('message')
 
@@ -335,7 +336,8 @@ class RecordedfutureConnector(BaseConnector):
         try:
             path_info.encode("utf-8")
         except:
-            return action_result.set_status(phantom.APP_ERROR, "Parameter value failed validation. Enter a valid value.")
+            return action_result.set_status(phantom.APP_ERROR,
+                                            "Parameter value failed validation. Enter a valid value.")
 
         # Params for the API call
         params = {
@@ -418,7 +420,8 @@ class RecordedfutureConnector(BaseConnector):
                     'description': evidence_list[evidence_id]['description'],
                     'rule': evidence_list[evidence_id]['rule'],
                     'level': evidence_list[evidence_id]['level'],
-                    'mitigation': evidence_list[evidence_id].get('mitigation', None)}
+                    'mitigation': evidence_list[evidence_id].get('mitigation',
+                                                                 None)}
                     for evidence_id in evidence_list.keys()]
             else:
                 evidence = []
@@ -442,7 +445,8 @@ class RecordedfutureConnector(BaseConnector):
             # Update the summary
             summary = action_result.get_summary()
             summary['risk score'] = res['riskscore']
-            summary['risk summary'] = '%s rules triggered of %s' % (res['rulecount'], res['maxrules'])
+            summary['risk summary'] = '%s rules triggered of %s' % (
+                res['rulecount'], res['maxrules'])
 
         else:
             res = {
@@ -485,10 +489,12 @@ class RecordedfutureConnector(BaseConnector):
         self.save_progress('Params found to triage: %s' % params)
 
         # make rest call
-        my_ret_val, response = self._make_rest_call('/soar/triage/contexts/%s?%s' % (param['threat_context'], '&format=phantom'),
-                                                    action_result,
-                                                    json=params,
-                                                    method='post')
+        my_ret_val, response = self._make_rest_call(
+            '/soar/triage/contexts/%s?%s' % (param['threat_context'],
+                                             '&format=phantom'),
+            action_result,
+            json=params,
+            method='post')
 
         self.debug_print('_handle_triage', {'path_info': 'triage',
                                             'endpoint': '/soar/triage',
@@ -503,9 +509,8 @@ class RecordedfutureConnector(BaseConnector):
             return action_result.get_status()
 
         # there will always be a response with data, how best represent this?
+        summary = action_result.get_summary()
         if response:
-
-            summary = action_result.get_summary()
             # restructure json
             res = {
                 'context': response['context'],
@@ -519,15 +524,16 @@ class RecordedfutureConnector(BaseConnector):
                     'evidence': entity['rule']['evidence']}
                     for entity in response['entities']]
             }
+            action_result.add_data(res)
 
-        action_result.add_data(res)
-
-        # set summary
-        if response['verdict']:
-            summary['assessment'] = 'Suspected to be malicious'
+            # set summary
+            if response['verdict']:
+                summary['assessment'] = 'Suspected to be malicious'
+            else:
+                summary['assessment'] = 'Not found to be malicious'
+            summary['riskscore'] = response['scores']['max']
         else:
-            summary['assessment'] = 'Not found to be malicious'
-        summary['riskscore'] = response['scores']['max']
+            res = {}
 
         action_result.set_summary(summary)
         self.save_progress('Added data with keys {}', res.keys())
@@ -546,7 +552,7 @@ class RecordedfutureConnector(BaseConnector):
 
         # make rest call
         my_ret_val, response = self._make_rest_call('/soar/triage/contexts',
-                                                            action_result)
+                                                    action_result)
 
         self.debug_print('_handle_list_contexts',
                          {'action_result': action_result,
@@ -575,7 +581,8 @@ class RecordedfutureConnector(BaseConnector):
                     "datagroup": response[triage_context]['datagroup']
                 })
 
-            summary['triage_contexts_available'] = summary_statement
+            summary['contexts_available_for_threat_assessment'] = \
+                summary_statement
 
         else:
             self.save_progress("API call failed to retrieve any information.")

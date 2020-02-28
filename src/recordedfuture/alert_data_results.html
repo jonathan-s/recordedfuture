@@ -33,53 +33,18 @@ Style elements are defined in a separate file, named below,
 and will be merged during compilation:
        recordedfuture_style.css          -->
 
-<div class="rf-widget">
-  <!-- Main Div -->
-  first test
-  <!-- {% for result in results %} --> <!-- loop for each result -->
-    testing
+<div class="rf-widget"> <!-- Main Div -->
+  <table>
+    <tr>
+      <td>Apa</td>
+    </tr>
+  </table>
+
   <!------------------- For each Result ---------------------->
-
-  <!-- <div class="rf-box">
-      <table class="rf-table">
-        <tr>
-          <td>
-            {% if not result.data %}
-              Alert rule: No data found
-            {% else %}
-              Alert rule: {{ result.data.0.rule.name }}
-          </td>
-        </tr>
-      </table>
-    </div>
-
-    {% for alert in result.data.0.alerts %}
-      {% if alert.alert %}
-        <div class="rf-box">
-          <table class="rf-table">
-            <tr>
-              <td.rf-timestamp>
-                Alert: {{ alert.alert.content.title }}<br/>
-                Triggered: {{ alert.alert.content.triggered }}
-              </td.rf-timestamp>
-            </tr>
-            {% if alert.alert.entities %}
-              {% for key, val in alert.alert.entities.items %}
-                <tr>
-                  <td> {{ key }} </td>
-                  <td>
-                    {% for entityvalue in val %}
-                      <div>{{ entityvalue }}</div>
-                    {% endfor %}
-                  </td>
-                </tr>
-              {% endfor %}
-            {% endif %}
-          </table>
-        </div>
-      {% endif %}
-    {% endfor %} -->
+  {% for result in results %}
+    <div>TEST</div>
   {% endfor %}
+
 </div> <!-- Main Div -->
 
 {% endblock %} <!-- Main Start Block -->

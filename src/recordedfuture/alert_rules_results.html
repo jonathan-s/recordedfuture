@@ -41,24 +41,26 @@ and will be merged during compilation:
 
     <div class="rf-box">
       <table class="rf-table">
+        {% if result.data %}
+          {% for entry in result.data %}
+            <tr>
+              <td>
+                <span class="non-highlighted">Rule Id</span><br/>
+                {{ entry.rule.id }}
+              </td>
+              <td>
+                <span class="non-highlighted">Rule Title</span><br/>
+                {{ entry.rule.title }}
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
         <tr>
-          {% if result.data %}
-            {% for rule in result.data %}
-              <td>
-                <span class="non-highlighted">Rule ID</span> <br/>
-                {{ result.data.rule.id }}
-              </td>
-              <td>
-                <span class="non-highlighted">Rule Name</span> <br/>
-                {{ result.data.0.rule.title }}
-              </td>
-            {% endfor ‰}
-          {% else %}
-            <td>
-              No rule found.
-            </td>
-          {% endif %}
+          <td>
+            No rule found.
+          </td>
         </tr>
+        {% endif %}
       </table>
     </div>
   {% endfor %}

@@ -2580,9 +2580,9 @@
                     "contains": ["recordedfuture threat assessment result message"]
                 },
                 {
-                    "data_path": "action_result.summary.triage_contexts_available",
-                    "data_type": "numeric",
-                    "contains": ["recordedfuture threat assessment contexts count"]
+                    "data_path": "action_result.summary.contexts_available_for_threat_assessment",
+                    "data_type": "string",
+                    "contains": ["recordedfuture threat assessment contexts"]
                 },
                 {
                     "data_path": "summary.total_objects",

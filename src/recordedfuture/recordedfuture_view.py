@@ -171,7 +171,7 @@ def format_alert_result(result):
     return format_result(result)
 
 
-def alert_results(provides, all_app_runs, context):
+def alert_data_results(provides, all_app_runs, context):
     """Setup the view for alert results."""
     context['results'] = results = []
 
@@ -187,7 +187,26 @@ def alert_results(provides, all_app_runs, context):
                 continue
             results.append(formatted)
 
-    return 'alert_results.html'
+    return 'alert_data_results.html'
+
+
+def alert_rules_results(provides, all_app_runs, context):
+    """Render the list of Alert Rules that match the search."""
+    context['results'] = results = []
+
+    for summary, action_results in all_app_runs:
+
+        for result in action_results:
+            # formatted = format_alert_result(result, True)
+            formatted = {
+                'param': result.get_param(),
+                'data': result.get_data()
+            }
+            if not formatted:
+                continue
+            results.append(formatted)
+
+    return 'alert_rules_results.html'
 
 
 def format_threat_assessment_result(result, all_data=False):
