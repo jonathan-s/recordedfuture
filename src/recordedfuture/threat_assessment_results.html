@@ -52,11 +52,6 @@ and will be merged during compilation:
                 <span class="highlighted">Non-malicious</span>
               {% endif %}
               with score: {{ result.data.triage_riskscore }}
-              <br>
-              <span class="non-highlighted">Threshold: {{ result.data.threshold }}
-                ({{result.data.threshold_type}})</span>
-              <span class="rf-hover-info non-highlighted"
-                    title="Threshold max signifies that one entity must have a risk score that is at least equal to the threshold. Min signifies that all entities must have a risk score at least equal to the threshold."> [?] </span>
             </td>
           </tr>
           <!-- Entities and their evidence -->

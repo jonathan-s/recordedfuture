@@ -323,8 +323,8 @@
             ],
             "render": {
                 "type": "custom",
-                "view": "recordedfuture_view.alert_results",
-                "title": "Recorded Future Alerts"
+                "view": "recordedfuture_view.alert_data_results",
+                "title": "Recorded Future Alert Data"
             },
             "versions": "EQ(*)"
         },
@@ -408,11 +408,9 @@
                 }
             ],
             "render": {
-                "type": "table",
-                "width": 12,
-                "height": 5,
-                "title": "Alert Rules",
-                "menu_name": "alert data lookup"
+                "type": "custom",
+                "view": "recordedfuture_view.alert_rules_results",
+                "title": "Recorded Future Alert Rules"
             },
             "versions": "EQ(*)"
         },
