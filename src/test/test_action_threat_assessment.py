@@ -12,7 +12,7 @@ requests.packages.urllib3.disable_warnings()
 
 # Test these contexts
 CTXLIST = ['c2', 'phishing']
-THRESHOLD = 60
+THRESHOLD = 80
 
 # Logger
 LOGGER = logging.getLogger(__name__)
@@ -51,8 +51,8 @@ class RfThreatAssessmentTests(RfTests):
         ctxlist = conapi._query('soar/triage/contexts')
         for context in CTXLIST:
             datagroups = ctxlist.result[context]['datagroup'].keys()
-            # threshold = ctxlist.result[context]['default_threshold']
-            threshold = THRESHOLD
+            threshold = ctxlist.result[context]['default_threshold']
+            # threshold = THRESHOLD
             total_targets = 0
             for datagroup in datagroups:
                 targets = self._get_triage_entities_by_group(
@@ -68,7 +68,7 @@ class RfThreatAssessmentTests(RfTests):
                                 % context)
 
     # @unittest.skip('Debug')
-    def test_threat_assessment_positive_verdict(self):
+    def _test_threat_assessment_positive_verdict(self, context):
         """Check that entities with sufficient risk yields positive verdict.
 
         "Randomly" select at least one entity with sufficient risk for the
@@ -78,28 +78,36 @@ class RfThreatAssessmentTests(RfTests):
                                         app_name='phantom_unittests')
         ctxlist = conapi._query('soar/triage/contexts')
         print('contexts: %s' % CTXLIST)
-        for context in CTXLIST:
-            datagroups = ctxlist.result[context]['datagroup'].keys()
-            # threshold = ctxlist.result[context]['default_threshold']
-            threshold = THRESHOLD
-            threshold_type = 'max'
+        datagroups = ctxlist.result[context]['datagroup'].keys()
+        threshold = ctxlist.result[context]['default_threshold']
+        # threshold = THRESHOLD
 
-            print('datagroups %s: %s' % (context, datagroups))
-            for datagroup in datagroups:
-                targets = self._get_triage_entities_by_group(
-                    datagroup,
-                    '%sSubscore' % context,
-                    5, threshold - 1, 100)
+        print('datagroups %s: %s' % (context, datagroups))
+        valid_targets_found = False
+        for datagroup in datagroups:
+            targets = self._get_triage_entities_by_group(
+                datagroup,
+                '%sSubscore' % context,
+                5, threshold - 1, 100)
 
-                print('targets %s/%s: %s' % (context, datagroup, targets))
-                if not targets:
-                    self.assertTrue(False, '%s/%s: no targets found.'
-                                    % (context, datagroup))
-                else:
-                    target = targets[0].split(':', 1)[1]
-                    self._test_positive_verdict(context, datagroup,
-                                                target, threshold,
-                                                threshold_type)
+            print('targets %s/%s: %s' % (context, datagroup, targets))
+            if targets:
+                valid_targets_found = True
+                target = targets[0].split(':', 1)[1]
+                self._test_positive_verdict(context, datagroup,
+                                            target)
+
+        self.assertTrue(valid_targets_found, 'No valid test targets found for'
+                        'context "%s".' % context)
+
+
+    def test_threat_assessment_positive_verdict_c2(self):
+        """Check the c2 context."""
+        self._test_threat_assessment_positive_verdict('c2')
+
+    def test_threat_assessment_positive_verdict_phishing(self):
+        """Check the phishing context."""
+        self._test_threat_assessment_positive_verdict('phishing')
 
     def test_threat_assessment_negative_verdict(self):
         """Check that entities without sufficient risk yields negative verdict.
@@ -112,17 +120,15 @@ class RfThreatAssessmentTests(RfTests):
         print('contexts: %s' % CTXLIST)
         for context in CTXLIST:
             datagroups = ctxlist.result[context]['datagroup'].keys()
-            # threshold = ctxlist.result[context]['default_threshold']
-            threshold = THRESHOLD
-            threshold_type = 'max'
+            threshold = ctxlist.result[context]['default_threshold']
+            # threshold = THRESHOLD
 
             print('datagroups %s: %s' % (context, datagroups))
             for datagroup in datagroups:
-                self._test_negative_verdict(context, datagroup, threshold,
-                                            threshold_type)
+                self._test_negative_verdict(context, datagroup)
 
     def _create_threat_assessment_event(self, label, context, datagroup,
-                                        threshold, threshold_type, target=None):
+                                        target=None):
         """Create a threat assessment event for testing.
 
         The event is expected to be consumed by the
@@ -131,10 +137,6 @@ class RfThreatAssessmentTests(RfTests):
         test_data = copy.deepcopy(TESTDATA)
         test_data['cs1'] = context
         test_data['cs1Label'] = 'Threat Assessment Context'
-        test_data['cs2'] = threshold
-        test_data['cs2Label'] = 'Threshold'
-        test_data['cs3'] = threshold_type
-        test_data['cs3Label'] = 'Threshold Type'
         if target:
             test_data[DGTOCEF[datagroup]].append(target)
 
@@ -157,14 +159,12 @@ class RfThreatAssessmentTests(RfTests):
         return ares
 
     def _test_positive_verdict(self,
-                               context, datagroup, target,
-                               threshold, threshold_type):
+                               context, datagroup, target):
         """Test positive verdict."""
         # Create event and collect playbook result
         label = 'Positive Test Event Threat Assessment (%s/%s)' % (context,
                                                                    datagroup)
         ares = self._create_threat_assessment_event(label, context, datagroup,
-                                                    threshold, threshold_type,
                                                     target)
         # Verify the verdict
         verdict = ares['data'][0]['result_data'][0]['data'][0][
@@ -172,14 +172,12 @@ class RfThreatAssessmentTests(RfTests):
         self.assertEqual(verdict, True, '%s/%s did not yield true verdict'
                          % (context, datagroup))
 
-    def _test_negative_verdict(self,
-                               context, datagroup, threshold, threshold_type):
+    def _test_negative_verdict(self, context, datagroup):
         """Test negative verdict."""
         # Create event and collect playbook result
         label = 'Negative Test Event Threat Assessment (%s/%s)' % (context,
                                                                    datagroup)
-        ares = self._create_threat_assessment_event(label, context, datagroup,
-                                                    threshold, threshold_type)
+        ares = self._create_threat_assessment_event(label, context, datagroup)
         # Verify the verdict
         verdict = ares['data'][0]['result_data'][0]['data'][0][
             'verdict']
