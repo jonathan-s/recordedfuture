@@ -72,8 +72,7 @@ class RfIpReputationTests(RfTests):
         for rd in result_data:
             # Assert success
             self.assertEqual(rd['status'], 'success')
-            # Assert message is as should
-            self.assertEqual(rd['message'], message)
+
             # Assert data
             self.assertEqual(rd['data'], response)
 
