@@ -536,7 +536,7 @@ def check_for_results(action=None, success=None, container=None, results=None, h
 
     # call connected blocks if condition 1 matched
     if matched_artifacts_1 or matched_results_1:
-        email_notification(action=action, success=success, container=container, results=results, handle=handle)
+        slack_notification(action=action, success=success, container=container, results=results, handle=handle)
         return
 
     # call connected blocks for 'else' condition 2
@@ -576,8 +576,8 @@ def only_if_results(action=None, success=None, container=None, results=None, han
 
     return
 
-def email_notification(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('email_notification() called')
+def slack_notification(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('slack_notification() called')
     
     template = """*Alert from Recorded Futures App for Phantom - threat hunting playbook*
 
@@ -602,35 +602,29 @@ def email_notification(action=None, success=None, container=None, results=None, 
         "container:url",
     ]
 
-    phantom.format(container=container, template=template, parameters=parameters, name="email_notification")
+    phantom.format(container=container, template=template, parameters=parameters, name="slack_notification")
 
-    send_email_1(container=container)
+    send_message_2(container=container)
 
     return
 
-def send_email_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
-    phantom.debug('send_email_1() called')
+def send_message_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
+    phantom.debug('send_message_2() called')
     
     #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
     
-    # collect data for 'send_email_1' call
-    formatted_data_1 = phantom.get_format_data(name='email_notification')
+    # collect data for 'send_message_2' call
+    formatted_data_1 = phantom.get_format_data(name='slack_notification')
 
     parameters = []
     
-    # build parameters list for 'send_email_1' call
+    # build parameters list for 'send_message_2' call
     parameters.append({
-        'body': formatted_data_1,
-        'from': "",
-        'attachments': "",
-        'to': "",
-        'cc': "",
-        'bcc': "",
-        'headers': "",
-        'subject': "Malicous IP with related entities found in Splunk",
+        'message': formatted_data_1,
+        'destination': "# phantom-demo",
     })
 
-    phantom.act("send email", parameters=parameters, assets=['smtp'], name="send_email_1")
+    phantom.act("send message", parameters=parameters, assets=['slack'], name="send_message_2")
 
     return
 

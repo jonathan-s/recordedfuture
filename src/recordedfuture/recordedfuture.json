@@ -2552,7 +2552,7 @@
         {
             "action": "list contexts",
             "identifier": "list_contexts",
-            "description": "Get a list of possible contexts to use in threat triage",
+            "description": "Get a list of possible contexts to use in threat assessment",
             "verbose": "",
             "type": "investigate",
             "read_only": true,
