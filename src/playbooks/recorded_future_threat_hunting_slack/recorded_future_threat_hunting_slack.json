@@ -7666,7 +7666,7 @@
     "create_time": "2020-03-12T14:47:48.643444+00:00",
     "draft_mode": false,
     "labels": [
-        "threat_hunting"
+        "*"
     ],
     "tags": [
         "IP_lookup"
