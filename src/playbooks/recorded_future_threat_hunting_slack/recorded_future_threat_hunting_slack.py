@@ -589,7 +589,7 @@ def slack_notification(action=None, success=None, container=None, results=None, 
 >Files:    *{4}*
 >Vulnerabilities:    *{5}*
 >
->More details are available in Phantom: https://phantom-qa-45-03{6}"""
+>More details are available in Phantom: {6}"""
 
     # parameter list for template variable replacement
     parameters = [

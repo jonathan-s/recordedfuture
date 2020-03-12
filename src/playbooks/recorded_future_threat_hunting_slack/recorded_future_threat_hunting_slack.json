@@ -7,6 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "Starting with a single IP address, this playbook gathers a list of related IP addresses, domain names, file hashes, and vulnerability CVE's from Recorded Future. Then Splunk is used to build threat hunting lookup tables and search across multiple data sources for events containing the related entities. Finally, IP addresses are blocked if approved by an analyst and an email is sent to notify a responder if more than 10 of a certain kind of entity are matched at once.",
+            "hash": "cfca37e00d2238bb801442376f60716bdc9eee8c",
             "joint": {
                 "cells": [
                     {
@@ -7109,208 +7110,6 @@
                         "attrs": {
                             ".background": {
                                 "fill": "#FFFFFF",
-                                "stroke": "#818D99"
-                            },
-                            ".color-band": {
-                                "fill": "#171D21"
-                            },
-                            ".format": {
-                                "text": "slack notification"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out-1": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out-1>.port-body": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "format"
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def slack_notification(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('slack_notification() called')\n    \n    template = \"\"\"*Alert from Recorded Futures App for Phantom - threat hunting playbook*\n\n>When processing the potentially malicious destination IP *{0}* with a Risk Score of *{1}*, the playbook have found one or more of its related entities present in Splunk. \n>\n>The following number of entities with at least 10 references in Recorded Future recent events were found:\n>IP Addresses:    *{2}* \n>Domains:    *{3}* \n>Files:    *{4}*\n>Vulnerabilities:    *{5}*\n>\n>More details are available in Phantom: https://phantom-qa-45-03{6}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"ip_reputation_1:action_result.data.*.name\",\n        \"ip_reputation_1:action_result.data.*.riskscore\",\n        \"splunksearch_for_ip:action_result.summary.total_events\",\n        \"spunksearch_for_domains:action_result.summary.total_events\",\n        \"splunksearch_for_files:action_result.summary.total_events\",\n        \"spunksearch_for_vulns:action_result.summary.total_events\",\n        \"container:url\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"slack_notification\")\n\n    send_message_2(container=container)\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "connected_to_start": true,
-                        "connection_name": "spunksearch for domains, splunksearch for files, spunksearch for vulns, splunksearch for ip",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "slack notification",
-                        "description": "",
-                        "format": "format",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "bd5ae34f-d6de-46a5-ac1f-993f04a702ad",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 611,
-                        "line_start": 579,
-                        "message": "Configuring now",
-                        "name": "format",
-                        "notes": "",
-                        "number": 15,
-                        "order": 23,
-                        "outPorts": [
-                            "out-1"
-                        ],
-                        "parameters": [
-                            {
-                                "position": 0,
-                                "type": "",
-                                "value": "ip_reputation_1:action_result.data.*.name"
-                            },
-                            {
-                                "position": 1,
-                                "type": "",
-                                "value": "ip_reputation_1:action_result.data.*.riskscore"
-                            },
-                            {
-                                "position": 7,
-                                "type": "",
-                                "value": "splunksearch_for_ip:action_result.summary.total_events"
-                            },
-                            {
-                                "position": 8,
-                                "type": "",
-                                "value": "spunksearch_for_domains:action_result.summary.total_events"
-                            },
-                            {
-                                "position": 9,
-                                "type": "",
-                                "value": "splunksearch_for_files:action_result.summary.total_events"
-                            },
-                            {
-                                "position": 10,
-                                "type": "",
-                                "value": "spunksearch_for_vulns:action_result.summary.total_events"
-                            },
-                            {
-                                "position": 6,
-                                "type": "",
-                                "value": "container:url"
-                            }
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 1600,
-                            "y": -180
-                        },
-                        "previous_function": "",
-                        "previous_name": "slack_notification",
-                        "show_number": true,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "format",
-                        "status": "",
-                        "template": "*Alert from Recorded Futures App for Phantom - threat hunting playbook*\n\n>When processing the potentially malicious destination IP *{0}* with a Risk Score of *{1}*, the playbook have found one or more of its related entities present in Splunk. \n>\n>The following number of entities with at least 10 references in Recorded Future recent events were found:\n>IP Addresses:    *{2}* \n>Domains:    *{3}* \n>Files:    *{4}*\n>Vulnerabilities:    *{5}*\n>\n>More details are available in Phantom: https://phantom-qa-45-03{6}",
-                        "title": "format",
-                        "type": "coa.Format",
-                        "warn": false,
-                        "z": 1044
-                    },
-                    {
-                        "active": false,
-                        "angle": 0,
-                        "attrs": {
-                            ".background": {
-                                "fill": "#FFFFFF",
                                 "stroke": "#637282",
                                 "transform": "rotate(45 30 70)"
                             },
@@ -7655,6 +7454,208 @@
                         "type": "coa.StartEnd",
                         "warn": false,
                         "z": 1046
+                    },
+                    {
+                        "active": false,
+                        "angle": 0,
+                        "attrs": {
+                            ".background": {
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
+                            },
+                            ".color-band": {
+                                "fill": "#171D21"
+                            },
+                            ".format": {
+                                "text": "slack notification"
+                            },
+                            ".inPorts>.port-in": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".inPorts>.port-in>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".message": {
+                                "opacity": 0,
+                                "text": "Configuring now"
+                            },
+                            ".outPorts>.port-out-1": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out-1>.port-body": {
+                                "port": {
+                                    "id": "out-1",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "text": "format"
+                            },
+                            "g.code image": {
+                                "opacity": 1
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
+                            }
+                        },
+                        "block_code": "def slack_notification(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('slack_notification() called')\n    \n    template = \"\"\"*Alert from Recorded Futures App for Phantom - threat hunting playbook*\n\n>When processing the potentially malicious destination IP *{0}* with a Risk Score of *{1}*, the playbook have found one or more of its related entities present in Splunk. \n>\n>The following number of entities with at least 10 references in Recorded Future recent events were found:\n>IP Addresses:    *{2}* \n>Domains:    *{3}* \n>Files:    *{4}*\n>Vulnerabilities:    *{5}*\n>\n>More details are available in Phantom: {6}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"ip_reputation_1:action_result.data.*.name\",\n        \"ip_reputation_1:action_result.data.*.riskscore\",\n        \"splunksearch_for_ip:action_result.summary.total_events\",\n        \"spunksearch_for_domains:action_result.summary.total_events\",\n        \"splunksearch_for_files:action_result.summary.total_events\",\n        \"spunksearch_for_vulns:action_result.summary.total_events\",\n        \"container:url\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"slack_notification\")\n\n    send_message_2(container=container)\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": false,
+                        "connected_to_start": true,
+                        "connection_name": "spunksearch for domains, splunksearch for files, spunksearch for vulns, splunksearch for ip",
+                        "connection_type": "action",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "slack notification",
+                        "description": "",
+                        "format": "format",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "bd5ae34f-d6de-46a5-ac1f-993f04a702ad",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 611,
+                        "line_start": 579,
+                        "message": "Configuring now",
+                        "name": "format",
+                        "notes": "",
+                        "number": 15,
+                        "order": 23,
+                        "outPorts": [
+                            "out-1"
+                        ],
+                        "parameters": [
+                            {
+                                "position": 0,
+                                "type": "",
+                                "value": "ip_reputation_1:action_result.data.*.name"
+                            },
+                            {
+                                "position": 1,
+                                "type": "",
+                                "value": "ip_reputation_1:action_result.data.*.riskscore"
+                            },
+                            {
+                                "position": 7,
+                                "type": "",
+                                "value": "splunksearch_for_ip:action_result.summary.total_events"
+                            },
+                            {
+                                "position": 8,
+                                "type": "",
+                                "value": "spunksearch_for_domains:action_result.summary.total_events"
+                            },
+                            {
+                                "position": 9,
+                                "type": "",
+                                "value": "splunksearch_for_files:action_result.summary.total_events"
+                            },
+                            {
+                                "position": 10,
+                                "type": "",
+                                "value": "spunksearch_for_vulns:action_result.summary.total_events"
+                            },
+                            {
+                                "position": 6,
+                                "type": "",
+                                "value": "container:url"
+                            }
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 1600,
+                            "y": -180
+                        },
+                        "previous_function": "",
+                        "previous_name": "slack_notification",
+                        "show_number": true,
+                        "size": {
+                            "height": 100,
+                            "width": 180
+                        },
+                        "state": "format",
+                        "status": "",
+                        "template": "*Alert from Recorded Futures App for Phantom - threat hunting playbook*\n\n>When processing the potentially malicious destination IP *{0}* with a Risk Score of *{1}*, the playbook have found one or more of its related entities present in Splunk. \n>\n>The following number of entities with at least 10 references in Recorded Future recent events were found:\n>IP Addresses:    *{2}* \n>Domains:    *{3}* \n>Files:    *{4}*\n>Vulnerabilities:    *{5}*\n>\n>More details are available in Phantom: {6}",
+                        "title": "format",
+                        "type": "coa.Format",
+                        "warn": false,
+                        "z": 1048
                     }
                 ]
             },
@@ -7663,7 +7664,7 @@
         "schema": 3,
         "version": "4.5.15922"
     },
-    "create_time": "2020-03-12T14:47:48.643444+00:00",
+    "create_time": "2020-03-12T21:33:17.634724+00:00",
     "draft_mode": false,
     "labels": [
         "*"

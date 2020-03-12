@@ -7,7 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "Starting with a single IP address, this playbook gathers a list of related IP addresses, domain names, file hashes, and vulnerability CVE's from Recorded Future. Then Splunk is used to build threat hunting lookup tables and search across multiple data sources for events containing the related entities. Finally, IP addresses are blocked if approved by an analyst and an email is sent to notify a responder if more than 10 of a certain kind of entity are matched at once.",
-            "hash": "1c0af002f98366ece29de50daa3e7592ed195246",
+            "hash": "c7ae17e4b2e89db2c16212826c8b675450d99f7a",
             "joint": {
                 "cells": [
                     {
@@ -217,8 +217,8 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 650,
-                        "line_start": 637,
+                        "line_end": 649,
+                        "line_start": 636,
                         "name": "",
                         "notes": "",
                         "number": 0,
@@ -7088,208 +7088,6 @@
                         "z": 1044
                     },
                     {
-                        "active": false,
-                        "angle": 0,
-                        "attrs": {
-                            ".background": {
-                                "fill": "#FFFFFF",
-                                "stroke": "#818D99"
-                            },
-                            ".color-band": {
-                                "fill": "#171D21"
-                            },
-                            ".format": {
-                                "text": "email notification"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out-1": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out-1>.port-body": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "format"
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def email_notification(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('email_notification() called')\n    \n    template = \"\"\"*Alert from Recorded Futures App for Phantom - threat hunting playbook*\n\n>When processing the potentially malicious destination IP *{0}* with a Risk Score of *{1}*, the playbook have found one or more of its related entities present in Splunk. \n>\n>The following number of entities with at least 10 references in Recorded Future recent events were found:\n>IP Addresses:    *{2}* \n>Domains:    *{3}* \n>Files:    *{4}*\n>Vulnerabilities:    *{5}*\n>\n>More details are available in Phantom: https://phantom-qa-45-03{6}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"ip_reputation_1:action_result.data.*.name\",\n        \"ip_reputation_1:action_result.data.*.riskscore\",\n        \"splunksearch_for_ip:action_result.summary.total_events\",\n        \"spunksearch_for_domains:action_result.summary.total_events\",\n        \"splunksearch_for_files:action_result.summary.total_events\",\n        \"spunksearch_for_vulns:action_result.summary.total_events\",\n        \"container:url\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"email_notification\")\n\n    send_email_1(container=container)\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "connected_to_start": true,
-                        "connection_name": "spunksearch for domains, splunksearch for files, spunksearch for vulns, splunksearch for ip",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "email notification",
-                        "description": "",
-                        "format": "format",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "bd5ae34f-d6de-46a5-ac1f-993f04a702ad",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 611,
-                        "line_start": 579,
-                        "message": "Configuring now",
-                        "name": "format",
-                        "notes": "",
-                        "number": 15,
-                        "order": 23,
-                        "outPorts": [
-                            "out-1"
-                        ],
-                        "parameters": [
-                            {
-                                "position": 0,
-                                "type": "",
-                                "value": "ip_reputation_1:action_result.data.*.name"
-                            },
-                            {
-                                "position": 1,
-                                "type": "",
-                                "value": "ip_reputation_1:action_result.data.*.riskscore"
-                            },
-                            {
-                                "position": 7,
-                                "type": "",
-                                "value": "splunksearch_for_ip:action_result.summary.total_events"
-                            },
-                            {
-                                "position": 8,
-                                "type": "",
-                                "value": "spunksearch_for_domains:action_result.summary.total_events"
-                            },
-                            {
-                                "position": 9,
-                                "type": "",
-                                "value": "splunksearch_for_files:action_result.summary.total_events"
-                            },
-                            {
-                                "position": 10,
-                                "type": "",
-                                "value": "spunksearch_for_vulns:action_result.summary.total_events"
-                            },
-                            {
-                                "position": 6,
-                                "type": "",
-                                "value": "container:url"
-                            }
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 1580,
-                            "y": -180
-                        },
-                        "previous_function": "",
-                        "previous_name": "email_notification",
-                        "show_number": true,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "format",
-                        "status": "",
-                        "template": "*Alert from Recorded Futures App for Phantom - threat hunting playbook*\n\n>When processing the potentially malicious destination IP *{0}* with a Risk Score of *{1}*, the playbook have found one or more of its related entities present in Splunk. \n>\n>The following number of entities with at least 10 references in Recorded Future recent events were found:\n>IP Addresses:    *{2}* \n>Domains:    *{3}* \n>Files:    *{4}*\n>Vulnerabilities:    *{5}*\n>\n>More details are available in Phantom: https://phantom-qa-45-03{6}",
-                        "title": "format",
-                        "type": "coa.Format",
-                        "warn": false,
-                        "z": 1047
-                    },
-                    {
                         "attrs": {
                             ".connection": {
                                 "stroke": "#818D99",
@@ -7342,7 +7140,7 @@
                             "cc": "",
                             "from": "",
                             "headers": "",
-                            "subject": "Malicous IP with related entities found in Splunk",
+                            "subject": "Alert from Recorded Futures App for Phantom - threat hunting playbook",
                             "to": ""
                         },
                         "angle": 0,
@@ -7370,7 +7168,7 @@
                                     "cc": "",
                                     "from": "",
                                     "headers": "",
-                                    "subject": "Malicous IP with related entities found in Splunk",
+                                    "subject": "Alert from Recorded Futures App for Phantom - threat hunting playbook",
                                     "to": ""
                                 },
                                 "has_app": true,
@@ -7613,7 +7411,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def send_email_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('send_email_1() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'send_email_1' call\n    formatted_data_1 = phantom.get_format_data(name='email_notification')\n\n    parameters = []\n    \n    # build parameters list for 'send_email_1' call\n    parameters.append({\n        'body': formatted_data_1,\n        'from': \"\",\n        'attachments': \"\",\n        'to': \"\",\n        'cc': \"\",\n        'bcc': \"\",\n        'headers': \"\",\n        'subject': \"Malicous IP with related entities found in Splunk\",\n    })\n\n    phantom.act(\"send email\", parameters=parameters, assets=['smtp'], name=\"send_email_1\")\n\n    return",
+                        "block_code": "def send_email_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('send_email_1() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'send_email_1' call\n    formatted_data_1 = phantom.get_format_data(name='email_notification')\n\n    parameters = []\n    \n    # build parameters list for 'send_email_1' call\n    parameters.append({\n        'body': formatted_data_1,\n        'from': \"\",\n        'attachments': \"\",\n        'to': \"\",\n        'cc': \"\",\n        'bcc': \"\",\n        'headers': \"\",\n        'subject': \"Alert from Recorded Futures App for Phantom - threat hunting playbook\",\n    })\n\n    phantom.act(\"send email\", parameters=parameters, assets=['smtp'], name=\"send_email_1\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -7638,8 +7436,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 637,
-                        "line_start": 611,
+                        "line_end": 636,
+                        "line_start": 610,
                         "message": "Configuring now",
                         "name": "send email",
                         "notes": "",
@@ -7720,8 +7518,210 @@
                         "status": "",
                         "title": "Generic",
                         "type": "coa.Action",
-                        "warn": "",
-                        "z": 1049
+                        "warn": false,
+                        "z": 1051
+                    },
+                    {
+                        "active": false,
+                        "angle": 0,
+                        "attrs": {
+                            ".background": {
+                                "fill": "#FFFFFF",
+                                "stroke": "#818D99"
+                            },
+                            ".color-band": {
+                                "fill": "#171D21"
+                            },
+                            ".format": {
+                                "text": "email notification"
+                            },
+                            ".inPorts>.port-in": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".inPorts>.port-in>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".message": {
+                                "opacity": 0,
+                                "text": "Configuring now"
+                            },
+                            ".outPorts>.port-out-1": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out-1>.port-body": {
+                                "port": {
+                                    "id": "out-1",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "text": "format"
+                            },
+                            "g.code image": {
+                                "opacity": 1
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
+                            }
+                        },
+                        "block_code": "def email_notification(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('email_notification() called')\n    \n    template = \"\"\"When processing the potentially malicious destination IP *{0}* with a Risk Score of *{1}*, the playbook have found one or more of its related entities present in Splunk. \n\nThe following number of entities with at least 10 references in Recorded Future recent events were found:\n\nIP Addresses:    *{2}* \nDomains:    *{3}* \nFiles:    *{4}*\nVulnerabilities:    *{5}*\n\nMore details are available in Phantom: {6}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"ip_reputation_1:action_result.data.*.name\",\n        \"ip_reputation_1:action_result.data.*.riskscore\",\n        \"splunksearch_for_ip:action_result.summary.total_events\",\n        \"spunksearch_for_domains:action_result.summary.total_events\",\n        \"splunksearch_for_files:action_result.summary.total_events\",\n        \"spunksearch_for_vulns:action_result.summary.total_events\",\n        \"container:url\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"email_notification\")\n\n    send_email_1(container=container)\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": false,
+                        "connected_to_start": true,
+                        "connection_name": "spunksearch for domains, splunksearch for files, spunksearch for vulns, splunksearch for ip",
+                        "connection_type": "action",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "email notification",
+                        "description": "",
+                        "format": "format",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "bd5ae34f-d6de-46a5-ac1f-993f04a702ad",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 610,
+                        "line_start": 579,
+                        "message": "Configuring now",
+                        "name": "format",
+                        "notes": "",
+                        "number": 15,
+                        "order": 23,
+                        "outPorts": [
+                            "out-1"
+                        ],
+                        "parameters": [
+                            {
+                                "position": 0,
+                                "type": "",
+                                "value": "ip_reputation_1:action_result.data.*.name"
+                            },
+                            {
+                                "position": 1,
+                                "type": "",
+                                "value": "ip_reputation_1:action_result.data.*.riskscore"
+                            },
+                            {
+                                "position": 7,
+                                "type": "",
+                                "value": "splunksearch_for_ip:action_result.summary.total_events"
+                            },
+                            {
+                                "position": 8,
+                                "type": "",
+                                "value": "spunksearch_for_domains:action_result.summary.total_events"
+                            },
+                            {
+                                "position": 9,
+                                "type": "",
+                                "value": "splunksearch_for_files:action_result.summary.total_events"
+                            },
+                            {
+                                "position": 10,
+                                "type": "",
+                                "value": "spunksearch_for_vulns:action_result.summary.total_events"
+                            },
+                            {
+                                "position": 6,
+                                "type": "",
+                                "value": "container:url"
+                            }
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 1580,
+                            "y": -180
+                        },
+                        "previous_function": "",
+                        "previous_name": "email_notification",
+                        "show_number": true,
+                        "size": {
+                            "height": 100,
+                            "width": 180
+                        },
+                        "state": "format",
+                        "status": "",
+                        "template": "When processing the potentially malicious destination IP *{0}* with a Risk Score of *{1}*, the playbook have found one or more of its related entities present in Splunk. \n\nThe following number of entities with at least 10 references in Recorded Future recent events were found:\n\nIP Addresses:    *{2}* \nDomains:    *{3}* \nFiles:    *{4}*\nVulnerabilities:    *{5}*\n\nMore details are available in Phantom: {6}",
+                        "title": "format",
+                        "type": "coa.Format",
+                        "warn": false,
+                        "z": 1053
                     }
                 ]
             },
@@ -7730,7 +7730,7 @@
         "schema": 3,
         "version": "4.5.15922"
     },
-    "create_time": "2020-03-12T15:03:10.849852+00:00",
+    "create_time": "2020-03-12T21:33:00.589846+00:00",
     "draft_mode": false,
     "labels": [
         "*"

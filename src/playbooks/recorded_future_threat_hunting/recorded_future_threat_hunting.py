@@ -579,17 +579,16 @@ def only_if_results(action=None, success=None, container=None, results=None, han
 def email_notification(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):
     phantom.debug('email_notification() called')
     
-    template = """*Alert from Recorded Futures App for Phantom - threat hunting playbook*
+    template = """When processing the potentially malicious destination IP *{0}* with a Risk Score of *{1}*, the playbook have found one or more of its related entities present in Splunk. 
 
->When processing the potentially malicious destination IP *{0}* with a Risk Score of *{1}*, the playbook have found one or more of its related entities present in Splunk. 
->
->The following number of entities with at least 10 references in Recorded Future recent events were found:
->IP Addresses:    *{2}* 
->Domains:    *{3}* 
->Files:    *{4}*
->Vulnerabilities:    *{5}*
->
->More details are available in Phantom: https://phantom-qa-45-03{6}"""
+The following number of entities with at least 10 references in Recorded Future recent events were found:
+
+IP Addresses:    *{2}* 
+Domains:    *{3}* 
+Files:    *{4}*
+Vulnerabilities:    *{5}*
+
+More details are available in Phantom: {6}"""
 
     # parameter list for template variable replacement
     parameters = [
@@ -627,7 +626,7 @@ def send_email_1(action=None, success=None, container=None, results=None, handle
         'cc': "",
         'bcc': "",
         'headers': "",
-        'subject': "Malicous IP with related entities found in Splunk",
+        'subject': "Alert from Recorded Futures App for Phantom - threat hunting playbook",
     })
 
     phantom.act("send email", parameters=parameters, assets=['smtp'], name="send_email_1")
