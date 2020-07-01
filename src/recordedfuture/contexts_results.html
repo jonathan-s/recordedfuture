@@ -1,10 +1,6 @@
 {% extends 'widgets/widget_template.html' %}
 {% load custom_template %}
 ​
-{% block title_color %}{{ title_color|default:'white' }}{% endblock %}
-{% block title_text_color %}{{ title_text_color|default:'rgb(101, 71, 150)' }}{% endblock %}
-{% block body_color %}{{ body_color|default:'white' }}{% endblock %}
-{% block body_text_color %}{{ body_text_color|default:'black' }}{% endblock %}
 {% block custom_title_prop %}{% if title_logo %}style="background-size: auto 60%; background-position: 50%; background-repeat: no-repeat; background-image: url('/app_resource/{{ title_logo }}');"{% endif %}{% endblock %}
 {% block title1 %}{{ title1 }}{% endblock %}
 {% block title2 %}{{ title2 }}{% endblock %}
@@ -18,7 +14,7 @@ File: contexts_results.html
 ​
 Recorded Future App View html template file
 ​
-Copyright (c) Recorded Future, Inc., 2016
+Copyright (c) Recorded Future, Inc., 2019-2020
 ​
 This unpublished material is proprietary to Recorded Future.
 All rights reserved. The methods and
@@ -39,7 +35,7 @@ and will be merged during compilation:
   {% for result in results %} <!-- loop for each result -->
 
   <!------------------- For each Result ---------------------->
-  ​
+
     {% if result.data %} <!-- else case will handle errors and no data found responses -->
       <div class="rf-box">
         <table class="rf-table">
@@ -57,7 +53,20 @@ and will be merged during compilation:
           {% endfor %}
         </table>
       </div>
+    {% else %}
+      <table class="rf-table">
+        <tr>
+          <th>Status</th>
+          <th>Message</th>
+        </tr>
+        <tr>
+          <td>{{ result.status }}</td>
+          <td>{{ result.message }}</td>
+        </tr>
+      </table>
     {% endif %}
+
+
   {% endfor %} <!-- loop for each result end -->
 </div> <!-- Main Div -->
 ​

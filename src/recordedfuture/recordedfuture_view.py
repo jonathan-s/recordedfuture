@@ -1,7 +1,7 @@
 # --
 # File: recordedfuture_view.py
 #
-# Copyright (c) Recorded Future, Inc., 2019
+# Copyright (c) Recorded Future, Inc., 2019-2020
 #
 # This unpublished material is proprietary to Recorded Future.
 # All rights reserved. The methods and
@@ -14,6 +14,7 @@
 # -----------------------------------------
 # Recorded Future App View python file
 # -----------------------------------------
+
 APP_URL = 'https://app.recordedfuture.com/live/sc/entity/%s%%3A%s'
 VULN_APP_URL = 'https://app.recordedfuture.com/live/sc/entity/%s'
 
@@ -25,34 +26,37 @@ def format_result(result, all_data=False):
     if data:
         retval['data'] = data[0]
 
-    if data and 'risk' in retval['data'] \
-            and retval['data']['risk']['score'] is not None:
-        if 'domain' in retval['param']:
-            retval['intelCard'] = APP_URL % ('idn', retval['param']['domain'])
-        elif 'ip' in retval['param']:
-            retval['intelCard'] = APP_URL % ('ip', retval['param']['ip'])
-        elif 'hash' in retval['param']:
-            retval['intelCard'] = APP_URL % ('hash', retval['param']['hash'])
-        elif 'url' in retval['param']:
-            retval['intelCard'] = APP_URL % ('url', retval['param']['url'])
-        elif 'vulnerability' in retval['param']:
-            retval['intelCard'] = VULN_APP_URL \
-                                  % (retval['data']['entity']['id'])
+    try:
+        if data and 'risk' in retval['data'] \
+                and retval['data']['risk']['score'] is not None:
+            if 'domain' in retval['param']:
+                retval['intelCard'] = APP_URL % ('idn', retval['param']['domain'])
+            elif 'ip' in retval['param']:
+                retval['intelCard'] = APP_URL % ('ip', retval['param']['ip'])
+            elif 'hash' in retval['param']:
+                retval['intelCard'] = APP_URL % ('hash', retval['param']['hash'])
+            elif 'url' in retval['param']:
+                retval['intelCard'] = APP_URL % ('url', retval['param']['url'])
+            elif 'vulnerability' in retval['param']:
+                retval['intelCard'] = VULN_APP_URL \
+                                    % (retval['data']['entity']['id'])
 
-        for rule in retval['data']['risk']['evidenceDetails']:
-            rule['timestampShort'] = rule['timestamp'][:10]
+            for rule in retval['data']['risk']['evidenceDetails']:
+                rule['timestampShort'] = rule['timestamp'][:10]
 
-    if data and 'cvss' in retval['data'] \
-            and 'published' in retval['data']['cvss']:
-        retval['data']['cvss']['publishedShort'] = \
-            retval['data']['cvss']['published'][:10]
-        retval['data']['cvss']['lastModifiedShort'] = \
-            retval['data']['cvss']['lastModified'][:10]
+        if data and 'cvss' in retval['data'] \
+                and 'published' in retval['data']['cvss']:
+            retval['data']['cvss']['publishedShort'] = \
+                retval['data']['cvss']['published'][:10]
+            retval['data']['cvss']['lastModifiedShort'] = \
+                retval['data']['cvss']['lastModified'][:10]
 
-    retval['data']['timestamps']['firstSeenShort'] = \
-        retval['data']['timestamps']['firstSeen'][:10]
-    retval['data']['timestamps']['lastSeenShort'] = \
-        retval['data']['timestamps']['lastSeen'][:10]
+        retval['data']['timestamps']['firstSeenShort'] = \
+            retval['data']['timestamps']['firstSeen'][:10]
+        retval['data']['timestamps']['lastSeenShort'] = \
+            retval['data']['timestamps']['lastSeen'][:10]
+    except:
+        retval['data'] = None
 
     summary = result.get_summary()
     if (summary):

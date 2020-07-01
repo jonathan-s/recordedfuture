@@ -1,10 +1,6 @@
 {% extends 'widgets/widget_template.html' %}
 {% load custom_template %}
 
-{% block title_color %}{{ title_color|default:'white' }}{% endblock %}
-{% block title_text_color %}{{ title_text_color|default:'rgb(101, 71, 150)' }}{% endblock %}
-{% block body_color %}{{ body_color|default:'white' }}{% endblock %}
-{% block body_text_color %}{{ body_text_color|default:'black' }}{% endblock %}
 {% block custom_title_prop %}{% if title_logo %}style="background-size: auto 60%; background-position: 50%; background-repeat: no-repeat; background-image: url('/app_resource/{{ title_logo }}');"{% endif %}{% endblock %}
 {% block title1 %}{{ title1 }}{% endblock %}
 {% block title2 %}{{ title2 }}{% endblock %}
@@ -14,11 +10,11 @@
 {% block widget_content %} <!-- Main Start Block -->
 
 <!--
-File: alert_results.html
+File: alert_rules_results.html
 
 Recorded Future App View html template file
 
-Copyright (c) Recorded Future, Inc., 2019
+Copyright (c) Recorded Future, Inc., 2019-2020
 
 This unpublished material is proprietary to Recorded Future.
 All rights reserved. The methods and
@@ -32,6 +28,7 @@ of Recorded Future.
 Style elements are defined in a separate file, named below,
 and will be merged during compilation:
        recordedfuture_style.css          -->
+
 
 <div class="rf-widget">
   <!-- Main Div -->
@@ -57,7 +54,7 @@ and will be merged during compilation:
         {% else %}
         <tr>
           <td>
-            No rule found.
+            No rule found
           </td>
         </tr>
         {% endif %}

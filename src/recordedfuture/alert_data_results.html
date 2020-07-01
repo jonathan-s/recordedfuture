@@ -1,10 +1,6 @@
 {% extends 'widgets/widget_template.html' %}
 {% load custom_template %}
 
-{% block title_color %}{{ title_color|default:'white' }}{% endblock %}
-{% block title_text_color %}{{ title_text_color|default:'rgb(101, 71, 150)' }}{% endblock %}
-{% block body_color %}{{ body_color|default:'white' }}{% endblock %}
-{% block body_text_color %}{{ body_text_color|default:'black' }}{% endblock %}
 {% block custom_title_prop %}{% if title_logo %}style="background-size: auto 60%; background-position: 50%; background-repeat: no-repeat; background-image: url('/app_resource/{{ title_logo }}');"{% endif %}{% endblock %}
 {% block title1 %}{{ title1 }}{% endblock %}
 {% block title2 %}{{ title2 }}{% endblock %}
@@ -14,11 +10,11 @@
 {% block widget_content %} <!-- Main Start Block -->
 
 <!--
-File: alert_results.html
+File: alert_data_results.html
 
 Recorded Future App View html template file
 
-Copyright (c) Recorded Future, Inc., 2019
+Copyright (c) Recorded Future, Inc., 2019-2020
 
 This unpublished material is proprietary to Recorded Future.
 All rights reserved. The methods and
@@ -33,45 +29,49 @@ Style elements are defined in a separate file, named below,
 and will be merged during compilation:
        recordedfuture_style.css          -->
 
+
 <div class="rf-widget"> <!-- Main Div -->
   <!------------------- For each Result ---------------------->
   {% for result in results %}
-    {% for alert in result.data %}
-      <div class="rf-box">
-        <table class="rf-table">
-          <tr>
-            <td colspan="3">
-              <span class="non-highlighted">Rule</span><br/>
-              {{ alert.rule.name }}
-            </td>
-          </tr>
-          {% for trigged in alert.alerts %}
+    {% if not result.data %}
+      <h4>No data found</h4>
+    {% else %}
+      {% for alert in result.data %}
+        <div class="rf-box">
+          <table class="rf-table">
             <tr>
-              <td>
-                <span class="non-highlighted">Alert Title</span><br/>
-                {{ trigged.alert.alertTitle }}
-              </td>
-              <td>
-                <span class="non-highlighted">Triggered</span><br/>
-                {{ trigged.alert.triggered }}
-              </td>
-              <td>
-                {% if trigged.alert.entities.EmailAddress %}
-                  {% for email in trigged.alert.entities.EmailAddress %}
-                    <div>
-                      <span class="non-highlighted">Email</span><br/>
-                      {{ email }}
-                    </div>
-                  {% endfor %}
-                {% endif %}
-                <span class="non-highlighted"></span>
+              <td colspan="3">
+                <span class="non-highlighted">Rule</span><br/>
+                {{ alert.rule.name }}
               </td>
             </tr>
-          {% endfor %}
-        </table>
-      </div>
-    {% endfor %}
-
+            {% for trigged in alert.alerts %}
+              <tr>
+                <td>
+                  <span class="non-highlighted">Alert Title</span><br/>
+                  {{ trigged.alert.alertTitle }}
+                </td>
+                <td>
+                  <span class="non-highlighted">Triggered</span><br/>
+                  {{ trigged.alert.triggered }}
+                </td>
+                <td>
+                  {% if trigged.alert.entities.EmailAddress %}
+                    {% for email in trigged.alert.entities.EmailAddress %}
+                      <div>
+                        <span class="non-highlighted">Email</span><br/>
+                        {{ email }}
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+                  <span class="non-highlighted"></span>
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+      {% endfor %}
+    {% endif %}
   {% endfor %}
 </div> <!-- Main Div -->
 
