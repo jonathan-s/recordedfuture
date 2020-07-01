@@ -1,4 +1,4 @@
-RELEASE := 2.1.0-rc1
+RELEASE := 3.0.0-rc1
 BUILDID := $(if $(SVN_REVISION),$(SVN_REVISION),$(shell git rev-list --count HEAD))
 BUILD_DIR := pkg_build
 SRC_DIR := recordedfuture
