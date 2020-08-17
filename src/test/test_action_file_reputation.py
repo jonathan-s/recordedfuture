@@ -72,6 +72,6 @@ class RfDomainReputationTests(RfTests):
             # Assert success
             self.assertEqual(rd['status'], 'success')
             # Assert message is as should
-            self.assertEqual(rd['message'], message)
+            self.assertRegexpMatches(rd['message'], message)
             # Assert data
             self.assertEqual(rd['data'], response)

@@ -48,20 +48,38 @@ def testdata_reputation_wo_risk(entity, category):
 
 def testdata_reputation_na(entity, category):
     """Create result for entities that don't exist."""
+    maxrules = {
+        'ip': 51,
+        'domain': 42,
+        'hash': 12,
+        'vulnerability': 0,
+        'url': 27
+    }[category]
+    r_type, i_type = {
+        'ip': ('IpAddress', 'ip'),
+        'domain': ('InternetDomainName', 'idn'),
+        'hash': ('Hash', 'hash'),
+        'url': ('URL', 'url')
+    }.get(category, ('UNDEF', 'undef'))
+
+    r_msg = {
+        'vulnerability': u'Riskscore: No information available.'
+    }.get(category, r'Risk score: 0.0, Risk summary: 0 rules triggered of \d+')
     return (
         [
             {
-                u'id': None,
-                u'name': u'',
-                u'type': None,
-                u'risklevel': None,
-                u'riskscore': None,
-                u'rulecount': None,
-                u'maxrules': None,
-                u'description': u''
+                u'evidence': [],
+                u'id': '%s:%s' % (i_type, entity),
+                u'name': entity,
+                u'type': r_type,
+                u'risklevel': 0,
+                u'riskscore': 0,
+                u'rulecount': 0,
+                u'maxrules': maxrules,
+                u'description': None
             }
         ],
-        u'Riskscore: No information available.'
+        r_msg
     )
 
 
