@@ -26,6 +26,9 @@ The overall organization of the repository:
 # Developing Phantom
 
 ## Getting started
+1. You need an account on https://my.phantom.us where all the documentation 
+   lives. If you don't have an account, go there an sign-up. There is a 
+   short waiting time before the account is activated upon registration.
 1. You need a dev Phantom server (either through 
    `launch_int_instance phantom dev` or docker).
 1. You need to setup easy network access:<br/>
