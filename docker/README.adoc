@@ -29,4 +29,6 @@ in Recorded Future's Docker registry.
 
 ## Using an image
 
-`docker run -it registry.recfut.com/rf/int/phantom/phantom:4.9`
+`docker run -it --privileged -p "443:443" registry.recfut.com/rf/int/phantom/phantom:4.9`
+
+Default account and password: admin / password
