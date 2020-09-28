@@ -1,0 +1,32 @@
+# Docker support for Phantom development
+
+The Phantom install script prompts for a my.phantom.us set of credentials.
+Rather than to fight this we're building images manually and storing them
+in Recorded Future's Docker registry.
+
+## Build an image
+
+. Launch a Centos image: +
+  `docker run -it centos/systemd:latest`
+. Run the following commands:
+.. Update the package repo: +
+   `yum update -y`
+.. Remove silly check for available disk space:
+... Edit the config script: +
+    `vi /opt/phantom/bin/phantom_setup.sh`
+... Look for `FILESIZE_MB=500000 #500GB` and change that to `FILESIZE_MB=25000 #25GB`
+.. Run the install script: +
+   `/opt/phantom/bin/phantom_setup.sh install --no-prompt` +
+   After a while the script will prompt for credentials to my.phantom.us. Look in
+   LastPass for "Phantom Login Credentials" (username integrations-ops@recordedfuture.com.)
+.. Make a note of the container id, it's shown in the prompt of the shell.
+.. Shut the system down: +
+   `poweroff`
+. Turn the container into an image: +
+  `docker commit <container_id> registry.recfut.com/rf/int/phantom/phantom:4.9`
+. Push the image to the Gitlab registry: +
+  `docker push registry.recfut.com/rf/int/phantom/phantom:4.9`
+
+## Using an image
+
+`docker run -it registry.recfut.com/rf/int/phantom/phantom:4.9`

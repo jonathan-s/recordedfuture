@@ -2,15 +2,11 @@ version: "3.6"
 
 services:
   ph1:
-    build:
-      context: ${PHANTOM_IMAGE:-phantom_4.9}
+    image: registry.recfut.com/rf/application/main/integrations/phantom:4.9
     container_name: ph1
     ports:
       - "80:80"
       - "443:443"
-    environment:
-      - MYPHANTOMUSER=${MYPHANTOMUSER}
-      - MYPHANTOMPASS=${MYPHANTOMPASS}
 
 #  event_generation:
 #    build:
@@ -18,19 +14,6 @@ services:
 #    container_name: event_generation
 #    environment:
 #      - RF_TOKEN=${RF_TOKEN}
-#
-#  splunk_bfi:
-#    build:
-#      context: splunk_bfi
-#    environment:
-#      - RF_TOKEN=${RF_TOKEN}
-#      - SPLUNK_BFI_SSL=adhoc
-#      - SPLUNK_BFI_HOST=0.0.0.0
-#    container_name: splunk_bfi
-#    ports:
-#      - 5000
-#    volumes:
-#      - ../../common/test_api:/tmp/test_api
 
 #  squid:
 #    image: sameersbn/squid:3.5.27-2
