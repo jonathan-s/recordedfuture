@@ -14,10 +14,11 @@ RESULT_FILES := reputation_results.html \
 STYLESHEET := recordedfuture_style.css
 RF_SRC := $(addprefix $(SRC_DIR)/,$(RESULT_FILES))
 RF_DEST := $(addprefix $(BUILD_DIR)/,$(RESULT_FILES))
-RSYNC := env RSYNC_RSH=ssh rsync -rav
+PH_PORT:= 22
+RSYNC := env RSYNC_RSH=ssh -p $(PH_PORT) rsync -rav
 LOCAL_RSYNC := rsync
-SSH := ssh -l phantom
-SSHRAW := ssh -t $(RFUSERARG)
+SSH := ssh -p $(PH_PORT) -l phantom
+SSHRAW := ssh -p $(PH_PORT) -t $(RFUSERARG)
 SED := sed
 MKDIR_P = mkdir -p
 MYTMPDIR := $(shell basename `mktemp -d -u`)
@@ -115,7 +116,7 @@ setup_ssh:
 		echo Environment variable PH must contain the hostname of the phantom server.;\
 		exit 1; \
 	fi
-	scp ~/.ssh/id_rsa.pub $(SCPHOST):/tmp/
+	scp -P $(PH_PORT) ~/.ssh/id_rsa.pub $(SCPHOST):/tmp/
 	$(SSHRAW) $(PH) "sudo -u phantom mkdir -p ~phantom/.ssh; \
 	                 sudo -u phantom chmod go= ~phantom/.ssh; \
 	                 sudo mv /tmp/id_rsa.pub ~phantom/.ssh/authorized_keys; \
