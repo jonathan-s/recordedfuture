@@ -28,6 +28,8 @@ all:
 	@echo "  package       - will build the package on a Phantom server and retreive it."
 	@echo "  setup_ssh     - will copy id_rsa.pub to the phantom user authorized key on "
 	@echo "                  the phantom server."
+	@echo "  setup_docker  - will copy id_rsa.pub to the phantom user authorized key on "
+	@echo "                  the phantom docker container."
 	@echo
 	@echo "If your LDAP username name differs from you local one, set RFLDAP to your LDAP username"
 
@@ -118,3 +120,8 @@ setup_ssh:
 	                 sudo -u phantom chmod go= ~phantom/.ssh; \
 	                 sudo mv /tmp/id_rsa.pub ~phantom/.ssh/authorized_keys; \
 	                 sudo chown phantom ~phantom/.ssh/authorized_keys"
+setup_docker:
+	docker exec -it rf_phantom mkdir -p /home/phantom/.ssh
+	docker exec -it rf_phantom chmod go= /home/phantom/.ssh
+	docker cp ~/.ssh/id_rsa.pub rf_phantom:/home/phantom/.ssh/authorized_keys
+	docker exec -it rf_phantom chown phantom /home/phantom/.ssh/authorized_keys
