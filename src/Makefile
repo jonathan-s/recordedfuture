@@ -125,4 +125,4 @@ setup_docker:
 	docker exec -it rf_phantom mkdir -p /home/phantom/.ssh
 	docker exec -it rf_phantom chmod go= /home/phantom/.ssh
 	docker cp ~/.ssh/id_rsa.pub rf_phantom:/home/phantom/.ssh/authorized_keys
-	docker exec -it rf_phantom chown phantom /home/phantom/.ssh/authorized_keys
+	docker exec -it rf_phantom chown -R phantom:phantom /home/phantom/.ssh
