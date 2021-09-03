@@ -15,7 +15,7 @@ STYLESHEET := recordedfuture_style.css
 RF_SRC := $(addprefix $(SRC_DIR)/,$(RESULT_FILES))
 RF_DEST := $(addprefix $(BUILD_DIR)/,$(RESULT_FILES))
 PH_PORT:= 22
-RSYNC := env RSYNC_RSH=ssh -p $(PH_PORT) rsync -rav
+RSYNC := env RSYNC_RSH="ssh -p $(PH_PORT)" rsync -rav
 LOCAL_RSYNC := rsync
 SSH := ssh -p $(PH_PORT) -l phantom
 SSHRAW := ssh -p $(PH_PORT) -t $(RFUSERARG)
@@ -98,7 +98,7 @@ $(PACKAGE): build
 	$(SSH) $(PH) "mkdir -p /tmp/$(MYTMPDIR)/recordedfuture"
 	$(RSYNC) $(BUILD_DIR)/* phantom@$(PH):/tmp/$(MYTMPDIR)/recordedfuture
 	$(SSH) $(PH) "cd /tmp/$(MYTMPDIR)/recordedfuture; chmod -R a+w ..; \
-	              (phenv python2.7 /opt/phantom/bin/compile_app.pyc -i);";
+	              (phenv python3 /opt/phantom/bin/compile_app.pyc -i);";
 	$(RSYNC) phantom@$(PH):/tmp/$(MYTMPDIR)/recordedfuture.tgz $@
 	$(SSH) $(PH) "rm -rf /tmp/$(MYTMPDIR)"
 
