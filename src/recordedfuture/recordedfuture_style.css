@@ -1,4 +1,17 @@
 <style>
+
+  /* XXXXX added colour variables and changed colour definitions for
+  criticality markup to use these */
+
+  /*  ||  RECORDED FUTURE COLOR */
+
+  :root{
+    --RecordedFutureBlue: #2673B3;
+    --CriticalityHigh: #cf0a2c;
+    --CriticalityModerate: #FFCE00;
+    --CriticalityLow: #e1e6eb;
+  }
+
   a:hover {
     text-decoration: underline;
   }
@@ -40,17 +53,17 @@
 
   td.rf-criticality-level-3, td.rf-criticality-level-4,
   td.rf-criticality-level-5 {
-    background: #cf0a2c;
+    background: var(--CriticalityHigh);
     width: 0 !important;
     padding: 0 2px 0 3px !important;
   }
   td.rf-criticality-level-2 {
-    background: #ffce00;
+    background: var(--CriticalityModerate);
     width: 0 !important;
     padding: 0 2px 0 3px !important;
   }
   td.rf-criticality-level-1 {
-    background: #cccccc;
+    background: var(--CriticalityLow);
     width: 0 !important;
     padding: 0 2px 0 3px !important;
   }
@@ -71,5 +84,6 @@
   .rf-hover-info:hover {
     font-weight: bold;
   }
+
 </style>
 
