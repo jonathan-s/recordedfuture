@@ -6,29 +6,46 @@ in Recorded Future's Docker registry.
 
 ## Build an image
 
-. Launch a Centos image: +
-  `docker run -it centos/systemd:latest`
-. Run the following commands:
-.. Update the package repo: +
-   `yum update -y`
-.. Remove silly check for available disk space:
-... Edit the config script: +
-    `vi /opt/phantom/bin/phantom_setup.sh`
-... Look for `FILESIZE_MB=500000 #500GB` and change that to `FILESIZE_MB=25000 #25GB`
+. Build a Centos/systemd image: +
+  `docker build -t phantom-manual:4.10 -f phantom_4.10/Dockerfile .`
+. Install the Application RPM file
+.. Start up the container: +
+   `docker run -it -d --cap-add=ALL \
+   --name rf_phantom \
+   --hostname phantosd \
+   -p "80:80" \
+   -p "443:443" \
+   phantom-manual:4.10`
+.. Start a new shell and jump into the container: +
+   `docker exec -it rf_phantom /bin/bash`
 .. Run the install script: +
-   `/opt/phantom/bin/phantom_setup.sh install --no-prompt` +
+   `/opt/phantom/bin/phantom_setup.sh install --no-prompt --no-space-check` +
    After a while the script will prompt for credentials to my.phantom.us. Look in
-   LastPass for "Phantom Login Credentials" (username integrations-ops@recordedfuture.com.)
-.. Make a note of the container id, it's shown in the prompt of the shell.
+   LastPass for "Phantom Login Credentials" (username: integration-ops@recordedfuture.com)
+.. Optional: Enabling backup/restore functionallity: +
+   `phenv python3 /opt/phantom/bin/ibackup.pyc --setup`
+.. Execute curl command to allow anyone to talk to the instance: +
+   `curl -g -k -X POST https://localhost/rest/ph_user/2 -u 'admin:password' -d '{"allowed_ips": ["any"]}'`
+.. Install the license in the GUI, Credentials can be found in LastPass as "Phantom license -"
+.. Exit the docker shell: +
+   `exit`
+.. Make a note of the container id, it's shown in the prompt of the shell or when executing: +
+   `docker ps`
 .. Shut the system down: +
-   `poweroff`
+   `docker stop rf_phantom`
 . Turn the container into an image: +
-  `docker commit <container_id> registry.recfut.com/rf/int/phantom/phantom:4.9`
+  `docker commit <container_id> registry.recfut.com/rf/application/main/integrations/phantom:4.10`
 . Push the image to the Gitlab registry: +
-  `docker push registry.recfut.com/rf/int/phantom/phantom:4.9`
+.. Login to our gitlab server: +
+  `docker login registry.recfut.com`
+.. Push the newly created docker image to our registry: +
+  `docker push registry.recfut.com/rf/application/main/integrations/phantom:4.10`
 
 ## Using an image
 
-`docker run -it --privileged -p "443:443" registry.recfut.com/rf/int/phantom/phantom:4.9`
+Best way to use the image is by start it with `docker-compose up -d rf_phantom` or you can also execute: +
+`docker run -it -d --cap-add=ALL \
+ -p "2022:22" -p "80:80" -p "443:443" \
+ registry.recfut.com/rf/application/main/integrations/phantom:4.10`
 
 Default account and password: admin / password
