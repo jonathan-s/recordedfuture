@@ -40,7 +40,7 @@ The overall organization of the repository:
    `docker-compose start rf_phantom` in the docker directory).<br />
 1. You need to setup easy network access:<br/>
    `env PH=<your phantom dev machine> make setup_ssh` for aws instance or 
-   `env PH=<your phantom dev machine> PH_PORT=2022 make setup_docker` for docker instance<br />
+   `make setup_docker` for docker instance<br />
     This will add your ssh key to the autorized_keys of the 
    phantom user on the dev machine.
 
@@ -48,7 +48,8 @@ The overall organization of the repository:
 
 To build and test the app:
 1. Go to the src folder
-1. Type `env PH=<your phantom dev machine> make package`
+ - For AWS instance, type `make PH=<your phantom dev machine> package`
+ - For docker instance, type `make PH=<your phantom dev machine> PH_PORT=2022 package`
 
 ## Testing
 
