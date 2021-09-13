@@ -20,7 +20,7 @@ The overall organization of the repository:
    not entirely true since Phantom apps are kept in Phantoms official 
    GitHub repository)
  - `releases-playbooks`: binary packages of the "official" demo playbooks
-- `docker` **WIP**: config files for Docker that will launch development machines
+- `docker`: config files for Docker that will launch development machines
 - `src`:
   - `playbooks`: source for the "official" playbooks created for 
     demonstration purposes
@@ -36,9 +36,11 @@ The overall organization of the repository:
    lives. If you don't have an account, go there an sign-up. There is a 
    short waiting time before the account is activated upon registration.
 1. You need a dev Phantom server (either through 
-   `launch_int_instance phantom dev` or docker).
+   `launch_int_instance phantom dev` for aws instance or 
+   `docker-compose start rf_phantom` in the docker directory).<br />
 1. You need to setup easy network access:<br/>
-   `env PH=<your phantom dev machine> make setup_ssh`<br/>
+   `env PH=<your phantom dev machine> make setup_ssh` for aws instance or 
+   `env PH=<your phantom dev machine> PH_PORT=2022 make setup_docker` for docker instance<br />
     This will add your ssh key to the autorized_keys of the 
    phantom user on the dev machine.
 
