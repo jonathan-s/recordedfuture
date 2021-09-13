@@ -1,12 +1,15 @@
-version: "3.6"
+version: "3.9"
 
 services:
-  ph1:
-    image: registry.recfut.com/rf/application/main/integrations/phantom:4.9
-    container_name: ph1
+  rf_phantom:
+    image: registry.recfut.com/rf/application/main/integrations/phantom:4.10
+    container_name: rf_phantom
     ports:
       - "80:80"
       - "443:443"
+      - "2022:22"
+    cap_add:
+      - ALL
 
 #  event_generation:
 #    build:
