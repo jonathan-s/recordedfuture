@@ -11,6 +11,23 @@ services:
     cap_add:
       - ALL
 
+  phantom_bfi:
+    cap_add:
+      - SYS_PTRACE
+    build:
+      context: phantom_bfi
+    environment:
+      - RF_TOKEN=${RF_TOKEN}
+      - PHANTOM_BFI_SSL=adhoc
+      - PHANTOM_BFI_HOST=0.0.0.0
+      - RF_ENV=premier_integrations_phantom
+    container_name: phantom_bfi
+    ports:
+      - "5002:5001"
+    volumes:
+      - ${RF_HOME}/python:/tmp/python
+      - ${RF_HOME}/conf:/tmp/conf
+
 #  event_generation:
 #    build:
 #      context: event_generation
