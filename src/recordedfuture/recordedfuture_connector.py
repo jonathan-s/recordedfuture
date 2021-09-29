@@ -386,15 +386,26 @@ class RecordedfutureConnector(BaseConnector):
         self.save_progress("Connecting to endpoint")
 
         # make rest call
-        my_ret_val, response = self._make_rest_call('/domain/google.com',
-                                                    action_result)
+        # my_ret_val, response = self._make_rest_call('/domain/google.com', action_result)
+        # use this to understand further: https://docs.splunk.com/Documentation/Phantom/4.10/DevelopApps/Tutorial
+        my_ret_val, response = self._make_rest_call('/helo', action_result)
 
         if phantom.is_fail(my_ret_val):
             self.save_progress("Test Connectivity Failed")
             return action_result.get_status()
 
+        self.save_progress("Successful connection to the endpoint")
+
+        self.save_progress("Verifying the credentials of the integration")
+
+        my_ret_val, response = self._make_rest_call('/config/info', action_result)
+
+        if phantom.is_fail(my_ret_val):
+            self.save_progress("Test Credentials Failed")
+            return action_result.get_status()
+
         # Return success
-        self.save_progress("Test Connectivity Passed")
+        self.save_progress("Test Connectivity and Credentials Passed")
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_intelligence(self, param, path_info, fields, operation_type):

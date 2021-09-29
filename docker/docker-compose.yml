@@ -23,7 +23,7 @@ services:
       - RF_ENV=premier_integrations_phantom
     container_name: phantom_bfi
     ports:
-      - "5002:5001"
+      - "5002:5002"
     volumes:
       - ${RF_HOME}/python:/tmp/python
       - ${RF_HOME}/conf:/tmp/conf
