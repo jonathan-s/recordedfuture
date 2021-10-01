@@ -289,7 +289,7 @@ class RecordedfutureConnector(BaseConnector):
 
         return input_str
 
-    def _make_rest_call(self, endpoint, action_result, method="get", **kwargs):
+    def _make_rest_call(self, endpoint, action_result, params=None, method="get", **kwargs):
         """Make a REST call to Recorded Future's ConnectAPI.
 
         Parameters:
@@ -319,10 +319,12 @@ class RecordedfutureConnector(BaseConnector):
 
         # Create a URL to connect to
         url = "{}{}".format(self._handle_py_ver_compat_for_input_str(self._base_url), endpoint)
+
         # Create a HTTP_USER_AGENT header
         # container_id is added to track actions associated with an event in
         # order to improve the app
         platform_id = 'Phantom_%s' % self.get_product_version()
+
         pdict = dict(app_name=os.path.basename(__file__),
                      container_id=self.get_container_id(),
                      os_id=platform.platform(),
@@ -360,6 +362,7 @@ class RecordedfutureConnector(BaseConnector):
                 url,
                 headers=my_headers,
                 verify=config.get('recordedfuture_verify_ssl', False),
+                params=params,
                 **kwargs)
         except Exception as err:
             error_code, error_msg = self._get_error_message_from_exception(err)
@@ -379,22 +382,27 @@ class RecordedfutureConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         # NOTE: test connectivity does _NOT_ take any parameters
+        # it will use the RF token to verify that it works in the second part
         # i.e. the param dictionary passed to this handler will be empty.
         # Also typically it does not add any data into an action_result either.
         # The status and progress messages are more important.
 
         self.save_progress("Connecting to endpoint")
 
-        # make rest call
-        # my_ret_val, response = self._make_rest_call('/domain/google.com', action_result)
-        # use this to understand further: https://docs.splunk.com/Documentation/Phantom/4.10/DevelopApps/Tutorial
-        my_ret_val, response = self._make_rest_call('/helo', action_result)
+        params = {
+           'output-format': 'application/json'
+        }
+
+        # make rest call - further info: https://docs.splunk.com/Documentation/Phantom/4.10/DevelopApps/Tutorial
+        my_ret_val, response = self._make_rest_call('/helo',
+                                                    action_result,
+                                                    params=params)
 
         if phantom.is_fail(my_ret_val):
-            self.save_progress("Test Connectivity Failed")
+            self.save_progress("Connectivity test failed. API endpoint not reachable")
             return action_result.get_status()
 
-        self.save_progress("Successful connection to the endpoint")
+        self.save_progress("Successful connection to the API endpoint")
 
         self.save_progress("Verifying the credentials of the integration")
 
@@ -405,7 +413,7 @@ class RecordedfutureConnector(BaseConnector):
             return action_result.get_status()
 
         # Return success
-        self.save_progress("Test Connectivity and Credentials Passed")
+        self.save_progress("Test of Connectivity and Credentials Passed")
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_intelligence(self, param, path_info, fields, operation_type):
