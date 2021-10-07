@@ -366,14 +366,19 @@ class RecordedfutureConnector(BaseConnector):
                 **kwargs)
         except Exception as err:
             error_code, error_msg = self._get_error_message_from_exception(err)
-
             return RetVal(action_result.set_status(
                 phantom.APP_ERROR,
                 "Error Connecting to server. Details: Error code:{0}. Error message:{1}".format(error_code, error_msg)),
                 resp_json)
 
-        # Process the response
-        return self._process_response(resp, action_result, **kwargs)
+        if resp.status_code == 200:
+            return self._process_response(resp, action_result, **kwargs)
+        elif resp.status_code == 401:
+            return RetVal(action_result.set_status(phantom.APP_ERROR, "Error Connecting to server. Details: Error code: 401 Unauthorised."), None)
+        elif resp.status_code == 403:
+            return RetVal(action_result.set_status(phantom.APP_ERROR, "Error Connecting to server. Details: Error code: 403 Forbidden."), None)
+        else:
+            return self._process_response(resp, action_result, **kwargs)
 
     def _handle_test_connectivity(self, param):
 
@@ -386,8 +391,6 @@ class RecordedfutureConnector(BaseConnector):
         # i.e. the param dictionary passed to this handler will be empty.
         # Also typically it does not add any data into an action_result either.
         # The status and progress messages are more important.
-
-        self.save_progress("Connecting to endpoint")
 
         params = {
            'output-format': 'application/json'
@@ -402,18 +405,21 @@ class RecordedfutureConnector(BaseConnector):
             self.save_progress("Connectivity test failed. API endpoint not reachable")
             return action_result.get_status()
 
-        self.save_progress("Successful connection to the API endpoint")
+        self.save_progress("Successful connection to the API")
 
-        self.save_progress("Verifying the credentials of the integration")
+        self.save_progress("Verifying Recorded Future API token")
 
         my_ret_val, response = self._make_rest_call('/config/info', action_result)
 
+        # this is never run as we don't take care of a non-successful reply properly
         if phantom.is_fail(my_ret_val):
             self.save_progress("Test Credentials Failed")
             return action_result.get_status()
 
         # Return success
-        self.save_progress("Test of Connectivity and Credentials Passed")
+        self.save_progress("Token is accepted by the API")
+
+        self.save_progress("Test of Connectivity and Credentials Passed. You may now close this window")
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_intelligence(self, param, path_info, fields, operation_type):
@@ -574,14 +580,14 @@ class RecordedfutureConnector(BaseConnector):
 
         # make rest call
         my_ret_val, response = self._make_rest_call(
-            '/soar/triage/contexts/%s?%s' % (self._handle_py_ver_compat_for_input_str(param['threat_context']),
+            '/config/triage/contexts/%s?%s' % (self._handle_py_ver_compat_for_input_str(param['threat_context']),
                                              '&format=phantom'),
             action_result,
             json=params,
             method='post')
 
         self.debug_print('_handle_triage', {'path_info': 'triage',
-                                            'endpoint': '/soar/triage',
+                                            'endpoint': '/config/triage',
                                             'action_result': action_result,
                                             'params': params,
                                             'my_ret_val': my_ret_val,
@@ -635,7 +641,7 @@ class RecordedfutureConnector(BaseConnector):
             "In action handler for: {0}".format(self.get_action_identifier()))
 
         # make rest call
-        my_ret_val, response = self._make_rest_call('/soar/triage/contexts',
+        my_ret_val, response = self._make_rest_call('/config/triage/contexts',
                                                     action_result)
 
         self.debug_print('_handle_list_contexts',
