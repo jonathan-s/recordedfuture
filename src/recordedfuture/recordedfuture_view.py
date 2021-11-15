@@ -224,9 +224,9 @@ def format_threat_assessment_result(result, all_data=False):
                     if key != 'entities'}
 
         entities = data[0]['entities']
-        entities.sort(key=lambda x: int(x.get('score', "0")))
+        entities.sort(key=lambda x: int(x.get('riskscore', "0")))
         ret_data['entities'] = [entity for entity in entities
-                                if entity['score']]
+                                if entity['riskscore']]
         retval['data'] = ret_data
     else:
         retval['data'] = 'NO DATA'

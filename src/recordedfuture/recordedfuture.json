@@ -431,12 +431,12 @@
             "read_only": true,
             "parameters": {
                 "rule_name": {
-                    "description": "Alert rule name",
+                    "description": "Search for alert rule name and ID",
                     "data_type": "string",
                     "required": true,
                     "primary": true,
                     "contains": [
-                        "recordedfuture alert rule name"
+                        "recordedfuture alert search for rule name"
                     ],
                     "order": 0
                 }
@@ -454,10 +454,10 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.rule_name",
+                    "data_path": "action_result.parameter.rule_search",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture alert rule name"
+                        "recordedfuture alert rule search"
                     ]
                 },
                 {
@@ -470,12 +470,12 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.rule.title",
+                    "data_path": "action_result.data.*.rule.name",
                     "data_type": "string",
                     "column_name": "Rule Name",
                     "column_order": 1,
                     "contains": [
-                        "recordedfuture alert rule title"
+                        "recordedfuture alert rule name"
                     ]
                 },
                 {
@@ -590,20 +590,6 @@
                     "data_type": "string",
                     "contains": [
                         "recordedfuture entity type"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.metrics.*.type",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture metrics type"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.metrics.*.value",
-                    "data_type": "numeric",
-                    "contains": [
-                        "recordedfuture metrics value"
                     ]
                 },
                 {
@@ -1091,20 +1077,6 @@
                     "data_type": "string",
                     "contains": [
                         "recordedfuture intelligence card url"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.metrics.*.type",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture metrics type"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.metrics.*.value",
-                    "data_type": "numeric",
-                    "contains": [
-                        "recordedfuture metrics value"
                     ]
                 },
                 {
@@ -1601,20 +1573,6 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.metrics.*.type",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture metrics type"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.metrics.*.value",
-                    "data_type": "numeric",
-                    "contains": [
-                        "recordedfuture metrics value"
-                    ]
-                },
-                {
                     "data_path": "action_result.data.*.relatedEntities.*.entities.*.count",
                     "data_type": "numeric",
                     "contains": [
@@ -2074,20 +2032,6 @@
                     "data_type": "string",
                     "contains": [
                         "recordedfuture intelligence card url"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.metrics.*.type",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture metrics type"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.metrics.*.value",
-                    "data_type": "numeric",
-                    "contains": [
-                        "recordedfuture metrics value"
                     ]
                 },
                 {
@@ -2632,20 +2576,6 @@
                     "data_type": "string",
                     "contains": [
                         "recordedfuture location organization"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.metrics.*.type",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture metrics type"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.metrics.*.value",
-                    "data_type": "numeric",
-                    "contains": [
-                        "recordedfuture metrics value"
                     ]
                 },
                 {

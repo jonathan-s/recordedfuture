@@ -19,13 +19,6 @@ import os
 import requests
 import sys
 
-try:
-    import urllib
-except:
-    import urllib.request
-    import urllib.parse
-    import urllib.error
-
 import json
 import hashlib
 import platform
@@ -102,7 +95,7 @@ class RecordedfutureConnector(BaseConnector):
             else:
                 error_text = UnicodeDammit(error_text).unicode_markup
         except:
-            error_text = error_text
+            pass
 
         message = "Please check the app configuration parameters. Status Code: {0}. Data from server:\n{1}\n".format(
             status_code, error_text)
@@ -419,10 +412,10 @@ class RecordedfutureConnector(BaseConnector):
         # Return success
         self.save_progress("Token is accepted by the API")
 
-        self.save_progress("Test of Connectivity and Credentials Passed. You may now close this window")
+        self.save_progress("Connectivity and credentials test passed. You may now close this window")
         return action_result.set_status(phantom.APP_SUCCESS)
 
-    def _handle_intelligence(self, param, path_info, fields, operation_type):
+    def _handle_intelligence(self, param, ioc, entity_type):
         """Return intelligence for an entity."""
         self.save_progress(
             "In action handler for: {0}".format(self.get_action_identifier()))
@@ -431,16 +424,18 @@ class RecordedfutureConnector(BaseConnector):
 
         # Params for the API call
         params = {
-            'fields': ','.join(fields)
+            "entity_type": entity_type,
+            "ioc": ioc
         }
 
         # make rest call
-        my_ret_val, response = self._make_rest_call(path_info,
+        my_ret_val, response = self._make_rest_call('/lookup/intelligence',
                                                     action_result,
-                                                    params=params)
+                                                    json=params,
+                                                    method='post')
 
         self.debug_print('_handle_intelligence',
-                         {'path_info': path_info,
+                         {'path_info': ("%s/%s", entity_type, ioc),
                           'action_result': action_result,
                           'params': params,
                           'my_ret_val': my_ret_val,
@@ -481,13 +476,13 @@ class RecordedfutureConnector(BaseConnector):
         }
 
         # make rest call
-        my_ret_val, response = self._make_rest_call('/soar/enrichment',
+        my_ret_val, response = self._make_rest_call('/lookup/reputation',
                                                     action_result,
                                                     json=params,
                                                     method='post')
 
         self.debug_print('_handle_reputation', {'path_info': entity,
-                                                'endpoint': '/soar/enrichment',
+                                                'endpoint': '/lookup/reputation',
                                                 'action_result': action_result,
                                                 'params': params,
                                                 'my_ret_val': my_ret_val,
@@ -495,75 +490,31 @@ class RecordedfutureConnector(BaseConnector):
 
         if phantom.is_fail(my_ret_val):
             return action_result.get_status()
-        if response.get('data', {}).get('results', []):
-            summary = action_result.get_summary()
-            item = response['data']['results'][0]
-            risk = item['risk']
-            rule = risk['rule']
-            if 'evidence' in rule:
-                evidence_list = rule['evidence']
-                evidence = [{
-                    'ruleid': evidence_id,
-                    'timestamp': evidence_list[evidence_id]['timestamp'],
-                    'description': evidence_list[evidence_id]['description'],
-                    'rule': evidence_list[evidence_id]['rule'],
-                    'level': evidence_list[evidence_id]['level'],
-                    'mitigation': evidence_list[evidence_id].get('mitigation', None)}
-                    for evidence_id in list(evidence_list.keys())]
-            else:
-                evidence = []
 
-            res = {
-                'id': item['entity']['id'],
-                'name': item['entity']['name'],
-                'type': item['entity']['type'],
-                'risklevel': risk['level'],
-                'riskscore': risk['score'],
-                'rulecount': rule['count'],
-                # 'maxrules': rule['maxCount'],
-                'evidence': evidence,
-                'description':
-                    item['entity'].get('description', None)
-            }
+        # the BFI returns a list of entities. In future we may add the capability for
+        # to do a reputation lookup of more than one entity
+        entity = response.pop(0)
 
-            if rule.get('maxCount'):
-                res['maxrules'] = rule['maxCount']
+        summary = action_result.get_summary()
 
-            if 'description' in item['entity']:
-                res['description'] = item['entity']['description']
-
-            # Update the summary
-            summary = action_result.get_summary()
-            summary['risk score'] = res['riskscore']
+        if entity.get('id', ''):
+            summary['risk score'] = entity.get('riskscore', '')
             summary['risk summary'] = '%s rules triggered of %s' % (
-                res['rulecount'], res['maxrules'])
-
+                entity.get('rulecount', ''), entity.get('maxrules', ''))
         else:
-            res = {
-                "id": None,
-                "name": '',
-                "type": None,
-                "description": '',
-                "risklevel": None,
-                "riskscore": None,
-                "rulecount": None,
-                "maxrules": None,
-            }
             summary = action_result.get_summary()
-            summary['riskscore'] = "No information available."
+            summary['riskscore'] = 'No information available.'
 
-        action_result.add_data(res)
-        self.save_progress('Added data with keys {}', list(res.keys()))
-
+        action_result.add_data(entity)
         action_result.set_summary(summary)
+        self.save_progress('Added data with keys {}', list(entity.keys()))
 
-        # Return success, no need to set the message, only the status
-        # BaseConnector will create a textual message based off of the summary
-        # dictionary
+        # Return success, no need to set the message, only the status BaseConnector
+        # will create a textual message based off the summary dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_triage(self, param):
-        """Return threat assessment information."""
+        """Return triage information."""
         self.save_progress(
             "In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
@@ -580,14 +531,14 @@ class RecordedfutureConnector(BaseConnector):
 
         # make rest call
         my_ret_val, response = self._make_rest_call(
-            '/config/triage/contexts/%s?%s' % (self._handle_py_ver_compat_for_input_str(param['threat_context']),
+            '/lookup/triage/%s?%s' % (self._handle_py_ver_compat_for_input_str(param['threat_context']),
                                              '&format=phantom'),
             action_result,
             json=params,
             method='post')
 
         self.debug_print('_handle_triage', {'path_info': 'triage',
-                                            'endpoint': '/config/triage',
+                                            'endpoint': '/lookup/triage',
                                             'action_result': action_result,
                                             'params': params,
                                             'my_ret_val': my_ret_val,
@@ -600,37 +551,21 @@ class RecordedfutureConnector(BaseConnector):
 
         # there will always be a response with data, how best represent this?
         summary = action_result.get_summary()
-        if response:
-            # restructure json
-            res = {
-                'context': response['context'],
-                'verdict': response['verdict'],
-                'assessment_riskscore': response['scores']['max'],
-                'entities': [{
-                    'id': entity['id'],
-                    'name': entity['name'],
-                    'type': entity['type'],
-                    'score': entity['score'],
-                    'evidence': entity['rule']['evidence']}
-                    for entity in response['entities']]
-            }
-            action_result.add_data(res)
-
-            # set summary
-            if response['verdict']:
-                summary['assessment'] = 'Suspected to be malicious'
-            else:
-                summary['assessment'] = 'Not found to be malicious'
-            summary['riskscore'] = response['scores']['max']
+        if response.get('verdict', ''):
+            summary['assessment'] = 'Suspected to be malicious'
+            summary['riskscore'] = response.get('triage_riskscore', '')
+        elif not response.get('entities', []):
+            summary['assessment'] = 'No information available'
         else:
-            res = {}
+            summary['assessment'] = 'Not found to be malicious'
+            summary['riskscore'] = response.get('triage_riskscore', '')
 
+        action_result.add_data(response)
         action_result.set_summary(summary)
-        self.save_progress('Added data with keys {}', res.keys())
+        self.save_progress('Added data with keys {}', response.keys())
 
-        # Return success, no need to set the message, only the status
-        # BaseConnector will create a textual message based off of the summary
-        # dictionary
+        # Return success, no need to set the message, only the status BaseConnector
+        # will create a textual message based off the summary dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_list_contexts(self, param):
@@ -750,7 +685,7 @@ class RecordedfutureConnector(BaseConnector):
                                                timeframe))
 
         # Add info about the rule to summary and action_result['data']
-        summary['rule_name'] = response['data']['results'][0]['rule']['name']
+        summary['rule_title'] = response['data']['results'][0]['rule']['name']
         summary['rule_id'] = response['data']['results'][0]['rule']['id']
         action_result.set_summary(summary)
 
@@ -799,19 +734,26 @@ class RecordedfutureConnector(BaseConnector):
         # the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
+        self.save_progress('DEBUG: started fetching rules')
+
         # Prepare the REST call
-        params = {
-            'freetext': self._handle_py_ver_compat_for_input_str(param['rule_name']),
-            'limit': 100
-        }
+        if not self._handle_py_ver_compat_for_input_str(param['rule_name']):
+            params = {
+                'limit': 100
+            }
+        else:
+            params = {
+                'freetext': self._handle_py_ver_compat_for_input_str(param['rule_name']),
+                'limit': 100
+            }
 
         # make rest call
-        my_ret_val, response = self._make_rest_call('/alert/rule',
+        my_ret_val, response = self._make_rest_call('/config/alert/rules',
                                                     action_result,
                                                     params=params)
 
         self.debug_print('_handle_rule_id_lookup',
-                         {'path_info': '/alert/rule',
+                         {'path_info': '/alert/rules',
                           'action_result': action_result,
                           'params': params,
                           'my_ret_val': my_ret_val,
@@ -823,10 +765,9 @@ class RecordedfutureConnector(BaseConnector):
 
         # Now post process the data
         rule_ids = []
-        for result in list(response['data'].values()):
-            for rule in result:
-                action_result.add_data({'rule': rule})
-                rule_ids.append(rule['id'])
+        for result in response['data']['results']:
+            action_result.add_data({'id': result['id'], 'name': result['title']})
+            rule_ids.append(result['id'])
 
         # Summary
         summary = action_result.get_summary()
@@ -863,15 +804,9 @@ class RecordedfutureConnector(BaseConnector):
             omap = INTELLIGENCE_MAP
             path_info_tmplt, fields, tag, do_quote = omap[entity_type]
             param_tag = self._handle_py_ver_compat_for_input_str(param[tag])
-            if do_quote:
-                if sys.version_info[0] < 3:
-                    path_info = path_info_tmplt % urllib.quote_plus(param_tag)
-                else:
-                    path_info = path_info_tmplt % urllib.parse.quote_plus(param_tag)
-            else:
-                path_info = path_info_tmplt % param_tag
-            my_ret_val = self._handle_intelligence(param, path_info, fields,
-                                                   operation_type)
+            param_tag = self._handle_py_ver_compat_for_input_str(param[tag])
+            my_ret_val = self._handle_intelligence(param, param_tag,
+                                                        entity_type)
         elif operation_type == 'reputation':
             # phantom entity type file has to be changed to hash
             if entity_type == 'file':
@@ -890,6 +825,7 @@ class RecordedfutureConnector(BaseConnector):
             my_ret_val = self._handle_list_contexts(param)
 
         elif action_id == 'rule_id_lookup':
+            self.debug_print('DEBUG: started fetching rules')
             my_ret_val = self._handle_rule_id_lookup(param)
 
         elif action_id == 'alert_data_lookup':

@@ -14,7 +14,7 @@ RESULT_FILES := reputation_results.html \
 STYLESHEET := recordedfuture_style.css
 RF_SRC := $(addprefix $(SRC_DIR)/,$(RESULT_FILES))
 RF_DEST := $(addprefix $(BUILD_DIR)/,$(RESULT_FILES))
-PH_PORT:= 2022
+PH_PORT:= 22
 RSYNC := env RSYNC_RSH="ssh -p $(PH_PORT)" rsync -rav
 LOCAL_RSYNC := rsync
 SSH := ssh -p $(PH_PORT) -l phantom
