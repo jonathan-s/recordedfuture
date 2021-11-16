@@ -1,4 +1,5 @@
-RELEASE := 3.0.0-rc1
+RELEASE := 3.1.0-rc1
+VERSION := 3.1
 BUILDID := $(if $(SVN_REVISION),$(SVN_REVISION),$(shell git rev-list --count HEAD))
 BUILD_DIR := pkg_build
 SRC_DIR := recordedfuture
@@ -68,6 +69,11 @@ build_consts: $(BUILD_DIR)/recordedfuture_consts.py build_dirs
 $(BUILD_DIR)/recordedfuture_consts.py: $(SRC_DIR)/recordedfuture_consts.py
 	$(SED) -e "s/%RELEASE%/$(RELEASE)/" \
            -e "s/%BUILDID%/$(BUILDID)/" \
+           < $^ > $@
+
+$(BUILD_DIR)/recordedfuture.json: $(SRC_DIR)/recordedfuture.json
+	$(SED) -e "s/%RELEASE%/$(RELEASE)/" \
+           -e "s/%VERSION%/$(VERSION)/" \
            < $^ > $@
 
 build_readme: $(BUILD_DIR)/readme.html build_dirs

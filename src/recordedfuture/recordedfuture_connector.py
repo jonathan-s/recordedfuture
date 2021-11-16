@@ -753,7 +753,7 @@ class RecordedfutureConnector(BaseConnector):
                                                     params=params)
 
         self.debug_print('_handle_rule_id_lookup',
-                         {'path_info': '/alert/rules',
+                         {'path_info': 'config/alert/rules',
                           'action_result': action_result,
                           'params': params,
                           'my_ret_val': my_ret_val,
