@@ -650,17 +650,16 @@ class RecordedfutureConnector(BaseConnector):
 
         # Prepare the REST call
         params = {
-            'alertRule': rule_id,
             'triggered': timeframe
         }
 
         # Make rest call
-        my_ret_val, response = self._make_rest_call('/alert/search',
+        my_ret_val, response = self._make_rest_call(f'/alert/rule/{rule_id}',
                                                     action_result,
                                                     params=params)
 
         self.debug_print('_handle_alert_data_lookup',
-                         {'path_info': '/alert/search',
+                         {'path_info': f'/alert/rule/{rule_id}',
                           'action_result': action_result,
                           'params': params,
                           'my_ret_val': my_ret_val,
@@ -672,8 +671,8 @@ class RecordedfutureConnector(BaseConnector):
 
         # Setup summary
         summary = action_result.get_summary()
-        summary['total_number_of_alerts'] = response['counts']['total']
-        summary['returned_number_of_alerts'] = response['counts']['returned']
+        summary['total_number_of_alerts'] = response['counts'].get('total', 0)
+        summary['returned_number_of_alerts'] = response['counts'].get('returned', 0)
 
         # No results can be non existing rule id or just that, no results...
         if response['counts']['total'] == 0:
@@ -685,7 +684,7 @@ class RecordedfutureConnector(BaseConnector):
                                                timeframe))
 
         # Add info about the rule to summary and action_result['data']
-        summary['rule_title'] = response['data']['results'][0]['rule']['name']
+        summary['rule_name'] = response['data']['results'][0]['rule']['name']
         summary['rule_id'] = response['data']['results'][0]['rule']['id']
         action_result.set_summary(summary)
 
@@ -699,7 +698,7 @@ class RecordedfutureConnector(BaseConnector):
             self.debug_print('_handle_alert_data_lookup',
                              {'path_info': url2,
                               'action_result': action_result,
-                              'params': None,
+                              'params': params,
                               'my_ret_val': ret_val2,
                               'response': response2})
 
@@ -737,7 +736,7 @@ class RecordedfutureConnector(BaseConnector):
         self.save_progress('DEBUG: started fetching rules')
 
         # Prepare the REST call
-        if not self._handle_py_ver_compat_for_input_str(param['rule_name']):
+        if not self._handle_py_ver_compat_for_input_str(param.get('rule_name', '')):
             params = {
                 'limit': 100
             }
@@ -771,8 +770,8 @@ class RecordedfutureConnector(BaseConnector):
 
         # Summary
         summary = action_result.get_summary()
-        summary['total_number_of_rules'] = response['counts']['total']
         summary['returned_number_of_rules'] = response['counts']['returned']
+        summary['total_number_of_rules'] = response['counts']['total']
         summary['rule_id_list'] = ','.join(rule_ids)
         action_result.set_summary(summary)
 

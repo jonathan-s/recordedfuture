@@ -39,24 +39,24 @@ and will be merged during compilation:
     <div class="rf-box">
       <table class="rf-table">
         {% if result.data %}
-          {% for entry in result.data %}
+          {% for rule in result.data %}
             <tr>
               <td>
                 <span class="non-highlighted">Rule Id</span><br/>
-                {{ entry.rule.id }}
+                {{ rule.id }}
               </td>
               <td>
                 <span class="non-highlighted">Rule Name</span><br/>
-                {{ entry.rule.name }}
+                {{ rule.name }}
               </td>
             </tr>
           {% endfor %}
         {% else %}
-        <tr>
-          <td>
-            No rule found
-          </td>
-        </tr>
+          <tr>
+            <td>
+              No rules found
+            </td>
+          </tr>
         {% endif %}
       </table>
     </div>

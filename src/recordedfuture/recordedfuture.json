@@ -433,7 +433,6 @@
                 "rule_name": {
                     "description": "Search for alert rule name and ID",
                     "data_type": "string",
-                    "required": true,
                     "primary": true,
                     "contains": [
                         "recordedfuture alert rule search"

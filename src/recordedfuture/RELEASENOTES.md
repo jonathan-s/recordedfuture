@@ -1,5 +1,11 @@
 # RELEASE NOTES
 
+## VERSION 3.1
+
+This version uses Recorded Future Links. There are also improvements, 
+all alert rules can be fetched. 
+
+
 ## VERSION 3.0
 
 This version uses Recorded Future's new extension of the SOAR API which is
