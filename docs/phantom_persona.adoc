@@ -1,0 +1,34 @@
+MACHINE PERSONA
+
+image::SplunkPhantom.png[Logo, float="right"]
+
+== SPLUNK PHANTOM
+
+[sidebar]
+Splunk Phantom is intended to do the first triage of events that is sent to it. It will
+gather information about the entities involved to determine the next actions: whether
+the event can be closed immediately, if there is enough information to decide on the
+next action and/or to hand it over to a SOC engineer.
+
+==== DEVELOPMENT PAIN POINTS
+[square]
+* Limited space to display information
+* Not suited for the large amount of data that is accessible via our API
+
+==== NEEDS
+[square]
+* A static API
+* Structured information on which to base decisions, cannot connect dots on its own
+* Clear information about what the information means and how reliable/actionable it is
+
+==== USAGE GOALS
+[square]
+* Decrease the number of alerts that SOC engineers need to get involved with directly
+* Decrease the time to react to threats
+* Create containers used for forensic investigation into threats and evidence gathering
+
+==== WINNING STRATEGY
+[square]
+* Amazingly good a working 24/7 without breaks
+* Likes calculations and handling large amounts of data when fitted
+with rules and playbooks to follow
