@@ -5,7 +5,7 @@ image::SplunkPhantom.png[Logo, float="right"]
 == SPLUNK PHANTOM
 
 [sidebar]
-Splunk Phantom is intended to do the first triage of events that is sent to it. It will
+Splunk Phantom is event-based to do the first triage of events that is sent to it. It will
 gather information about the entities involved to determine the next actions: whether
 the event can be closed immediately, if there is enough information to decide on the
 next action and/or to hand it over to a SOC engineer.
@@ -32,3 +32,7 @@ next action and/or to hand it over to a SOC engineer.
 * Amazingly good a working 24/7 without breaks
 * Likes calculations and handling large amounts of data when fitted
 with rules and playbooks to follow
+
+From video
+automate the annoying/time consuming
+automate the things with a lot of steps

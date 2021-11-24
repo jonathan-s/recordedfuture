@@ -367,11 +367,19 @@ class RecordedfutureConnector(BaseConnector):
         if resp.status_code == 200:
             return self._process_response(resp, action_result, **kwargs)
         elif resp.status_code == 401:
-            return RetVal(action_result.set_status(phantom.APP_ERROR, "Error Connecting to server. Details: Error code: 401 Unauthorised."), None)
+            return RetVal(action_result.set_status(phantom.APP_ERROR,
+                "Error Connecting to server. Details: Error code: 401 Unauthorised."), None)
         elif resp.status_code == 403:
-            return RetVal(action_result.set_status(phantom.APP_ERROR, "Error Connecting to server. Details: Error code: 403 Forbidden."), None)
+            return RetVal(action_result.set_status(phantom.APP_ERROR,
+                "Error Connecting to server. Details: Error code: 403 Forbidden."), None)
+        elif resp.status_code == 400:
+            return RetVal(action_result.set_status(phantom.APP_ERROR,
+                "Error Connecting to server. Details: Error code: 400 Bad Request."), None)
         else:
-            return self._process_response(resp, action_result, **kwargs)
+            # _process_response is not able to handle the abort response message, can't do get on the response
+            message = resp.get('message', '')
+            return RetVal(action_result.set_status(phantom.APP_ERROR,
+                f"Error Connecting to server. Details: Error code: {resp.status_code} {message}."), None)
 
     def _handle_test_connectivity(self, param):
 

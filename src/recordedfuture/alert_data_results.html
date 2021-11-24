@@ -53,7 +53,7 @@ and will be merged during compilation:
                 </td>
                 <td>
                   <span class="non-highlighted">Triggered</span><br/>
-                  {{ trigged.alert.triggered }}
+                  {{ trigged.alert.triggered|slice:"0:10"  }}
                 </td>
                 <td>
                   {% if trigged.alert.entities.EmailAddress %}

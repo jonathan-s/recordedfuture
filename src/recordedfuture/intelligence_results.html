@@ -106,6 +106,33 @@ and will be merged during compilation:
         </table>
       </div>
 
+      <!-- Links -->
+      {% if result.data.technicalLinks %}
+        <div class="rf-box">
+          <table class="rf-table">
+            <tr>
+              <td colspan="3"><b>Technical Links </b></td>
+            </tr>
+            {% for entity in result.data.technicalLinks.entities %}
+              <tr>
+                <td>
+                  {{ entity.name  }}
+                </td>
+                <td>
+                  {{ entity.score}}
+                </td>
+                <td>
+                  {{ entity.type  }}
+                </td>
+                <td>
+                  {{ entity.category  }}
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+      {% endif %}
+
       <!-- NVD CVSS -->
       {% if result.data.nvdDescription %}
       <div class="rf-box">
