@@ -144,6 +144,7 @@ def intelligence_results(provides, all_app_runs, context):
             if (not formatted):
                 continue
             results.append(formatted)
+
     return 'intelligence_results.html'
 
 
@@ -156,6 +157,7 @@ def reputation_results(provides, all_app_runs, context):
             if (not formatted):
                 continue
             results.append(formatted)
+
     return 'reputation_results.html'
 
 
@@ -168,6 +170,7 @@ def contexts_results(provides, all_app_runs, context):
             if not formatted:
                 continue
             results.append(formatted)
+
     return 'contexts_results.html'
 
 
@@ -201,7 +204,6 @@ def alert_rules_results(provides, all_app_runs, context):
     for summary, action_results in all_app_runs:
 
         for result in action_results:
-            # formatted = format_alert_result(result, True)
             formatted = {
                 'param': result.get_param(),
                 'data': result.get_data()
@@ -218,7 +220,6 @@ def format_threat_assessment_result(result, all_data=False):
 
     data = result.get_data()
     if data:
-        # retval['data'] = data[0]
         ret_data = {key: data[0][key]
                     for key in data[0].keys()
                     if key != 'entities'}
@@ -258,7 +259,5 @@ def threat_assessment_results(provides, all_app_runs, context):
             if (not formatted):
                 continue
             results.append(formatted)
-            # retval = {'param': result.get_param()}
-            # retval['data'] = {'riskscore': 90}
-            # results.append(retval)
+
     return 'threat_assessment_results.html'

@@ -79,7 +79,7 @@ and will be merged during compilation:
               {{ result.data.risk.score }}
             </td>
             <td>
-              <span class="non-highlighted">Summary</span> <br/>
+              <span class="non-highlighted">Risk Rules Observed</span> <br/>
               {{ result.data.risk.riskSummary }}
             </td>
             <td class="rf-timestamp">
@@ -111,21 +111,20 @@ and will be merged during compilation:
         <div class="rf-box">
           <table class="rf-table">
             <tr>
-              <td colspan="3"><b>Technical Links </b></td>
+              <td colspan="3"><b>Technical Links</b></td>
             </tr>
             {% for entity in result.data.technicalLinks.entities %}
               <tr>
-                <td>
-                  {{ entity.name  }}
+                <td colspan="2">
+                  {{ entity.type }}:
+                  <a href="javascript:;" onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ result.param.ip }}' }], 0, {{ container.id }}, null, false);"><span class="highlighted">{{ entity.name }}</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
+                  </a>
                 </td>
                 <td>
-                  {{ entity.score}}
+                  Score: {{ entity.score }}
                 </td>
                 <td>
-                  {{ entity.type  }}
-                </td>
-                <td>
-                  {{ entity.category  }}
+                  {{ entity.category }}
                 </td>
               </tr>
             {% endfor %}
@@ -150,81 +149,81 @@ and will be merged during compilation:
 
       <!-- Risk Rules Triggered -->
       {% if result.data.risk.evidenceDetails %}
-      <div class="rf-box">
-        <table class="rf-table">
-        <tr><td colspan="4">Triggered Risk Rules</td></tr>
-        {% for rule in result.data.risk.evidenceDetails|dictsortreversed:"criticality" %}
-        <tr>
-          <td class="rf-criticality-level-{{ rule.criticality }}"></td>
-          <td>
-            <span class="non-highlighted">Risk Rule</span> <br/>
-            {{ rule.rule }}
-          </td>
-          <td>
-            <span class="non-highlighted">Evidence</span> <br/>
-            {{ rule.evidenceString }}
-          </td>
-          <td class="rf-timestamp">
-            <span class="non-highlighted">Timestamp</span> <br/>
-            <span title="{{ rule.timestamp }}">
-              {{ rule.timestampShort }}
-            </span>
-          </td>
-        </tr>
-        {% endfor %}
-      </table>
-      </div>
+        <div class="rf-box">
+          <table class="rf-table">
+            <tr><td colspan="4">Triggered Risk Rules</td></tr>
+            {% for rule in result.data.risk.evidenceDetails|dictsortreversed:"criticality" %}
+              <tr>
+                <td class="rf-criticality-level-{{ rule.criticality }}"></td>
+                <td>
+                  <span class="non-highlighted">Risk Rule</span> <br/>
+                  {{ rule.rule }}
+                </td>
+                <td>
+                  <span class="non-highlighted">Evidence</span> <br/>
+                  {{ rule.evidenceString }}
+                </td>
+                <td class="rf-timestamp">
+                  <span class="non-highlighted">Timestamp</span> <br/>
+                  <span title="{{ rule.timestamp }}">
+                    {{ rule.timestampShort }}
+                  </span>
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
       {% endif %}
 
       <!-- NVD CVSS -->
       {% if result.data.cvss %}
-      <div class="rf-box">
-        <table class="rf-table">
-          <tr><td colspan="9">CVSS Vulnerability Metrics</td></tr>
-          <tr>
-            <td>
-              <span class="non-highlighted">Access Vector</span><br/>
-              {{ result.data.cvss.accessVector }}
-            </td>
-            <td>
-              <span class="non-highlighted">Availability</span><br/>
-              {{ result.data.cvss.availability }}
-            </td>
-            <td>
-              <span class="non-highlighted">Score</span><br/>
-              {{ result.data.cvss.score }}
-            </td>
-            <td>
-              <span class="non-highlighted">Access Complexity</span><br/>
-              {{ result.data.cvss.accessComplexity }}
-            </td>
-            <td>
-              <span class="non-highlighted">Authentication</span><br/>
-              {{ result.data.cvss.authentication }}
-            </td>
-            <td>
-              <span class="non-highlighted">Confidentiality</span><br/>
-              {{ result.data.cvss.confidentiality }}
-            </td>
-            <td>
-              <span class="non-highlighted">Integrity</span><br/>
-              {{ result.data.cvss.integrity }}
-            </td>
-            <td>
-              <span class="non-highlighted">Published</span><br/>
-              <span title="{{ result.data.cvss.published }}">
-                {{ result.data.cvss.publishedShort }}
-              </span>
-            </td>
-            <td>
-              <span class="non-highlighted">Last Modified</span><br/>
-              <span title="{{result.data.cvss.lastModified}}">
-                {{ result.data.cvss.lastModifiedShort }}
-              </span>
-            </td>
-          </tr>
-        </table>
-      </div>
+        <div class="rf-box">
+          <table class="rf-table">
+            <tr><td colspan="9">CVSS Vulnerability Metrics</td></tr>
+            <tr>
+              <td>
+                <span class="non-highlighted">Access Vector</span><br/>
+                {{ result.data.cvss.accessVector }}
+              </td>
+              <td>
+                <span class="non-highlighted">Availability</span><br/>
+                {{ result.data.cvss.availability }}
+              </td>
+              <td>
+                <span class="non-highlighted">Score</span><br/>
+                {{ result.data.cvss.score }}
+              </td>
+              <td>
+                <span class="non-highlighted">Access Complexity</span><br/>
+                {{ result.data.cvss.accessComplexity }}
+              </td>
+              <td>
+                <span class="non-highlighted">Authentication</span><br/>
+                {{ result.data.cvss.authentication }}
+              </td>
+              <td>
+                <span class="non-highlighted">Confidentiality</span><br/>
+                {{ result.data.cvss.confidentiality }}
+              </td>
+              <td>
+                <span class="non-highlighted">Integrity</span><br/>
+                {{ result.data.cvss.integrity }}
+              </td>
+              <td>
+                <span class="non-highlighted">Published</span><br/>
+                <span title="{{ result.data.cvss.published }}">
+                  {{ result.data.cvss.publishedShort }}
+                </span>
+              </td>
+              <td>
+                <span class="non-highlighted">Last Modified</span><br/>
+                <span title="{{result.data.cvss.lastModified}}">
+                  {{ result.data.cvss.lastModifiedShort }}
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
       {% endif %}
 
       <!-- Threat Lists -->

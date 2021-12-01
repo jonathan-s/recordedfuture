@@ -18,6 +18,9 @@
 version = '%RELEASE%'
 buildid = '%BUILDID%'
 
+# timeout for our http requests to bfi_phantom
+timeout = 15
+
 # These dicts map which path_info, which fields, what the Recorded Future
 # category is called and whether to quote the entity or not.
 # They are used to make the reputation/intelligence method parameterized.
