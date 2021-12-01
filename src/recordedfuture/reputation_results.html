@@ -95,7 +95,7 @@ and will be merged during compilation:
       {% if result.data.evidence %}
       <div class="rf-box">
         <table class="rf-table">
-          <tr><td colspan="4">Risk Rules Triggered</td></tr>
+          <tr><th colspan="4">Risk Rules Triggered</th></tr>
           {% for rule in result.data.evidence|dictsortreversed:"level" %}
             <tr>
               <td class="rf-criticality-level-{{ rule.level }}"></td>

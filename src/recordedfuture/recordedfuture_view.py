@@ -55,7 +55,7 @@ def format_result(result, all_data=False):
             retval['data']['timestamps']['firstSeen'][:10]
         retval['data']['timestamps']['lastSeenShort'] = \
             retval['data']['timestamps']['lastSeen'][:10]
-    except:
+    except Exception:
         retval['data'] = None
 
     summary = result.get_summary()
@@ -185,7 +185,6 @@ def alert_data_results(provides, all_app_runs, context):
     for summary, action_results in all_app_runs:
 
         for result in action_results:
-            # formatted = format_alert_result(result, True)
             formatted = {
                 'param': result.get_param(),
                 'data': result.get_data()
