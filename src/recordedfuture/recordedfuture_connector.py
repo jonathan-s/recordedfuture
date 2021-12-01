@@ -342,13 +342,13 @@ class RecordedfutureConnector(BaseConnector):
 
         if resp.status_code == 200:
             return self._process_response(resp, action_result, **kwargs)
-        elif resp.status_code == 4001:
+        elif resp.status_code == 401:
             return RetVal(action_result.set_status(phantom.APP_ERROR,
                 'Error Connecting to server. Details: Error code: 401 Unauthorised.'), None)
-        elif resp.status_code == 4003:
+        elif resp.status_code == 403:
             return RetVal(action_result.set_status(phantom.APP_ERROR,
                 'Error Connecting to server. Details: Error code: 403 Forbidden.'), None)
-        elif resp.status_code == 4000:
+        elif resp.status_code == 400:
             return RetVal(action_result.set_status(phantom.APP_ERROR,
                 'Error Connecting to server. Details: Error code: 400 Bad Request.'), None)
         else:
