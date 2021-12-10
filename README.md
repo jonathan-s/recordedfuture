@@ -1,9 +1,3 @@
-A few comments at the start of new phantom version - this time using git and docker for development:
-
-There seems to be a clash of networks: restart docker deamon and rf_phantom to gets it working. 
-
-
-
 # Phantom integration
 
 Phantom is a System Orchestration and Automated Response (SOAR) platform 

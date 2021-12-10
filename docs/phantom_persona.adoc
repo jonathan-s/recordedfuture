@@ -14,7 +14,7 @@ next action and/or to hand it over to a SOC engineer.
 [square]
 * Limited space to display information
 * Not suited for the large amount of data that is accessible via our API
-* json structure visible to users
+* json structure visible to users, and is currently too deep
 
 ==== NEEDS
 [square]

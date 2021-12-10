@@ -592,87 +592,143 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.start_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.start_date",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture research links start date"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.stop_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.stop_date",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture research links stop date"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.name",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.ip.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture research links entity name"
+                        "ip"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.type",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.ip.*.type",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture research links entity type"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.category",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.ip.*.score",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture research links entity category"
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.score",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.domain.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture research links entity risk score"
+                        "ip"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.start_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.domain.*.type",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links start date"
+                        "recordedfuture research links entity type"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.stop_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.domain.*.score",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links stop date"
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.name",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity name"
+                        "ip"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.type",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.type",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity type"
+                        "recordedfuture research links entity type"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.category",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.score",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity category"
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.score",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity risk score"
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture research links entity type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.score",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture entity risk score"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.url.*.name",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.url.*.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture research links entity type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.url.*.score",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture entity risk score"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.other.*.name",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.other.*.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture research links entity type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.other.*.score",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {
@@ -1156,87 +1212,143 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.start_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.start_date",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture research links start date"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.stop_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.stop_date",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture research links stop date"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.name",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.ip.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture research links entity name"
+                        "ip"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.type",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.ip.*.type",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture research links entity type"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.category",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.ip.*.score",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture research links entity category"
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.score",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.domain.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture research links entity risk score"
+                        "ip"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.start_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.domain.*.type",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links start date"
+                        "recordedfuture research links entity type"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.stop_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.domain.*.score",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links stop date"
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.name",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity name"
+                        "ip"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.type",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.type",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity type"
+                        "recordedfuture research links entity type"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.category",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.score",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity category"
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.score",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity risk score"
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture research links entity type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.score",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture entity risk score"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.url.*.name",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.url.*.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture research links entity type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.url.*.score",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture entity risk score"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.other.*.name",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.other.*.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture research links entity type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.other.*.score",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {
@@ -1723,87 +1835,143 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.start_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.start_date",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture research links start date"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.stop_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.stop_date",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture research links stop date"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.name",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.ip.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture research links entity name"
+                        "ip"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.type",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.ip.*.type",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture research links entity type"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.category",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.ip.*.score",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture research links entity category"
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.score",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.domain.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture research links entity risk score"
+                        "ip"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.start_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.domain.*.type",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links start date"
+                        "recordedfuture research links entity type"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.stop_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.domain.*.score",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links stop date"
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.name",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity name"
+                        "ip"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.type",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.type",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity type"
+                        "recordedfuture research links entity type"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.category",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.score",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity category"
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.score",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity risk score"
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture research links entity type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.score",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture entity risk score"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.url.*.name",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.url.*.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture research links entity type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.url.*.score",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture entity risk score"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.other.*.name",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.other.*.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture research links entity type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.other.*.score",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {
@@ -2279,87 +2447,143 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.start_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.start_date",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture research links start date"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.stop_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.stop_date",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture research links stop date"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.name",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.ip.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture research links entity name"
+                        "ip"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.type",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.ip.*.type",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture research links entity type"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.category",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.ip.*.score",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture research links entity category"
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.score",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.domain.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture research links entity risk score"
+                        "ip"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.start_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.domain.*.type",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links start date"
+                        "recordedfuture research links entity type"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.stop_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.domain.*.score",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links stop date"
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.name",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity name"
+                        "ip"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.type",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.type",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity type"
+                        "recordedfuture research links entity type"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.category",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.score",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity category"
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.score",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity risk score"
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture research links entity type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.score",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture entity risk score"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.url.*.name",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.url.*.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture research links entity type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.url.*.score",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture entity risk score"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.other.*.name",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.other.*.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture research links entity type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.other.*.score",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {
@@ -2851,87 +3075,143 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.start_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.start_date",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture research links start date"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.stop_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.stop_date",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture research links stop date"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.name",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.ip.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture research links entity name"
+                        "ip"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.type",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.ip.*.type",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture research links entity type"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.category",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.ip.*.score",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture research links entity category"
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.researchLinks.entities.score",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.domain.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture research links entity risk score"
+                        "domain"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.start_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.domain.*.type",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links start date"
+                        "recordedfuture research links entity type"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.stop_date",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.domain.*.score",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links stop date"
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.name",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity name"
+                        "file"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.type",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.type",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity type"
+                        "recordedfuture research links entity type"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.category",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.score",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity category"
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.technicalLinks.entities.score",
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture technical links entity risk score"
+                        "vulnerability"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture research links entity type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.score",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture entity risk score"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.url.*.name",
+                    "data_type": "string",
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.url.*.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture research links entity type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.url.*.score",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture entity risk score"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.other.*.name",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture research links other entity types"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.other.*.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture research links entity type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recordedfutureLinks.entities.other.*.score",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture entity risk score"
                     ]
                 },
                 {

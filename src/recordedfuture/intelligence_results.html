@@ -42,32 +42,27 @@ and will be merged during compilation:
           <tr>
             <td colspan="5">
               {% if result.param.ip %}
-              <span class="highlighted">{{ result.data.risk.criticalityLabel }}</span>
-              <span> IP </span>
+              <span class="non-highlighted">IP Intelligence</span><br>
               <a href="javascript:;" onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ result.param.ip }}' }], 0, {{ container.id }}, null, false);"><span class="highlighted">{{ result.param.ip }}</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
               </a>
             {% endif %}
             {% if result.param.domain %}
-              <span class="highlighted">{{ result.data.risk.criticalityLabel }}</span>
-              <span> Domain </span>
+              <span class="non-highlighted">Domain Intelligence</span><br>
               <a href="javascript:;" onclick="context_menu(this, [{'contains': ['domain'], 'value': '{{ result.param.domain }}' }], 0, {{ container.id }}, null, false);"><span class="highlighted">{{ result.param.domain }}</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
               </a>
             {% endif %}
             {% if result.param.hash %}
-              <span class="highlighted">{{ result.data.risk.criticalityLabel }}</span>
-              <span> Hash ({{ result.data.hashAlgorithm }}) </span>
-              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['hash'], 'value': '{{ result.param.hash }}' }], 0, {{ container.id }}, null, false);"><span class="highlighted">{{ result.param.hash }}</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
+              <span class="non-highlighted">File Intelligence</span><br>
+              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['hash', 'sha256', 'sha1','md5'], 'value': '{{ result.param.hash }}' }], 0, {{ container.id }}, null, false);"><span class="highlighted">{{ result.param.hash }}</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
               </a>
             {% endif %}
             {% if result.param.url %}
-              <span class="highlighted">{{ result.data.risk.criticalityLabel }}</span>
-              <span> URL </span>
+              <span class="non-highlighted">URL Intelligence</span><br>
               <a href="javascript:;" onclick="context_menu(this, [{'contains': ['url'], 'value': '{{ result.param.url }}' }], 0, {{ container.id }}, null, false);"><span class="highlighted">{{ result.param.url }}</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
               </a>
             {% endif %}
             {% if result.param.vulnerability %}
-              <span class="highlighted">{{ result.data.risk.criticalityLabel }}</span>
-              <span> Vulnerability </span>
+              <span class="non-highlighted">Vulnerability Intelligence</span><br>
               <a href="javascript:;" onclick="context_menu(this, [{'contains': ['vulnerability'], 'value': '{{ result.param.vulnerability }}' }], 0, {{ container.id }}, null, false);"><span class="highlighted">{{ result.param.vulnerability }}</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
               </a>
             {% endif %}
@@ -79,7 +74,7 @@ and will be merged during compilation:
               {{ result.data.risk.score }}
             </td>
             <td>
-              <span class="non-highlighted">Risk Rules Observed</span> <br/>
+              <span class="non-highlighted">Risk Rules Triggered</span> <br/>
               {{ result.data.risk.riskSummary }}
             </td>
             <td class="rf-timestamp">
@@ -97,7 +92,8 @@ and will be merged during compilation:
             <td>
               <span class="non-highlighted">Intelligence Card</span> <br/>
               {% if result.data.intelCard %}
-                <a href="{{ result.data.intelCard }}" target="new">Open</a>
+                <a href="{{ result.data.intelCard }}" target="new">Open
+                  <img </a>
               {% elif result.intelCard %}
                 <a href="{{ result.intelCard }}" target="new">Open</a>
               {% endif %}
@@ -106,45 +102,19 @@ and will be merged during compilation:
         </table>
       </div>
 
-      <!-- Links -->
-      {% if result.data.technicalLinks %}
+      <!-- NVD CVSS -->
+      {% if result.data.nvdDescription %}
         <div class="rf-box">
           <table class="rf-table">
             <tr>
-              <td colspan="3"><strong>Technical Links</strong></td>
+              <td>
+                <span class="non-highlighted">NVD Vulnerability
+                  Description</span><br/>
+                {{ result.data.nvdDescription }}
+              </td>
             </tr>
-            {% for entity in result.data.technicalLinks.entities %}
-              <tr>
-                <td colspan="2">
-                  {{ entity.type }}:
-                  <a href="javascript:;" onclick="context_menu(this, [{'contains': ['ip'], 'value': '{{ result.param.ip }}' }], 0, {{ container.id }}, null, false);"><span class="highlighted">{{ entity.name }}</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
-                  </a>
-                </td>
-                <td>
-                  Score: {{ entity.score }}
-                </td>
-                <td>
-                  {{ entity.category }}
-                </td>
-              </tr>
-            {% endfor %}
           </table>
         </div>
-      {% endif %}
-
-      <!-- NVD CVSS -->
-      {% if result.data.nvdDescription %}
-      <div class="rf-box">
-        <table class="rf-table">
-          <tr>
-            <td>
-              <span class="non-highlighted">NVD Vulnerability
-                Description</span><br/>
-              {{ result.data.nvdDescription }}
-            </td>
-          </tr>
-        </table>
-      </div>
       {% endif %}
 
       <!-- Risk Rules Triggered -->
@@ -228,54 +198,86 @@ and will be merged during compilation:
 
       <!-- Threat Lists -->
       {% if result.data.threatLists %}
-      <div class="rf-box">
-        <table class="rf-table">
-          <tr><td colspan="2">Threat Lists</td></tr>
-          {% for threatList in result.data.threatLists %}
-          <tr>
-            <td style="min-width: 20ex;">
-              <span class="non-highlighted">Threatlist Name</span> <br/>
-              {{ threatList.name }} </td>
-            <td>
-              <span class="non-highlighted">Description</span> <br/>
-              {{ threatList.description}}
-            </td>
-          </tr>
-          {% endfor %}
-        </table>
-      </div>
+        <div class="rf-box">
+          <table class="rf-table">
+            <tr><td colspan="2">Threat Lists</td></tr>
+            {% for threatList in result.data.threatLists %}
+            <tr>
+              <td style="min-width: 20ex;">
+                <span class="non-highlighted">Threatlist Name</span> <br/>
+                {{ threatList.name }} </td>
+              <td>
+                <span class="non-highlighted">Description</span> <br/>
+                {{ threatList.description}}
+              </td>
+            </tr>
+            {% endfor %}
+          </table>
+          </div>
       {% endif %}
 
       <!-- Location -->
       {% if result.data.location %}
-      <div class="rf-box">
-        <table class="rf-table">
-          <tr><td colspan="5">ASN and Geolocation</td></tr>
-          <tr>
-            <td>
-              <span class="non-highlighted">AS Number</span> <br/>
-              {{ result.data.location.asn }}
-            </td>
-            <td>
-              <span class="non-highlighted">AS Name</span> <br/>
-              {{ result.data.location.organization }}
-            </td>
-            <td>
-              <span class="non-highlighted">IP Range</span> <br/>
-              {{ result.data.location.cidr.name }}
-            </td>
-            <td>
-              <span class="non-highlighted">Geolocation (city)</span> <br/>
-              {{ result.data.location.location.city }}
-            </td>
-            <td>
-              <span class="non-highlighted">Geolocation (country)</span> <br/>
-              {{ result.data.location.location.country }}
-            </td>
-          </tr>
-        </table>
-      </div>
+        <div class="rf-box">
+          <table class="rf-table">
+            <tr><td colspan="5">ASN and Geolocation</td></tr>
+            <tr>
+              <td>
+                <span class="non-highlighted">AS Number</span> <br/>
+                {{ result.data.location.asn }}
+              </td>
+              <td>
+                <span class="non-highlighted">AS Name</span> <br/>
+                {{ result.data.location.organization }}
+              </td>
+              <td>
+                <span class="non-highlighted">IP Range</span> <br/>
+                {{ result.data.location.cidr.name }}
+              </td>
+              <td>
+                <span class="non-highlighted">Geolocation (city)</span> <br/>
+                {{ result.data.location.location.city }}
+              </td>
+              <td>
+                <span class="non-highlighted">Geolocation (country)</span> <br/>
+                {{ result.data.location.location.country }}
+              </td>
+            </tr>
+          </table>
+        </div>
       {% endif %}
+
+      {% if result.data.recordedfutureLinks %}
+        <div class="rf-box">
+          <table class="rf-table">
+            <tr>
+              <td>Recorded Future Research and Technical Links</td>
+            </tr>
+            {% for entity_type, entities in result.data.recordedfutureLinks.entities.items %}
+              <tr>
+                <td>
+                  <strong>{{ entity_type|upper }}</strong> <br>
+                  {% for entity in entities|dictsortreversed:"score" %}
+                    {% if entity_type == 'other' %}
+                      {{ entity.name }} ({{ entity.type|title }})
+                      <br>
+                    {% else %}
+                      Risk: {{ entity.score }}&nbsp;&nbsp; |&nbsp;&nbsp;
+                      <a href="javascript:;" onclick="context_menu(this, [{'contains': ['{{ entity_type }}'], 'value': '{{ entity.name }}' }], 0, {{ container.id }}, null, false);">
+                        {{ entity.name }}
+                        &nbsp;
+                        <span class="fa fa-caret-down" style="font-size: smaller;"></span>
+                      </a>
+                      <br>
+                    {% endif %}
+                  {% endfor %}
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+      {% endif %}
+
     {% else %} <!-- handle no data responses -->
       <table class="rf-table">
         <tr>

@@ -18,25 +18,25 @@
 
   .rf-widget {
     overflow: auto;
-    width: 100%;
+    width: 120%;
     height: 100%;
     padding-left:10px;
     padding-right:10px;
   }
 
   .rf-box {
-    width: 98%;
+    width: 600px;
     padding: 5px 10px 5px 10px;
     margin: 0 5px;
     font-size: 12px;
   }
 
   .highlighted {
-    font-weight: bold;
+    font-weight: 700;
   }
 
   .non-highlighted {
-    font-size: xx-small;
+    font-size: x-small;
   }
 
   .rf-box th {
