@@ -630,7 +630,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.domain.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "domain"
                     ]
                 },
                 {
@@ -651,7 +651,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "hash"
                     ]
                 },
                 {
@@ -672,7 +672,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "cve"
                     ]
                 },
                 {
@@ -693,7 +693,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.url.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "url"
                     ]
                 },
                 {
@@ -714,7 +714,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.other.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "recordedfuture research links other entity type"
                     ]
                 },
                 {
@@ -1250,7 +1250,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.domain.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "domain"
                     ]
                 },
                 {
@@ -1271,7 +1271,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "hash"
                     ]
                 },
                 {
@@ -1292,7 +1292,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "cve"
                     ]
                 },
                 {
@@ -1313,7 +1313,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.url.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "url"
                     ]
                 },
                 {
@@ -1334,7 +1334,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.other.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "recordedfuture research links other entity type"
                     ]
                 },
                 {
@@ -1873,7 +1873,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.domain.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "domain"
                     ]
                 },
                 {
@@ -1894,7 +1894,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "hash"
                     ]
                 },
                 {
@@ -1915,7 +1915,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "cve"
                     ]
                 },
                 {
@@ -1936,7 +1936,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.url.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "url"
                     ]
                 },
                 {
@@ -1957,7 +1957,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.other.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "recordedfuture research links other entity type"
                     ]
                 },
                 {
@@ -2485,7 +2485,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.domain.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "domain"
                     ]
                 },
                 {
@@ -2506,7 +2506,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "hash"
                     ]
                 },
                 {
@@ -2527,7 +2527,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "cve"
                     ]
                 },
                 {
@@ -2548,7 +2548,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.url.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "url"
                     ]
                 },
                 {
@@ -2569,7 +2569,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.other.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "recordedfuture research links other entity type"
                     ]
                 },
                 {
@@ -3134,7 +3134,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.name",
                     "data_type": "string",
                     "contains": [
-                        "file"
+                        "hash"
                     ]
                 },
                 {
@@ -3155,7 +3155,7 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.vulnerability.*.name",
                     "data_type": "string",
                     "contains": [
-                        "vulnerability"
+                        "cve"
                     ]
                 },
                 {
