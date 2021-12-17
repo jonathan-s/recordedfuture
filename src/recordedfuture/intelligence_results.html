@@ -53,7 +53,7 @@ and will be merged during compilation:
             {% endif %}
             {% if result.param.hash %}
               <span class="non-highlighted">File Intelligence</span><br>
-              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['hash', 'sha256', 'sha1','md5'], 'value': '{{ result.param.hash }}' }], 0, {{ container.id }}, null, false);"><span class="highlighted">{{ result.param.hash }}</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
+              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['file'], 'value': '{{ result.param.hash }}' }], 0, {{ container.id }}, null, false);"><span class="highlighted">{{ result.param.hash }}</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
               </a>
             {% endif %}
             {% if result.param.url %}
@@ -63,7 +63,7 @@ and will be merged during compilation:
             {% endif %}
             {% if result.param.vulnerability %}
               <span class="non-highlighted">Vulnerability Intelligence</span><br>
-              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['vulnerability'], 'value': '{{ result.param.vulnerability }}' }], 0, {{ container.id }}, null, false);"><span class="highlighted">{{ result.param.vulnerability }}</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
+              <a href="javascript:;" onclick="context_menu(this, [{'contains': ['cve','recordedfuture vulnerability id','vulnerability'], 'value': '{{ result.param.vulnerability }}' }], 0, {{ container.id }}, null, false);"><span class="highlighted">{{ result.param.vulnerability }}</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
               </a>
             {% endif %}
             </td>
