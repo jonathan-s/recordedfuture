@@ -609,7 +609,8 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.ip.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "ip",
+                        "ipv6"
                     ]
                 },
                 {
@@ -651,7 +652,11 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.name",
                     "data_type": "string",
                     "contains": [
-                        "file"
+                        "file",
+                        "hash",
+                        "sha256",
+                        "sha1",
+                        "md5"
                     ]
                 },
                 {
@@ -673,7 +678,6 @@
                     "data_type": "string",
                     "contains": [
                         "cve",
-                        "recordedfuture vulnerability id",
                         "vulnerability"
                     ]
                 },
@@ -1096,7 +1100,6 @@
                     "primary": true,
                     "contains": [
                         "cve",
-                        "recordedfuture vulnerability id",
                         "vulnerability"
                     ],
                     "order": 0
@@ -1119,7 +1122,7 @@
                     "data_type": "string",
                     "contains": [
                         "cve",
-                        "recordedfuture vulnerability id"
+                        "vulnerability"
                     ]
                 },
                 {
@@ -1204,7 +1207,7 @@
                     "data_type": "string",
                     "contains": [
                         "cve",
-                        "recordedfuture vulnerability id"
+                        "vulnerability"
                     ]
                 },
                 {
@@ -1232,7 +1235,8 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.ip.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "ip",
+                        "ipv6"
                     ]
                 },
                 {
@@ -1274,7 +1278,11 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.name",
                     "data_type": "string",
                     "contains": [
-                        "file"
+                        "file",
+                        "hash",
+                        "sha256",
+                        "sha1",
+                        "md5"
                     ]
                 },
                 {
@@ -1296,7 +1304,6 @@
                     "data_type": "string",
                     "contains": [
                         "cve",
-                        "recordedfuture vulnerability id",
                         "vulnerability"
                     ]
                 },
@@ -1583,7 +1590,6 @@
                     "primary": true,
                     "contains": [
                         "cve",
-                        "recordedfuture vulnerability id",
                         "vulnerability"
                     ],
                     "order": 0
@@ -1606,7 +1612,7 @@
                     "data_type": "string",
                     "contains": [
                         "cve",
-                        "recordedfuture vulnerability id"
+                        "vulnerability"
                     ]
                 },
                 {
@@ -1715,7 +1721,7 @@
                     "data_type": "string",
                     "contains": [
                         "cve",
-                        "recordedfuture vulnerability id"
+                        "vulnerability"
                     ]
                 },
                 {
@@ -1783,7 +1789,11 @@
                     "required": true,
                     "primary": true,
                     "contains": [
-                        "file"
+                        "file",
+                        "hash",
+                        "sha256",
+                        "sha1",
+                        "md5"
                     ],
                     "order": 0
                 }
@@ -1804,6 +1814,7 @@
                     "data_path": "action_result.parameter.hash",
                     "data_type": "string",
                     "contains": [
+                        "file",
                         "hash",
                         "sha256",
                         "sha1",
@@ -1821,6 +1832,7 @@
                     "data_path": "action_result.data.*.entity.name",
                     "data_type": "string",
                     "contains": [
+                        "file",
                         "hash",
                         "sha256",
                         "sha1",
@@ -1855,7 +1867,8 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.ip.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "ip",
+                        "ipv6"
                     ]
                 },
                 {
@@ -1897,7 +1910,11 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.name",
                     "data_type": "string",
                     "contains": [
-                        "file"
+                        "file",
+                        "hash",
+                        "sha256",
+                        "sha1",
+                        "md5"
                     ]
                 },
                 {
@@ -1919,7 +1936,6 @@
                     "data_type": "string",
                     "contains": [
                         "cve",
-                        "recordedfuture vulnerability id",
                         "vulnerability"
                     ]
                 },
@@ -2207,7 +2223,11 @@
                     "required": true,
                     "primary": true,
                     "contains": [
-                        "file"
+                        "file",
+                        "hash",
+                        "sha256",
+                        "sha1",
+                        "md5"
                     ],
                     "order": 0
                 }
@@ -2228,6 +2248,7 @@
                     "data_path": "action_result.data.*.name",
                     "data_type": "string",
                     "contains": [
+                        "file",
                         "hash",
                         "sha1",
                         "sha256",
@@ -2332,6 +2353,7 @@
                     "data_path": "action_result.parameter.hash",
                     "data_type": "string",
                     "contains": [
+                        "file",
                         "hash",
                         "sha256",
                         "sha1",
@@ -2466,7 +2488,8 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.ip.*.name",
                     "data_type": "string",
                     "contains": [
-                        "ip"
+                        "ip",
+                        "ipv6"
                     ]
                 },
                 {
@@ -2508,7 +2531,11 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.name",
                     "data_type": "string",
                     "contains": [
-                        "file"
+                        "file",
+                        "hash",
+                        "sha256",
+                        "sha1",
+                        "md5"
                     ]
                 },
                 {
@@ -2530,7 +2557,6 @@
                     "data_type": "string",
                     "contains": [
                         "cve",
-                        "recordedfuture vulnerability id",
                         "vulnerability"
                     ]
                 },
@@ -3139,7 +3165,11 @@
                     "data_path": "action_result.data.*.recordedfutureLinks.entities.file.*.name",
                     "data_type": "string",
                     "contains": [
-                        "file"
+                        "file",
+                        "hash",
+                        "sha256",
+                        "sha1",
+                        "md5"
                     ]
                 },
                 {
@@ -3161,7 +3191,6 @@
                     "data_type": "string",
                     "contains": [
                         "cve",
-                        "recordedfuture vulnerability id",
                         "vulnerability"
                     ]
                 },
@@ -3492,7 +3521,7 @@
                 "ip": {
                     "description": "IP to query",
                     "data_type": "string",
-                    "required": false,
+                    "required": true,
                     "primary": true,
                     "contains": [
                         "ip",
@@ -3724,11 +3753,12 @@
                     "order": 3
                 },
                 "hash": {
-                    "description": "Hash to query",
+                    "description": "File hash to query",
                     "data_type": "string",
                     "primary": true,
                     "allow_list": true,
                     "contains": [
+                        "file",
                         "hash",
                         "sha256",
                         "sha1",
@@ -3761,7 +3791,9 @@
                     "data_type": "string",
                     "contains": [
                         "ip",
+                        "ipv6",
                         "domain",
+                        "file",
                         "hash",
                         "sha1",
                         "md5",
@@ -3912,6 +3944,7 @@
                     "data_path": "action_result.parameter.hash",
                     "data_type": "string",
                     "contains": [
+                        "file",
                         "hash",
                         "sha256",
                         "sha1",
@@ -4040,12 +4073,15 @@
                     "data_type": "string",
                     "contains": [
                         "ip",
+                        "ipv6",
                         "domain",
+                        "file",
                         "hash",
                         "sha1",
                         "sha256",
                         "md5",
-                        "vulnerability"
+                        "vulnerability",
+                        "cve"
                     ]
                 },
                 {
