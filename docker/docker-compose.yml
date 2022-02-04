@@ -20,7 +20,7 @@ services:
       - RF_TOKEN=${RF_TOKEN}
       - PHANTOM_BFI_SSL=adhoc
       - PHANTOM_BFI_HOST=0.0.0.0
-      - RF_ENV=premier_integrations_phantom
+      - RF_ENV=premier_integrations
     container_name: phantom_bfi
     ports:
       - "5002:5002"
