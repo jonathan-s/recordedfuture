@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   rf_phantom:
-    image: registry.recfut.com/rf/application/main/integrations/phantom:4.10
+    image: registry.recfut.com/rf/application/main/integrations/phantom:5.1
     container_name: rf_phantom
     ports:
       - "80:80"

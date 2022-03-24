@@ -1,4 +1,4 @@
-# Docker support for Phantom development
+integration-ops@recordedfuture.com# Docker support for Phantom development
 
 The Phantom install script prompts for a my.phantom.us set of credentials.
 Rather than to fight this we're building images manually and storing them
@@ -7,7 +7,7 @@ in Recorded Future's Docker registry.
 ## Build an image
 
 . Build a Centos/systemd image: +
-  `docker build -t phantom-manual:4.10 -f phantom_4.10/Dockerfile .`
+  `docker build -t phantom-manual:5.1 -f phantom_5.1/Dockerfile .`
 . Install the Application RPM file
 .. Start up the container: +
    `docker run -it -d --cap-add=ALL \
@@ -15,7 +15,7 @@ in Recorded Future's Docker registry.
    --hostname phantosd \
    -p "80:80" \
    -p "443:443" \
-   phantom-manual:4.10`
+   phantom-manual:5.1`
 .. Start a new shell and jump into the container: +
    `docker exec -it rf_phantom /bin/bash`
 .. Run the install script: +
@@ -34,18 +34,18 @@ in Recorded Future's Docker registry.
 .. Shut the system down: +
    `docker stop rf_phantom`
 . Turn the container into an image: +
-  `docker commit <container_id> registry.recfut.com/rf/application/main/integrations/phantom:4.10`
+  `docker commit <container_id> registry.recfut.com/rf/application/main/integrations/phantom:5.1`
 . Push the image to the Gitlab registry: +
 .. Login to our gitlab server: +
   `docker login registry.recfut.com`
 .. Push the newly created docker image to our registry: +
-  `docker push registry.recfut.com/rf/application/main/integrations/phantom:4.10`
+  `docker push registry.recfut.com/rf/application/main/integrations/phantom:5.1`
 
 ## Using an image
 
 Best way to use the image is by start it with `docker-compose up -d rf_phantom` or you can also execute: +
 `docker run -it -d --cap-add=ALL \
  -p "2022:22" -p "80:80" -p "443:443" \
- registry.recfut.com/rf/application/main/integrations/phantom:4.10`
+ registry.recfut.com/rf/application/main/integrations/phantom:5.1`
 
 Default account and password: admin / password
