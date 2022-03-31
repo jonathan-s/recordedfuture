@@ -102,8 +102,8 @@ $(PACKAGE): build
 	$(SSH) $(PH) "mkdir -p /tmp/$(MYTMPDIR)/recordedfuture"
 	$(RSYNC) $(BUILD_DIR)/* phantom@$(PH):/tmp/$(MYTMPDIR)/recordedfuture
 	$(SSH) $(PH) "cd /tmp/$(MYTMPDIR)/recordedfuture; chmod -R a+w ..; \
-	              (phenv python3 /opt/phantom/bin/compile_app.pyc -i);";
-	$(RSYNC) phantom@$(PH):/tmp/$(MYTMPDIR)/recordedfuture.tgz $@
+	              (phenv compile_app -i);";
+	$(RSYNC) phantom@$(PH):/tmp/$(MYTMPDIR)/recordedfuture/recordedfuture.tgz $@
 	$(SSH) $(PH) "rm -rf /tmp/$(MYTMPDIR)"
 
 ##########################################
