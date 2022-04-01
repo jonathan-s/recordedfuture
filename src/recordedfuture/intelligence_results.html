@@ -274,7 +274,7 @@ and will be merged during compilation:
                   <strong>{{ entity_type|upper }}</strong> <br>
                   {% for entity in entities|dictsortreversed:"score" %}
                     {% if entity_type == 'other' %}
-                      {{ entity.name }} ({{ entity.type|title }})
+                      {{ entity.type|title }} :  {{ entity.name }}
                       <br>
                     {% else %}
                       Risk: {{ entity.score }}&nbsp;&nbsp; |&nbsp;&nbsp;

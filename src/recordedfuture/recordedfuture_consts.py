@@ -20,8 +20,8 @@
 # and limitations under the License.
 
 # Define your constants here
-version = '3.1.0'
-buildid = '264'
+version = '%RELEASE%'
+buildid = '%BUILDID%'
 
 # timeout for our http requests to bfi_phantom
 timeout = 33
