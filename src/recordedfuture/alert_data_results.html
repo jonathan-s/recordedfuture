@@ -47,9 +47,13 @@ and will be merged during compilation:
         <div class="rf-box">
           <table class="rf-table">
             <tr>
-              <td colspan="3">
+              <td colspan="2">
                 <span class="non-highlighted">Rule</span><br/>
                 {{ alert.rule.name }}
+              </td>
+              <td>
+                <span class="non-highlighted">Time Frame</span><br/>
+                {{ result.param.timeframe }}
               </td>
             </tr>
             {% for trigged in alert.alerts %}

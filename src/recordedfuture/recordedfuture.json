@@ -86,7 +86,7 @@
                     "contains": [
                         "recordedfuture alert timerange"
                     ],
-                    "primary": true
+                    "primary": false
                 }
             },
             "output": [
@@ -3720,7 +3720,7 @@
                     "description": "Context to use",
                     "data_type": "string",
                     "required": true,
-                    "primary": true,
+                    "primary": false,
                     "order": 0,
                     "contains": [
                         "recordedfuture threat assessment context"
