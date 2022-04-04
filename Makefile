@@ -1,7 +1,7 @@
 RELEASE := 3.2.0-rc1
 BUILDID := $(if $(SVN_REVISION),$(SVN_REVISION),$(shell git rev-list --count HEAD))
 BUILD_DIR := pkg_build
-SRC_DIR := recordedfuture
+SRC_DIR := src/recordedfuture
 PACKAGE := recordedfuture-$(RELEASE).tgz
 RFUSERARG := $(if ${RFLDAP},-l ${RFLDAP},)
 SCPHOST := $(if ${RFLDAP},${RFLDAP}@${PH},${PH})
@@ -37,13 +37,37 @@ all:
 
 ##########################################
 #
+# Targets needs to be implemented for build pipeline
+#
+##########################################
+
+review:
+	echo "make review not implemented"
+
+unittests:
+	echo "make unittests not implemented"
+
+itests_mock:
+	echo "make itests_mock not implemented"
+
+itests_live:
+	echo "make itests_live not implemented"
+
+uitests_mock:
+	echo "make uitests_mock not implemented"
+
+uitests_live:
+	echo "make uitests_live not implemented"
+
+##########################################
+#
 # Targets related to build
 #
 ##########################################
 build: build_rsync build_style build_json build_readme build_consts
 
 build_rsync: build_dirs
-	$(LOCAL_RSYNC) -ra recordedfuture/ $(BUILD_DIR)/ \
+	$(LOCAL_RSYNC) -ra $(SRC_DIR)/ $(BUILD_DIR)/ \
 		--exclude=recordedfuture.json \
 		--exclude=recordedfuture_consts.py \
 		--exclude=readme.html \
