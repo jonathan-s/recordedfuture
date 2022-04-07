@@ -1,0 +1,532 @@
+{
+    "blockly": false,
+    "blockly_xml": "<xml></xml>",
+    "category": "Uncategorized",
+    "coa": {
+        "data": {
+            "description": "This playbook has been created in connection with the Recorded Future App for Phantom version 3.1 to show how the action \"Threat Assessment\" can be used in a playbook which acts on a event that have lists of IOCs stored as artifacts. \n\nContext is a required parameter for the new Threat Assessment action. A list of the possible contexts can be obtained through the other new action \"list contexts\" .  The parameter can make use of an artifact but this playbook works solely on C2.\n\nThe playbook starts by marking the event as 'Open' before obtaining the assessment results from Recorded Future. If the artifacts are deemed malicious, the user gets a choice of whether to promote the event to a case, otherwise the event is closed.",
+            "edges": [
+                {
+                    "id": "port_0_to_port_3",
+                    "sourceNode": "0",
+                    "sourcePort": "0_out",
+                    "targetNode": "3",
+                    "targetPort": "3_in"
+                },
+                {
+                    "id": "port_3_to_port_4",
+                    "sourceNode": "3",
+                    "sourcePort": "3_out",
+                    "targetNode": "4",
+                    "targetPort": "4_in"
+                },
+                {
+                    "id": "port_4_to_port_5",
+                    "sourceNode": "4",
+                    "sourcePort": "4_out",
+                    "targetNode": "5",
+                    "targetPort": "5_in"
+                },
+                {
+                    "conditions": [
+                        {
+                            "index": 0
+                        }
+                    ],
+                    "id": "port_5_to_port_6",
+                    "sourceNode": "5",
+                    "sourcePort": "5_out",
+                    "targetNode": "6",
+                    "targetPort": "6_in"
+                },
+                {
+                    "id": "port_6_to_port_7",
+                    "sourceNode": "6",
+                    "sourcePort": "6_out",
+                    "targetNode": "7",
+                    "targetPort": "7_in"
+                },
+                {
+                    "id": "port_7_to_port_8",
+                    "sourceNode": "7",
+                    "sourcePort": "7_out",
+                    "targetNode": "8",
+                    "targetPort": "8_in"
+                },
+                {
+                    "id": "port_8_to_port_1",
+                    "sourceNode": "8",
+                    "sourcePort": "8_out",
+                    "targetNode": "1",
+                    "targetPort": "1_in"
+                },
+                {
+                    "conditions": [
+                        {
+                            "index": 1
+                        }
+                    ],
+                    "id": "port_5_to_port_9",
+                    "sourceNode": "5",
+                    "sourcePort": "5_out",
+                    "targetNode": "9",
+                    "targetPort": "9_in"
+                },
+                {
+                    "id": "port_9_to_port_1",
+                    "sourceNode": "9",
+                    "sourcePort": "9_out",
+                    "targetNode": "1",
+                    "targetPort": "1_in"
+                }
+            ],
+            "hash": "34cf61124dacf1afae11ea9d0ec993e992b3cd91",
+            "nodes": {
+                "0": {
+                    "data": {
+                        "advanced": {
+                            "join": []
+                        },
+                        "functionName": "on_start",
+                        "id": "0",
+                        "type": "start"
+                    },
+                    "errors": {},
+                    "id": "0",
+                    "type": "start",
+                    "x": 180,
+                    "y": 0
+                },
+                "1": {
+                    "data": {
+                        "advanced": {
+                            "join": []
+                        },
+                        "functionId": 1,
+                        "functionName": "on_finish",
+                        "id": "1",
+                        "type": "end"
+                    },
+                    "errors": {},
+                    "id": "1",
+                    "type": "end",
+                    "userCode": "\n    # This function is called after all actions are completed.\n    # summary of all the action and/or all details of actions\n    # can be collected here.\n\n    # summary_json = phantom.get_summary()\n    # if 'result' in summary_json:\n        # for action_result in summary_json['result']:\n            # if 'action_run_id' in action_result:\n                # action_results = phantom.get_action_results(action_run_id=action_result['action_run_id'], result_data=False, flatten=False)\n                # phantom.debug(action_results)\n\n",
+                    "x": 190,
+                    "y": 1068
+                },
+                "3": {
+                    "data": {
+                        "advanced": {
+                            "customName": "Set Status to Open",
+                            "customNameId": 0,
+                            "join": [],
+                            "refreshNotableData": true
+                        },
+                        "customFunction": null,
+                        "functionId": 1,
+                        "functionName": "set_status_to_open",
+                        "id": "3",
+                        "selectMore": false,
+                        "tab": "apis",
+                        "type": "utility",
+                        "utilities": {
+                            "add_note": {
+                                "description": "",
+                                "fields": [
+                                    {
+                                        "description": "",
+                                        "label": "title",
+                                        "name": "title",
+                                        "placeholder": "Enter a note title",
+                                        "renderType": "input",
+                                        "required": false
+                                    },
+                                    {
+                                        "description": "",
+                                        "label": "content",
+                                        "name": "content",
+                                        "placeholder": "Enter the note content",
+                                        "renderType": "datapath",
+                                        "required": false
+                                    },
+                                    {
+                                        "choices": [
+                                            "markdown",
+                                            "html"
+                                        ],
+                                        "default": "markdown",
+                                        "description": "",
+                                        "label": "note format",
+                                        "name": "note_format",
+                                        "placeholder": "Enter the note content",
+                                        "renderType": "dropdown",
+                                        "required": false
+                                    },
+                                    {
+                                        "hidden": true,
+                                        "name": "container",
+                                        "required": false
+                                    },
+                                    {
+                                        "default": "general",
+                                        "hidden": true,
+                                        "name": "note_type",
+                                        "required": false
+                                    },
+                                    {
+                                        "hidden": true,
+                                        "name": "author",
+                                        "required": false
+                                    },
+                                    {
+                                        "hidden": true,
+                                        "name": "event_id",
+                                        "required": false
+                                    },
+                                    {
+                                        "hidden": true,
+                                        "name": "task_id",
+                                        "required": false
+                                    },
+                                    {
+                                        "hidden": true,
+                                        "name": "trace",
+                                        "required": false
+                                    }
+                                ],
+                                "label": "add note",
+                                "name": "add_note"
+                            },
+                            "set_status": {
+                                "description": "",
+                                "fields": [
+                                    {
+                                        "choices": "notableStatus",
+                                        "description": "",
+                                        "label": "status",
+                                        "name": "status",
+                                        "placeholder": "Select status",
+                                        "renderType": "dropdown",
+                                        "required": true
+                                    },
+                                    {
+                                        "hidden": true,
+                                        "name": "container",
+                                        "required": false
+                                    },
+                                    {
+                                        "hidden": true,
+                                        "name": "trace",
+                                        "required": false
+                                    }
+                                ],
+                                "label": "set status",
+                                "name": "set_status",
+                                "refreshNotableData": true
+                            }
+                        },
+                        "utilityType": "api",
+                        "values": {
+                            "add_note": {
+                                "_internal": [
+                                    "container",
+                                    "note_type",
+                                    "author",
+                                    "event_id",
+                                    "task_id",
+                                    "trace"
+                                ],
+                                "content": null,
+                                "note_format": "html",
+                                "note_type": "general",
+                                "title": "Start of Processing"
+                            },
+                            "set_status": {
+                                "_internal": [
+                                    "container",
+                                    "trace"
+                                ],
+                                "status": "open"
+                            }
+                        }
+                    },
+                    "errors": {},
+                    "id": "3",
+                    "type": "utility",
+                    "x": 160,
+                    "y": 148
+                },
+                "4": {
+                    "data": {
+                        "action": "threat assessment",
+                        "actionType": "investigate",
+                        "advanced": {
+                            "customName": "C2 Threat Assessment",
+                            "customNameId": 0,
+                            "join": []
+                        },
+                        "connector": "Recorded Future",
+                        "connectorConfigs": [
+                            "recorded-future"
+                        ],
+                        "connectorId": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
+                        "connectorVersion": "v1",
+                        "functionId": 1,
+                        "functionName": "c2_threat_assessment",
+                        "id": "4",
+                        "parameters": {
+                            "domain": "artifact:*.cef.destinationDnsDomain",
+                            "hash": "artifact:*.cef.fileHash",
+                            "ip": "artifact:*.cef.destinationAddress",
+                            "threat_context": "c2",
+                            "url": "artifact:*.cef.requestURL"
+                        },
+                        "requiredParameters": [
+                            "threat_context"
+                        ],
+                        "type": "action"
+                    },
+                    "errors": {},
+                    "id": "4",
+                    "type": "action",
+                    "x": 160,
+                    "y": 296
+                },
+                "5": {
+                    "data": {
+                        "advanced": {
+                            "join": []
+                        },
+                        "conditions": [
+                            {
+                                "comparisons": [
+                                    {
+                                        "conditionIndex": 0,
+                                        "op": "==",
+                                        "param": "c2_threat_assessment:action_result.data.*.verdict",
+                                        "value": "True"
+                                    }
+                                ],
+                                "conditionIndex": 0,
+                                "customName": "C2 threat",
+                                "display": "If",
+                                "logic": "and",
+                                "type": "if"
+                            },
+                            {
+                                "comparisons": [
+                                    {
+                                        "conditionIndex": 1,
+                                        "op": "==",
+                                        "param": "",
+                                        "value": ""
+                                    }
+                                ],
+                                "conditionIndex": 1,
+                                "customName": "else",
+                                "display": "Else",
+                                "logic": "and",
+                                "type": "else"
+                            }
+                        ],
+                        "functionId": 1,
+                        "functionName": "decision_1",
+                        "id": "5",
+                        "type": "decision"
+                    },
+                    "errors": {},
+                    "id": "5",
+                    "type": "decision",
+                    "x": 240,
+                    "y": 444
+                },
+                "6": {
+                    "data": {
+                        "advanced": {
+                            "customName": "Format Slack Message",
+                            "customNameId": 0,
+                            "join": []
+                        },
+                        "functionId": 1,
+                        "functionName": "format_slack_message",
+                        "id": "6",
+                        "parameters": [
+                            "container:id",
+                            "c2_threat_assessment:action_result.parameter.threat_context",
+                            "container:url",
+                            "c2_threat_assessment:action_result.data.*.triage_riskscore"
+                        ],
+                        "template": "*Alert from testing Playbook*\n\n> Event  {0} has been found to be malicious for context {1} with risk {3}\n>\n> The event has been promoted to a case for further investigation.\n>\n> Link to the event: {2}",
+                        "type": "format"
+                    },
+                    "errors": {},
+                    "id": "6",
+                    "type": "format",
+                    "x": 0,
+                    "y": 624
+                },
+                "7": {
+                    "data": {
+                        "action": "send message",
+                        "actionType": "generic",
+                        "advanced": {
+                            "customName": "Send Slack Message",
+                            "customNameId": 0,
+                            "join": []
+                        },
+                        "connector": "Slack",
+                        "connectorConfigs": [
+                            "slack"
+                        ],
+                        "connectorId": "3ac26c7f-baa4-4583-86ff-5aac82778a86",
+                        "connectorVersion": "v1",
+                        "functionId": 1,
+                        "functionName": "send_slack_message",
+                        "id": "7",
+                        "parameters": {
+                            "destination": "# phantom-demo",
+                            "message": "format_slack_message:formatted_data"
+                        },
+                        "requiredParameters": [
+                            "message",
+                            "destination"
+                        ],
+                        "type": "action"
+                    },
+                    "errors": {},
+                    "id": "7",
+                    "type": "action",
+                    "x": 0,
+                    "y": 772
+                },
+                "8": {
+                    "data": {
+                        "advanced": {
+                            "customName": "Set Severity High",
+                            "customNameId": 0,
+                            "join": [],
+                            "refreshNotableData": true
+                        },
+                        "functionId": 2,
+                        "functionName": "set_severity_high",
+                        "id": "8",
+                        "selectMore": false,
+                        "tab": "apis",
+                        "type": "utility",
+                        "utilities": {
+                            "set_severity": {
+                                "description": "",
+                                "fields": [
+                                    {
+                                        "choices": "notableSeverity",
+                                        "description": "",
+                                        "label": "severity",
+                                        "name": "severity",
+                                        "placeholder": "Select severity",
+                                        "renderType": "dropdown",
+                                        "required": true
+                                    },
+                                    {
+                                        "hidden": true,
+                                        "name": "container",
+                                        "required": false
+                                    }
+                                ],
+                                "label": "set severity",
+                                "name": "set_severity",
+                                "refreshNotableData": true
+                            }
+                        },
+                        "utilityType": "api",
+                        "values": {
+                            "set_severity": {
+                                "_internal": [
+                                    "container"
+                                ],
+                                "severity": "high"
+                            }
+                        }
+                    },
+                    "errors": {},
+                    "id": "8",
+                    "type": "utility",
+                    "x": 0,
+                    "y": 920
+                },
+                "9": {
+                    "data": {
+                        "advanced": {
+                            "customName": "Close Event",
+                            "customNameId": 0,
+                            "join": [],
+                            "refreshNotableData": true
+                        },
+                        "functionId": 3,
+                        "functionName": "close_event",
+                        "id": "9",
+                        "selectMore": false,
+                        "tab": "apis",
+                        "type": "utility",
+                        "utilities": {
+                            "set_status": {
+                                "description": "",
+                                "fields": [
+                                    {
+                                        "choices": "notableStatus",
+                                        "description": "",
+                                        "label": "status",
+                                        "name": "status",
+                                        "placeholder": "Select status",
+                                        "renderType": "dropdown",
+                                        "required": true
+                                    },
+                                    {
+                                        "hidden": true,
+                                        "name": "container",
+                                        "required": false
+                                    },
+                                    {
+                                        "hidden": true,
+                                        "name": "trace",
+                                        "required": false
+                                    }
+                                ],
+                                "label": "set status",
+                                "name": "set_status",
+                                "refreshNotableData": true
+                            }
+                        },
+                        "utilityType": "api",
+                        "values": {
+                            "set_status": {
+                                "_internal": [
+                                    "container",
+                                    "trace"
+                                ],
+                                "status": "closed"
+                            }
+                        }
+                    },
+                    "errors": {},
+                    "id": "9",
+                    "type": "utility",
+                    "x": 340,
+                    "y": 920
+                }
+            },
+            "notes": ""
+        },
+        "input_spec": null,
+        "output_spec": null,
+        "playbook_type": "automation",
+        "python_version": "3",
+        "schema": "5.0.4",
+        "version": "5.1.0.70187"
+    },
+    "create_time": "2022-04-07T12:32:28.405782+00:00",
+    "draft_mode": false,
+    "labels": [
+        "events"
+    ],
+    "tags": []
+}

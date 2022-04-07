@@ -1,1922 +1,284 @@
 {
     "blockly": false,
     "blockly_xml": "<xml></xml>",
-    "category": "Use Cases",
+    "category": "Uncategorized",
     "coa": {
         "data": {
-            "clean": true,
-            "code_block": "",
-            "description": "This playbook was created to show how to obtain intelligence for IP address with a high Risk Score. It is typically used for artifact enrichment.\n\nThe playbook has been updated to work in conjunction with Recorded Future App for Phantom v2.0.",
-            "hash": "183751f1b0220d48686975dfb6e6ad8d1d20a477",
-            "joint": {
-                "cells": [
-                    {
-                        "0": "E",
-                        "1": "N",
-                        "2": "D",
-                        "active": false,
-                        "angle": 0,
-                        "attrs": {
-                            ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
-                            },
-                            ".color-band": {
-                                "fill": "#3C444D"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".title": {
-                                "text": "END"
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.icon image": {
-                                "xlink:href": "/inc/coa/img/block_icon_end.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            }
+            "description": "This playbook was created to show how to obtain intelligence for IP address with a high Risk Score. It is typically used for artifact enrichment.\n\nThe playbook has been updated to work in conjunction with Recorded Future App for Phantom v3.1.",
+            "edges": [
+                {
+                    "id": "port_0_to_port_2",
+                    "sourceNode": "0",
+                    "sourcePort": "0_out",
+                    "targetNode": "2",
+                    "targetPort": "2_in"
+                },
+                {
+                    "id": "port_2_to_port_3",
+                    "sourceNode": "2",
+                    "sourcePort": "2_out",
+                    "targetNode": "3",
+                    "targetPort": "3_in"
+                },
+                {
+                    "conditions": [
+                        {
+                            "index": 0
+                        }
+                    ],
+                    "id": "port_3_to_port_5",
+                    "sourceNode": "3",
+                    "sourcePort": "3_out",
+                    "targetNode": "5",
+                    "targetPort": "5_in"
+                },
+                {
+                    "id": "port_5_to_port_6",
+                    "sourceNode": "5",
+                    "sourcePort": "5_out",
+                    "targetNode": "6",
+                    "targetPort": "6_in"
+                },
+                {
+                    "id": "port_6_to_port_8",
+                    "sourceNode": "6",
+                    "sourcePort": "6_out",
+                    "targetNode": "8",
+                    "targetPort": "8_in"
+                },
+                {
+                    "id": "port_8_to_port_1",
+                    "sourceNode": "8",
+                    "sourcePort": "8_out",
+                    "targetNode": "1",
+                    "targetPort": "1_in"
+                }
+            ],
+            "hash": "1b8e89e42e29d3320a8addfa8012f8c9ec698584",
+            "nodes": {
+                "0": {
+                    "data": {
+                        "advanced": {
+                            "join": []
                         },
-                        "block_code": "def on_finish(container, summary):\n    phantom.debug('on_finish() called')\n    # This function is called after all actions are completed.\n    # summary of all the action and/or all detals of actions \n    # can be collected here.\n\n    # summary_json = phantom.get_summary()\n    # if 'result' in summary_json:\n        # for action_result in summary_json['result']:\n            # if 'action_run_id' in action_result:\n                # action_results = phantom.get_action_results(action_run_id=action_result['action_run_id'], result_data=False, flatten=False)\n                # phantom.debug(action_results)\n\n    return",
-                        "callback_code": "# read-only block view not available",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "connected_to_start": true,
-                        "connection_name": "send message, ip intelligence",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "",
-                        "description": "",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "aa17535b-915f-424d-a78a-90129bf6ca84",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "# read-only block view not available",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 137,
-                        "line_start": 124,
-                        "name": "",
-                        "notes": "",
-                        "number": 0,
-                        "order": 7,
-                        "outPorts": [],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 1240,
-                            "y": 160
-                        },
-                        "previous_function": "",
-                        "previous_name": "",
-                        "show_number": true,
-                        "size": {
-                            "height": 54,
-                            "width": 80
-                        },
-                        "status": "",
-                        "title": "END",
-                        "type": "coa.StartEnd",
-                        "warn": false,
-                        "z": 2
+                        "functionName": "on_start",
+                        "id": "0",
+                        "type": "start"
                     },
-                    {
-                        "attrs": {
-                            ".connection": {
-                                "stroke": "#6C7A89",
-                                "stroke-width": 2
-                            },
-                            ".marker-target": {
-                                "d": "M 10 0 L 0 5 L 10 10 z",
-                                "fill": "#6a6c8a",
-                                "stroke": "#6a6c8a"
-                            }
+                    "errors": {},
+                    "id": "0",
+                    "type": "start",
+                    "x": 19.999999999999986,
+                    "y": -1.9184653865522705e-13
+                },
+                "1": {
+                    "data": {
+                        "advanced": {
+                            "join": []
                         },
-                        "connector": {
-                            "args": {
-                                "radius": 5
-                            },
-                            "name": "rounded"
-                        },
-                        "endDirections": [
-                            "left"
-                        ],
-                        "id": "c64f5b2e-443f-4a1b-99cc-0427be1df243",
-                        "router": {
-                            "name": "metro"
-                        },
-                        "source": {
-                            "id": "d3209520-b750-4d44-96ef-bc673465ab34",
-                            "port": "out-1",
-                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "startDirections": [
-                            "right"
-                        ],
-                        "target": {
-                            "id": "e1a87499-423c-4ea3-a30b-570281b72131",
-                            "selector": ".port-body[type=\"input\"]"
-                        },
-                        "type": "link",
-                        "z": 14
+                        "functionId": 1,
+                        "functionName": "on_finish",
+                        "id": "1",
+                        "type": "end"
                     },
-                    {
-                        "attrs": {
-                            ".connection": {
-                                "stroke": "#6C7A89",
-                                "stroke-width": 2
-                            },
-                            ".marker-target": {
-                                "d": "M 10 0 L 0 5 L 10 10 z",
-                                "fill": "#6a6c8a",
-                                "stroke": "#6a6c8a"
-                            }
-                        },
-                        "connector": {
-                            "args": {
-                                "radius": 5
-                            },
-                            "name": "rounded"
-                        },
-                        "endDirections": [
-                            "left"
-                        ],
-                        "id": "236234a7-e1c9-45a1-a34b-5c9badae5d31",
-                        "router": {
-                            "name": "metro"
-                        },
-                        "source": {
-                            "id": "0c69448a-5be7-48a7-a0d1-f641dfc87285",
-                            "port": null,
-                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "startDirections": [
-                            "right"
-                        ],
-                        "target": {
-                            "id": "aa17535b-915f-424d-a78a-90129bf6ca84",
-                            "port": null,
-                            "selector": "g:nth-child(1) > g:nth-child(1) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "type": "link",
-                        "z": 31
-                    },
-                    {
-                        "attrs": {
-                            ".connection": {
-                                "stroke": "#6C7A89",
-                                "stroke-width": 2
-                            },
-                            ".marker-target": {
-                                "d": "M 10 0 L 0 5 L 10 10 z",
-                                "fill": "#6a6c8a",
-                                "stroke": "#6a6c8a"
-                            }
-                        },
-                        "connector": {
-                            "args": {
-                                "radius": 5
-                            },
-                            "name": "rounded"
-                        },
-                        "endDirections": [
-                            "left"
-                        ],
-                        "id": "1eea19b2-7cce-43c1-9ac8-1dbac5a0886a",
-                        "router": {
-                            "name": "metro"
-                        },
-                        "source": {
-                            "id": "d3209520-b750-4d44-96ef-bc673465ab34",
-                            "port": "out-2",
-                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(2) > circle:nth-child(1)"
-                        },
-                        "startDirections": [
-                            "right"
-                        ],
-                        "target": {
-                            "id": "aa17535b-915f-424d-a78a-90129bf6ca84",
-                            "port": null,
-                            "selector": "g:nth-child(1) > g:nth-child(1) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "type": "link",
-                        "z": 85
-                    },
-                    {
-                        "0": "S",
-                        "1": "T",
-                        "2": "A",
-                        "3": "R",
-                        "4": "T",
-                        "active": false,
-                        "angle": 0,
-                        "attrs": {
-                            ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
-                            },
-                            ".color-band": {
-                                "fill": "#3C444D"
-                            },
-                            ".outPorts>.port-out": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out>.port-body": {
-                                "port": {
-                                    "id": "out",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "ref-x": 33,
-                                "ref-y": 8,
-                                "text": "START"
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.icon image": {
-                                "ref-x": 13,
-                                "xlink:href": "/inc/coa/img/block_icon_start.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            }
-                        },
-                        "block_code": "def on_start(container):\n    phantom.debug('on_start() called')\n    \n    # call 'ip_intelligence_2' block\n    ip_intelligence_2(container=container)\n\n    return",
-                        "callback_code": "# read-only block view not available",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "connected_to_start": true,
-                        "connection_name": "",
-                        "connection_type": "",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "",
-                        "description": "",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "659e3f76-980a-4733-a992-61df3b1d3b47",
-                        "inPorts": [],
-                        "join_code": "# read-only block view not available",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 19,
-                        "line_start": 11,
-                        "name": "",
-                        "notes": "",
-                        "number": 0,
-                        "order": 1,
-                        "outPorts": [
-                            "out"
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 60,
-                            "y": 80
-                        },
-                        "previous_function": "",
-                        "previous_name": "",
-                        "show_number": true,
-                        "size": {
-                            "height": 54,
-                            "width": 80
-                        },
-                        "status": "",
-                        "title": "START",
-                        "type": "coa.StartEnd",
-                        "warn": false,
-                        "z": 113
-                    },
-                    {
-                        "attrs": {
-                            ".connection": {
-                                "stroke": "#818D99",
-                                "stroke-width": 2
-                            },
-                            ".marker-target": {
-                                "d": "M 10 0 L 0 5 L 10 10 z",
-                                "fill": "#818D99",
-                                "stroke": "#818D99"
-                            }
-                        },
-                        "connector": {
-                            "args": {
-                                "radius": 5
-                            },
-                            "name": "rounded"
-                        },
-                        "endDirections": [
-                            "left"
-                        ],
-                        "id": "affc4eaa-edd2-48c6-9449-cf4c293bda70",
-                        "router": {
-                            "name": "metro"
-                        },
-                        "source": {
-                            "id": "659e3f76-980a-4733-a992-61df3b1d3b47",
-                            "port": null,
-                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "startDirections": [
-                            "right"
-                        ],
-                        "target": {
-                            "id": "5d6d896c-011c-40f2-b46b-bf1da75055a6",
-                            "selector": ".port-body[type=\"input\"]"
-                        },
-                        "type": "link",
-                        "z": 132
-                    },
-                    {
-                        "attrs": {
-                            ".connection": {
-                                "stroke": "#818D99",
-                                "stroke-width": 2
-                            },
-                            ".marker-target": {
-                                "d": "M 10 0 L 0 5 L 10 10 z",
-                                "fill": "#818D99",
-                                "stroke": "#818D99"
-                            }
-                        },
-                        "connector": {
-                            "args": {
-                                "radius": 5
-                            },
-                            "name": "rounded"
-                        },
-                        "endDirections": [
-                            "left"
-                        ],
-                        "id": "2867fa3b-4b35-4803-93ef-6fe115438ae3",
-                        "router": {
-                            "name": "metro"
-                        },
-                        "source": {
-                            "id": "5d6d896c-011c-40f2-b46b-bf1da75055a6",
-                            "port": null,
-                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "startDirections": [
-                            "right"
-                        ],
-                        "target": {
-                            "id": "d3209520-b750-4d44-96ef-bc673465ab34",
-                            "port": "in",
-                            "selector": "g:nth-child(1) > g:nth-child(1) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "type": "link",
-                        "z": 135
-                    },
-                    {
+                    "errors": {},
+                    "id": "1",
+                    "type": "end",
+                    "userCode": "\n    # This function is called after all actions are completed.\n    # summary of all the action and/or all details of actions\n    # can be collected here.\n\n    # summary_json = phantom.get_summary()\n    # if 'result' in summary_json:\n        # for action_result in summary_json['result']:\n            # if 'action_run_id' in action_result:\n                # action_results = phantom.get_action_results(action_run_id=action_result['action_run_id'], result_data=False, flatten=False)\n                # phantom.debug(action_results)\n\n",
+                    "x": 19.999999999999986,
+                    "y": 920
+                },
+                "2": {
+                    "data": {
                         "action": "ip intelligence",
-                        "action_type": "investigate",
-                        "active": false,
-                        "active_keys": {},
-                        "active_values": {
+                        "actionType": "investigate",
+                        "advanced": {
+                            "customName": "Lookup IP Intelligence",
+                            "customNameId": 0,
+                            "join": []
+                        },
+                        "connector": "Recorded Future",
+                        "connectorConfigs": [
+                            "recorded-future"
+                        ],
+                        "connectorId": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
+                        "connectorVersion": "v1",
+                        "functionId": 1,
+                        "functionName": "lookup_ip_intelligence",
+                        "id": "2",
+                        "parameters": {
                             "ip": "artifact:*.cef.destinationAddress"
                         },
-                        "angle": 0,
-                        "app": "Recorded Future",
-                        "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-                        "approver": "",
-                        "assets": [
-                            {
-                                "action": "ip intelligence",
-                                "actions": [
-                                    "ip reputation",
-                                    "ip intelligence",
-                                    "domain reputation",
-                                    "domain intelligence",
-                                    "file reputation",
-                                    "file intelligence",
-                                    "vulnerability reputation",
-                                    "vulnerability intelligence",
-                                    "url reputation",
-                                    "url intelligence",
-                                    "alert rule lookup",
-                                    "alert data lookup",
-                                    "test connectivity"
-                                ],
-                                "active": true,
-                                "app_name": "Recorded Future",
-                                "app_version": "2.0.0",
-                                "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
-                                "asset_name": "recorded-future",
-                                "config_type": "asset",
-                                "count": 0,
-                                "fields": {
-                                    "ip": "artifact:*.cef.destinationAddress"
-                                },
-                                "has_app": true,
-                                "id": 6,
-                                "loaded": false,
-                                "missing": false,
-                                "name": "recorded-future",
-                                "output": [
-                                    {
-                                        "data_path": "action_result.status",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "contains": [
-                                            "ip",
-                                            "ipv6"
-                                        ],
-                                        "data_path": "action_result.parameter.ip",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.entity.id",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "contains": [
-                                            "ip",
-                                            "ipv6"
-                                        ],
-                                        "data_path": "action_result.data.*.entity.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.entity.type",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.intelCard",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.asn",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.cidr.id",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.cidr.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.cidr.type",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.location.city",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.location.continent",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.location.country",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.location.organization",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.*.type",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.metrics.*.value",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.*.entities.*.count",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.*.entities.*.entity.id",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.*.entities.*.entity.name",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.*.entities.*.entity.type",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.relatedEntities.*.type",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.criticality",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.criticalityLabel",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "Very Malicious"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.criticality",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.criticalityLabel",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "Unusual"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.evidenceString",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.mitigationString",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.rule",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.evidenceDetails.*.timestamp",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.riskString",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.riskSummary",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.rules",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.risk.score",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.timestamps.firstSeen",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.timestamps.lastSeen",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.criticalityLabel",
-                                        "data_type": "string",
-                                        "example_values": [
-                                            "Very Malicious"
-                                        ]
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.lastSeen",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.summary.riskSummary",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.message",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "summary.total_objects",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "summary.total_objects_successful",
-                                        "data_type": "numeric"
-                                    }
-                                ],
-                                "parameters": {
-                                    "ip": {
-                                        "contains": [
-                                            "ip"
-                                        ],
-                                        "data_type": "string",
-                                        "default": "",
-                                        "description": "IP to query",
-                                        "key": "ip",
-                                        "order": 0,
-                                        "primary": true,
-                                        "required": true,
-                                        "value_list": []
-                                    }
-                                },
-                                "product_name": "Recorded Future App for Phantom",
-                                "product_vendor": "Recorded Future, Inc",
-                                "targets": "6",
-                                "type": "reputation"
-                            }
+                        "requiredParameters": [
+                            "ip"
                         ],
-                        "attrs": {
-                            ".action": {
-                                "text": "ip intelligence"
-                            },
-                            ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
-                            },
-                            ".color-band": {
-                                "fill": "#3C444D"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "ref-x": 5,
-                                "ref-y": 105,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out>.port-body": {
-                                "port": {
-                                    "id": "out",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "Investigate"
-                            },
-                            "g.approver image": {
-                                "opacity": 1
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
-                            },
-                            "g.icon image": {
-                                "xlink:href": "/inc/coa/img/block_icon_investigate.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            },
-                            "g.timer image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def ip_intelligence_2(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('ip_intelligence_2() called')\n\n    # collect data for 'ip_intelligence_2' call\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    parameters = []\n    \n    # build parameters list for 'ip_intelligence_2' call\n    for container_item in container_data:\n        if container_item[0]:\n            parameters.append({\n                'ip': container_item[0],\n                # context (artifact id) is added to associate results with the artifact\n                'context': {'artifact_id': container_item[1]},\n            })\n\n    phantom.act(\"ip intelligence\", parameters=parameters, assets=['recorded-future'], callback=filter_for_risk_score_above_90, name=\"ip_intelligence_2\")\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": true,
-                        "color": "",
-                        "connected_to_start": true,
-                        "connection_name": "",
-                        "connection_type": "",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "",
-                        "delay": 0,
-                        "description": "",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "5d6d896c-011c-40f2-b46b-bf1da75055a6",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 104,
-                        "line_start": 83,
-                        "message": "Configuring now",
-                        "name": "ip intelligence",
-                        "notes": "",
-                        "number": 2,
-                        "order": 5,
-                        "outPorts": [
-                            "out"
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 180,
-                            "y": 60
-                        },
-                        "previous_function": "",
-                        "previous_name": "ip_intelligence_2",
-                        "required_params": {
-                            "ip": true
-                        },
-                        "reviewer": "",
-                        "show_number": false,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "app_action_assets",
-                        "status": "",
-                        "title": "Investigate",
-                        "type": "coa.Action",
-                        "warn": false,
-                        "z": 136
+                        "type": "action"
                     },
-                    {
-                        "active": false,
-                        "angle": 0,
-                        "attrs": {
-                            ".background": {
-                                "fill": "#000000",
-                                "stroke": "#637282",
-                                "transform": "rotate(45 30 70)"
-                            },
-                            ".inPorts>.port-0>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".number": {
-                                "text": 1
-                            },
-                            ".outPorts>.port-0": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                },
-                                "ref-x": 83,
-                                "ref-y": 40
-                            },
-                            ".outPorts>.port-0>.port-body": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                }
-                            },
-                            ".outPorts>.port-1": {
-                                "port": {
-                                    "id": "out-2",
-                                    "type": "out"
-                                },
-                                "ref-x": 41,
-                                "ref-y": 82
-                            },
-                            ".outPorts>.port-1>.port-body": {
-                                "port": {
-                                    "id": "out-2",
-                                    "type": "out"
-                                }
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
+                    "errors": {},
+                    "id": "2",
+                    "type": "action",
+                    "x": 0,
+                    "y": 148
+                },
+                "3": {
+                    "data": {
+                        "advanced": {
+                            "customName": "Inspect risk",
+                            "customNameId": 0,
+                            "join": []
                         },
-                        "block_code": "def filter_for_risk_score_above_90(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('filter_for_risk_score_above_90() called')\n\n    # check for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"ip_intelligence_2:action_result.data.*.risk.score\", \">=\", 90],\n            [\"ip_intelligence_2:action_result.data.*.risk.evidenceDetails.*.rule\", \"in\", \"Current C&C Server\"],\n        ],\n        logical_operator='and')\n\n    # call connected blocks if condition 1 matched\n    if matched_artifacts_1 or matched_results_1:\n        format_slack_message(action=action, success=success, container=container, results=results, handle=handle)\n        return\n\n    # call connected blocks for 'else' condition 2\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "connected_to_start": true,
-                        "connection_name": "ip intelligence",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "filter for risk score above 90",
-                        "description": "",
-                        "hasElse": true,
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "d3209520-b750-4d44-96ef-bc673465ab34",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 41,
-                        "line_start": 19,
-                        "name": "decision",
-                        "notes": "",
-                        "number": 1,
-                        "order": 2,
-                        "outPorts": [
-                            "out-1",
-                            "out-2"
-                        ],
-                        "outputs": [
+                        "conditions": [
                             {
-                                "conditions": [
+                                "comparisons": [
                                     {
-                                        "comparison": ">=",
-                                        "data_type": "",
-                                        "param": "ip_intelligence_2:action_result.data.*.risk.score",
+                                        "conditionIndex": 0,
+                                        "op": ">=",
+                                        "param": "lookup_ip_intelligence:action_result.data.*.risk.score",
                                         "value": "90"
-                                    },
-                                    {
-                                        "comparison": "in",
-                                        "data_type": "",
-                                        "param": "ip_intelligence_2:action_result.data.*.risk.evidenceDetails.*.rule",
-                                        "value": "Current C&C Server"
                                     }
                                 ],
+                                "conditionIndex": 0,
+                                "customName": "Check Risk",
                                 "display": "If",
                                 "logic": "and",
                                 "type": "if"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "comparison": "==",
-                                        "data_type": "",
-                                        "param": "",
-                                        "value": ""
-                                    }
-                                ],
-                                "display": "Else",
-                                "logic": "and",
-                                "type": "else"
                             }
                         ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 420,
-                            "y": 60
-                        },
-                        "previous_function": "",
-                        "previous_name": "filter_for_risk_score_above_90",
-                        "show_number": true,
-                        "size": {
-                            "height": 82,
-                            "width": 82
-                        },
-                        "state": "decision",
-                        "status": "",
-                        "type": "coa.Decision",
-                        "warn": "",
-                        "z": 139
+                        "functionId": 1,
+                        "functionName": "inspect_risk",
+                        "id": "3",
+                        "type": "decision"
                     },
-                    {
-                        "active": false,
-                        "angle": 0,
-                        "api": "add list",
-                        "attrs": {
-                            ".api": {
-                                "text": "add bad ip to list"
-                            },
-                            ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
-                            },
-                            ".color-band": {
-                                "fill": "#3C444D"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "ref-x": 5,
-                                "ref-y": 105,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out>.port-body": {
-                                "port": {
-                                    "id": "out",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "API"
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes code": {
-                                "opacity": 1,
-                                "xlink:href": "/inc/coa/img/block_icon_code_dark_off.svg"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
+                    "errors": {},
+                    "id": "3",
+                    "type": "decision",
+                    "x": 80,
+                    "y": 296
+                },
+                "5": {
+                    "data": {
+                        "advanced": {
+                            "customName": "Format Slack Message",
+                            "customNameId": 0,
+                            "join": []
                         },
-                        "block_code": "def add_bad_ip_to_list(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('add_bad_ip_to_list() called')\n\n    container_data = phantom.collect2(container=container, datapath=['artifact:*.cef.destinationAddress', 'artifact:*.id'])\n\n    container_item_0 = [item[0] for item in container_data]\n\n    phantom.add_list(\"Identified IP's\", container_item_0)\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "color": "",
-                        "configured": [
-                            {
-                                "addListData": "artifact:*.cef.destinationAddress",
-                                "addListList": "Identified IP's",
-                                "key": "add-list"
-                            }
+                        "functionId": 1,
+                        "functionName": "format_slack_message",
+                        "id": "5",
+                        "parameters": [
+                            "lookup_ip_intelligence:action_result.parameter.ip",
+                            "lookup_ip_intelligence:action_result.data.*.risk.score",
+                            "lookup_ip_intelligence:action_result.data.*.risk.evidenceDetails.*.rule",
+                            "lookup_ip_intelligence:action_result.data.*.risk.evidenceDetails.*.evidenceString",
+                            "lookup_ip_intelligence:action_result.data.*.intelCard"
                         ],
-                        "connected_to_start": true,
-                        "connection_name": "send message",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "add bad ip to list",
-                        "description": "",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "0c69448a-5be7-48a7-a0d1-f641dfc87285",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 83,
-                        "line_start": 72,
-                        "message": "Configuring now",
-                        "name": "add list",
-                        "notes": "",
-                        "number": 1,
-                        "order": 4,
-                        "outPorts": [
-                            "out"
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 1000,
-                            "y": 60
-                        },
-                        "previous_function": "",
-                        "previous_name": "add_bad_ip_to_list",
-                        "show_number": false,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "api",
-                        "status": "",
-                        "title": "API",
-                        "type": "coa.API",
-                        "warn": false,
-                        "z": 145
+                        "template": "*Alert from Recorded Futures App for Phantom - enrichment playbook*\n\n>IP address *{0}*  is has a risk score of *{1}*\n>\n>The rules triggered for this IP are *{2}*\n>\n>The Evidence Details are:\n>{3}\n>\n>More information about the entity: {4}",
+                        "type": "format"
                     },
-                    {
-                        "attrs": {
-                            ".connection": {
-                                "stroke": "#818D99",
-                                "stroke-width": 2
-                            },
-                            ".marker-target": {
-                                "d": "M 10 0 L 0 5 L 10 10 z",
-                                "fill": "#818D99",
-                                "stroke": "#818D99"
-                            }
-                        },
-                        "connector": {
-                            "args": {
-                                "radius": 5
-                            },
-                            "name": "rounded"
-                        },
-                        "endDirections": [
-                            "left"
-                        ],
-                        "id": "095f08ab-5ee4-4e15-b990-44b5bdbef980",
-                        "router": {
-                            "name": "metro"
-                        },
-                        "source": {
-                            "id": "e1a87499-423c-4ea3-a30b-570281b72131",
-                            "port": null,
-                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "startDirections": [
-                            "right"
-                        ],
-                        "target": {
-                            "id": "c919a854-8bbf-4beb-ac3e-256046d19a1d",
-                            "selector": ".port-body[type=\"input\"]"
-                        },
-                        "type": "link",
-                        "z": 153
-                    },
-                    {
-                        "attrs": {
-                            ".connection": {
-                                "stroke": "#818D99",
-                                "stroke-width": 2
-                            },
-                            ".marker-target": {
-                                "d": "M 10 0 L 0 5 L 10 10 z",
-                                "fill": "#818D99",
-                                "stroke": "#818D99"
-                            }
-                        },
-                        "connector": {
-                            "args": {
-                                "radius": 5
-                            },
-                            "name": "rounded"
-                        },
-                        "endDirections": [
-                            "left"
-                        ],
-                        "id": "e3d48792-6029-4f55-8761-52c437961c0c",
-                        "router": {
-                            "name": "metro"
-                        },
-                        "source": {
-                            "id": "c919a854-8bbf-4beb-ac3e-256046d19a1d",
-                            "port": null,
-                            "selector": "g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "startDirections": [
-                            "right"
-                        ],
-                        "target": {
-                            "id": "0c69448a-5be7-48a7-a0d1-f641dfc87285",
-                            "port": null,
-                            "selector": "g:nth-child(1) > g:nth-child(1) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "type": "link",
-                        "z": 156
-                    },
-                    {
+                    "errors": {},
+                    "id": "5",
+                    "type": "format",
+                    "x": 0,
+                    "y": 476
+                },
+                "6": {
+                    "data": {
                         "action": "send message",
-                        "action_type": "investigate",
-                        "active": false,
-                        "active_keys": {},
-                        "active_values": {
+                        "actionType": "generic",
+                        "advanced": {
+                            "customName": "Send Slack Message",
+                            "customNameId": 0,
+                            "join": []
+                        },
+                        "connector": "Slack",
+                        "connectorConfigs": [
+                            "slack"
+                        ],
+                        "connectorId": "3ac26c7f-baa4-4583-86ff-5aac82778a86",
+                        "connectorVersion": "v1",
+                        "functionId": 1,
+                        "functionName": "send_slack_message",
+                        "id": "6",
+                        "parameters": {
                             "destination": "# phantom-demo",
                             "message": "format_slack_message:formatted_data"
                         },
-                        "angle": 0,
-                        "app": "Slack",
-                        "appid": "3ac26c7f-baa4-4583-86ff-5aac82778a86",
-                        "approver": "",
-                        "assets": [
-                            {
-                                "action": "send message",
-                                "actions": [
-                                    "stop bot",
-                                    "on poll",
-                                    "get response",
-                                    "ask question",
-                                    "upload file",
-                                    "send message",
-                                    "get user",
-                                    "list users",
-                                    "list channels",
-                                    "test connectivity"
-                                ],
-                                "active": true,
-                                "app_name": "Slack",
-                                "app_version": "1.2.21",
-                                "appid": "3ac26c7f-baa4-4583-86ff-5aac82778a86",
-                                "asset_name": "slack",
-                                "config_type": "asset",
-                                "count": 0,
-                                "fields": {
-                                    "destination": "# phantom-demo",
-                                    "message": "format_slack_message:formatted_data"
-                                },
-                                "has_app": true,
-                                "id": 12,
-                                "loaded": false,
-                                "missing": false,
-                                "name": "slack",
-                                "output": [
-                                    {
-                                        "column_name": "Status",
-                                        "column_order": 2,
-                                        "data_path": "action_result.status",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "column_name": "Destination",
-                                        "column_order": 0,
-                                        "contains": [
-                                            "slack destination",
-                                            "slack user"
-                                        ],
-                                        "data_path": "action_result.parameter.destination",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "column_name": "Message",
-                                        "column_order": 1,
-                                        "data_path": "action_result.parameter.message",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "contains": [
-                                            "slack destination"
-                                        ],
-                                        "data_path": "action_result.data.*.channel",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.message.bot_id",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.message.text",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.message.ts",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.message.type",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.message.user",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.ok",
-                                        "data_type": "boolean"
-                                    },
-                                    {
-                                        "data_path": "action_result.data.*.ts",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.summary",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "action_result.message",
-                                        "data_type": "string"
-                                    },
-                                    {
-                                        "data_path": "summary.total_objects",
-                                        "data_type": "numeric"
-                                    },
-                                    {
-                                        "data_path": "summary.total_objects_successful",
-                                        "data_type": "numeric"
-                                    }
-                                ],
-                                "parameters": {
-                                    "destination": {
-                                        "contains": [
-                                            "slack destination",
-                                            "slack user"
-                                        ],
-                                        "data_type": "string",
-                                        "default": null,
-                                        "description": "Channel (e.g. #channel or C1A1A1AAA) or user (e.g. @user or U1A1A1AAA) to send message to",
-                                        "key": "destination",
-                                        "order": 0,
-                                        "primary": true,
-                                        "required": true
-                                    },
-                                    "message": {
-                                        "data_type": "string",
-                                        "default": null,
-                                        "description": "Message to send",
-                                        "key": "message",
-                                        "order": 1,
-                                        "primary": false,
-                                        "required": true
-                                    }
-                                },
-                                "product_name": "Slack",
-                                "product_vendor": "Slack Technologies",
-                                "targets": "12",
-                                "type": "information"
-                            }
+                        "requiredParameters": [
+                            "message",
+                            "destination"
                         ],
-                        "attrs": {
-                            ".action": {
-                                "text": "send message"
-                            },
-                            ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
-                            },
-                            ".color-band": {
-                                "fill": "#3C444D"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "ref-x": 5,
-                                "ref-y": 105,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out>.port-body": {
-                                "port": {
-                                    "id": "out",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "Investigate"
-                            },
-                            "g.approver image": {
-                                "opacity": 1
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
-                            },
-                            "g.icon image": {
-                                "xlink:href": "/inc/coa/img/block_icon_investigate.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            },
-                            "g.timer image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def send_message_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('send_message_1() called')\n    \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'send_message_1' call\n    formatted_data_1 = phantom.get_format_data(name='format_slack_message')\n\n    parameters = []\n    \n    # build parameters list for 'send_message_1' call\n    parameters.append({\n        'message': formatted_data_1,\n        'destination': \"# phantom-demo\",\n    })\n\n    phantom.act(\"send message\", parameters=parameters, assets=['slack'], callback=add_bad_ip_to_list, name=\"send_message_1\")\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": true,
-                        "color": "",
-                        "connected_to_start": true,
-                        "connection_name": "ip intelligence",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "",
-                        "delay": 0,
-                        "description": "",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "c919a854-8bbf-4beb-ac3e-256046d19a1d",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 124,
-                        "line_start": 104,
-                        "message": "Configuring now",
-                        "name": "send message",
-                        "notes": "",
-                        "number": 1,
-                        "order": 6,
-                        "outPorts": [
-                            "out"
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 780,
-                            "y": 60
-                        },
-                        "previous_function": "",
-                        "previous_name": "send_message_1",
-                        "required_params": {
-                            "destination": true,
-                            "message": true
-                        },
-                        "reviewer": "",
-                        "show_number": false,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "app_action_assets",
-                        "status": "",
-                        "title": "Investigate",
-                        "type": "coa.Action",
-                        "warn": false,
-                        "z": 157
+                        "type": "action"
                     },
-                    {
-                        "active": false,
-                        "angle": 0,
-                        "attrs": {
-                            ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
-                            },
-                            ".color-band": {
-                                "fill": "#3C444D"
-                            },
-                            ".format": {
-                                "text": "format slack message"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out-1": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out-1>.port-body": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "format"
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
+                    "errors": {},
+                    "id": "6",
+                    "type": "action",
+                    "x": 0,
+                    "y": 624
+                },
+                "8": {
+                    "data": {
+                        "advanced": {
+                            "customName": "Add Bad IP to List",
+                            "customNameId": 0,
+                            "join": []
                         },
-                        "block_code": "def format_slack_message(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None):\n    phantom.debug('format_slack_message() called')\n    \n    template = \"\"\"*Alert from Recorded Futures App for Phantom - enrichment playbook*\n\n>IP address *{0}*  is has a risk score of *{1}*\n>\n>The rules triggered for this IP are *{2}*\n>\n>The Evidence Details are:\n>{3}\n>\n>More information about the entity: {4}\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"ip_intelligence_2:action_result.parameter.ip\",\n        \"ip_intelligence_2:action_result.data.*.risk.score\",\n        \"ip_intelligence_2:action_result.data.*.risk.evidenceDetails.*.rule\",\n        \"ip_intelligence_2:action_result.data.*.risk.evidenceDetails.*.evidenceString\",\n        \"ip_intelligence_2:action_result.data.*.intelCard\",\n        \"ip_intelligence_2:action_result.data.*.entity.type\",\n        \"ip_intelligence_2:action_result.data.*.intelCard\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"format_slack_message\")\n\n    send_message_1(container=container)\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "connected_to_start": true,
-                        "connection_name": "ip intelligence",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "format slack message",
-                        "description": "",
-                        "format": "format",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "e1a87499-423c-4ea3-a30b-570281b72131",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 141,
-                        "line_end": 72,
-                        "line_start": 41,
-                        "message": "Configuring now",
-                        "name": "format",
-                        "notes": "",
-                        "number": 1,
-                        "order": 3,
-                        "outPorts": [
-                            "out-1"
-                        ],
-                        "parameters": [
-                            {
-                                "position": 0,
-                                "type": "",
-                                "value": "ip_intelligence_2:action_result.parameter.ip"
-                            },
-                            {
-                                "position": 1,
-                                "type": "",
-                                "value": "ip_intelligence_2:action_result.data.*.risk.score"
-                            },
-                            {
-                                "position": 2,
-                                "type": "",
-                                "value": "ip_intelligence_2:action_result.data.*.risk.evidenceDetails.*.rule"
-                            },
-                            {
-                                "position": 3,
-                                "type": "",
-                                "value": "ip_intelligence_2:action_result.data.*.risk.evidenceDetails.*.evidenceString"
-                            },
-                            {
-                                "position": 4,
-                                "type": "",
-                                "value": "ip_intelligence_2:action_result.data.*.intelCard"
-                            },
-                            {
-                                "position": 5,
-                                "type": "",
-                                "value": "ip_intelligence_2:action_result.data.*.entity.type"
-                            },
-                            {
-                                "position": 6,
-                                "type": "",
-                                "value": "ip_intelligence_2:action_result.data.*.intelCard"
-                            }
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
+                        "functionId": 3,
+                        "functionName": "add_bad_ip_to_list",
+                        "id": "8",
+                        "selectMore": false,
+                        "tab": "apis",
+                        "type": "utility",
+                        "utilities": {
+                            "add_list": {
+                                "description": "",
+                                "fields": [
+                                    {
+                                        "choices": "lists",
+                                        "description": "",
+                                        "label": "list",
+                                        "name": "list_name",
+                                        "placeholder": "Select a list",
+                                        "renderType": "combobox",
+                                        "required": true
                                     },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
+                                    {
+                                        "description": "",
+                                        "label": "data",
+                                        "name": "values",
+                                        "placeholder": "Enter data",
+                                        "renderType": "datapath",
+                                        "required": true
                                     }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
+                                ],
+                                "label": "add to list",
+                                "name": "add_list"
                             }
                         },
-                        "position": {
-                            "x": 560,
-                            "y": 60
-                        },
-                        "previous_function": "",
-                        "previous_name": "format_slack_message",
-                        "show_number": true,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "format",
-                        "status": "",
-                        "template": "*Alert from Recorded Futures App for Phantom - enrichment playbook*\n\n>IP address *{0}*  is has a risk score of *{1}*\n>\n>The rules triggered for this IP are *{2}*\n>\n>The Evidence Details are:\n>{3}\n>\n>More information about the entity: {4}",
-                        "title": "format",
-                        "type": "coa.Format",
-                        "warn": false,
-                        "z": 170
-                    }
-                ]
+                        "utilityType": "api",
+                        "values": {
+                            "add_list": {
+                                "list_name": "Identified IP's",
+                                "values": "artifact:*.cef.destinationAddress"
+                            }
+                        }
+                    },
+                    "errors": {},
+                    "id": "8",
+                    "type": "utility",
+                    "x": 0,
+                    "y": 772
+                }
             },
             "notes": ""
         },
-        "schema": 3,
-        "version": "4.5.15922"
+        "input_spec": null,
+        "output_spec": null,
+        "playbook_type": "automation",
+        "python_version": "3",
+        "schema": "5.0.4",
+        "version": "5.1.0.70187"
     },
-    "create_time": "2019-10-22T11:17:10.856518+00:00",
+    "create_time": "2022-04-07T13:06:19.515400+00:00",
     "draft_mode": false,
     "labels": [
         "events"

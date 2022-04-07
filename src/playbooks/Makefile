@@ -1,9 +1,7 @@
-PACKAGES := recorded_future_threat_assessment.tgz \
-		recorded_future_threat_hunting.tgz \
- 		recorded_future_correlation_slack.tgz \
+PACKAGES := recorded_future_correlation_slack.tgz \
 		recorded_future_enrichment_slack.tgz \
 		recorded_future_handle_leaked_credentials_slack.tgz \
-		recorded_future_threat_assessment_slack.tgz \
+		recorded_future_c2_threat_assessment_slack.tgz \
 		recorded_future_threat_hunting_slack.tgz
 DIST_DIR := pkg_build
 PKG_TARGETS := $(addprefix $(DIST_DIR)/,$(PACKAGES))
