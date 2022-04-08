@@ -792,6 +792,50 @@ class RecordedfutureConnector(BaseConnector):
         # Return success, no need to set the message, only the status
         return action_result.set_status(phantom.APP_SUCCESS)
 
+    def _handle_alert_lookup(self, param):
+        """Implement lookup of alerts issued for an alert rule."""
+        self.save_progress(
+            "In action handler for: {0}".format(self.get_action_identifier())
+        )
+
+        # Add an action result object to self (BaseConnector) to represent
+        # the action for this param
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        # Required values can be accessed directly
+        alert_id = UnicodeDammit(param['alert_id']).unicode_markup
+
+        # Make rest call
+        my_ret_val, response = self._make_rest_call(
+            f'/alert/{alert_id}', action_result
+        )
+
+        self.debug_print(
+            '_handle_alert_lookup',
+            {
+                'path_info': f'/alert/{alert_id}',
+                'action_result': action_result,
+                'my_ret_val': my_ret_val,
+                'response': response,
+            },
+        )
+
+        # Something went wrong
+        if phantom.is_fail(my_ret_val):
+            return action_result.get_status()
+
+        # Setup summary
+        action_result.add_data(response)
+        summary = action_result.get_summary()
+
+        # Add info about the rule to summary and action_result['data'] TODO
+        summary['Alert Title'] = response['data'].get('title', '')
+        summary['Triggered'] = response['data'].get('triggered', '')
+        action_result.set_summary(summary)
+
+        # Return success, no need to set the message, only the status
+        return action_result.set_status(phantom.APP_SUCCESS)
+
     def _handle_rule_id_lookup(self, param):
         """Make a freetext search for alert rules."""
         self.save_progress(
@@ -900,6 +944,12 @@ class RecordedfutureConnector(BaseConnector):
 
         elif action_id == 'alert_data_lookup':
             my_ret_val = self._handle_alert_data_lookup(param)
+
+        elif action_id == 'alert_lookup':
+            my_ret_val = self._handle_alert_lookup(param)
+
+        # elif action_id == 'alert_update':
+        #     my_ret_val = self._handle_alert_update(param)
 
         return my_ret_val
 

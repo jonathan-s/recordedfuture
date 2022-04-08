@@ -430,6 +430,372 @@
             "versions": "EQ(*)"
         },
         {
+            "action": "alert lookup",
+            "identifier": "alert_lookup",
+            "description": "Get details on an alert",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "alert_id": {
+                    "description": "Alert ID to use for the lookup",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "recordedfuture alert id"
+                    ],
+                    "allow_list": true,
+                    "order": 0}
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture result status"
+                    ],
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.alert_id",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.review.assignee",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert content review assignee"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.review.statusDate",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert content review note status date"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.review.statusInPortal",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert content review note status in portal"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.review.status",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert content review note status"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.review.noteDate",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert content review note data"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.review.statusChangeBy",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert content review note data"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.review.noteAuthor",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert content review note author"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.review.note",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert content review note"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.trend.documents.*.source.id",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities trend documents source id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.trend.documents.*.source.name",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities trend documents source name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.trend.documents.*.source.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities trend documents source type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.trend.documents.*.url",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities trend documents url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.trend.documents.*.references.*.fragment",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities trend documents references fragment"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.trend.documents.*.references.*.entities.*.id",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities trend documents references entities id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.trend.documents.*.references.*.entities.*.name",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities trend documents references entities name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.trend.documents.*.references.*.entities.*.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities trend documents references entities type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.trend.documents.*.references.*.language",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities trend documents references language"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.trend.documents.*.references.*.id",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities trend documents references id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.trend.documents.*.authors.*.id",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities trend documents authors id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.trend.documents.*.authors.*.name",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities trend documents authors name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.trend.documents.*.authors.*.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities trend documents authors type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.trend.documents.*.title",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities trend documents title"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.trend.risk",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities trend risk"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.url",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert title"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.rule.name",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities rule name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.rule.id",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities rule id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.rule.url",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities rule url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.triggered.",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities triggerd"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.id",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.counts.references",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities counts ..."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.counts.entities",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities counts entities"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.counts.documents",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities counts documents"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.triggered_by.*.entity_path.*.attribute.id",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities triggered by entity path attribute id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.triggered_by.*.entity_path.*.entity.id",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities triggered by entity path entity id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.triggered_by.*.entity_path.*.entity.name",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities triggered by entity path entity name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.triggered_by.*.entity_path.*.entity.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities triggered by entity path entity type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.triggered_by.*.reference_id",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities triggered by reference id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.title",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities title"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.entities.*.type",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert entities type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.alert_id",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert alert id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.rule_id",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert rule id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.rule_name",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture rule name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture result message"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "contains": [
+                        "recordedfuture total objects"
+                    ],
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "contains": [
+                        "recordedfuture total objects successful"
+                    ],
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "custom",
+                "view": "recordedfuture_view.alert_lookup_results",
+                "title": "Recorded Future Alert Lookup"
+            },
+            "versions": "EQ(*)"
+        },
+        {
             "action": "alert rule lookup",
             "identifier": "rule_id_lookup",
             "description": "Search for alert rule IDs by name",
