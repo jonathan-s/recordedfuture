@@ -85,6 +85,7 @@
                     "contains": [
                         "recordedfuture alert status"
                     ],
+                    "value_list": ["New","Pending", "Resolved", "Dismissed"],
                     "allow_list": true,
                     "order": 1
                 },

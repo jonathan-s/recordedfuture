@@ -851,11 +851,11 @@ class RecordedfutureConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         params = []
-        params = [{
+        params = {
            'id': UnicodeDammit(param.get('alert_id', '')).unicode_markup,
            'status': UnicodeDammit(param.get('alert_status', '')).unicode_markup,
            'note': UnicodeDammit(param.get('alert_note', '')).unicode_markup
-        }]
+        }
 
         # Make rest call
         my_ret_val, response = self._make_rest_call(
@@ -883,9 +883,9 @@ class RecordedfutureConnector(BaseConnector):
 
         # Add info about the rule to summary and action_result['data']
         if response.get('success', ''):
-            summary['Action'] = 'Update successful'
+            summary['Update'] = 'Successful'
         else:
-            summary['Action'] = 'Update not successful'
+            summary['Update'] = 'Not successful'
             summary['Reason'] = response['error'].get('reason', '')
         action_result.set_summary(summary)
 
