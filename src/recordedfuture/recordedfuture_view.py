@@ -200,6 +200,21 @@ def alert_lookup_results(provides, all_app_runs, context):
     return 'alert_lookup_results.html'
 
 
+def alert_update_results(provides, all_app_runs, context):
+    """Setup the view for an alert."""
+    context['results'] = results = []
+
+    for summary, action_results in all_app_runs:
+
+        for result in action_results:
+            formatted = {'param': result.get_param(), 'data': result.get_data()}
+            if not formatted:
+                continue
+            results.append(formatted)
+
+    return 'alert_update_results.html'
+
+
 def alert_data_results(provides, all_app_runs, context):
     """Setup the view for alert results."""
     context['results'] = results = []

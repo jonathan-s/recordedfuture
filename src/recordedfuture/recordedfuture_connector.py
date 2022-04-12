@@ -836,6 +836,62 @@ class RecordedfutureConnector(BaseConnector):
         # Return success, no need to set the message, only the status
         return action_result.set_status(phantom.APP_SUCCESS)
 
+    def _handle_alert_update(self, param):
+        """Implement lookup of alerts issued for an alert rule."""
+
+        # Don't forget to add the html file for alert update TODO
+        # first implementation does not take any parameters for status nor note
+
+        self.save_progress(
+            "In action handler for: {0}".format(self.get_action_identifier())
+        )
+
+        # Add an action result object to self (BaseConnector) to represent
+        # the action for this param
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        params = []
+        params = [{
+           'id': UnicodeDammit(param.get('alert_id', '')).unicode_markup,
+           'status': UnicodeDammit(param.get('alert_status', '')).unicode_markup,
+           'note': UnicodeDammit(param.get('alert_note', '')).unicode_markup
+        }]
+
+        # Make rest call
+        my_ret_val, response = self._make_rest_call(
+            '/alert/update', action_result, json=params, method='post'
+        )
+
+        self.debug_print(
+            '_handle_alert_update',
+            {
+                'path_info': 'alert/update',
+                'action_result': action_result,
+                'params': params,
+                'my_ret_val': my_ret_val,
+                'response': response,
+            },
+        )
+
+        # Something went wrong
+        if phantom.is_fail(my_ret_val):
+            return action_result.get_status()
+
+        # Setup summary
+        action_result.add_data(response)
+        summary = action_result.get_summary()
+
+        # Add info about the rule to summary and action_result['data']
+        if response.get('success', ''):
+            summary['Action'] = 'Update successful'
+        else:
+            summary['Action'] = 'Update not successful'
+            summary['Reason'] = response['error'].get('reason', '')
+        action_result.set_summary(summary)
+
+        # Return success, no need to set the message, only the status
+        return action_result.set_status(phantom.APP_SUCCESS)
+
     def _handle_rule_id_lookup(self, param):
         """Make a freetext search for alert rules."""
         self.save_progress(
@@ -948,8 +1004,8 @@ class RecordedfutureConnector(BaseConnector):
         elif action_id == 'alert_lookup':
             my_ret_val = self._handle_alert_lookup(param)
 
-        # elif action_id == 'alert_update':
-        #     my_ret_val = self._handle_alert_update(param)
+        elif action_id == 'alert_update':
+            my_ret_val = self._handle_alert_update(param)
 
         return my_ret_val
 
