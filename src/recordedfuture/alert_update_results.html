@@ -41,39 +41,33 @@ and will be merged during compilation:
 <div class="rf-widget">
   <!-- Main Div -->
   {% for result in results %} <!-- loop for each result -->
+    {% for alert_update in result.data %} <!-- loop for each result -->
+    <!------------------- For each Result ---------------------->
 
-  <!------------------- For each Result ---------------------->
-
-    <div class="rf-box">
-      <table class="rf-table">
-        {% if result.data.success %}
-          {% for alert in success %}
-            <tr>
-              <td colspan="2">
-                <span class="non-highlighted">Alert Id</span><br/>
-                {{ alert.id }}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span class="non-highlighted">Status</span><br/>
-                {{ alert.status }}
-              </td>
-              <td>
-                <span class="non-highlighted">Note</span><br/>
-                {{ alert.note.text }}
-              </td>
-            </tr>
-          {% endfor %}
-        {% else %}
+      <div class="rf-box">
+        <table class="rf-table">
           <tr>
             <td>
-              Update failed
+              <span class="non-highlighted">Alert Title (ID)</span><br/>
+              {{ alert_update.title }}
+              (<a href="javascript:;" onclick="context_menu(this, [{'contains': ['recordedfuture alert id'], 'value': '{{ result.param.alert_id }}' }], 0, {{ container.id }}, null, false);">
+                <span class="highlighted">{{ result.param.alert_id }})</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
+              </a>
+            </td>
+            <td>
+              <span class="non-highlighted">Status</span><br/>
+              {{ alert_update.statusInPortal }}
             </td>
           </tr>
-        {% endif %}
-      </table>
-    </div>
+          <tr>
+            <td colspan="2">
+              <span class="non-highlighted">Note</span><br/>
+              {{ alert_update.note.text }}
+            </td>
+          </tr>
+        </table>
+      </div>
+    {% endfor %}
   {% endfor %}
 </div> <!-- Main Div -->
 

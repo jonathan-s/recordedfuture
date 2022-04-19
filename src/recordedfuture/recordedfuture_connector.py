@@ -828,7 +828,7 @@ class RecordedfutureConnector(BaseConnector):
         action_result.add_data(response)
         summary = action_result.get_summary()
 
-        # Add info about the rule to summary and action_result['data'] TODO
+        # Add info about the rule to summary and action_result['data'] TODO format date
         summary['Alert Title'] = response['data'].get('title', '')
         summary['Triggered'] = response['data'].get('triggered', '')
         action_result.set_summary(summary)
@@ -840,7 +840,6 @@ class RecordedfutureConnector(BaseConnector):
         """Implement lookup of alerts issued for an alert rule."""
 
         # Don't forget to add the html file for alert update TODO
-        # first implementation does not take any parameters for status nor note
 
         self.save_progress(
             "In action handler for: {0}".format(self.get_action_identifier())
@@ -877,11 +876,11 @@ class RecordedfutureConnector(BaseConnector):
         if phantom.is_fail(my_ret_val):
             return action_result.get_status()
 
-        # Setup summary
-        action_result.add_data(response)
+        # Setup response including summary
+        res = response.get('success', '')
+        action_result.add_data(res[0])
         summary = action_result.get_summary()
 
-        # Add info about the rule to summary and action_result['data']
         if response.get('success', ''):
             summary['Update'] = 'Successful'
         else:
