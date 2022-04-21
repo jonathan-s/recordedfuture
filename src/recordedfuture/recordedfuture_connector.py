@@ -449,6 +449,148 @@ class RecordedfutureConnector(BaseConnector):
         )
         return action_result.set_status(phantom.APP_SUCCESS)
 
+    def _on_poll(self, param):
+        """Polling for triggered alerts given a list of rule IDs."""
+        # copied from "https://github.com/splunk-soar-connectors/splunk/blob/next/splunk_connector.py"
+        # not modified yet
+
+        action_result = self.add_action_result(phantom.ActionResult(dict(param)))
+
+        if (phantom.is_fail(self._connect(action_result))):
+            return action_result.get_status()
+
+        config = self.get_config()
+        # split to get a proper list of rule ids
+        list_of_rules = config.get('on_poll_alert_ruleids')
+
+        if not list_of_rules:
+            self.save_progress("Need to specify Alert Rule IDs use for polling")
+            return action_result.set_status(phantom.APP_ERROR)
+
+        try:
+            rule_list = [x.strip() for x in list_of_rules.split(',')]
+        except:
+            return action_result.set_status(phantom.APP_ERROR, "Error occurred while parsing the search query")
+
+        search_params = {}
+        param = {}
+
+        if self.is_poll_now():
+            search_params['max_count'] = param.get('container_count', 100)
+        else:
+            search_params['max_count'] = self.max_container
+            start_time = self._state.get('start_time')
+            if start_time:
+                search_params['index_earliest'] = start_time
+
+        if int(search_params['max_count']) <= 0:
+            self.debug_print("The value of 'container_count' parameter must be a positive integer. \
+            The value provided in the 'container_count' parameter is {}.\
+            Therefore, 'container_count' parameter will be ignored".format(int(search_params['max_count'])))
+            search_params.pop('max_count')
+
+        for rule in rule_list:
+            ret_val = self._alert_data_lookup(self, param)
+
+        if phantom.is_fail(ret_val):
+            self.save_progress(action_result.get_message())
+            return action_result.set_status(phantom.APP_ERROR)
+
+        display = config.get('on_poll_display')
+        header_set = None
+        if display:
+            header_set = [x.strip().lower() for x in display.split(',')]
+
+        # Set the most recent event to data[0]
+        data = list(reversed(action_result.get_data()))
+        self.save_progress("Finished search")
+
+        self.debug_print("Total {} event(s) fetched".format(len(data)))
+
+        count = 1
+
+        for item in data:
+            container = {}
+            cef = {}
+            if header_set:
+                name_mappings = {}
+                for k, v in list(item.items()):
+                    if k.lower() in header_set:
+                        # Use this to keep the orignal capitalization from splunk
+                        name_mappings[k.lower()] = k
+                # for h in header_set:
+                    # cef[name_mappings.get(consts.CIM_CEF_MAP.get(h, h), h)] = item.get(name_mappings.get(h, h))
+            # else:
+                # for k, v in list(item.items()):
+                    # cef[consts.CIM_CEF_MAP.get(k, k)] = v
+
+            raw = self._handle_py_ver_compat_for_input_str(item.get("_raw", ""))
+            if raw:
+                index = self._handle_py_ver_compat_for_input_str(item.get("index", ""))
+                source = self._handle_py_ver_compat_for_input_str(item.get("source", ""))
+                sourcetype = self._handle_py_ver_compat_for_input_str(item.get("sourcetype", ""))
+                input_str = "{}{}{}{}".format(raw, source, index, sourcetype)
+            else:
+                input_str = json.dumps(item)
+
+            if self._python_version == 3:
+                input_str = UnicodeDammit(input_str).unicode_markup.encode('utf-8')
+
+            fips_enabled = self._get_fips_enabled()
+            # if fips is not enabled, we should continue with our existing md5 usage for generating SDIs
+            # to not impact existing customers
+            if not fips_enabled:
+                sdi = hashlib.md5(input_str).hexdigest()
+            else:
+                sdi = hashlib.sha256(input_str).hexdigest()
+
+            severity = self._get_splunk_severity(item)
+            spl_event_start = self._get_event_start(item.get("_time"))
+
+            container['name'] = self._get_splunk_title(item)
+            container['severity'] = severity
+            container['source_data_identifier'] = sdi
+
+            ret_val, msg, cid = self.save_container(container)
+            if phantom.is_fail(ret_val):
+                self.save_progress("Error saving container: {}".format(msg))
+                self.debug_print("Error saving container: {} -- CID: {}".format(msg, cid))
+                continue
+
+            if self.remove_empty_cef:
+                cleaned_cef = {}
+                for key, value in list(cef.items()):
+                    if value is not None:
+                        cleaned_cef[key] = value
+                cef = cleaned_cef
+
+            artifact = [{
+                    'cef': cef,
+                    'name': 'Field Values',
+                    'source_data_identifier': sdi,
+                    'severity': severity,
+                    'start_time': spl_event_start,
+                    'container_id': cid
+                }]
+            create_artifact_status, create_artifact_msg, _ = self.save_artifacts(artifact)
+            if phantom.is_fail(create_artifact_status):
+                self.save_progress("Error saving artifact: {}".format(create_artifact_msg))
+                self.debug_print("Error saving artifact: {}".format(create_artifact_msg))
+                continue
+
+            if count == self.container_update_state and not self.is_poll_now():
+                self._state['start_time'] = item.get("_indextime")
+                self.save_state(self._state)
+                self.debug_print("Index time updated")
+                count = 0
+
+            count += 1
+
+        if data and not self.is_poll_now():
+            self._state['start_time'] = data[-1].get('_indextime')
+
+        return action_result.set_status(phantom.APP_SUCCESS)
+
     def _handle_intelligence(self, param, ioc, entity_type):
         """Return intelligence for an entity."""
         self.save_progress(
@@ -839,8 +981,6 @@ class RecordedfutureConnector(BaseConnector):
     def _handle_alert_update(self, param):
         """Implement lookup of alerts issued for an alert rule."""
 
-        # Don't forget to add the html file for alert update TODO
-
         self.save_progress(
             "In action handler for: {0}".format(self.get_action_identifier())
         )
@@ -849,7 +989,6 @@ class RecordedfutureConnector(BaseConnector):
         # the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        params = []
         params = {
            'id': UnicodeDammit(param.get('alert_id', '')).unicode_markup,
            'status': UnicodeDammit(param.get('alert_status', '')).unicode_markup,
