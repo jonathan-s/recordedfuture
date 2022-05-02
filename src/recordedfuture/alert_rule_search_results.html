@@ -9,7 +9,7 @@
 
 {% block widget_content %} <!-- Main Start Block -->
 
-<!-- File: alert_rules_results.html
+<!-- File: alert_rule_search_results.html
 
 Copyright (c) Recorded Future, Inc., 2019-2022
 
@@ -50,7 +50,8 @@ and will be merged during compilation:
             <tr>
               <td>
                 <span class="non-highlighted">Rule Id</span><br/>
-                {{ rule.id }}
+                <a href="javascript:;" onclick="context_menu(this, [{'contains': ['recordedfuture alert rule id'], 'value': '{{ rule.id }}' }], 0, {{ container.id }}, null, false);">
+                <span class="highlighted">{{ rule.id }}</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
               </td>
               <td>
                 <span class="non-highlighted">Rule Name</span><br/>

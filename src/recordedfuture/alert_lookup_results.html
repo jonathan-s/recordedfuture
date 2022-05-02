@@ -9,7 +9,7 @@
 
 {% block widget_content %} <!-- Main Start Block -->
 
-<!-- File: alert_lookup_results.html
+<!-- File: alert_search_results.html
 
 Copyright (c) Recorded Future, Inc., 2019-2022
 
@@ -43,47 +43,70 @@ and will be merged during compilation:
     {% if not result.data %}
       <h4>No data found</h4>
     {% else %}
-      <div class="rf-box">
-        <table class="rf-table">
-          {% for alert in result.data %}
-          <tr>
-            <td colspan="3">
-              <span class="non-highlighted">Alert Title (ID)</span><br/>
-              {{ alert.data.title }}
-              (<a href="javascript:;" onclick="context_menu(this, [{'contains': ['recordedfuture alert id'], 'value': '{{ alert.data.id }}' }], 0, {{ container.id }}, null, false);">
-                <span class="highlighted">{{ alert.data.id }})</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
-              </a>
-            </td>
-          </tr>
-          <tr colspan="3">
-            <td>
-              <span class="non-highlighted">Alerting Rule (Rule ID)</span><br/>
-              {{ alert.data.rule.name }} ({{alert.data.rule.id}})
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span class="non-highlighted">Triggered</span><br/>
-              {{ alert.data.triggered|slice:"0:10"  }}
-            </td>
-            <td>
-              <span class="non-highlighted">Status</span><br/>
-              {{ alert.data.review.statusInPortal  }}
-            </td>
-            <td>
-              <span class="non-highlighted">Assignee</span><br/>
-              {{ alert.data.review.assignee }}
-            </td>
-          </tr>
-          <tr>
-            <td colspan="3">
-              <span class="non-highlighted">Note</span><br/>
-              {{ alert.data.review.note  }}
-            </td>
-          </tr>
-          {% endfor %}
-        </table>
-      </div>
+      {% for alert in result.data %}
+        <div class="rf-box">
+          <table class="rf-table">
+            <tr>
+              <td colspan="3">
+                <span class="non-highlighted">Alert (Alert ID)</span><br/>
+                {{ alert.data.title }}
+                (<a href="javascript:;" onclick="context_menu(this, [{'contains': ['recordedfuture alert id'], 'value': '{{ alert.data.id }}' }], 0, {{ container.id }}, null, false);">
+                  <span class="highlighted">{{ alert.data.id }})</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
+                </a>
+              </td>
+              <td>
+                <span class="non-highlighted">Links to Recorded Future</span><br/>
+                <a href="{{ alert.data.url }}">Alert</a> / <a href="{{ alert.data.rule.url }}">Alert Rule</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="non-highlighted">Triggered</span><br/>
+                {{ alert.data.triggered|slice:"0:10"  }}
+              </td>
+              <td>
+                <span class="non-highlighted">Status</span><br/>
+                {{ alert.data.review.statusInPortal  }}
+              </td>
+              <td>
+                <span class="non-highlighted">Assignee</span><br/>
+                {{ alert.data.review.assignee }}
+              </td>
+              <td>
+                <span class="non-highlighted">Alerting Rule (Rule ID)</span><br/>
+                {{ alert.data.rule.name }}
+                (<a href="javascript:;" onclick="context_menu(this, [{'contains': ['recordedfuture alert rule id'], 'value': '{{ alert.data.rule.id }}' }], 0, {{ container.id }}, null, false);">
+                <span class="highlighted">{{ alert.data.rule.id }})</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="rf-box">
+          <table class="rf-table">
+            <tr><td colspan="5">Notes and Entities</td></tr>
+            <tr>
+              <td colspan="4">
+                <span class="non-highlighted">Note</span><br/>
+                {{ alert.data.review.note  }}
+              </td>
+            </tr>
+            <tr>
+              <td colspan="4">
+                {% if alert.entities %}
+                  {% for entity_type, entities in alert.entities.items %}
+                    <div>
+                      <span class="non-highlighted">{{ entity_type }}</span><br/>
+                    </div>
+                    {% for entity in entities %}
+                      {{ entity }}
+                    {% endfor %}
+                  {% endfor %}
+                {% endif %}
+              </td>
+            </tr>
+          </table>
+        </div>
+      {% endfor %}
     {% endif %}
   {% endfor %}
 </div> <!-- Main Div -->

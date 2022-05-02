@@ -215,7 +215,7 @@ def alert_update_results(provides, all_app_runs, context):
     return 'alert_update_results.html'
 
 
-def alert_data_results(provides, all_app_runs, context):
+def alert_search_results(provides, all_app_runs, context):
     """Setup the view for alert results."""
     context['results'] = results = []
 
@@ -227,10 +227,10 @@ def alert_data_results(provides, all_app_runs, context):
                 continue
             results.append(formatted)
 
-    return 'alert_data_results.html'
+    return 'alert_search_results.html'
 
 
-def alert_rules_results(provides, all_app_runs, context):
+def alert_rule_search_results(provides, all_app_runs, context):
     """Render the list of Alert Rules that match the search."""
     context['results'] = results = []
 
@@ -242,7 +242,7 @@ def alert_rules_results(provides, all_app_runs, context):
                 continue
             results.append(formatted)
 
-    return 'alert_rules_results.html'
+    return 'alert_rule_search_results.html'
 
 
 def format_threat_assessment_result(result, all_data=False):

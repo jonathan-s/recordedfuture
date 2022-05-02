@@ -30,6 +30,7 @@ import json
 import os
 import platform
 import sys
+import time
 
 # Phantom App imports
 # noinspection PyUnresolvedReferences
@@ -43,7 +44,9 @@ from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 
 # Usage of the consts file is recommended
-from recordedfuture_consts import INTELLIGENCE_MAP, timeout, version
+from recordedfuture_consts import INTELLIGENCE_MAP, CEF_TYPE_CONTAINS, timeout, version, MAX_CONTAINERS
+# from datetime import datetime, now
+from math import ceil
 
 
 class RetVal(tuple):
@@ -396,8 +399,6 @@ class RecordedfutureConnector(BaseConnector):
                 None,
             )
         else:
-            # XXXX _process_response is not able to handle the abort response message, can't do get on the response
-            # message = resp.get('message', '')
             return RetVal(
                 action_result.set_status(
                     phantom.APP_ERROR,
@@ -447,148 +448,6 @@ class RecordedfutureConnector(BaseConnector):
         self.save_progress(
             'Connectivity and credentials test passed. You may now close this window'
         )
-        return action_result.set_status(phantom.APP_SUCCESS)
-
-    def _on_poll(self, param):
-        """Polling for triggered alerts given a list of rule IDs."""
-        # copied from "https://github.com/splunk-soar-connectors/splunk/blob/next/splunk_connector.py"
-        # not modified yet
-
-        action_result = self.add_action_result(phantom.ActionResult(dict(param)))
-
-        if (phantom.is_fail(self._connect(action_result))):
-            return action_result.get_status()
-
-        config = self.get_config()
-        # split to get a proper list of rule ids
-        list_of_rules = config.get('on_poll_alert_ruleids')
-
-        if not list_of_rules:
-            self.save_progress("Need to specify Alert Rule IDs use for polling")
-            return action_result.set_status(phantom.APP_ERROR)
-
-        try:
-            rule_list = [x.strip() for x in list_of_rules.split(',')]
-        except:
-            return action_result.set_status(phantom.APP_ERROR, "Error occurred while parsing the search query")
-
-        search_params = {}
-        param = {}
-
-        if self.is_poll_now():
-            search_params['max_count'] = param.get('container_count', 100)
-        else:
-            search_params['max_count'] = self.max_container
-            start_time = self._state.get('start_time')
-            if start_time:
-                search_params['index_earliest'] = start_time
-
-        if int(search_params['max_count']) <= 0:
-            self.debug_print("The value of 'container_count' parameter must be a positive integer. \
-            The value provided in the 'container_count' parameter is {}.\
-            Therefore, 'container_count' parameter will be ignored".format(int(search_params['max_count'])))
-            search_params.pop('max_count')
-
-        for rule in rule_list:
-            ret_val = self._alert_data_lookup(self, param)
-
-        if phantom.is_fail(ret_val):
-            self.save_progress(action_result.get_message())
-            return action_result.set_status(phantom.APP_ERROR)
-
-        display = config.get('on_poll_display')
-        header_set = None
-        if display:
-            header_set = [x.strip().lower() for x in display.split(',')]
-
-        # Set the most recent event to data[0]
-        data = list(reversed(action_result.get_data()))
-        self.save_progress("Finished search")
-
-        self.debug_print("Total {} event(s) fetched".format(len(data)))
-
-        count = 1
-
-        for item in data:
-            container = {}
-            cef = {}
-            if header_set:
-                name_mappings = {}
-                for k, v in list(item.items()):
-                    if k.lower() in header_set:
-                        # Use this to keep the orignal capitalization from splunk
-                        name_mappings[k.lower()] = k
-                # for h in header_set:
-                    # cef[name_mappings.get(consts.CIM_CEF_MAP.get(h, h), h)] = item.get(name_mappings.get(h, h))
-            # else:
-                # for k, v in list(item.items()):
-                    # cef[consts.CIM_CEF_MAP.get(k, k)] = v
-
-            raw = self._handle_py_ver_compat_for_input_str(item.get("_raw", ""))
-            if raw:
-                index = self._handle_py_ver_compat_for_input_str(item.get("index", ""))
-                source = self._handle_py_ver_compat_for_input_str(item.get("source", ""))
-                sourcetype = self._handle_py_ver_compat_for_input_str(item.get("sourcetype", ""))
-                input_str = "{}{}{}{}".format(raw, source, index, sourcetype)
-            else:
-                input_str = json.dumps(item)
-
-            if self._python_version == 3:
-                input_str = UnicodeDammit(input_str).unicode_markup.encode('utf-8')
-
-            fips_enabled = self._get_fips_enabled()
-            # if fips is not enabled, we should continue with our existing md5 usage for generating SDIs
-            # to not impact existing customers
-            if not fips_enabled:
-                sdi = hashlib.md5(input_str).hexdigest()
-            else:
-                sdi = hashlib.sha256(input_str).hexdigest()
-
-            severity = self._get_splunk_severity(item)
-            spl_event_start = self._get_event_start(item.get("_time"))
-
-            container['name'] = self._get_splunk_title(item)
-            container['severity'] = severity
-            container['source_data_identifier'] = sdi
-
-            ret_val, msg, cid = self.save_container(container)
-            if phantom.is_fail(ret_val):
-                self.save_progress("Error saving container: {}".format(msg))
-                self.debug_print("Error saving container: {} -- CID: {}".format(msg, cid))
-                continue
-
-            if self.remove_empty_cef:
-                cleaned_cef = {}
-                for key, value in list(cef.items()):
-                    if value is not None:
-                        cleaned_cef[key] = value
-                cef = cleaned_cef
-
-            artifact = [{
-                    'cef': cef,
-                    'name': 'Field Values',
-                    'source_data_identifier': sdi,
-                    'severity': severity,
-                    'start_time': spl_event_start,
-                    'container_id': cid
-                }]
-            create_artifact_status, create_artifact_msg, _ = self.save_artifacts(artifact)
-            if phantom.is_fail(create_artifact_status):
-                self.save_progress("Error saving artifact: {}".format(create_artifact_msg))
-                self.debug_print("Error saving artifact: {}".format(create_artifact_msg))
-                continue
-
-            if count == self.container_update_state and not self.is_poll_now():
-                self._state['start_time'] = item.get("_indextime")
-                self.save_state(self._state)
-                self.debug_print("Index time updated")
-                count = 0
-
-            count += 1
-
-        if data and not self.is_poll_now():
-            self._state['start_time'] = data[-1].get('_indextime')
-
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_intelligence(self, param, ioc, entity_type):
@@ -821,7 +680,7 @@ class RecordedfutureConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _parse_rule_data(self, res):
-        """Reformat entities returned by the alert verb."""
+        """Reformat entities returned with the alert lookup."""
         from collections import defaultdict
 
         entities = defaultdict(list)
@@ -831,10 +690,172 @@ class RecordedfutureConnector(BaseConnector):
             for doc in ent.get('documents'):
                 for ref in doc.get('references'):
                     for entity in ref.get('entities'):
-                        entities[entity['type']].append(entity['name'])
+                        if entity['name'] not in entities[entity['type']]:
+                            entities[entity['type']].append(entity['name'])
         return entities
 
-    def _handle_alert_data_lookup(self, param):
+    def _on_poll(self, param):
+        """Entry point for obtaining alerts and rules."""
+        # new containers and artifacts will be stored in containers[]
+        action_result = self.add_action_result(ActionResult(dict(param)))
+        config = self.get_config()
+        containers = []
+
+        if self.is_poll_now():
+            param['max_count'] = param.get('container_count', MAX_CONTAINERS)
+        else:
+            param['max_count'] = config.get('max_count', MAX_CONTAINERS)
+            # Asset Settings in Asset Configuration allows a negative number
+            if int(param['max_count']) <= 0:
+                param['max_count'] = MAX_CONTAINERS
+
+        # if data and not self.is_poll_now():
+        #     self._state['start_time'] = data[-1].get('_indextime')
+
+        if config.get('download_alerts'):
+            # do I need to provide action_result??
+            containers.extend(self._on_poll_alerts(param, config, action_result))
+#         if self.get_config('yara_rules'):
+#             containers.append(self._on_poll_alerts)
+#         if self.get_config('sigma_rules'):
+#             containers.append(self._on_poll_alerts)
+#         if self.get_config('snort_rules'):
+#             containers.append(self._on_poll_alerts)
+
+        count = 0
+
+        for container in containers:
+
+            ret_val, msg, cid = self.save_container(container)
+
+            if phantom.is_fail(ret_val):
+                self.save_progress("Error saving containers: {}".format(msg))
+                self.debug_print("Error saving containers: {} -- CID: {}".format(msg, cid))
+                return action_result.set_status(phantom.APP_ERROR, "Error while trying to add the containers")
+
+            if msg != "Duplicate container found":
+                # only count and change state to Pending on new containers
+                params = {
+                   'id': container['artifacts'][0]['cef']['alert'],
+                   'status': 'Pending'
+                }
+                # update container to status depending
+                my_ret_val, response = self._make_rest_call(
+                    '/alert/update', action_result, json=params, method='post'
+                )
+                # increase the counter and break if hitting the max_count limit
+                count += 1
+                if count == param['max_count']:
+                    break
+
+        # TODO to be removed
+        self.save_progress(f'saved {count} containers')
+
+        return action_result.set_status(phantom.APP_SUCCESS)
+
+    def _on_poll_alerts(self, param, config, action_result):
+        """Polling for triggered alerts given a list of rule IDs."""
+
+        # obtain the list of rule ids to use to obtain alerts
+        list_of_rules = config.get('on_poll_alert_ruleids')
+        if not list_of_rules:
+            self.save_progress("Need to specify Alert Rule IDs use for polling")
+            return action_result.set_status(phantom.APP_ERROR)
+        try:
+            rule_list = [x.strip() for x in list_of_rules.split(',')]
+        except:
+            return action_result.set_status(phantom.APP_ERROR, "Error occurred while parsing the search query")
+
+        # timeframe = '-12h to now'
+        params = {}
+        timeframe = ""
+
+        # Get the scheduling correct:
+        if not self.is_poll_now():
+            start_time = self._state.get('start_time')
+            if start_time:
+                interval = int(ceil((start_time - time.time()) / 3600))
+                timeframe = f'-{interval}h to now'
+                self.save_progress(f"calculating time difference {start_time}, now {time.time()} and interval {interval}")
+
+        alert_ids = []
+        containers = []
+
+        for rule_id in rule_list:
+            # Prepare the REST call to get all alerts within the timeframe and with status New
+            params = {
+                # TODO include status in the search when access to a new enterprise
+                'status': 'New',
+                'limit': param.get('max_count', 100)
+            }
+            if timeframe:
+                params['triggered'] = timeframe
+
+            # Make rest call
+            my_ret_val, response = self._make_rest_call(
+                f'/alert/rule/{rule_id}', action_result, params=params
+            )
+
+            # only add the alert_ids if the response contains any aerts
+            self.save_progress(f"Alert count returned is {response['counts']['returned']} of total {response['counts']['total']} for rule {rule_id}")
+            if response['counts'].get('returned', 0) > 0:
+                for alert in response['data']['results']:
+                    alert_ids.append(alert['id'])
+
+        # not sure I need this either
+        # display = config.get('on_poll_display')
+        # header_set = None
+        # if display:
+        #    header_set = [x.strip().lower() for x in display.split(',')]
+
+        self.debug_print(f"on_poll alerts: found a list of {len(alert_ids)} alert_ids")
+        self.save_progress("on_poll alerts: found {} alerts(s)".format(len(alert_ids)))
+
+        if not alert_ids:
+            return containers
+
+        for alert_id in alert_ids:
+            container = {}
+            artifacts = []
+            artifact = {}
+            cef = {}
+
+            # get the alert info and populate the entity structure
+            my_ret_val, alert_response = self._make_rest_call(f'/alert/{alert_id}', action_result)
+            if phantom.is_fail(my_ret_val):
+                return action_result.get_status()
+            entities = self._parse_rule_data(alert_response['data'])
+
+            # Assemble the information needed for the artifacts and add it to artifacts
+            cef = {
+                entity_type.lower(): (','.join(entities[entity_type]))
+                for entity_type in entities.keys()
+            }
+            cef['alert'] = alert_id
+            artifact = {
+                'name': "Recorded Future Alert entities",
+                'cef_types': CEF_TYPE_CONTAINS,
+                'cef': cef
+            }
+            artifacts.append(artifact)
+
+            # Assemble the information needed for container and add it to containers
+            container = {
+                'name': f"{alert_response['data']['rule']['name']} Alert (Recorded Future)",
+                'severity': config.get('on_poll_alert_severity'),
+                'triggered': alert_response['data']['triggered'],
+                'source_data_identifier': f'Recorded Future Alerts {alert_id}',
+                'description': f"Container created from alert {alert_id}",
+                # container['data'] = alert_response['data'] - should/can this be attach?
+                'artifacts': artifacts
+            }
+            containers.append(container)
+
+        containers.sort(key=lambda k: k['triggered'], reverse=True)
+
+        return containers
+
+    def _handle_alert_search(self, param):
         """Implement lookup of alerts issued for an alert rule."""
         self.save_progress(
             "In action handler for: {0}".format(self.get_action_identifier())
@@ -859,7 +880,7 @@ class RecordedfutureConnector(BaseConnector):
         )
 
         self.debug_print(
-            '_handle_alert_data_lookup',
+            '_handle_alert_search',
             {
                 'path_info': f'/alert/rule/{rule_id}',
                 'action_result': action_result,
@@ -900,7 +921,7 @@ class RecordedfutureConnector(BaseConnector):
             url2 = '/alert/%s' % alert['id']
             ret_val2, response2 = self._make_rest_call(url2, action_result)
             self.debug_print(
-                '_handle_alert_data_lookup',
+                '_handle_alert_search',
                 {
                     'path_info': url2,
                     'action_result': action_result,
@@ -967,6 +988,7 @@ class RecordedfutureConnector(BaseConnector):
             return action_result.get_status()
 
         # Setup summary
+        response['entities'] = self._parse_rule_data(response['data'])
         action_result.add_data(response)
         summary = action_result.get_summary()
 
@@ -1030,7 +1052,7 @@ class RecordedfutureConnector(BaseConnector):
         # Return success, no need to set the message, only the status
         return action_result.set_status(phantom.APP_SUCCESS)
 
-    def _handle_rule_id_lookup(self, param):
+    def _handle_alert_rule_search(self, param):
         """Make a freetext search for alert rules."""
         self.save_progress(
             "In action handler for: {0}".format(self.get_action_identifier())
@@ -1057,7 +1079,7 @@ class RecordedfutureConnector(BaseConnector):
         )
 
         self.debug_print(
-            '_handle_rule_id_lookup',
+            '_handle_alert_rule_search',
             {
                 'path_info': 'config/alert/rules',
                 'action_result': action_result,
@@ -1132,18 +1154,21 @@ class RecordedfutureConnector(BaseConnector):
             # todo: need to check the in-parameters
             my_ret_val = self._handle_list_contexts(param)
 
-        elif action_id == 'rule_id_lookup':
+        elif action_id == 'alert_rule_search':
             self.debug_print('DEBUG: started fetching rules')
-            my_ret_val = self._handle_rule_id_lookup(param)
+            my_ret_val = self._handle_alert_rule_search(param)
 
-        elif action_id == 'alert_data_lookup':
-            my_ret_val = self._handle_alert_data_lookup(param)
+        elif action_id == 'alert_search':
+            my_ret_val = self._handle_alert_search(param)
 
         elif action_id == 'alert_lookup':
             my_ret_val = self._handle_alert_lookup(param)
 
         elif action_id == 'alert_update':
             my_ret_val = self._handle_alert_update(param)
+
+        elif action_id == 'on_poll':
+            my_ret_val = self._on_poll(param)
 
         return my_ret_val
 

@@ -39,58 +39,67 @@
             "description": "Recorded Future API Token",
             "data_type": "password",
             "required": true,
-            "order": 1
+            "order": 2
         },
         "recordedfuture_verify_ssl": {
             "description": "Verify SSL Certificates",
             "data_type": "boolean",
             "default": true,
-            "order": 2
+            "order": 4
         },
         "on_poll_alert_ruleids": {
             "data_type": "string",
-            "order": 8,
+            "order": 1,
             "description": "Comma-separated list of alert ruleIDs"
         },
-        "on_poll_parse_only": {
+        "on_poll_alert_severity": {
+            "data_type": "string",
+            "order": 3,
+            "description": "Severity to apply to the alert event",
+            "default": "Medium",
+            "value_list": ["High", "Medium", "Low"]
+        },
+        "download_alerts": {
+            "description": "Download triggered alerts from Recorded Future",
+            "data_type": "boolean",
+            "order": 5,
+            "default": false
+        },
+        "sigma_rules": {
+            "description": "Download Sigma rules when doing an ingest",
+            "data_type": "boolean",
+            "order": 7,
+            "default": false
+        },
+        "yara_rules": {
+            "description": "Download YARA rules when doing an ingest",
+            "data_type": "boolean",
+            "order": 9,
+            "default": false
+        },
+        "snort_rules": {
+            "description": "Download SNORT rules when doing an ingest",
             "data_type": "boolean",
             "order": 11,
-            "description": "Parse Only",
-            "default": true
+            "default": false
         },
-        "max_container": {
+        "max_count": {
             "data_type": "numeric",
-            "order": 12,
+            "order": 6,
             "description": "Max events to ingest for Scheduled Polling(Default: 100)",
             "default": 100
         },
         "container_update_state": {
             "data_type": "numeric",
-            "order": 13,
+            "order": 8,
             "description": "Container count to update the state file",
             "default": 100
-        },
-        "container_name_prefix": {
-            "data_type": "string",
-            "order": 14,
-            "description": "Name to give containers created via ingestion"
-        },
-        "container_name_values": {
-            "data_type": "string",
-            "order": 15,
-            "description": "Values to append to container name"
         },
         "retry_count": {
             "description": "Number of retries",
             "data_type": "numeric",
-            "order": 16,
+            "order": 10,
             "default": 3
-        },
-        "remove_empty_cef": {
-            "description": "Remove CEF fields having empty values from the artifact",
-            "data_type": "boolean",
-            "order": 17,
-            "default": false
         },
         "sleeptime_in_requests": {
             "description": "The time to wait for next REST call (max 120 seconds)",
@@ -107,39 +116,6 @@
             "type": "test",
             "read_only": true,
             "parameters": {},
-            "output": [],
-            "versions": "EQ(*)"
-        },
-        {
-            "action": "on poll",
-            "description": "Ingest alerts from Recorded Future",
-            "verbose": "This action will fetch alerts for the specified rule IDs and within the specified timeframe. When limiting the number of events to ingest, it will ingest the most recent events.<br><br>",
-            "type": "ingest",
-            "identifier": "on_poll",
-            "read_only": true,
-            "parameters": {
-                "container_id": {
-                    "description": "Parameter ignored in this app",
-                    "data_type": "numeric"
-                },
-                "start_time": {
-                    "description": "Parameter ignored in this app",
-                    "data_type": "numeric"
-                },
-                "end_time": {
-                    "description": "Parameter ignored in this app",
-                    "data_type": "numeric"
-                },
-                "container_count": {
-                    "description": "Maximum number of events to query for",
-                    "data_type": "numeric",
-                    "default": 100
-                },
-                "artifact_count": {
-                    "description": "Parameter ignored in this app",
-                    "data_type": "numeric"
-                }
-            },
             "output": [],
             "versions": "EQ(*)"
         },
@@ -169,7 +145,7 @@
                     "contains": [
                         "recordedfuture alert status"
                     ],
-                    "value_list": ["New","Pending", "Resolved", "Dismissed"],
+                    "value_list": ["New", "Pending", "Resolved", "Dismissed"],
                     "allow_list": true,
                     "order": 1
                 },
@@ -217,6 +193,27 @@
                     "contains": [
                         "recordedfuture alert note"
                     ]
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture result message"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture result message"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture result message"
+                    ]
                 }
             ],
             "render": {
@@ -229,8 +226,8 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "alert data lookup",
-            "identifier": "alert_data_lookup",
+            "action": "alert search",
+            "identifier": "alert_search",
             "description": "Get details on alerts configured and generated by Recorded Future by alert rule ID and time range",
             "type": "investigate",
             "read_only": true,
@@ -595,7 +592,7 @@
                 "type": "custom",
                 "width": 15,
                 "height": 8,
-                "view": "recordedfuture_view.alert_data_results",
+                "view": "recordedfuture_view.alert_search_results",
                 "title": "Recorded Future Alert Data"
             },
             "versions": "EQ(*)"
@@ -969,8 +966,8 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "alert rule lookup",
-            "identifier": "rule_id_lookup",
+            "action": "alert rule search",
+            "identifier": "alert_rule_search",
             "description": "Search for alert rule IDs by name",
             "type": "investigate",
             "read_only": true,
@@ -1075,7 +1072,7 @@
                 "type": "custom",
                 "width": 15,
                 "height": 8,
-                "view": "recordedfuture_view.alert_rules_results",
+                "view": "recordedfuture_view.alert_rule_search_results",
                 "title": "Recorded Future Alert Rules"
             },
             "versions": "EQ(*)"
@@ -4687,6 +4684,46 @@
                     ]
                 }
             ],
+            "render": {
+                "type": "custom",
+                "width": 15,
+                "height": 8,
+                "view": "recordedfuture_view.contexts_results",
+                "title": "List of available contexts"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "on poll",
+            "description": "Ingest alerts from Recorded Future",
+            "verbose": "This action will fetch alerts for the specified rule IDs and within the specified timeframe. When limiting the number of events to ingest, it will ingest the most recent events.<br><br>",
+            "type": "ingest",
+            "identifier": "on_poll",
+            "read_only": true,
+            "parameters": {
+                "container_id": {
+                    "description": "Parameter ignored in this app",
+                    "data_type": "numeric"
+                },
+                "start_time": {
+                    "description": "Parameter ignored in this app",
+                    "data_type": "numeric"
+                },
+                "end_time": {
+                    "description": "Parameter ignored in this app",
+                    "data_type": "numeric"
+                },
+                "container_count": {
+                    "description": "Maximum number of events to query for",
+                    "data_type": "numeric",
+                    "default": 100
+                },
+                "artifact_count": {
+                    "description": "Parameter ignored in this app",
+                    "data_type": "numeric"
+                }
+            },
+            "output": [],
             "render": {
                 "type": "custom",
                 "width": 15,

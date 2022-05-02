@@ -9,7 +9,7 @@
 
 {% block widget_content %} <!-- Main Start Block -->
 
-<!-- File: alert_data_results.html
+<!-- File: alert_search_results.html
 
 Copyright (c) Recorded Future, Inc., 2019-2022
 
@@ -47,11 +47,13 @@ and will be merged during compilation:
         <div class="rf-box">
           <table class="rf-table">
             <tr>
-              <td colspan="2">
-                <span class="non-highlighted">Rule</span><br/>
-                {{ alert.rule.name }}
-              </td>
               <td>
+                <span class="non-highlighted">Rule (Rule ID)</span><br/>
+                {{ alert.rule.name }}
+                (<a href="javascript:;" onclick="context_menu(this, [{'contains': ['recordedfuture alert rule id'], 'value': '{{ alert.rule.id }}' }], 0, {{ container.id }}, null, false);">
+                  <span class="highlighted">{{ alert.rule.id }})</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
+              </td>
+              <td style="width: 20%">
                 <span class="non-highlighted">Time Frame</span><br/>
                 {{ result.param.timeframe }}
               </td>
@@ -59,25 +61,34 @@ and will be merged during compilation:
             {% for trigged in alert.alerts %}
               <tr>
                 <td>
-                  <span class="non-highlighted">Alert Title</span><br/>
+                  <span class="non-highlighted">Alert Title (Alert ID)</span><br/>
                   {{ trigged.alert.alertTitle }}
+                  (<a href="javascript:;" onclick="context_menu(this, [{'contains': ['recordedfuture alert id'], 'value': '{{ trigged.alert.content.id }}' }], 0, {{ container.id }}, null, false);">
+                  <span class="highlighted">{{ trigged.alert.content.id }})</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
                 </td>
                 <td>
                   <span class="non-highlighted">Triggered</span><br/>
                   {{ trigged.alert.triggered|slice:"0:10"  }}
                 </td>
-                <td>
-                  {% if trigged.alert.entities.EmailAddress %}
-                    {% for email in trigged.alert.entities.EmailAddress %}
-                      <div>
-                        <span class="non-highlighted">Email</span><br/>
-                        {{ email }}
-                      </div>
-                    {% endfor %}
-                  {% endif %}
-                  <span class="non-highlighted"></span>
-                </td>
               </tr>
+              {% if trigged.alert.entities %}
+                <tr style="border-top:0px;">
+                  <td>
+                    {% for entity_type, entities in trigged.alert.entities.items %}
+                      <div>
+                        <span class="non-highlighted">{{ entity_type }}</span><br/>
+                      </div>
+                      {% for entity in entities %}
+                        {{ entity }}
+                      {% endfor %}
+                    {% endfor %}
+                  </td>
+                  <td>
+                    <span class="non-highlighted">Links to Recorded Future</span><br/>
+                    <a href="{{ alert.rule.url }}">Rule</a> / <a href="{{ trigged.alert.alertUrl }}">Alert</a>
+                  </td>
+                </tr>
+              {% endif %}
             {% endfor %}
           </table>
         </div>

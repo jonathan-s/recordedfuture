@@ -9,10 +9,10 @@ RESULT_FILES := reputation_results.html \
 	intelligence_results.html \
 	threat_assessment_results.html \
 	contexts_results.html \
-	alert_rules_results.html \
+	alert_rule_search_results.html \
+	alert_search_results.html \
 	alert_lookup_results.html \
-	alert_update_results.html \
-	alert_data_results.html
+	alert_update_results.html
 STYLESHEET := recordedfuture_style.css
 RF_SRC := $(addprefix $(SRC_DIR)/,$(RESULT_FILES))
 RF_DEST := $(addprefix $(BUILD_DIR)/,$(RESULT_FILES))
