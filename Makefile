@@ -18,8 +18,8 @@ RF_SRC := $(addprefix $(SRC_DIR)/,$(RESULT_FILES))
 RF_DEST := $(addprefix $(BUILD_DIR)/,$(RESULT_FILES))
 PH_PORT:= 22
 LOCAL_RSYNC := rsync
-SSH_KEY_FILE_ARGS := $(if ${SSH_KEY_FILE},-i ${SSH_KEY_FILE} -o UserKnownHostsFile=/dev/null,)
-SSH := ssh -p $(PH_PORT) $(SSH_KEY_FILE_ARGS) -l phantom -o StrictHostKeyChecking=no
+SSH_KEY_FILE_ARGS := $(if ${SSH_KEY_FILE},-i ${SSH_KEY_FILE} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no,)
+SSH := ssh -p $(PH_PORT) $(SSH_KEY_FILE_ARGS) -l phantom
 RSYNC := env RSYNC_RSH="ssh $(SSH_KEY_FILE_ARGS) -p $(PH_PORT)" rsync -rav
 SSHRAW := ssh -p $(PH_PORT) -t $(RFUSERARG)
 SED := sed
