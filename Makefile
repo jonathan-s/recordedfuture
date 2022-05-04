@@ -19,7 +19,8 @@ RF_DEST := $(addprefix $(BUILD_DIR)/,$(RESULT_FILES))
 PH_PORT:= 22
 RSYNC := env RSYNC_RSH="ssh -p $(PH_PORT)" rsync -rav
 LOCAL_RSYNC := rsync
-SSH := ssh -p $(PH_PORT) -l phantom -o StrictHostKeyChecking=no
+SSH_KEY_FILE_ARGS := $(if ${SSH_KEY_FILE},-i ${SSH_KEY_FILE},)
+SSH := ssh -p $(PH_PORT) $(SSH_KEY_FILE_ARGS) -l phantom -o StrictHostKeyChecking=no
 SSHRAW := ssh -p $(PH_PORT) -t $(RFUSERARG)
 SED := sed
 MKDIR_P = mkdir -p
@@ -146,7 +147,7 @@ setup_ssh:
 		echo Environment variable PH must contain the hostname of the phantom server.;\
 		exit 1; \
 	fi
-	scp -P $(PH_PORT) ~/.ssh/id_rsa.pub $(SCPHOST):/tmp/
+	scp $(SSH_KEY_FILE_ARGS) -P $(PH_PORT) ~/.ssh/id_rsa.pub $(SCPHOST):/tmp/
 	$(SSHRAW) $(PH) "sudo -u phantom mkdir -p ~phantom/.ssh; \
 	                 sudo -u phantom chmod go= ~phantom/.ssh; \
 	                 sudo mv /tmp/id_rsa.pub ~phantom/.ssh/authorized_keys; \
