@@ -2,31 +2,30 @@
     "appid": "6efe0e1b-76ac-4ffd-8fa0-ac58fd6efd77",
     "name": "Recorded Future",
     "description": "This app implements investigative actions to perform lookups for quick reputation information, contextual threat intelligence and external threat alerts",
+    "publisher": "Recorded Future, Inc",
     "type": "reputation",
+    "main_module": "recordedfuture_connector.py",
+    "app_version": "4.0.0",
+    "utctime_updated": "2022-05-30T07:33:58.826014Z",
+    "package_name": "phantom_recordedfuture",
+    "product_name": "Recorded Future App for Phantom",
     "product_vendor": "Recorded Future, Inc",
+    "product_version_regex": ".*",
+    "min_phantom_version": "5.0.0",
+    "python_version": "3",
+    "latest_tested_versions": [
+        "Cloud API v2 on 3/13/2020",
+        "3.1.0"
+    ],
     "logo": "logo_recordedfuture.svg",
     "logo_dark": "logo_recordedfuture_dark.svg",
-    "product_name": "Recorded Future App for Phantom",
-    "product_version_regex": ".*",
-    "publisher": "Recorded Future, Inc",
     "license": "Copyright (c) Recorded Future, Inc, 2019-2022",
-    "app_version": "3.1.0",
-    "utctime_updated": "2019-04-17T07:33:58.826014Z",
-    "package_name": "phantom_recordedfuture",
-    "main_module": "recordedfuture_connector.py",
-    "python_version": "3",
     "contributors": [
         {
             "name": "Recorded Future - Premier Integrations",
             "email": "phantom@recordedfuture.com"
         }
     ],
-    "latest_tested_versions": [
-        "Cloud API v2 on 3/13/2020",
-        "3.1.0"
-    ],
-    "min_phantom_version": "5.0.0",
-    "app_wizard_version": "1.0.0",
     "configuration": {
         "recordedfuture_base_url": {
             "description": "Recorded Future API Basename",
@@ -50,7 +49,7 @@
         "on_poll_alert_ruleids": {
             "data_type": "string",
             "order": 1,
-            "description": "Comma-separated list of alert ruleIDs"
+            "description": "Comma-separated list of alert rule IDs"
         },
         "on_poll_alert_severity": {
             "data_type": "string",
@@ -195,18 +194,48 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture result message"
-                    ]
+                    "data_path": "action_result.data.*.id",
+                    "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.summary",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture result message"
-                    ]
+                    "data_path": "action_result.data.*.note.date",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.note.text",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.note.author",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.title",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.status",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.statusDate",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.statusChangeBy",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.statusInPortal",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.update",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.reason",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -444,7 +473,7 @@
                     "data_path": "action_result.data.*.alerts.*.alert.content.rule.id",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture alert content rule id"
+                        "recordedfuture alert rule id"
                     ]
                 },
                 {
@@ -522,7 +551,7 @@
                     "data_path": "action_result.data.*.rule.name",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture alert rule id"
+                        "recordedfuture alert rule name"
                     ]
                 },
                 {
@@ -635,276 +664,210 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.review.assignee",
+                    "data_path": "action_result.*.id",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.*.review.assignee",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture alert content review assignee"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.review.statusDate",
+                    "data_path": "action_result.*.review.statusDate",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture alert content review note status date"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.review.statusInPortal",
+                    "data_path": "action_result.*.review.statusInPortal",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture alert content review note status in portal"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.review.status",
+                    "data_path": "action_result.*.review.status",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture alert content review note status"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.review.noteDate",
+                    "data_path": "action_result.*.review.noteDate",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture alert content review note data"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.review.statusChangeBy",
+                    "data_path": "action_result.*.review.statusChangeBy",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture alert content review note data"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.review.noteAuthor",
+                    "data_path": "action_result.*.review.noteAuthor",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture alert content review note author"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.review.note",
+                    "data_path": "action_result.*.review.note",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture alert content review note"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entities.*.trend.documents.*.source.id",
+                    "data_path": "action_result.*.rule.name",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture alert entities trend documents source id"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entities.*.trend.documents.*.source.name",
+                    "data_path": "action_result.*.rule.id",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture alert entities trend documents source name"
+                        "recordedfuture alert content review assignee"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entities.*.trend.documents.*.source.type",
+                    "data_path": "action_result.*.rule.url",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture alert entities trend documents source type"
+                        "recordedfuture alert content review assignee"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entities.*.trend.documents.*.url",
+                    "data_path": "action_result.*.title",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture alert entities trend documents url"
+                        "recordedfuture alert content review assignee"
+                    ]
+                },
+
+                {
+                    "data_path": "action_result.*.triggered",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert content review assignee"
+                    ]
+                },
+
+                {
+                    "data_path": "action_result.*.url",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture alert content review assignee"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entities.*.trend.documents.*.references.*.fragment",
+                    "data_path": "action_result.data.*.entities.*.alert.*",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture alert entities trend documents references fragment"
+                        "recordedfuture alert id"
+                    ]
+                },
+
+                {
+                    "data_path": "action_result.data.*.entities.*.city.*",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture city"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entities.*.trend.documents.*.references.*.entities.*.id",
+                    "data_path": "action_result.data.*.entities.*.country.*",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture alert entities trend documents references entities id"
+                        "recordedfuture country"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entities.*.trend.documents.*.references.*.entities.*.name",
+                    "data_path": "action_result.data.*.entities.*.cyberVulnerability.*",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture alert entities trend documents references entities name"
+                        "recordedfuture entity type email"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entities.*.trend.documents.*.references.*.entities.*.type",
+                    "data_path": "action_result.data.*.entities.*.email.*",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture alert entities trend documents references entities type"
+                        "recordedfuture entity type email"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entities.*.trend.documents.*.references.*.language",
+                    "data_path": "action_result.data.*.entities.*.hash.*",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture alert entities trend documents references language"
+                        "file"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entities.*.trend.documents.*.references.*.id",
+                    "data_path": "action_result.data.*.entities.*.malwareCategory.*",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture alert entities trend documents references id"
+                        "recordedfuture malware category"
+                    ]
+                },
+
+                {
+                    "data_path": "action_result.data.*.entities.*.domain.*",
+                    "data_type": "string",
+                    "contains": [
+                        "domain"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entities.*.trend.documents.*.authors.*.id",
+                    "data_path": "action_result.data.*.entities.*.ip.*",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture alert entities trend documents authors id"
+                        "ip"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entities.*.trend.documents.*.authors.*.name",
+                    "data_path": "action_result.data.*.entities.*.operatingSystem.*",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture alert entities trend documents authors name"
+                        "recordedfuture operating system"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entities.*.trend.documents.*.authors.*.type",
+                    "data_path": "action_result.data.*.entities.*.product.*",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture alert entities trend documents authors type"
+                        "recordedfuture product"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entities.*.trend.documents.*.title",
+                    "data_path": "action_result.data.*.entities.*.technology.*",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture alert entities trend documents title"
+                        "recordedfuture technology"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entities.*.trend.risk",
+                    "data_path": "action_result.data.*.entities.*.url.*",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture alert entities trend risk"
+                        "recordedfuture url"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.entities.*.url",
+                    "data_path": "action_result.data.*.entities.*.vulnerability.*",
                     "data_type": "string",
                     "contains": [
-                        "recordedfuture alert title"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.entities.*.rule.name",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture alert entities rule name"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.entities.*.rule.id",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture alert entities rule id"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.entities.*.rule.url",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture alert entities rule url"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.entities.*.triggered.",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture alert entities triggerd"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.entities.*.id",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture alert entities id"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.entities.*.counts.references",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture alert entities counts "
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.entities.*.counts.entities",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture alert entities counts entities"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.entities.*.counts.documents",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture alert entities counts documents"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.entities.*.triggered_by.*.entity_path.*.attribute.id",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture alert entities triggered by entity path attribute id"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.entities.*.triggered_by.*.entity_path.*.entity.id",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture alert entities triggered by entity path entity id"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.entities.*.triggered_by.*.entity_path.*.entity.name",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture alert entities triggered by entity path entity name"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.entities.*.triggered_by.*.entity_path.*.entity.type",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture alert entities triggered by entity path entity type"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.entities.*.triggered_by.*.reference_id",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture alert entities triggered by reference id"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.entities.*.title",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture alert entities title"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.entities.*.type",
-                    "data_type": "string",
-                    "contains": [
-                        "recordedfuture alert entities type"
+                        "recordedfuture entity type email"
                     ]
                 },
                 {
@@ -4701,18 +4664,6 @@
             "identifier": "on_poll",
             "read_only": true,
             "parameters": {
-                "container_id": {
-                    "description": "Parameter ignored in this app",
-                    "data_type": "numeric"
-                },
-                "start_time": {
-                    "description": "Parameter ignored in this app",
-                    "data_type": "numeric"
-                },
-                "end_time": {
-                    "description": "Parameter ignored in this app",
-                    "data_type": "numeric"
-                },
                 "container_count": {
                     "description": "Maximum number of events to query for",
                     "data_type": "numeric",

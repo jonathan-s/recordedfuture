@@ -679,21 +679,6 @@ class RecordedfutureConnector(BaseConnector):
         # dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
 
-    def _parse_rule_data(self, res):
-        """Reformat entities returned with the alert lookup."""
-        from collections import defaultdict
-
-        entities = defaultdict(list)
-        for ent in res.get('entities', []):
-            if ent['entity'] is not None:
-                entities[ent['entity']['type']].append(ent['entity']['name'])
-            for doc in ent.get('documents'):
-                for ref in doc.get('references'):
-                    for entity in ref.get('entities'):
-                        if entity['name'] not in entities[entity['type']]:
-                            entities[entity['type']].append(entity['name'])
-        return entities
-
     def _on_poll(self, param):
         """Entry point for obtaining alerts and rules."""
         # new containers and artifacts will be stored in containers[]
@@ -715,12 +700,15 @@ class RecordedfutureConnector(BaseConnector):
         if config.get('download_alerts'):
             # do I need to provide action_result??
             containers.extend(self._on_poll_alerts(param, config, action_result))
-#         if self.get_config('yara_rules'):
-#             containers.append(self._on_poll_alerts)
-#         if self.get_config('sigma_rules'):
-#             containers.append(self._on_poll_alerts)
-#         if self.get_config('snort_rules'):
-#             containers.append(self._on_poll_alerts)
+        # if self.get_config('yara_rules'):
+        #    containers.append(self._on_poll_alerts)
+        #    pass
+        # if self.get_config('sigma_rules'):
+        #    # containers.append(self._on_poll_alerts)
+        #    pass
+        # if self.get_config('snort_rules'):
+            # pass
+            # containers.append(self._on_poll_alerts)
 
         count = 0
 
@@ -784,7 +772,6 @@ class RecordedfutureConnector(BaseConnector):
         for rule_id in rule_list:
             # Prepare the REST call to get all alerts within the timeframe and with status New
             params = {
-                # TODO include status in the search when access to a new enterprise
                 'status': 'New',
                 'limit': param.get('max_count', 100)
             }
@@ -801,6 +788,11 @@ class RecordedfutureConnector(BaseConnector):
             if response['counts'].get('returned', 0) > 0:
                 for alert in response['data']['results']:
                     alert_ids.append(alert['id'])
+
+            # update the limit in order not to obtain many alerts than needed
+            params['limit'] -= response['counts']['returned']
+            if params['limit'] <= 0:
+                break
 
         # not sure I need this either
         # display = config.get('on_poll_display')
@@ -824,12 +816,11 @@ class RecordedfutureConnector(BaseConnector):
             my_ret_val, alert_response = self._make_rest_call(f'/alert/{alert_id}', action_result)
             if phantom.is_fail(my_ret_val):
                 return action_result.get_status()
-            entities = self._parse_rule_data(alert_response['data'])
 
             # Assemble the information needed for the artifacts and add it to artifacts
             cef = {
-                entity_type.lower(): (','.join(entities[entity_type]))
-                for entity_type in entities.keys()
+                entity_type.lower(): (','.join(alert_response['entities'][entity_type]))
+                for entity_type in alert_response['entities'].keys()
             }
             cef['alert'] = alert_id
             artifact = {
@@ -841,9 +832,9 @@ class RecordedfutureConnector(BaseConnector):
 
             # Assemble the information needed for container and add it to containers
             container = {
-                'name': f"{alert_response['data']['rule']['name']} Alert (Recorded Future)",
+                'name': f"{alert_response['rule']['name']} Alert (Recorded Future)",
                 'severity': config.get('on_poll_alert_severity'),
-                'triggered': alert_response['data']['triggered'],
+                'triggered': alert_response['triggered'],
                 'source_data_identifier': f'Recorded Future Alerts {alert_id}',
                 'description': f"Container created from alert {alert_id}",
                 # container['data'] = alert_response['data'] - should/can this be attach?
@@ -988,13 +979,12 @@ class RecordedfutureConnector(BaseConnector):
             return action_result.get_status()
 
         # Setup summary
-        response['entities'] = self._parse_rule_data(response['data'])
         action_result.add_data(response)
         summary = action_result.get_summary()
 
         # Add info about the rule to summary and action_result['data'] TODO format date
-        summary['Alert Title'] = response['data'].get('title', '')
-        summary['Triggered'] = response['data'].get('triggered', '')
+        summary['alert title'] = response.get('title', '')
+        summary['triggered'] = response.get('triggered', '')
         action_result.set_summary(summary)
 
         # Return success, no need to set the message, only the status
@@ -1043,10 +1033,10 @@ class RecordedfutureConnector(BaseConnector):
         summary = action_result.get_summary()
 
         if response.get('success', ''):
-            summary['Update'] = 'Successful'
+            summary['update'] = 'Successful'
         else:
-            summary['Update'] = 'Not successful'
-            summary['Reason'] = response['error'].get('reason', '')
+            summary['update'] = 'Not successful'
+            summary['reason'] = response['error'].get('reason', '')
         action_result.set_summary(summary)
 
         # Return success, no need to set the message, only the status

@@ -49,34 +49,34 @@ and will be merged during compilation:
             <tr>
               <td colspan="3">
                 <span class="non-highlighted">Alert (Alert ID)</span><br/>
-                {{ alert.data.title }}
-                (<a href="javascript:;" onclick="context_menu(this, [{'contains': ['recordedfuture alert id'], 'value': '{{ alert.data.id }}' }], 0, {{ container.id }}, null, false);">
-                  <span class="highlighted">{{ alert.data.id }})</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
+                {{ alert.title }}
+                (<a href="javascript:;" onclick="context_menu(this, [{'contains': ['recordedfuture alert id'], 'value': '{{ alert.id }}' }], 0, {{ container.id }}, null, false);">
+                  <span class="highlighted">{{ alert.id }})</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
                 </a>
               </td>
               <td>
                 <span class="non-highlighted">Links to Recorded Future</span><br/>
-                <a href="{{ alert.data.url }}">Alert</a> / <a href="{{ alert.data.rule.url }}">Alert Rule</a>
+                <a href="{{ alert.url }}">Alert</a> / <a href="{{ alert.rule.url }}">Alert Rule</a>
               </td>
             </tr>
             <tr>
               <td>
                 <span class="non-highlighted">Triggered</span><br/>
-                {{ alert.data.triggered|slice:"0:10"  }}
+                {{ alert.triggered|slice:"0:10"  }}
               </td>
               <td>
                 <span class="non-highlighted">Status</span><br/>
-                {{ alert.data.review.statusInPortal  }}
+                {{ alert.review.statusInPortal  }}
               </td>
               <td>
                 <span class="non-highlighted">Assignee</span><br/>
-                {{ alert.data.review.assignee }}
+                {{ alert.review.assignee }}
               </td>
               <td>
                 <span class="non-highlighted">Alerting Rule (Rule ID)</span><br/>
-                {{ alert.data.rule.name }}
-                (<a href="javascript:;" onclick="context_menu(this, [{'contains': ['recordedfuture alert rule id'], 'value': '{{ alert.data.rule.id }}' }], 0, {{ container.id }}, null, false);">
-                <span class="highlighted">{{ alert.data.rule.id }})</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
+                {{ alert.rule.name }}
+                (<a href="javascript:;" onclick="context_menu(this, [{'contains': ['recordedfuture alert rule id'], 'value': '{{ alert.rule.id }}' }], 0, {{ container.id }}, null, false);">
+                <span class="highlighted">{{ alert.rule.id }})</span>&nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
               </td>
             </tr>
           </table>
@@ -87,7 +87,7 @@ and will be merged during compilation:
             <tr>
               <td colspan="4">
                 <span class="non-highlighted">Note</span><br/>
-                {{ alert.data.review.note  }}
+                {{ alert.review.note  }}
               </td>
             </tr>
             <tr>

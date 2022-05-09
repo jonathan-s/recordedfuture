@@ -102,9 +102,24 @@ INTELLIGENCE_MAP = {
 }
 
 CEF_TYPE_CONTAINS = {
-    'emailaddress': ['email'],
-    'url': ['url'],
-    'vulnerability': ['cve'],
-    'industryterm': [],
     'alert': ['recordedfuture alert id'],
+    'city': [''],
+    'country': [''],
+    'cyberVulnerability': [
+        "cve",
+        "vulnerability"
+    ],
+    'email': ['email'],
+    'hash': ['file'],
+    'malwareCategory': [''],
+    'domain': ['domain'],
+    'ip': ['ip'],
+    'operatingSystem': [''],
+    'product': [''],
+    'technology': [''],
+    'url': ['url'],
+    'vulnerability': [
+        "cve",
+        "vulnerability"
+    ],
 }
