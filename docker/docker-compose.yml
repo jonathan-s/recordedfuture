@@ -20,7 +20,6 @@ services:
       - RF_TOKEN=${RF_TOKEN}
       - PHANTOM_BFI_SSL=adhoc
       - PHANTOM_BFI_HOST=0.0.0.0
-      - entity_repository.url=https://sproxy.recfut.com/entity-repository/lookup
       - RF_ENV=premier_integrations
     container_name: phantom_bfi
     ports:

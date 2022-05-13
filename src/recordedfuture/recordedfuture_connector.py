@@ -44,7 +44,7 @@ from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 
 # Usage of the consts file is recommended
-from recordedfuture_consts import INTELLIGENCE_MAP, CEF_TYPE_CONTAINS, timeout, version, MAX_CONTAINERS
+from recordedfuture_consts import INTELLIGENCE_MAP, timeout, version, MAX_CONTAINERS
 # from datetime import datetime, now
 from math import ceil
 
@@ -682,6 +682,10 @@ class RecordedfutureConnector(BaseConnector):
     def _on_poll(self, param):
         """Entry point for obtaining alerts and rules."""
         # new containers and artifacts will be stored in containers[]
+
+        self.save_progress(
+            "In action handler for: {0}".format(self.get_action_identifier())
+        )
         action_result = self.add_action_result(ActionResult(dict(param)))
         config = self.get_config()
         containers = []
@@ -710,7 +714,11 @@ class RecordedfutureConnector(BaseConnector):
             # pass
             # containers.append(self._on_poll_alerts)
 
+        # counter to keep track of the number of events added
         count = 0
+
+        # sort the containers to get the oldest first
+        containers.sort(key=lambda k: k['triggered'], reverse=False)
 
         for container in containers:
 
@@ -724,20 +732,22 @@ class RecordedfutureConnector(BaseConnector):
             if msg != "Duplicate container found":
                 # only count and change state to Pending on new containers
                 params = {
-                   'id': container['artifacts'][0]['cef']['alert'],
+                   'id': container['source_data_identifier'].split(' ')[3],
                    'status': 'Pending'
                 }
-                # update container to status depending
+                # update container to status depending TODO error checking !
                 my_ret_val, response = self._make_rest_call(
                     '/alert/update', action_result, json=params, method='post'
                 )
+
+                # Something went wrong
+                if phantom.is_fail(my_ret_val):
+                    return action_result.get_status()
+
                 # increase the counter and break if hitting the max_count limit
                 count += 1
                 if count == param['max_count']:
                     break
-
-        # TODO to be removed
-        self.save_progress(f'saved {count} containers')
 
         return action_result.set_status(phantom.APP_SUCCESS)
 
@@ -754,9 +764,7 @@ class RecordedfutureConnector(BaseConnector):
         except:
             return action_result.set_status(phantom.APP_ERROR, "Error occurred while parsing the search query")
 
-        # timeframe = '-12h to now'
-        params = {}
-        timeframe = ""
+        timeframe = '-12h to now'
 
         # Get the scheduling correct:
         if not self.is_poll_now():
@@ -766,83 +774,24 @@ class RecordedfutureConnector(BaseConnector):
                 timeframe = f'-{interval}h to now'
                 self.save_progress(f"calculating time difference {start_time}, now {time.time()} and interval {interval}")
 
-        alert_ids = []
-        containers = []
+        # Prepare the REST call to get all alerts within the timeframe and with status New
+        params = {
+            'timeframe': timeframe,
+            'rules': rule_list,
+            'severity': config.get('on_poll_alert_severity'),
+            'limit': param.get('max_count', 100)
+        }
 
-        for rule_id in rule_list:
-            # Prepare the REST call to get all alerts within the timeframe and with status New
-            params = {
-                'status': 'New',
-                'limit': param.get('max_count', 100)
-            }
-            if timeframe:
-                params['triggered'] = timeframe
-
-            # Make rest call
-            my_ret_val, response = self._make_rest_call(
-                f'/alert/rule/{rule_id}', action_result, params=params
-            )
-
-            # only add the alert_ids if the response contains any aerts
-            self.save_progress(f"Alert count returned is {response['counts']['returned']} of total {response['counts']['total']} for rule {rule_id}")
-            if response['counts'].get('returned', 0) > 0:
-                for alert in response['data']['results']:
-                    alert_ids.append(alert['id'])
-
-            # update the limit in order not to obtain many alerts than needed
-            params['limit'] -= response['counts']['returned']
-            if params['limit'] <= 0:
-                break
-
-        # not sure I need this either
-        # display = config.get('on_poll_display')
-        # header_set = None
-        # if display:
-        #    header_set = [x.strip().lower() for x in display.split(',')]
-
-        self.debug_print(f"on_poll alerts: found a list of {len(alert_ids)} alert_ids")
-        self.save_progress("on_poll alerts: found {} alerts(s)".format(len(alert_ids)))
-
-        if not alert_ids:
-            return containers
-
-        for alert_id in alert_ids:
-            container = {}
-            artifacts = []
-            artifact = {}
-            cef = {}
-
-            # get the alert info and populate the entity structure
-            my_ret_val, alert_response = self._make_rest_call(f'/alert/{alert_id}', action_result)
-            if phantom.is_fail(my_ret_val):
-                return action_result.get_status()
-
-            # Assemble the information needed for the artifacts and add it to artifacts
-            cef = {
-                entity_type.lower(): (','.join(alert_response['entities'][entity_type]))
-                for entity_type in alert_response['entities'].keys()
-            }
-            cef['alert'] = alert_id
-            artifact = {
-                'name': "Recorded Future Alert entities",
-                'cef_types': CEF_TYPE_CONTAINS,
-                'cef': cef
-            }
-            artifacts.append(artifact)
-
-            # Assemble the information needed for container and add it to containers
-            container = {
-                'name': f"{alert_response['rule']['name']} Alert (Recorded Future)",
-                'severity': config.get('on_poll_alert_severity'),
-                'triggered': alert_response['triggered'],
-                'source_data_identifier': f'Recorded Future Alerts {alert_id}',
-                'description': f"Container created from alert {alert_id}",
-                # container['data'] = alert_response['data'] - should/can this be attach?
-                'artifacts': artifacts
-            }
-            containers.append(container)
-
-        containers.sort(key=lambda k: k['triggered'], reverse=True)
+        # Make the rest call
+        my_ret_val, containers = self._make_rest_call(
+            '/alert/on_poll',
+            action_result,
+            json=params,
+            method='post',
+        )
+        # Something went wrong
+        if phantom.is_fail(my_ret_val):
+            return action_result.get_status()
 
         return containers
 
@@ -909,7 +858,7 @@ class RecordedfutureConnector(BaseConnector):
         alerts = []
         for alert in response['data']['results']:
             self.save_progress('In alert loop: %s' % alert)
-            url2 = '/alert/%s' % alert['id']
+            url2 = '/alert/lookup/%s' % alert['id']
             ret_val2, response2 = self._make_rest_call(url2, action_result)
             self.debug_print(
                 '_handle_alert_search',
@@ -921,6 +870,9 @@ class RecordedfutureConnector(BaseConnector):
                     'response': response2,
                 },
             )
+            # Something went wrong
+            if phantom.is_fail(ret_val2):
+                return action_result.get_status()
 
             entities = self._parse_rule_data(response2['data'])
             self.save_progress('ENTITIES: %s' % entities)
@@ -961,13 +913,13 @@ class RecordedfutureConnector(BaseConnector):
 
         # Make rest call
         my_ret_val, response = self._make_rest_call(
-            f'/alert/{alert_id}', action_result
+            f'/alert/lookup/{alert_id}', action_result
         )
 
         self.debug_print(
             '_handle_alert_lookup',
             {
-                'path_info': f'/alert/{alert_id}',
+                'path_info': f'/alert/lookup/{alert_id}',
                 'action_result': action_result,
                 'my_ret_val': my_ret_val,
                 'response': response,
@@ -983,7 +935,7 @@ class RecordedfutureConnector(BaseConnector):
         summary = action_result.get_summary()
 
         # Add info about the rule to summary and action_result['data'] TODO format date
-        summary['alert title'] = response.get('title', '')
+        summary['alert_title'] = response.get('title', '')
         summary['triggered'] = response.get('triggered', '')
         action_result.set_summary(summary)
 

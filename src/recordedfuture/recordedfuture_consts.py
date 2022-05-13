@@ -100,26 +100,3 @@ INTELLIGENCE_MAP = {
         True,
     ),
 }
-
-CEF_TYPE_CONTAINS = {
-    'alert': ['recordedfuture alert id'],
-    'city': [''],
-    'country': [''],
-    'cyberVulnerability': [
-        "cve",
-        "vulnerability"
-    ],
-    'email': ['email'],
-    'hash': ['file'],
-    'malwareCategory': [''],
-    'domain': ['domain'],
-    'ip': ['ip'],
-    'operatingSystem': [''],
-    'product': [''],
-    'technology': [''],
-    'url': ['url'],
-    'vulnerability': [
-        "cve",
-        "vulnerability"
-    ],
-}
