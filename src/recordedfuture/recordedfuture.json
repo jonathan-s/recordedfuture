@@ -183,10 +183,6 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.statusInPortal",
-                    "data_type": "string"
-                },
-                {
                     "data_path": "action_result.summary.update",
                     "data_type": "string"
                 },
@@ -260,73 +256,69 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.*.rule.name",
+                    "data_path": "action_result.data.*.rule.name",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.*.rule.id",
+                    "data_path": "action_result.data.*.rule.id",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture alert rule id"
                     ]
                 },
                 {
-                    "data_path": "action_result.*.rule.url",
+                    "data_path": "action_result.data.*.rule.url",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.*.alerts.*.id",
+                    "data_path": "action_result.data.*.alerts.*.id",
                     "data_type": "string",
                     "contains": [
                         "recordedfuture alert id"
                     ]
                 },
                 {
-                    "data_path": "action_result.*.alerts.*.review.assignee",
+                    "data_path": "action_result.data.*.alerts.*.review.assignee",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.*.alerts.*.review.statusDate",
+                    "data_path": "action_result.data.*.alerts.*.review.statusDate",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.*.alerts.*.review.statusInPortal",
+                    "data_path": "action_result.data.*.alerts.*.review.status",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.*.alerts.*.review.status",
+                    "data_path": "action_result.data.*.alerts.*.review.noteDate",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.*.alerts.*.review.noteDate",
+                    "data_path": "action_result.data.*.alerts.*.review.statusChangeBy",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.*.alerts.*.review.statusChangeBy",
+                    "data_path": "action_result.data.*.alerts.*.review.noteAuthor",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.*.alerts.*.review.noteAuthor",
+                    "data_path": "action_result.data.*.alerts.*.review.note",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.*.alerts.*.review.note",
+                    "data_path": "action_result.data.*.alerts.*.title",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.*.alerts.*.title",
+                    "data_path": "action_result.data.*.alerts.*.triggered",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.*.alerts.*.triggered",
+                    "data_path": "action_result.data.*.alerts.*.type",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.*.alerts.*.type",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.*.alerts.*.url",
+                    "data_path": "action_result.data.*.alerts.*.url",
                     "data_type": "string"
                 },
                 {
@@ -800,10 +792,6 @@
                 },
                 {
                     "data_path": "action_result.*.review.statusDate",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.*.review.statusInPortal",
                     "data_type": "string"
                 },
                 {

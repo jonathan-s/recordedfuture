@@ -727,7 +727,7 @@ class RecordedfutureConnector(BaseConnector):
         try:
             rule_list = [x.strip() for x in list_of_rules.split(',')]
         except:
-            return action_result.set_status(phantom.APP_ERROR, "Error occurred while parsing the search query")
+            return action_result.set_status(phantom.APP_ERROR, "Error occurred while parsing the rules")
 
         if self.is_poll_now():
             param['max_count'] = param.get('container_count', MAX_CONTAINERS)
@@ -926,11 +926,11 @@ class RecordedfutureConnector(BaseConnector):
         # the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        params = {
+        params = [{
            'id': UnicodeDammit(param.get('alert_id', '')).unicode_markup,
            'status': UnicodeDammit(param.get('alert_status', '')).unicode_markup,
            'note': UnicodeDammit(param.get('alert_note', '')).unicode_markup
-        }
+        }]
 
         # Make rest call
         my_ret_val, response = self._make_rest_call(
