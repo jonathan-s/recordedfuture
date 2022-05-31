@@ -31,6 +31,7 @@ import os
 import platform
 import sys
 import time
+from math import ceil
 
 # Phantom App imports
 # noinspection PyUnresolvedReferences
@@ -45,8 +46,6 @@ from phantom.base_connector import BaseConnector
 
 # Usage of the consts file is recommended
 from recordedfuture_consts import INTELLIGENCE_MAP, timeout, version, MAX_CONTAINERS
-# from datetime import datetime, now
-from math import ceil
 
 
 class RetVal(tuple):
@@ -688,37 +687,8 @@ class RecordedfutureConnector(BaseConnector):
         )
         action_result = self.add_action_result(ActionResult(dict(param)))
         config = self.get_config()
-        containers = []
 
-        if self.is_poll_now():
-            param['max_count'] = param.get('container_count', MAX_CONTAINERS)
-        else:
-            param['max_count'] = config.get('max_count', MAX_CONTAINERS)
-            # Asset Settings in Asset Configuration allows a negative number
-            if int(param['max_count']) <= 0:
-                param['max_count'] = MAX_CONTAINERS
-
-        # if data and not self.is_poll_now():
-        #     self._state['start_time'] = data[-1].get('_indextime')
-
-        if config.get('download_alerts'):
-            # do I need to provide action_result??
-            containers.extend(self._on_poll_alerts(param, config, action_result))
-        # if self.get_config('yara_rules'):
-        #    containers.append(self._on_poll_alerts)
-        #    pass
-        # if self.get_config('sigma_rules'):
-        #    # containers.append(self._on_poll_alerts)
-        #    pass
-        # if self.get_config('snort_rules'):
-            # pass
-            # containers.append(self._on_poll_alerts)
-
-        # counter to keep track of the number of events added
-        count = 0
-
-        # sort the containers to get the oldest first
-        containers.sort(key=lambda k: k['triggered'], reverse=False)
+        containers = self._on_poll_alerts(param, config, action_result)
 
         for container in containers:
 
@@ -729,25 +699,20 @@ class RecordedfutureConnector(BaseConnector):
                 self.debug_print("Error saving containers: {} -- CID: {}".format(msg, cid))
                 return action_result.set_status(phantom.APP_ERROR, "Error while trying to add the containers")
 
-            if msg != "Duplicate container found":
-                # only count and change state to Pending on new containers
-                params = {
-                   'id': container['source_data_identifier'].split(' ')[3],
-                   'status': 'Pending'
-                }
-                # update container to status depending TODO error checking !
-                my_ret_val, response = self._make_rest_call(
-                    '/alert/update', action_result, json=params, method='post'
-                )
+            # Always update the alerts with new status to ensure that they are not left in limbo
+            params = {
+               'id': container['source_data_identifier'].split(' ')[3],
+               'status': 'Pending'
+            }
+            my_ret_val, response = self._make_rest_call(
+                '/alert/update', action_result, json=params, method='post'
+            )
 
-                # Something went wrong
-                if phantom.is_fail(my_ret_val):
-                    return action_result.get_status()
+            # Something went wrong
+            if phantom.is_fail(my_ret_val):
+                return action_result.get_status()
 
-                # increase the counter and break if hitting the max_count limit
-                count += 1
-                if count == param['max_count']:
-                    break
+            self._state['start_time'] = time.time()
 
         return action_result.set_status(phantom.APP_SUCCESS)
 
@@ -764,15 +729,26 @@ class RecordedfutureConnector(BaseConnector):
         except:
             return action_result.set_status(phantom.APP_ERROR, "Error occurred while parsing the search query")
 
-        timeframe = '-12h to now'
-
-        # Get the scheduling correct:
-        if not self.is_poll_now():
-            start_time = self._state.get('start_time')
-            if start_time:
-                interval = int(ceil((start_time - time.time()) / 3600))
+        if self.is_poll_now():
+            param['max_count'] = param.get('container_count', MAX_CONTAINERS)
+            timeframe = ""
+        else:
+            # Different number of max containers if first run
+            if self._state.get('first_run', True):
+                # set the config to _not_ first run hereafter
+                self._state['first_run'] = False
+                param['max_count'] = config.get('first_max_count', MAX_CONTAINERS)
+                self.save_progress("First time Ingestion detected.")
+                timeframe = ""
+            else:
+                param['max_count'] = config.get('max_count', MAX_CONTAINERS)
+                # calculate time since last fetch
+                interval = ceil((time.time() - self._state.get('start_time')) / 3600) + 3
                 timeframe = f'-{interval}h to now'
-                self.save_progress(f"calculating time difference {start_time}, now {time.time()} and interval {interval}")
+
+        # Asset Settings in Asset Configuration allows a negative number
+        if int(param['max_count']) <= 0:
+            param['max_count'] = MAX_CONTAINERS
 
         # Prepare the REST call to get all alerts within the timeframe and with status New
         params = {
@@ -792,6 +768,13 @@ class RecordedfutureConnector(BaseConnector):
         # Something went wrong
         if phantom.is_fail(my_ret_val):
             return action_result.get_status()
+
+        # sort the containers to get the oldest first
+        containers.sort(key=lambda k: k['triggered'], reverse=False)
+
+        # if necessary truncate the list of containers TODO need to fix other issue first
+        # if len(containers) > param['max_count'] + 1:
+        #     containers = containers[0:param['max_count'] + 1]
 
         return containers
 
@@ -837,7 +820,7 @@ class RecordedfutureConnector(BaseConnector):
         # Setup summary
         summary = action_result.get_summary()
         summary['total_number_of_alerts'] = response['counts'].get('total', 0)
-        summary['returned_number_of_alerts'] = response['counts'].get('returned', 0)
+        summary['alerts_returned'] = response['counts'].get('returned', 0)
 
         # No results can be non existing rule id or just that, no results...
         if response['counts']['total'] == 0:
@@ -874,21 +857,11 @@ class RecordedfutureConnector(BaseConnector):
             if phantom.is_fail(ret_val2):
                 return action_result.get_status()
 
-            entities = self._parse_rule_data(response2['data'])
-            self.save_progress('ENTITIES: %s' % entities)
-
             # Add the response into the data section
-            current_alert = {
-                'alertTitle': response2['data']['title'],
-                'triggered': response2['data']['triggered'],
-                'alertUrl': response2['data']['url'],
-                'content': response2['data'],
-                'entities': entities,
-            }
-            alerts.append({'alert': current_alert})
+            alerts.append(response2)
             self.save_progress(
                 'Alert: "%s" triggered "%s"'
-                % (response2['data']['title'], response2['data']['triggered'])
+                % (response2['title'], response2['triggered'])
             )
 
         action_result.add_data(
@@ -1043,7 +1016,7 @@ class RecordedfutureConnector(BaseConnector):
 
         # Summary
         summary = action_result.get_summary()
-        summary['returned_number_of_rules'] = response['counts']['returned']
+        summary['rules_returned'] = response['counts']['returned']
         summary['total_number_of_rules'] = response['counts']['total']
         summary['rule_id_list'] = ','.join(rule_ids)
         action_result.set_summary(summary)

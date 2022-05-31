@@ -24,7 +24,7 @@ version = '%RELEASE%'
 buildid = '%BUILDID%'
 
 # timeout for our http requests to bfi_phantom
-timeout = 33
+timeout = 63
 MAX_CONTAINERS = 100
 
 # These dicts map which path_info, which fields, what the Recorded Future
