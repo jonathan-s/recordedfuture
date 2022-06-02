@@ -31,6 +31,7 @@ def format_result(result, all_data=False):
         retval['data'] = data[0]
 
     try:
+        # assemble the string needed for an URL to Recorded Future portal
         if (
             data and 'risk' in retval['data'] and retval['data']['risk']['score'] is not None
         ):
@@ -48,6 +49,7 @@ def format_result(result, all_data=False):
             for rule in retval['data']['risk']['evidenceDetails']:
                 rule['timestampShort'] = rule['timestamp'][:10]
 
+        # add cvss info only if present (should only be applicable by vulnerabilities)
         if data and 'cvss' in retval['data'] and 'published' in retval['data']['cvss']:
             retval['data']['cvss']['publishedShort'] = retval['data']['cvss'][
                 'published'
@@ -56,6 +58,7 @@ def format_result(result, all_data=False):
                 'lastModified'
             ][:10]
 
+        # format date and time to be shorter and easier to read
         retval['data']['timestamps']['firstSeenShort'] = retval['data']['timestamps'][
             'firstSeen'
         ][:10]
@@ -65,6 +68,7 @@ def format_result(result, all_data=False):
     except Exception:
         retval['data'] = None
 
+    # set summary, status and message for the action
     summary = result.get_summary()
     if summary:
         retval['summary'] = summary

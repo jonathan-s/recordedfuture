@@ -752,7 +752,7 @@ class RecordedfutureConnector(BaseConnector):
 
         # Prepare the REST call to get all alerts within the timeframe and with status New
         params = {
-            'timeframe': timeframe,
+            'triggered': timeframe,
             'rules': rule_list,
             'severity': config.get('on_poll_alert_severity'),
             'limit': param.get('max_count', 100)
