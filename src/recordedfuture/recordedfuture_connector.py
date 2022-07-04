@@ -700,8 +700,10 @@ class RecordedfutureConnector(BaseConnector):
                 return action_result.set_status(phantom.APP_ERROR, "Error while trying to add the containers")
 
             # Always update the alerts with new status to ensure that they are not left in limbo
+            # description has string in the format -> "Container created from alert {alert_id}"
+            # we get alert_id from it.
             params = [{
-               'id': container['source_data_identifier'].split(' ')[3],
+               'id': container['description'].split(' ')[4],
                'status': 'Pending'
             }]
             my_ret_val, response = self._make_rest_call(
