@@ -726,10 +726,7 @@ class RecordedfutureConnector(BaseConnector):
         if not list_of_rules:
             self.save_progress("Need to specify Alert Rule IDs use for polling")
             return action_result.set_status(phantom.APP_ERROR)
-        try:
-            rule_list = [x.strip() for x in list_of_rules.split(',')]
-        except:
-            return action_result.set_status(phantom.APP_ERROR, "Error occurred while parsing the rules")
+        rule_list = [x.strip() for x in list_of_rules.split(',')]
 
         if self.is_poll_now():
             param['max_count'] = param.get('container_count', MAX_CONTAINERS)
@@ -1100,7 +1097,7 @@ class RecordedfutureConnector(BaseConnector):
 
         try:
             ipaddress.ip_address(ip_address_input)
-        except:
+        except ValueError:
             return False
 
         return True
