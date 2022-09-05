@@ -2,11 +2,11 @@
 # Recorded Future
 
 Publisher: Recorded Future, Inc  
-Connector Version: 3\.0\.0  
+Connector Version: 3\.1\.0  
 Product Vendor: Recorded Future, Inc  
 Product Name: Recorded Future App for Phantom  
 Product Version Supported (regex): "\.\*"  
-Minimum Product Version: 4\.6\.19142  
+Minimum Product Version: 5\.1\.0  
 
 This app implements investigative actions to perform lookups for quick reputation information, contextual threat intelligence and external threat alerts
 

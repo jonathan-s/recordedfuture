@@ -45,7 +45,7 @@ from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 
 # Usage of the consts file is recommended
-from recordedfuture_consts import INTELLIGENCE_MAP, timeout, version, MAX_CONTAINERS
+from recordedfuture_consts import INTELLIGENCE_MAP, MAX_CONTAINERS, timeout, version
 
 
 class RetVal(tuple):
@@ -1164,7 +1164,7 @@ if __name__ == '__main__':
         login_url = BaseConnector._get_phantom_base_url() + 'login'
         try:
             print('Accessing the Login page')
-            r = requests.get(login_url, verify=False, timeout=timeout)
+            r = requests.get(login_url, verify=True, timeout=timeout)
             csrftoken = r.cookies['csrftoken']
 
             data = dict()
@@ -1178,7 +1178,7 @@ if __name__ == '__main__':
 
             print('Logging into Platform to get the session id')
             r2 = requests.post(
-                login_url, verify=False, data=data, headers=headers, timeout=timeout
+                login_url, verify=True, data=data, headers=headers, timeout=timeout
             )
             session_id = r2.cookies['sessionid']
         except Exception as e:
