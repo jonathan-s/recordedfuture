@@ -18,9 +18,28 @@
 # the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
+from datetime import datetime
 
 APP_URL = 'https://app.recordedfuture.com/live/sc/entity/%s%%3A%s'
 VULN_APP_URL = 'https://app.recordedfuture.com/live/sc/entity/%s'
+
+ENTITY_LIST_STATUS_VALUE_TO_LITERAL_MAPPING = {
+    'ready': 'Ready (no pending updates)',
+    'pending': 'Processing update',
+    'processing': 'Processing update',
+    'added': 'added',
+    'unchanged': 'is already in list',
+    'removed': 'removed from list',
+}
+
+
+def format_datetime_string(datetime_string):
+    try:
+        return datetime.strptime(datetime_string, '%Y-%m-%dT%H:%M:%S.%f%z').strftime(
+            '%Y-%m-%d, %H:%M'
+        )
+    except ValueError:
+        return datetime_string
 
 
 def format_result(result, all_data=False):
@@ -33,7 +52,9 @@ def format_result(result, all_data=False):
     try:
         # assemble the string needed for an URL to Recorded Future portal
         if (
-            data and 'risk' in retval['data'] and retval['data']['risk']['score'] is not None
+            data
+            and 'risk' in retval['data']
+            and retval['data']['risk']['score'] is not None
         ):
             if 'domain' in retval['param']:
                 retval['intelCard'] = APP_URL % ('idn', retval['param']['domain'])
@@ -292,3 +313,95 @@ def threat_assessment_results(provides, all_app_runs, context):
             results.append(formatted)
 
     return 'threat_assessment_results.html'
+
+
+def list_search_results(provides, all_app_runs, context):
+    """Setup the view for list search results."""
+    context['results'] = results = []
+    for summary, action_results in all_app_runs:
+        for result in action_results:
+            result_data = result.get_data()
+            if result_data:
+                result_data = result_data[0]
+            results.append({'param': result.get_param(), 'data': result_data})
+
+    return 'list_search_results.html'
+
+
+def list_create_results(provides, all_app_runs, context):
+    """Setup the view for list create result"""
+    context['results'] = results = []
+    for summary, action_results in all_app_runs:
+        for result in action_results:
+            result_data = result.get_data()
+            if result_data:
+                result_data = result_data[0]
+            results.append({'param': result.get_param(), 'data': result_data})
+
+    return 'list_create_results.html'
+
+
+def list_details_results(provides, all_app_runs, context):
+    """Setup the view for list details result"""
+    context['results'] = results = []
+    for summary, action_results in all_app_runs:
+        for result in action_results:
+            result_data = result.get_data()
+            if result_data:
+                result_data = result_data[0]
+                result_data['created'] = format_datetime_string(result_data['created'])
+                result_data['updated'] = format_datetime_string(result_data['updated'])
+
+            results.append({'param': result.get_param(), 'data': result_data})
+
+    return 'list_details_results.html'
+
+
+def list_status_results(provides, all_app_runs, context):
+    """Setup the view for list status info"""
+    context['results'] = results = []
+    for summary, action_results in all_app_runs:
+        for result in action_results:
+            result_data = result.get_data()
+            if result_data:
+                result_data = result_data[0]
+                result_data['status'] = ENTITY_LIST_STATUS_VALUE_TO_LITERAL_MAPPING.get(
+                    result_data['status']
+                )
+            results.append({'param': result.get_param(), 'data': result_data})
+
+    return 'list_status_results.html'
+
+
+def list_entities_results(provides, all_app_runs, context):
+    """Setup the view for list status info"""
+    context['results'] = results = []
+    for summary, action_results in all_app_runs:
+        for result in action_results:
+            result_data = result.get_data()
+            if result_data:
+                result_data = result_data[0]
+                for entity in result_data:
+                    entity['added'] = format_datetime_string(entity['added'])
+                    entity['status'] = ENTITY_LIST_STATUS_VALUE_TO_LITERAL_MAPPING.get(
+                        entity['status']
+                    )
+            results.append({'param': result.get_param(), 'data': result_data})
+
+    return 'list_entities_results.html'
+
+
+def list_entities_management_results(provides, all_app_runs, context):
+    """Setup the view for list status info"""
+    context['results'] = results = []
+    for summary, action_results in all_app_runs:
+        for result in action_results:
+            result_data = result.get_data()
+            if result_data:
+                result_data = result_data[0]
+                result_data['result'] = ENTITY_LIST_STATUS_VALUE_TO_LITERAL_MAPPING.get(
+                    result_data['result']
+                )
+            results.append({'param': result.get_param(), 'data': result_data})
+
+    return 'list_entities_management_results.html'

@@ -4423,6 +4423,444 @@
             "versions": "EQ(*)"
         },
         {
+            "action": "list search",
+            "identifier": "list_search",
+            "description": "Find lists based on a query",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "list_name": {
+                    "description": "List Name",
+                    "data_type": "string",
+                    "required": false
+                },
+                "entity_types": {
+                    "description": "Entity Types",
+                    "data_type": "string",
+                    "required": false,
+                    "value_list": [
+                        "entity",
+                        "source",
+                        "text",
+                        "custom",
+                        "ip",
+                        "domain",
+                        "tech_stack",
+                        "industry",
+                        "brand",
+                        "partner",
+                        "industry_peer",
+                        "location",
+                        "supplier",
+                        "vulnerability",
+                        "company",
+                        "hash",
+                        "operation",
+                        "attacker",
+                        "target",
+                        "method"
+                    ]
+                },
+                "limit": {
+                    "description": "Limit number of records in response.",
+                    "data_type": "numeric",
+                    "required": false,
+                    "default": 25
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture result status"
+                    ],
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.owner_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.organisation_name",
+                    "data_type": "string"
+                }
+            ],
+            "render": {
+                "type": "custom",
+                "width": 15,
+                "height": 8,
+                "view": "recordedfuture_view.list_search_results",
+                "title": "User List of entities"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "create list",
+            "identifier": "list_create",
+            "description": "Create new list",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "list_name": {
+                    "description": "List Name",
+                    "data_type": "string",
+                    "required": true
+                },
+                "entity_types": {
+                    "description": "List Type",
+                    "data_type": "string",
+                    "required": true,
+                    "value_list": [
+                        "entity",
+                        "source",
+                        "text",
+                        "custom",
+                        "ip",
+                        "domain",
+                        "tech_stack",
+                        "industry",
+                        "brand",
+                        "partner",
+                        "industry_peer",
+                        "location",
+                        "supplier",
+                        "vulnerability",
+                        "company",
+                        "hash",
+                        "operation",
+                        "attacker",
+                        "target",
+                        "method"
+                    ]
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture result status"
+                    ],
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.owner_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.organisation_name",
+                    "data_type": "string"
+                }
+            ],
+            "render": {
+                "type": "custom",
+                "width": 15,
+                "height": 8,
+                "view": "recordedfuture_view.list_create_results",
+                "title": "Created list"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "list add entity",
+            "identifier": "list_add-entity",
+            "description": "Add new entity to list",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "list_id": {
+                   "description": "List ID",
+                    "data_type": "string",
+                    "required": true
+                },
+                "entity_id": {
+                   "description": "Entity ID (Do not specify ID when use 'name'+'type')",
+                    "data_type": "string",
+                    "required": false
+                },
+                "entity_name": {
+                    "description": "Entity name (can be used only with selected type)",
+                    "data_type": "string",
+                    "required": false
+                },
+                "entity_type": {
+                    "description": "Entity type",
+                    "data_type": "string",
+                    "required": false,
+                    "value_list": ["IpAddress", "InternetDomainName", "Hash", "CyberVulnerability"]
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture result status"
+                    ],
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.result",
+                    "data_type": "string"
+                }
+            ],
+            "render": {
+                "type": "custom",
+                "width": 15,
+                "height": 8,
+                "view": "recordedfuture_view.list_entities_management_results",
+                "title": "Results"
+            },
+            "versions": "EQ(*)"
+        },
+                {
+            "action": "list remove entity",
+            "identifier": "list_remove-entity",
+            "description": "Remove entity from list",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "list_id": {
+                   "description": "List ID",
+                    "data_type": "string",
+                    "required": true
+                },
+                "entity_id": {
+                   "description": "Entity ID (Do not specify ID when use 'name'+'type')",
+                    "data_type": "string",
+                    "required": false
+                },
+                "entity_name": {
+                    "description": "Entity name (can be used only with selected type)",
+                    "data_type": "string",
+                    "required": false
+                },
+                "entity_type": {
+                    "description": "Entity type",
+                    "data_type": "string",
+                    "required": false,
+                    "value_list": ["IpAddress", "InternetDomainName", "Hash", "CyberVulnerability"]
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture result status"
+                    ],
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.result",
+                    "data_type": "string"
+                }
+            ],
+            "render": {
+                "type": "custom",
+                "width": 15,
+                "height": 8,
+                "view": "recordedfuture_view.list_entities_management_results",
+                "title": "Results"
+            },
+            "versions": "EQ(*)"
+        },
+
+        {
+            "action": "list details",
+            "identifier": "list_details",
+            "description": "Get list details",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "list_id": {
+                    "description": "List ID",
+                    "data_type": "string",
+                    "required": true
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture result status"
+                    ],
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.owner_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.organisation_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.created",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.updated",
+                    "data_type": "string"
+                }
+            ],
+            "render": {
+                "type": "custom",
+                "width": 15,
+                "height": 8,
+                "view": "recordedfuture_view.list_details_results",
+                "title": "List details"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "list status",
+            "identifier": "list_status",
+            "description": "Get list status info",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "list_id": {
+                    "description": "List ID",
+                    "data_type": "string",
+                    "required": true
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture result status"
+                    ],
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.status",
+                    "data_type": "string"
+                }
+            ],
+            "render": {
+                "type": "custom",
+                "width": 15,
+                "height": 8,
+                "view": "recordedfuture_view.list_status_results",
+                "title": "List status"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "list entities",
+            "identifier": "list_entities",
+            "description": "Get list entities",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "list_id": {
+                    "description": "List id",
+                    "data_type": "string",
+                    "required": true
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "contains": [
+                        "recordedfuture result status"
+                    ],
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.status",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.added",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.entity.id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.entity.type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.entity.name",
+                    "data_type": "string"
+                }
+            ],
+            "render": {
+                "type": "custom",
+                "width": 15,
+                "height": 8,
+                "view": "recordedfuture_view.list_entities_results",
+                "title": "List entities"
+            },
+            "versions": "EQ(*)"
+        },
+        {
             "action": "ip reputation",
             "identifier": "ip_reputation",
             "description": "Get a quick indicator of the risk associated with an IP address",

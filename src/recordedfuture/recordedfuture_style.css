@@ -81,5 +81,12 @@
   .rf-hover-info:hover {
     font-weight: bold;
   }
+  .rf-full-width-box {
+    width: 100%;
+    border-bottom: 1px solid #3c444d;
+    padding: 5px;
+    margin: 0 5px;
+    font-size: 12px;
+  }
 
 </style>

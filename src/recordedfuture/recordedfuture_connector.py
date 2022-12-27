@@ -23,24 +23,31 @@
 # Phantom App imports
 
 import hashlib
+
 # noinspection PyCompatibility
 import ipaddress
 import json
+
 # Global imports
 import os
 import platform
 import sys
 import time
+from html import escape
 from math import ceil
+from typing import Literal
 
 # Phantom App imports
 # noinspection PyUnresolvedReferences
 import phantom.app as phantom
 import requests
+
 # noinspection PyUnresolvedReferences
 from bs4 import BeautifulSoup, UnicodeDammit
+
 # noinspection PyUnresolvedReferences
 from phantom.action_result import ActionResult
+
 # noinspection PyUnresolvedReferences
 from phantom.base_connector import BaseConnector
 
@@ -355,10 +362,12 @@ class RecordedfutureConnector(BaseConnector):
                 **kwargs,
             )
         except requests.exceptions.Timeout:
-            return RetVal(action_result.set_status(
-                phantom.APP_ERROR,
-                "Timeout error when connecting to server"),
-                resp_json)
+            return RetVal(
+                action_result.set_status(
+                    phantom.APP_ERROR, "Timeout error when connecting to server"
+                ),
+                resp_json,
+            )
         except Exception as err:
             error_code, error_msg = self._get_error_message_from_exception(err)
             return RetVal(
@@ -371,7 +380,7 @@ class RecordedfutureConnector(BaseConnector):
                 resp_json,
             )
 
-        if resp.status_code == 200:
+        if resp.status_code in [200, 201]:
             return self._process_response(resp, action_result, **kwargs)
         elif resp.status_code == 401:
             return RetVal(
@@ -551,6 +560,162 @@ class RecordedfutureConnector(BaseConnector):
         # will create a textual message based off the summary dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
 
+    def _handle_list_actions(self, param, action: str):
+        if action == 'search':
+            return self._handle_list_search(param)
+        if action == 'details':
+            return self._handle_list_details(param, info_type='info')
+        if action == 'entities':
+            return self._handle_list_details(param, info_type='entities')
+        if action == 'status':
+            return self._handle_list_details(param, info_type='status')
+        if action == 'create':
+            return self._handle_list_create(param)
+        if action == 'add-entity':
+            return self._handle_manage_list_entities(param, action='add')
+        if action == 'remove-entity':
+            return self._handle_manage_list_entities(param, action='remove')
+
+    def _get_list_action_result(self, action_result, my_ret_val, response_obj):
+        if phantom.is_fail(my_ret_val):
+            return action_result.get_status()
+
+        summary = action_result.get_summary()
+        action_result.add_data(response_obj)
+        action_result.set_summary(summary)
+        return action_result.set_status(phantom.APP_SUCCESS)
+
+    def _handle_list_search(self, param):
+        """Find lists"""
+        self.save_progress(
+            "In action handler for: {0}".format(self.get_action_identifier())
+        )
+        action_result = self.add_action_result(ActionResult(param))
+        params = {'limit': param.get('limit', 25)}
+        entity_types = param.get('entity_types', '')
+        list_name = param.get('list_name', '')
+        if entity_types:
+            params['type'] = UnicodeDammit(escape(entity_types)).unicode_markup
+        if list_name:
+            params['name'] = UnicodeDammit(escape(list_name)).unicode_markup
+
+        my_ret_val, response = self._make_rest_call(
+            '/list/search', action_result, json=params, method='post'
+        )
+
+        self.debug_print(
+            '_handle_list_search',
+            {
+                'endpoint': '/list/search',
+                'action_result': action_result,
+                'param': param,
+                'params': params,
+                'my_ret_val': my_ret_val,
+                'response': response,
+            },
+        )
+
+        return self._get_list_action_result(
+            action_result=action_result,
+            my_ret_val=my_ret_val,
+            response_obj=response,
+        )
+
+    def _handle_list_create(self, param):
+        """Create new list"""
+        self.save_progress(
+            "In action handler for: {0}".format(self.get_action_identifier())
+        )
+        action_result = self.add_action_result(ActionResult(param))
+        params = {
+            'name': UnicodeDammit(param['list_name']).unicode_markup,
+            'type': UnicodeDammit(param['entity_types']).unicode_markup,
+        }
+        my_ret_val, response = self._make_rest_call(
+            '/list/create', action_result, json=params, method='post'
+        )
+        self.debug_print(
+            '_handle_list_create',
+            {
+                'endpoint': '/list/create',
+                'action_result': action_result,
+                'params': params,
+                'my_ret_val': my_ret_val,
+                'response': response,
+            },
+        )
+        return self._get_list_action_result(
+            action_result=action_result,
+            my_ret_val=my_ret_val,
+            response_obj=response,
+        )
+
+    def _handle_list_details(
+        self, param, info_type: Literal["info", "status", "entities"]
+    ):
+        """Get list details"""
+        self.save_progress(
+            "In action handler for: {0}".format(self.get_action_identifier())
+        )
+        action_result = self.add_action_result(ActionResult(param))
+        list_id = UnicodeDammit(param["list_id"]).unicode_markup
+        my_ret_val, response = self._make_rest_call(
+            f'/list/{list_id}/{info_type}', action_result, method='get'
+        )
+        self.debug_print(
+            '_handle_list_details',
+            {
+                'endpoint': f'/list/{list_id}/{info_type}',
+                'action_result': action_result,
+                'my_ret_val': my_ret_val,
+                'response': response,
+            },
+        )
+        return self._get_list_action_result(
+            action_result=action_result, my_ret_val=my_ret_val, response_obj=response
+        )
+
+    def _handle_manage_list_entities(self, param, action: Literal["add", "remove"]):
+        """Add/remove entity to list"""
+        self.save_progress(
+            "In action handler for: {0}".format(self.get_action_identifier())
+        )
+        action_result = self.add_action_result(ActionResult(param))
+        list_id = UnicodeDammit(param['list_id']).unicode_markup
+        entity_id = param.get('entity_id')
+        entity_name = param.get('entity_name')
+        entity_type = param.get('entity_type')
+
+        data = {
+            'name': UnicodeDammit(escape(entity_name)).unicode_markup
+            if entity_name
+            else None,
+            'type': UnicodeDammit(escape(entity_type)).unicode_markup
+            if entity_type
+            else None,
+            'id': UnicodeDammit(escape(entity_id)).unicode_markup
+            if entity_id
+            else None,
+        }
+        my_ret_val, response = self._make_rest_call(
+            f'/list/{list_id}/entity/{action}', action_result, json=data, method='post'
+        )
+        self.debug_print(
+            '_handle_manage_list_entities',
+            {
+                'endpoint': f'/list/{list_id}/entity/{action}',
+                'action_result': action_result,
+                'my_ret_val': my_ret_val,
+                'response': response,
+                'data': data,
+            },
+        )
+        return self._get_list_action_result(
+            action_result=action_result,
+            my_ret_val=my_ret_val,
+            response_obj=response,
+        )
+
     def _handle_triage(self, param):
         """Return triage information."""
         self.save_progress(
@@ -696,16 +861,19 @@ class RecordedfutureConnector(BaseConnector):
 
             if phantom.is_fail(ret_val):
                 self.save_progress("Error saving containers: {}".format(msg))
-                self.debug_print("Error saving containers: {} -- CID: {}".format(msg, cid))
-                return action_result.set_status(phantom.APP_ERROR, "Error while trying to add the containers")
+                self.debug_print(
+                    "Error saving containers: {} -- CID: {}".format(msg, cid)
+                )
+                return action_result.set_status(
+                    phantom.APP_ERROR, "Error while trying to add the containers"
+                )
 
             # Always update the alerts with new status to ensure that they are not left in limbo
             # description has string in the format -> "Container created from alert {alert_id}"
             # we get alert_id from it.
-            params = [{
-               'id': container['description'].split(' ')[4],
-               'status': 'Pending'
-            }]
+            params = [
+                {'id': container['description'].split(' ')[4], 'status': 'Pending'}
+            ]
             my_ret_val, response = self._make_rest_call(
                 '/alert/update', action_result, json=params, method='post'
             )
@@ -742,7 +910,9 @@ class RecordedfutureConnector(BaseConnector):
             else:
                 param['max_count'] = config.get('max_count', MAX_CONTAINERS)
                 # calculate time since last fetch
-                interval = ceil((time.time() - self._state.get('start_time')) / 3600) + 3
+                interval = (
+                    ceil((time.time() - self._state.get('start_time')) / 3600) + 3
+                )
                 timeframe = f'-{interval}h to now'
 
         # Asset Settings in Asset Configuration allows a negative number
@@ -754,7 +924,7 @@ class RecordedfutureConnector(BaseConnector):
             'triggered': timeframe,
             'rules': rule_list,
             'severity': config.get('on_poll_alert_severity'),
-            'limit': param.get('max_count', 100)
+            'limit': param.get('max_count', 100),
         }
 
         # Make the rest call
@@ -925,11 +1095,13 @@ class RecordedfutureConnector(BaseConnector):
         # the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        params = [{
-           'id': UnicodeDammit(param.get('alert_id', '')).unicode_markup,
-           'status': UnicodeDammit(param.get('alert_status', '')).unicode_markup,
-           'note': UnicodeDammit(param.get('alert_note', '')).unicode_markup
-        }]
+        params = [
+            {
+                'id': UnicodeDammit(param.get('alert_id', '')).unicode_markup,
+                'status': UnicodeDammit(param.get('alert_status', '')).unicode_markup,
+                'note': UnicodeDammit(param.get('alert_note', '')).unicode_markup,
+            }
+        ]
 
         # Make rest call
         my_ret_val, response = self._make_rest_call(
@@ -1084,6 +1256,8 @@ class RecordedfutureConnector(BaseConnector):
         elif action_id == 'on_poll':
             my_ret_val = self._on_poll(param)
 
+        elif entity_type == 'list':
+            my_ret_val = self._handle_list_actions(param, operation_type)
         return my_ret_val
 
     def _is_ip(self, input_ip_address):

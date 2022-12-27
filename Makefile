@@ -1,4 +1,4 @@
-RELEASE := 4.0.0
+RELEASE := 4.1.0
 BUILDID := $(if $(SVN_REVISION),$(SVN_REVISION),$(shell git rev-list --count HEAD))
 BUILD_DIR := pkg_build
 SRC_DIR := src/recordedfuture
@@ -12,7 +12,13 @@ RESULT_FILES := reputation_results.html \
 	alert_rule_search_results.html \
 	alert_search_results.html \
 	alert_lookup_results.html \
-	alert_update_results.html
+	alert_update_results.html \
+	list_search_results.html \
+	list_create_results.html \
+	list_details_results.html \
+	list_status_results.html \
+	list_entities_results.html \
+	list_entities_management_results.html
 STYLESHEET := recordedfuture_style.css
 RF_SRC := $(addprefix $(SRC_DIR)/,$(RESULT_FILES))
 RF_DEST := $(addprefix $(BUILD_DIR)/,$(RESULT_FILES))
