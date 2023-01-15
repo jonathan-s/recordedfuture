@@ -5486,6 +5486,439 @@
             "versions": "EQ(*)"
         },
         {
+            "action": "playbook alerts search",
+            "identifier": "playbook_alerts_search",
+            "description": "Search Playbook alerts",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "category": {
+                    "description": "Playbook alert category",
+                    "data_type": "string",
+                    "required": false,
+                    "value_list": [
+                        "cyber_vulnerability",
+                        "domain_abuse"
+                    ]
+                },
+                "status": {
+                    "description": "Playbook alert status",
+                    "data_type": "string",
+                    "required": false,
+                    "value_list": [
+                        "New",
+                        "InProgress",
+                        "Dismissed",
+                        "Resolved"
+                    ]
+                },
+                "from_date": {
+                    "description": "Created after date (YYYY-MM-DD)",
+                    "data_type": "string",
+                    "required": false
+                },
+                "last_updated_date": {
+                    "description": "Updated after date (YYYY-MM-DD)",
+                    "data_type": "string",
+                    "required": false
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.playbook_alert_id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.created",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.updated",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.status",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.category",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.priority",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.title",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.owner_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.organisation_name",
+                    "data_type": "string"
+                }
+            ],
+            "render": {
+                "type": "custom",
+                "width": 15,
+                "height": 8,
+                "view": "recordedfuture_view.playbook_alert_search_results",
+                "title": "Recorded Future Playbook Alert Data"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "playbook alert update",
+            "identifier": "update_playbook_alert",
+            "description": "Update Playbook alert",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "alert_id": {
+                    "description": "Playbook alert ID",
+                    "data_type": "string",
+                    "required": true,
+                    "order": 0
+                },
+                "priority": {
+                    "description": "Playbook alert category",
+                    "data_type": "string",
+                    "required": false,
+                    "value_list": [
+                        "High",
+                        "Moderate",
+                        "Informational"
+                    ]
+                },
+                "status": {
+                    "description": "Playbook alert status",
+                    "data_type": "string",
+                    "required": false,
+                    "value_list": [
+                        "New",
+                        "InProgress",
+                        "Dismissed",
+                        "Resolved"
+                    ]
+                },
+                "assignee": {
+                    "description": "Alert assignee",
+                    "data_type": "string",
+                    "required": false
+                },
+                "log_message": {
+                    "description": "Log message",
+                    "data_type": "string",
+                    "required": false
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.status.status_message",
+                    "data_type": "string"
+                }
+            ],
+            "render": {
+                "type": "custom",
+                "width": 15,
+                "height": 8,
+                "view": "recordedfuture_view.playbook_alert_update_results",
+                "title": "Recorded Future Playbook Alert Data"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "domain abuse alert details",
+            "identifier": "domain_abuse_alert_details",
+            "description": "Get Domain abuse Playbook alert details",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "alert_id": {
+                    "description": "Playbook alert ID",
+                    "data_type": "string",
+                    "required": true
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.playbook_alert_id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.entity_id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.entity_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.entity_criticality",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.risk_score",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.context_list.*.context",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.target",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.status",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.priority",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.assignee_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.assignee_id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.created",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.updated",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.case_rule_id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.case_rule_label",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.creator_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.creator_id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.owner_id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.owner_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.organisation_id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_status.organisation_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_summary.explanation",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_summary.resolved_records_list.*.record",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_summary.resolved_records_list.*.risk_score",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_summary.resolved_records_list.*.criticality",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_summary.resolved_records_list.*.record_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_summary.resolved_records_list.*.context_list.*.context",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_summary.screenshots.*.image_id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_summary.screenshots.*.created_time",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_summary.screenshots.*.tag",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.ip_list.*.record",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.ip_list.*.risk_score",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.ip_list.*.criticality",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.ip_list.*.record_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.ip_list.*.context_list.*.context",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.ip_list.*.record",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.ip_list.*.risk_score",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.ip_list.*.criticality",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.ip_list.*.record_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.ip_list.*.context_list.*.context",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.mx_list.*.record",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.mx_list.*.risk_score",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.mx_list.*.criticality",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.mx_list.*.record_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.mx_list.*.context_list.*.context",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.ns_list.*.record",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.ns_list.*.risk_score",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.ns_list.*.criticality",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.ns_list.*.record_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_dns.ns_list.*.context_list.*.context",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_evidence_whois.body.*",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_log.id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_log.actor_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_log.actor_id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_log.created",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_log.modified",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_log.action_priority",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_log.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_log.changes.previous",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.panel_log.changes.current",
+                    "data_type": "string"
+                }
+            ],
+            "render": {
+                "type": "custom",
+                "width": 15,
+                "height": 8,
+                "view": "recordedfuture_view.domain_abuse_alert_details_results",
+                "title": "Recorded Future Playbook Alert Data"
+            },
+            "versions": "EQ(*)"
+        },
+        {
             "action": "on poll",
             "description": "Ingest alerts from Recorded Future",
             "verbose": "This action will fetch alerts for the specified rule IDs and within the specified timeframe. When limiting the number of events to ingest, it will ingest the most recent events.<br><br>",

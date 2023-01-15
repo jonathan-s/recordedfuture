@@ -384,3 +384,45 @@ def list_entities_management_results(provides, all_app_runs, context):
             results.append({'param': result.get_param(), 'data': result_data})
 
     return 'list_entities_management_results.html'
+
+
+def playbook_alert_search_results(provides, all_app_runs, context):
+    """Setup the view for Playbook alerts search result"""
+    context['results'] = results = []
+    for summary, action_results in all_app_runs:
+        for result in action_results:
+            result_data = result.get_data()
+            if result_data:
+                result_data = result_data[0]
+                for search_result in result_data:
+                    search_result['created'] = format_datetime_string(search_result['created'])
+                    search_result['updated'] = format_datetime_string(search_result['updated'])
+
+            results.append({'param': result.get_param(), 'data': result_data})
+
+    return 'playbook_alert_search_results.html'
+
+def playbook_alert_update_results(provides, all_app_runs, context):
+    """Setup the view for Playbook alert update"""
+    context['results'] = results = []
+    for summary, action_results in all_app_runs:
+        for result in action_results:
+            result_data = result.get_data()
+            if result_data:
+                result_data = result_data[0]
+            results.append({'param': result.get_param(), 'data': result_data})
+
+    return 'playbook_alert_update_results.html'
+
+
+def domain_abuse_alert_details_results(provides, all_app_runs, context):
+    """Setup the view for Playbook alert update"""
+    context['results'] = results = []
+    for summary, action_results in all_app_runs:
+        for result in action_results:
+            result_data = result.get_data()
+            if result_data:
+                result_data = result_data[0]
+            results.append({'param': result.get_param(), 'data': result_data})
+
+    return "domain_abuse_alert_details_results.html"
