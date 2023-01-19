@@ -124,4 +124,26 @@
   .rf-criticality-level-Low {
     background: var(--CriticalityLow);
   }
+  .rf-playbook-alert-screenshot {
+    margin-bottom: 20px;
+    width: 100%;
+    height: 720px
+  }
+  .rf-playbook-alert-data-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0;
+  }
+  .rf-playbook-alert-panel-title {
+    margin-left: 2%;
+  }
+  .rf-playbook-alert-whois-data-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .rf-playbook-alert-whois-data-row-title {
+    width: 10%;
+  }
 </style>

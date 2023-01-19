@@ -36,6 +36,7 @@ import time
 from html import escape
 from math import ceil
 from typing import Literal
+from datetime import datetime
 
 # Phantom App imports
 # noinspection PyUnresolvedReferences
@@ -839,6 +840,57 @@ class RecordedfutureConnector(BaseConnector):
         # dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
 
+    def _on_poll_playbook_alerts(self, param, config, action_result):
+        """Polling for triggered playbook alerts"""
+
+        if self.is_poll_now():
+            param['max_count'] = param.get('container_count', MAX_CONTAINERS)
+            from_date = None
+        else:
+            # Different number of max containers if first run
+            if self._state.get('first_run', True):
+                # set the config to _not_ first run hereafter
+                self._state['first_run'] = False
+                param['max_count'] = config.get('first_max_count', MAX_CONTAINERS)
+                self.save_progress("First time Ingestion detected.")
+                from_date = None
+            else:
+                param['max_count'] = config.get('max_count', MAX_CONTAINERS)
+                from_date = self._state.get("last_playbook_alerts_fetch_time")
+
+        # Asset Settings in Asset Configuration allows a negative number
+        if int(param['max_count']) <= 0:
+            param['max_count'] = MAX_CONTAINERS
+
+        # Prepare the REST call to get all alerts within the timeframe and with status New
+        params = {
+            'from_date': from_date,
+            'state': self._state,
+            'limit': param.get('max_count', 100),
+            'categories': [
+                el.strip()
+                for el in config.get("on_poll_playbook_alert_type", "").split(",")
+                if el.strip()
+            ],
+            'priorities': [config["on_poll_playbook_alert_priority"]]
+            if config.get("on_poll_playbook_alert_priority")
+            else None,
+        }
+
+        # Make the rest call
+        my_ret_val, containers = self._make_rest_call(
+            '/playbook_alert/on_poll',
+            action_result,
+            json=params,
+            method='post',
+        )
+        # Something went wrong
+        if phantom.is_fail(my_ret_val):
+            return action_result.get_status()
+
+        self._state['last_playbook_alerts_fetch_time'] = datetime.now().isoformat()
+        return containers
+
     def _on_poll(self, param):
         """Entry point for obtaining alerts and rules."""
         # new containers and artifacts will be stored in containers[]
@@ -879,6 +931,18 @@ class RecordedfutureConnector(BaseConnector):
                 return action_result.get_status()
 
         self._state['start_time'] = time.time()
+
+        containers = self._on_poll_playbook_alerts(param, config, action_result)
+        for container in containers:
+            ret_val, msg, cid = self.save_container(container)
+            if phantom.is_fail(ret_val):
+                self.save_progress("Error saving containers: {}".format(msg))
+                self.debug_print(
+                    "Error saving containers: {} -- CID: {}".format(msg, cid)
+                )
+                return action_result.set_status(
+                    phantom.APP_ERROR, "Error while trying to add the containers"
+                )
 
         return action_result.set_status(phantom.APP_SUCCESS)
 
@@ -1200,14 +1264,19 @@ class RecordedfutureConnector(BaseConnector):
         # the action for this param
         action_result = self.add_action_result(ActionResult(param))
         params = {
-            "category": UnicodeDammit(param.get('category', '')).unicode_markup,
-            "status": UnicodeDammit(param.get('status', '')).unicode_markup,
-            "limit": UnicodeDammit(param.get('limit', '')).unicode_markup,
-            "from_date": UnicodeDammit(param.get('from_date', '')).unicode_markup,
-            "last_updated_date": UnicodeDammit(param.get('last_updated_date', '')).unicode_markup,
+            'categories': [UnicodeDammit(param['category']).unicode_markup]
+            if 'category' in param
+            else None,
+            'statuses': [UnicodeDammit(param['status']).unicode_markup]
+            if 'status' in param
+            else None,
+            'limit': param.get('limit', 100),
+            'from_date': UnicodeDammit(param.get('from_date', '')).unicode_markup,
+            'last_updated_date': UnicodeDammit(
+                param.get('last_updated_date', '')
+            ).unicode_markup,
         }
         params = {key: value for key, value in params.items() if value}
-
         # make rest call
         my_ret_val, response = self._make_rest_call(
             '/playbook_alert/search', action_result, json=params, method="post"
@@ -1245,7 +1314,8 @@ class RecordedfutureConnector(BaseConnector):
 
         # make rest call
         my_ret_val, response = self._make_rest_call(
-            f'/playbook_alert/domain_abuse/{param["alert_id"]}', action_result,
+            f'/playbook_alert/domain_abuse/{param["alert_id"]}',
+            action_result,
         )
 
         self.debug_print(
@@ -1278,17 +1348,19 @@ class RecordedfutureConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(param))
 
         params = {
-            "priority": UnicodeDammit(param.get('priority', '')).unicode_markup,
-            "status": UnicodeDammit(param.get('status', '')).unicode_markup,
-            "assignee": UnicodeDammit(param.get('assignee', '')).unicode_markup,
-            "log_message": UnicodeDammit(param.get('log_message', '')).unicode_markup,
+            'priority': UnicodeDammit(param.get('priority', '')).unicode_markup,
+            'status': UnicodeDammit(param.get('status', '')).unicode_markup,
+            'assignee': UnicodeDammit(param.get('assignee', '')).unicode_markup,
+            'log_message': UnicodeDammit(param.get('log_message', '')).unicode_markup,
         }
         params = {key: value for key, value in params.items() if value}
 
-
         # make rest call
         my_ret_val, response = self._make_rest_call(
-            f'/playbook_alert/{param["alert_id"]}', json=params, action_result=action_result, method="put"
+            f'/playbook_alert/{param["alert_id"]}',
+            json=params,
+            action_result=action_result,
+            method="put",
         )
 
         self.debug_print(
@@ -1374,11 +1446,11 @@ class RecordedfutureConnector(BaseConnector):
         elif entity_type == 'list':
             my_ret_val = self._handle_list_actions(param, operation_type)
 
-        elif action_id == "playbook_alerts_search":
+        elif action_id == 'playbook_alerts_search':
             my_ret_val = self._handle_playbook_alerts_search(param)
-        elif action_id == "update_playbook_alert":
+        elif action_id == 'update_playbook_alert':
             my_ret_val = self._handle_playbook_alert_update(param)
-        elif action_id == "domain_abuse_alert_details":
+        elif action_id == 'domain_abuse_alert_details':
             my_ret_val = self._handle_domain_abuse_playbook_alert_details(param)
 
         return my_ret_val

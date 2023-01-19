@@ -55,6 +55,10 @@
             "data_type": "ph",
             "order": 8
         },
+        "ph3": {
+            "data_type": "ph",
+            "order": 10
+        },
         "on_poll_alert_ruleids": {
             "data_type": "string",
             "order": 1,
@@ -70,6 +74,17 @@
                 "Medium",
                 "Low"
             ]
+        },
+        "on_poll_playbook_alert_priority": {
+            "data_type": "string",
+            "order": 9,
+            "description": "On Poll Playbook Alerts priority threshold",
+            "value_list": ["High", "Moderate", "Informational"]
+        },
+        "on_poll_playbook_alert_type": {
+            "data_type": "string",
+            "order": 11,
+            "description": "Comma-separated list of Playbook alert types. (domain_abuse, cyber_vulnerability are now supported)"
         },
         "max_count": {
             "data_type": "numeric",
@@ -5513,12 +5528,12 @@
                     ]
                 },
                 "from_date": {
-                    "description": "Created after date (YYYY-MM-DD)",
+                    "description": "Created after (date in ISO format)",
                     "data_type": "string",
                     "required": false
                 },
                 "last_updated_date": {
-                    "description": "Updated after date (YYYY-MM-DD)",
+                    "description": "Updated after (date in ISO format)",
                     "data_type": "string",
                     "required": false
                 }
@@ -5921,7 +5936,7 @@
         {
             "action": "on poll",
             "description": "Ingest alerts from Recorded Future",
-            "verbose": "This action will fetch alerts for the specified rule IDs and within the specified timeframe. When limiting the number of events to ingest, it will ingest the most recent events.<br><br>",
+            "verbose": "This action will fetch alerts / Playbook Alerts for the specified rule IDs and within the specified timeframe. When limiting the number of events to ingest, it will ingest the most recent events.<br><br>",
             "type": "ingest",
             "identifier": "on_poll",
             "read_only": true,

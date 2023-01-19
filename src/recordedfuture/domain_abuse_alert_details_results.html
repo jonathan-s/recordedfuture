@@ -44,50 +44,50 @@ and will be merged during compilation:
     <!------------------- For each Result ---------------------->
 
       <div class="rf-full-width-box">
-        <h3 style="margin-left: 2%">Domain abuse</h3>
+        <h3 class="rf-playbook-alert-panel-title">Domain abuse</h3>
         <div class="rf-alert-panel">
-          <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 10px">
+          <div class="rf-playbook-alert-data-row" style="gap: 5px; margin-bottom: 10px">
             <h5>{{ result.data.panel_status.entity_name }}</h5>
                 <div class="rf-circle rf-criticality-level-{{result_data.panel_status.entity_criticality}}"></div>
             <div>{{ result.data.panel_status.risk_score }}</div>
           </div>
-          <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 10px">
+          <div class="rf-playbook-alert-data-row" style="gap: 5px; margin-bottom: 10px">
             {% for context in result.data.panel_status.context_list %}
               <div class="rf-chip-box">{{ context.context }}</div>
             {% endfor %}
           </div>
           <div style="display: flex; gap: 20px; margin-bottom: 5px">
             <div>Targets</div>
-            <div style="display:block;">
+            <div style="display: block;">
               {% for target in result.data.panel_status.targets %}
-                <div style="margin-bottom: 5px" class="rf-chip-box">{{ target }}</div>
+                <div style="margin-bottom: 5px;">{{ target }}</div>
               {% endfor %}
             </div>
           </div>
-          <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 5px">
+          <div class="rf-playbook-alert-data-row" style="gap: 20px; margin-bottom: 5px">
             <div>Status</div>
             <div>{{ result.data.panel_status.status }}</div>
           </div>
           <div style="display: flex; gap: 20px; margin-bottom: 5px">
             <div>Priority</div>
-            <div style="display: flex; align-items: center; gap: 5px; margin: 0">
+            <div class="rf-playbook-alert-data-row">
               <div class="rf-circle rf-priority-level-{{result.data.panel_status.priority}}"></div>
               <div>{{ result.data.panel_status.priority }}</div>
             </div>
           </div>
-          <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 5px">
+          <div class="rf-playbook-alert-data-row" style="gap: 20px; margin-bottom: 5px">
             <div>Created</div>
             <div>{{ result.data.panel_status.created }}</div>
           </div>
         </div>
-        <h3 style="margin-left: 2%">Evidence summary</h3>
+        <h3 class="rf-playbook-alert-panel-title">Evidence summary</h3>
         <div class="rf-alert-panel">
           <h5 style="margin-bottom: 10px">{{ result.data.panel_evidence_summary.explanation }}</h5>
-          <p><span style="font-weight: 700">{{ result.data.panel_status.entity_name}}</span>has recently resolved to IPs and/or mail servers:</p>
+          <p><span style="font-weight: 700">{{ result.data.panel_status.entity_name}}</span> has recently resolved to IPs and/or mail servers:</p>
           {% for resolved_record in result.data.panel_evidence_summary.resolved_record_list %}
-            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 5px">
+            <div class="rf-playbook-alert-data-row" style="gap: 20px; margin-bottom: 5px">
               <div><h6 style="margin: 0">{{ resolved_record.entity }}</h6></div>
-              <div style="display: flex; align-items: center; gap: 5px; margin: 0">
+              <div class="rf-playbook-alert-data-row">
                 <div class="rf-circle rf-criticality-level-{{resolved_record.criticality}}"></div>
                 <div>{{ resolved_record.risk_score }}</div>
               </div>
@@ -98,44 +98,100 @@ and will be merged during compilation:
           {% endfor %}
           <div>
             {% for image in result.data.images %}
-              <img style="margin-bottom: 20px; width: 100%; height: 720px" src="data:image/jpeg;base64, {{image}}" alt="">
+              <img class="rf-playbook-alert-screenshot" src="data:image/jpeg;base64, {{image}}" alt="">
             {% endfor %}
           </div>
         </div>
-        <h3 style="margin-left: 2%">DNS Records</h3>
+        <h3 class="rf-playbook-alert-panel-title">DNS Records</h3>
         <div class="rf-alert-panel">
-          <p>IP Addresses</p>
+          <h5>IP Addresses</h5>
           {% for ip in result.data.panel_evidence_dns.ip_list %}
-            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 5px">
-              <div><h6>{{ ip.entity }}</h6></div>
-              <div style="display: flex; align-items: center; gap: 5px; margin: 0">
-                <div><h6>{{ mx.entity }}</h6></div>
+            <div class="rf-playbook-alert-whois-data-row">
+              <div><h6 style="margin: 0">{{ ip.entity }}</h6></div>
+              <div class="rf-playbook-alert-data-row">
+                <div><h6 style="margin: 0">{{ mx.entity }}</h6></div>
                 <div class="rf-circle rf-criticality-level-{{ip.criticality}}"></div>
                 <div>{{ ip.risk_score }}</div>
               </div>
             </div>
           {% endfor %}
-          <p>Mail Server</p>
+          <h5>Mail Server</h5>
           {% for mx in result.data.panel_evidence_dns.mx_list %}
-            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 5px">
-              <div><h6>{{ mx.record_type }}</h6></div>
-              <div style="display: flex; align-items: center; gap: 5px; margin: 0">
-                <div><h6>{{ mx.entity }}</h6></div>
+            <div class="rf-playbook-alert-whois-data-row">
+              <div><h6 style="margin: 0">{{ mx.record_type }}</h6></div>
+              <div class="rf-playbook-alert-data-row">
+                <div><h6 style="margin: 0">{{ mx.entity }}</h6></div>
                 <div class="rf-circle rf-criticality-level-{{mx.criticality}}"></div>
                 <div>{{ mx.risk_score }}</div>
               </div>
             </div>
           {% endfor %}
-          <p>Name Server</p>
+          <h5>Name Server</h5>
           {% for ns in result.data.panel_evidence_dns.ns_list %}
-            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 5px">
-              <div><h6>{{ ns.entity }}</h6></div>
-              <div style="display: flex; align-items: center; gap: 5px; margin: 0">
-                <div><h6>{{ mx.entity }}</h6></div>
+            <div class="rf-playbook-alert-whois-data-row">
+              <div><h6 style="margin: 0">{{ ns.record_type }}</h6></div>
+              <div style="display: flex; align-items: center; gap: 5px;">
+                <div><h6 style="margin: 0">{{ ns.entity }}</h6></div>
                 <div class="rf-circle rf-criticality-level-{{ns.criticality}}"></div>
                 <div>{{ ns.risk_score }}</div>
               </div>
             </div>
+          {% endfor %}
+        </div>
+        <h3 class="rf-playbook-alert-panel-title">Whois Record Data</h3>
+        <div class="rf-alert-panel">
+          {% for contact in result.data.panel_evidence_whois.body %}
+            {% if contact.value.type %}
+              <h5 style="margin-top: 20px; margin-bottom: 0">{{ contact.value.type }}</h5>
+              {% if contact.value.telephone %}
+                <div class="rf-playbook-alert-whois-data-row">
+                  <div class="rf-playbook-alert-whois-data-row-title">Telephone</div>
+                  <div>{{ contact.value.telephone }}</div>
+                </div>
+              {% endif %}
+              {% if contact.value.street1 %}
+                <div class="rf-playbook-alert-whois-data-row">
+                  <div class="rf-playbook-alert-whois-data-row-title">Street 1</div>
+                  <div>{{ contact.value.street1 }}</div>
+                </div>
+              {% endif %}
+              {% if contact.value.state %}
+                <div class="rf-playbook-alert-whois-data-row">
+                  <div class="rf-playbook-alert-whois-data-row-title">State</div>
+                  <div>{{ contact.value.state }}</div>
+                </div>
+              {% endif %}
+              {% if contact.value.postalCode %}
+                <div class="rf-playbook-alert-whois-data-row">
+                  <div class="rf-playbook-alert-whois-data-row-title">Postal code</div>
+                  <div>{{ contact.value.postalCode }}</div>
+                </div>
+              {% endif %}
+              {% if contact.value.name %}
+                <div class="rf-playbook-alert-whois-data-row">
+                  <div class="rf-playbook-alert-whois-data-row-title">Name</div>
+                  <div>{{ contact.value.name }}</div>
+                </div>
+              {% endif %}
+              {% if contact.value.countryCode %}
+                <div class="rf-playbook-alert-whois-data-row">
+                  <div class="rf-playbook-alert-whois-data-row-title">Country Code</div>
+                  <div>{{ contact.value.countryCode }}</div>
+                </div>
+              {% endif %}
+              {% if contact.value.country %}
+                <div class="rf-playbook-alert-whois-data-row">
+                  <div class="rf-playbook-alert-whois-data-row-title">Country</div>
+                  <div>{{ contact.value.country }}</div>
+                </div>
+              {% endif %}
+              {% if contact.value.city %}
+                <div class="rf-playbook-alert-whois-data-row">
+                  <div class="rf-playbook-alert-whois-data-row-title">City</div>
+                  <div>{{ contact.value.city }}</div>
+                </div>
+              {% endif %}
+            {% endif %}
           {% endfor %}
         </div>
       </div>
