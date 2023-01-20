@@ -29,6 +29,7 @@ ENTITY_LIST_STATUS_VALUE_TO_LITERAL_MAPPING = {
     'processing': 'Processing update',
     'added': 'added',
     'unchanged': 'is already in list',
+    'not_in_list': 'is not in list',
     'removed': 'removed from list',
 }
 
