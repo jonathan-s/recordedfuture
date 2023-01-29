@@ -5508,13 +5508,9 @@
             "read_only": true,
             "parameters": {
                 "category": {
-                    "description": "Playbook alert category",
+                    "description": "Playbook alert category (cyber_vulnerability, domain_abuse)",
                     "data_type": "string",
-                    "required": false,
-                    "value_list": [
-                        "cyber_vulnerability",
-                        "domain_abuse"
-                    ]
+                    "required": false
                 },
                 "status": {
                     "description": "Playbook alert status",
@@ -5627,11 +5623,6 @@
                         "Resolved"
                     ]
                 },
-                "assignee": {
-                    "description": "Alert assignee",
-                    "data_type": "string",
-                    "required": false
-                },
                 "log_message": {
                     "description": "Log message",
                     "data_type": "string",
@@ -5662,9 +5653,9 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "domain abuse alert details",
-            "identifier": "domain_abuse_alert_details",
-            "description": "Get Domain abuse Playbook alert details",
+            "action": "playbook alert details",
+            "identifier": "playbook_alert_details",
+            "description": "Get Playbook alert details",
             "type": "investigate",
             "read_only": true,
             "parameters": {
@@ -5921,6 +5912,10 @@
                 },
                 {
                     "data_path": "action_result.data.*.panel_log.changes.current",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.images",
                     "data_type": "string"
                 }
             ],

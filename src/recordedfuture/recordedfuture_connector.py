@@ -901,10 +901,24 @@ class RecordedfutureConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
         config = self.get_config()
 
-        containers = self._on_poll_alerts(param, config, action_result)
-
+        containers = self._on_poll_playbook_alerts(param, config, action_result)
         for container in containers:
+            ret_val, msg, cid = self.save_container(container)
+            if phantom.is_fail(ret_val):
+                self.save_progress("Error saving containers: {}".format(msg))
+                self.debug_print(
+                    "Error saving containers: {} -- CID: {}".format(msg, cid)
+                )
+                return action_result.set_status(
+                    phantom.APP_ERROR, "Error while trying to add the containers"
+                )
 
+        action_result.set_status(phantom.APP_SUCCESS)
+        if not config.get('on_poll_alert_ruleids'):
+            return action_result.get_status()
+
+        containers = self._on_poll_alerts(param, config, action_result)
+        for container in containers:
             ret_val, msg, cid = self.save_container(container)
 
             if phantom.is_fail(ret_val):
@@ -931,18 +945,6 @@ class RecordedfutureConnector(BaseConnector):
                 return action_result.get_status()
 
         self._state['start_time'] = time.time()
-
-        containers = self._on_poll_playbook_alerts(param, config, action_result)
-        for container in containers:
-            ret_val, msg, cid = self.save_container(container)
-            if phantom.is_fail(ret_val):
-                self.save_progress("Error saving containers: {}".format(msg))
-                self.debug_print(
-                    "Error saving containers: {} -- CID: {}".format(msg, cid)
-                )
-                return action_result.set_status(
-                    phantom.APP_ERROR, "Error while trying to add the containers"
-                )
 
         return action_result.set_status(phantom.APP_SUCCESS)
 
@@ -1303,7 +1305,7 @@ class RecordedfutureConnector(BaseConnector):
         action_result.set_summary(summary)
         return action_result.set_status(phantom.APP_SUCCESS)
 
-    def _handle_domain_abuse_playbook_alert_details(self, param):
+    def _handle_playbook_alert_details(self, param):
         self.save_progress(
             "In action handler for: {0}".format(self.get_action_identifier())
         )
@@ -1314,12 +1316,12 @@ class RecordedfutureConnector(BaseConnector):
 
         # make rest call
         my_ret_val, response = self._make_rest_call(
-            f'/playbook_alert/domain_abuse/{param["alert_id"]}',
+            f'/playbook_alert/{param["alert_id"]}',
             action_result,
         )
 
         self.debug_print(
-            '_handle_domain_abuse_playbook_alert_details',
+            '_handle_playbook_alert_details',
             {
                 'path_info': f'/playbook_alert/domain_abuse/{param["alert_id"]}',
                 'action_result': action_result,
@@ -1340,7 +1342,7 @@ class RecordedfutureConnector(BaseConnector):
 
     def _handle_playbook_alert_update(self, param):
         self.save_progress(
-            "In action handler for: {0}".format(self.get_action_identifier())
+            'In action handler for: {0}'.format(self.get_action_identifier())
         )
 
         # Add an action result object to self (BaseConnector) to represent
@@ -1350,7 +1352,6 @@ class RecordedfutureConnector(BaseConnector):
         params = {
             'priority': UnicodeDammit(param.get('priority', '')).unicode_markup,
             'status': UnicodeDammit(param.get('status', '')).unicode_markup,
-            'assignee': UnicodeDammit(param.get('assignee', '')).unicode_markup,
             'log_message': UnicodeDammit(param.get('log_message', '')).unicode_markup,
         }
         params = {key: value for key, value in params.items() if value}
@@ -1450,8 +1451,8 @@ class RecordedfutureConnector(BaseConnector):
             my_ret_val = self._handle_playbook_alerts_search(param)
         elif action_id == 'update_playbook_alert':
             my_ret_val = self._handle_playbook_alert_update(param)
-        elif action_id == 'domain_abuse_alert_details':
-            my_ret_val = self._handle_domain_abuse_playbook_alert_details(param)
+        elif action_id == 'playbook_alert_details':
+            my_ret_val = self._handle_playbook_alert_details(param)
 
         return my_ret_val
 
