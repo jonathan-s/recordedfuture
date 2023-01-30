@@ -1,6 +1,6 @@
 # File: recordedfuture_connector.py
 #
-# Copyright (c) Recorded Future, Inc., 2019-2022
+# Copyright (c) Recorded Future, Inc, 2019-2023
 #
 # This unpublished material is proprietary to Recorded Future. All
 # rights reserved. The methods and techniques described herein are
@@ -44,15 +44,13 @@ import requests
 
 # noinspection PyUnresolvedReferences
 from bs4 import BeautifulSoup, UnicodeDammit
-
 # noinspection PyUnresolvedReferences
 from phantom.action_result import ActionResult
-
 # noinspection PyUnresolvedReferences
 from phantom.base_connector import BaseConnector
 
 # Usage of the consts file is recommended
-from recordedfuture_consts import INTELLIGENCE_MAP, MAX_CONTAINERS, timeout, version
+from recordedfuture_consts import *
 
 
 class RetVal(tuple):
@@ -78,7 +76,7 @@ class RecordedfutureConnector(BaseConnector):
     @staticmethod
     def _process_empty_response(response, action_result):
         """Process an empty result."""
-        if response.status_code == 200:
+        if response.status_code == 200 or response.status_code == 204:
             return RetVal(phantom.APP_SUCCESS, {})
 
         return RetVal(
@@ -159,12 +157,12 @@ class RecordedfutureConnector(BaseConnector):
         try:
             resp_json = resp.json()
         except Exception as err:
-            error_code, error_msg = self._get_error_message_from_exception(err)
+            error_code, error_message = self._get_error_message_from_exception(err)
             return RetVal(
                 action_result.set_status(
                     phantom.APP_ERROR,
                     "Unable to parse JSON response. Error code: {0}. Error message: {1}".format(
-                        error_code, error_msg
+                        error_code, error_message
                     ),
                 ),
                 None,
@@ -362,25 +360,23 @@ class RecordedfutureConnector(BaseConnector):
                 **kwargs,
             )
         except requests.exceptions.Timeout:
-            return RetVal(
-                action_result.set_status(
-                    phantom.APP_ERROR, "Timeout error when connecting to server"
-                ),
-                resp_json,
-            )
+            return RetVal(action_result.set_status(
+                phantom.APP_ERROR,
+                "Timeout error when connecting to server"),
+                resp_json)
         except Exception as err:
-            error_code, error_msg = self._get_error_message_from_exception(err)
+            error_code, error_message = self._get_error_message_from_exception(err)
             return RetVal(
                 action_result.set_status(
                     phantom.APP_ERROR,
                     "Error Connecting to server. Error code:{0}. Error message:{1}".format(
-                        error_code, error_msg
+                        error_code, error_message
                     ),
                 ),
                 resp_json,
             )
 
-        if resp.status_code in [200, 201]:
+        if resp.status_code == 200:
             return self._process_response(resp, action_result, **kwargs)
         elif resp.status_code == 401:
             return RetVal(
@@ -882,7 +878,7 @@ class RecordedfutureConnector(BaseConnector):
             if phantom.is_fail(my_ret_val):
                 return action_result.get_status()
 
-            self._state['start_time'] = time.time()
+        self._state['start_time'] = time.time()
 
         return action_result.set_status(phantom.APP_SUCCESS)
 
@@ -1281,6 +1277,10 @@ class RecordedfutureConnector(BaseConnector):
         # Load the state in initialize, use it to store data
         # that needs to be accessed across actions
         self._state = self.load_state()
+        if not isinstance(self._state, dict):
+            self.debug_print("Resetting the state file with the default format")
+            self._state = {"app_version": self.get_app_json().get("app_version")}
+            return self.set_status(phantom.APP_ERROR, RF_STATE_FILE_CORRUPT_ERR)
 
         # get the asset config
         config = self.get_config()

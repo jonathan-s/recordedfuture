@@ -1,6 +1,6 @@
 # File: recordedfuture_view.py
 #
-# Copyright (c) Recorded Future, Inc., 2019-2022
+# Copyright (c) Recorded Future, Inc, 2019-2023
 #
 # This unpublished material is proprietary to Recorded Future. All
 # rights reserved. The methods and techniques described herein are
@@ -18,29 +18,9 @@
 # the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
-from datetime import datetime
 
 APP_URL = 'https://app.recordedfuture.com/live/sc/entity/%s%%3A%s'
 VULN_APP_URL = 'https://app.recordedfuture.com/live/sc/entity/%s'
-
-ENTITY_LIST_STATUS_VALUE_TO_LITERAL_MAPPING = {
-    'ready': 'Ready (no pending updates)',
-    'pending': 'Processing update',
-    'processing': 'Processing update',
-    'added': 'added',
-    'unchanged': 'is already in list',
-    'not_in_list': 'is not in list',
-    'removed': 'removed from list',
-}
-
-
-def format_datetime_string(datetime_string):
-    try:
-        return datetime.strptime(datetime_string, '%Y-%m-%dT%H:%M:%S.%f%z').strftime(
-            '%Y-%m-%d, %H:%M'
-        )
-    except ValueError:
-        return datetime_string
 
 
 def format_result(result, all_data=False):
@@ -53,9 +33,7 @@ def format_result(result, all_data=False):
     try:
         # assemble the string needed for an URL to Recorded Future portal
         if (
-            data
-            and 'risk' in retval['data']
-            and retval['data']['risk']['score'] is not None
+            data and 'risk' in retval['data'] and retval['data']['risk']['score'] is not None
         ):
             if 'domain' in retval['param']:
                 retval['intelCard'] = APP_URL % ('idn', retval['param']['domain'])
