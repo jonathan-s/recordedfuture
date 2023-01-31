@@ -377,7 +377,7 @@ class RecordedfutureConnector(BaseConnector):
                 resp_json,
             )
 
-        if resp.status_code == 200:
+        if resp.status_code in [200, 201]:
             return self._process_response(resp, action_result, **kwargs)
         elif resp.status_code == 401:
             return RetVal(
