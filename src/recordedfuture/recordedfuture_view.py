@@ -18,6 +18,7 @@
 # the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
+from datetime import datetime
 
 APP_URL = 'https://app.recordedfuture.com/live/sc/entity/%s%%3A%s'
 VULN_APP_URL = 'https://app.recordedfuture.com/live/sc/entity/%s'
@@ -481,4 +482,18 @@ def domain_abuse_alert_details_results(provides, all_app_runs, context):
         for result in action_results:
             results.append(format_domain_abuse_details_result(result))
 
-    return "domain_abuse_alert_details_results.html"
+    return 'domain_abuse_alert_details_results.html'
+
+
+def entity_search_results(provides, all_app_runs, context):
+    """Setup the view for entity search results."""
+
+    context['results'] = results = []
+    for summary, action_results in all_app_runs:
+        for result in action_results:
+            result_data = result.get_data()
+            if result_data:
+                result_data = result_data[0]
+            results.append({'param': result.get_param(), 'data': result_data})
+
+    return 'entity_search_results.html'

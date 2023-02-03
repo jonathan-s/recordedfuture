@@ -21,7 +21,8 @@ RESULT_FILES := reputation_results.html \
 	list_entities_management_results.html \
 	playbook_alert_search_results.html \
 	playbook_alert_update_results.html \
-	domain_abuse_alert_details_results.html
+	domain_abuse_alert_details_results.html \
+	entity_search_results.html
 
 STYLESHEET := recordedfuture_style.css
 RF_SRC := $(addprefix $(SRC_DIR)/,$(RESULT_FILES))

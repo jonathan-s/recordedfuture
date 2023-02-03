@@ -1383,6 +1383,48 @@ class RecordedfutureConnector(BaseConnector):
         action_result.set_summary(summary)
         return action_result.set_status(phantom.APP_SUCCESS)
 
+    def _handle_entities_search(self, param):
+        self.save_progress(
+            "In action handler for: {0}".format(self.get_action_identifier())
+        )
+
+        # Add an action result object to self (BaseConnector) to represent
+        # the action for this param
+        action_result = self.add_action_result(ActionResult(param))
+        params = {
+            'name': UnicodeDammit(param['name']).unicode_markup,
+            'type': UnicodeDammit(param['entity_type']).unicode_markup
+            if 'entity_type' in param
+            else None,
+            'limit': param.get('limit', 10),
+        }
+        params = {key: value for key, value in params.items() if value}
+        # make rest call
+        my_ret_val, response = self._make_rest_call(
+            '/entity/search', action_result, json=params, method="post"
+        )
+
+        self.debug_print(
+            '_handle_entities_search',
+            {
+                'path_info': '/entity/search',
+                'action_result': action_result,
+                'params': params,
+                'my_ret_val': my_ret_val,
+                'response': response,
+            },
+        )
+
+        # Handle failure
+        if phantom.is_fail(my_ret_val):
+            return action_result.get_status()
+
+        # Summary
+        summary = action_result.get_summary()
+        action_result.add_data(response)
+        action_result.set_summary(summary)
+        return action_result.set_status(phantom.APP_SUCCESS)
+
     def handle_action(self, param):
         """Handle a call to the app, switch depending on action."""
         my_ret_val = phantom.APP_SUCCESS
@@ -1449,10 +1491,15 @@ class RecordedfutureConnector(BaseConnector):
 
         elif action_id == 'playbook_alerts_search':
             my_ret_val = self._handle_playbook_alerts_search(param)
+
         elif action_id == 'update_playbook_alert':
             my_ret_val = self._handle_playbook_alert_update(param)
+
         elif action_id == 'playbook_alert_details':
             my_ret_val = self._handle_playbook_alert_details(param)
+
+        elif action_id == 'entity_search':
+            my_ret_val = self._handle_entities_search(param)
 
         return my_ret_val
 
