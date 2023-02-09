@@ -35,7 +35,7 @@ ENTITY_LIST_STATUS_VALUE_TO_LITERAL_MAPPING = {
 
 PLAYBOOK_ALERT_CATEGORY_DISPLAY_MAPPING = {
     "domain_abuse": "Domain Abuse",
-    "cyber_vulnerability": "Cyber vulnerability",
+    "cyber_vulnerability": "Vulnerability",
 }
 
 
@@ -475,14 +475,14 @@ def playbook_alert_update_results(provides, all_app_runs, context):
     return 'playbook_alert_update_results.html'
 
 
-def domain_abuse_alert_details_results(provides, all_app_runs, context):
-    """Setup the view for Domain Abuse Playbook alert details"""
+def playbook_alert_details_results(provides, all_app_runs, context):
+    """Setup the view for Playbook alert details"""
     context['results'] = results = []
     for summary, action_results in all_app_runs:
         for result in action_results:
             results.append(format_domain_abuse_details_result(result))
 
-    return 'domain_abuse_alert_details_results.html'
+    return 'playbook_alert_details_results.html'
 
 
 def entity_search_results(provides, all_app_runs, context):

@@ -5923,7 +5923,7 @@
                 "type": "custom",
                 "width": 15,
                 "height": 8,
-                "view": "recordedfuture_view.domain_abuse_alert_details_results",
+                "view": "recordedfuture_view.playbook_alert_details_results",
                 "title": "Recorded Future Playbook Alert Data"
             },
             "versions": "EQ(*)"

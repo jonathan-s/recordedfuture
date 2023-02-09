@@ -9,7 +9,7 @@
 
 {% block widget_content %} <!-- Main Start Block -->
 
-<!-- File: domain_abuse_alert_details_results.html
+<!-- File: playbook_alert_details_results.html
 
 Copyright (c) Recorded Future, Inc., 2019-2023
 
@@ -42,8 +42,7 @@ and will be merged during compilation:
   <!-- Main Div -->
   {% for result in results %} <!-- loop for each result -->
     <!------------------- For each Result ---------------------->
-
-      <div class="rf-full-width-box">
+      {% if result.data.category == "domain_abuse" %}
         <h3 class="rf-playbook-alert-panel-title">Domain abuse</h3>
         <div class="rf-alert-panel">
           <div class="rf-playbook-alert-data-row" style="margin-bottom: 10px">
@@ -198,7 +197,74 @@ and will be merged during compilation:
             {% endif %}
           {% endfor %}
         </div>
-      </div>
+      {% else %}
+        <h3 class="rf-playbook-alert-panel-title">Vulnerability</h3>
+        <div class="rf-alert-panel">
+          <div class="rf-playbook-alert-data-row" style="margin-bottom: 10px">
+            <div class="rf-playbook-alert-data-row-title">Subject</div>
+            <div class="rf-playbook-alert-data-row" style="gap: 5px; margin: 0">
+              <h5>{{ result.data.panel_status.entity_name }}</h5>
+              <div class="rf-circle rf-criticality-level-{{result.data.panel_status.entity_criticality}}"></div>
+              <div>{{ result.data.panel_status.risk_score }}</div>
+            </div>
+          </div>
+          <div class="rf-playbook-alert-data-row" style="margin-bottom: 10px">
+            <div class="rf-chip-box rf-playbook-alert-data-row" style="gap: 5px; margin: 0">{{ result.data.panel_status.lifecycle_stage }}</div>
+          </div>
+          <div class="rf-playbook-alert-data-row" style="align-items: flex-start">
+            <div class="rf-playbook-alert-data-row-title">Targets</div>
+            <div style="display: block;">
+              {% for target in result.data.panel_status.targets %}
+                <div style="margin-bottom: 5px;">{{ target.name }}</div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="rf-playbook-alert-data-row">
+            <div class="rf-playbook-alert-data-row-title">Status</div>
+            <div>{{ result.data.panel_status.status }}</div>
+          </div>
+          <div class="rf-playbook-alert-data-row">
+            <div class="rf-playbook-alert-data-row-title">Priority</div>
+            <div class="rf-playbook-alert-data-row" style="gap: 5px; margin: 0">
+              <div class="rf-circle rf-priority-level-{{result.data.panel_status.priority}}"></div>
+              <div>{{ result.data.panel_status.priority }}</div>
+            </div>
+          </div>
+          <div class="rf-playbook-alert-data-row">
+            <div class="rf-playbook-alert-data-row-title">Created</div>
+            <div>{{ result.data.panel_status.created }}</div>
+          </div>
+        </div>
+        <h3 class="rf-playbook-alert-panel-title">Evidence summary</h3>
+        <div class="rf-alert-panel">
+            <div class="rf-chip-box" style="width: fit-content; margin: 0">{{ result.data.panel_status.lifecycle_stage }}</div>
+          <div style="display: block;">
+              {% for target in result.data.panel_status.targets %}
+                <div style="margin-bottom: 5px;">{{ target.name }}</div>
+              {% endfor %}
+            </div>
+          {% for risk_rule in result.data.panel_evidence_summary.risk_rules %}
+            <div class="rf-playbook-alert-data-row">
+              <p><strong>{{ risk_rule.rule }}</strong> {{ risk_rule.description }}
+            </div>
+          {% endfor %}
+        </div>
+        <h3 class="rf-playbook-alert-panel-title">Affected products</h3>
+        <div class="rf-alert-panel">
+          {% for product in result.data.panel_evidence_summary.affected_products %}
+            <div class="rf-playbook-alert-data-row">
+              <div>{{ product.name }}</div>
+            </div>
+          {% endfor %}
+        </div>
+        <h3 class="rf-playbook-alert-panel-title">Insikt Group Notes</h3>
+        <div class="rf-alert-panel">
+          {% for insikt_note in result.data.panel_evidence_summary.insikt_notes %}
+            <h4>{{ insikt_note.title }}</h4>
+            <p>{{ insikt_note.fragment }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
   {% endfor %}
 </div> <!-- Main Div -->
 
