@@ -104,3 +104,11 @@ RF_STATE_FILE_CORRUPT_ERROR = (
     "Error occurred while loading the state file due to its unexpected format. "
     "Resetting the state file with the default format. Please try again."
 )
+
+RF_PLAYBOOK_STATUS_MAP = {
+    "New": "New",
+    "InProgress": "In Progress",
+    "In Progress": "InProgress",
+    "Dismissed": "Dismissed",
+    "Resolved": "Resolved",
+}

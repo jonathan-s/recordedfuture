@@ -20,6 +20,8 @@
 # and limitations under the License.
 from datetime import datetime
 
+from recordedfuture_consts import RF_PLAYBOOK_STATUS_MAP
+
 APP_URL = 'https://app.recordedfuture.com/live/sc/entity/%s%%3A%s'
 VULN_APP_URL = 'https://app.recordedfuture.com/live/sc/entity/%s'
 
@@ -450,6 +452,9 @@ def playbook_alert_search_results(provides, all_app_runs, context):
                     )
                     search_result['updated'] = format_datetime_string(
                         search_result['updated']
+                    )
+                    search_result['status'] = RF_PLAYBOOK_STATUS_MAP.get(
+                        search_result['status'], search_result['status']
                     )
                     search_result[
                         'category_display'

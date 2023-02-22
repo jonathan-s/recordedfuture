@@ -21,7 +21,7 @@
 #
 #
 # Phantom App imports
-
+import base64
 import hashlib
 
 # noinspection PyCompatibility
@@ -33,6 +33,7 @@ import os
 import platform
 import sys
 import time
+import uuid
 from html import escape
 from math import ceil
 from typing import Literal
@@ -41,12 +42,16 @@ from datetime import datetime
 # Phantom App imports
 # noinspection PyUnresolvedReferences
 import phantom.app as phantom
+import phantom.vault as vault
+
 import requests
 
 # noinspection PyUnresolvedReferences
 from bs4 import BeautifulSoup, UnicodeDammit
+
 # noinspection PyUnresolvedReferences
 from phantom.action_result import ActionResult
+
 # noinspection PyUnresolvedReferences
 from phantom.base_connector import BaseConnector
 
@@ -361,10 +366,12 @@ class RecordedfutureConnector(BaseConnector):
                 **kwargs,
             )
         except requests.exceptions.Timeout:
-            return RetVal(action_result.set_status(
-                phantom.APP_ERROR,
-                "Timeout error when connecting to server"),
-                resp_json)
+            return RetVal(
+                action_result.set_status(
+                    phantom.APP_ERROR, "Timeout error when connecting to server"
+                ),
+                resp_json,
+            )
         except Exception as err:
             error_code, error_message = self._get_error_message_from_exception(err)
             return RetVal(
@@ -840,6 +847,24 @@ class RecordedfutureConnector(BaseConnector):
         # dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
 
+    def _add_screenshots_to_container(self, container, screenshots):
+        for screenshot in screenshots:
+            file_name = f'{uuid.uuid4()}.png'
+            file_path = os.path.join('/opt/splunk-soar/vault/tmp', file_name)
+            with open(file_path, "wb") as screenshot_file:
+                screenshot_file.write(base64.b64decode(screenshot))
+
+            success, message, vault_id = vault.vault_add(
+                container=container,
+                file_location=file_path,
+                file_name=file_name,
+                metadata=None,
+                trace=True
+            )
+            self.debug_print(
+                f"Add screenshot - {message} - {container}"
+            )
+
     def _on_poll_playbook_alerts(self, param, config, action_result):
         """Polling for triggered playbook alerts"""
 
@@ -847,16 +872,18 @@ class RecordedfutureConnector(BaseConnector):
             param['max_count'] = param.get('container_count', MAX_CONTAINERS)
             from_date = None
         else:
+            if not config.get("on_poll_playbook_alert_type"):
+                return []
             # Different number of max containers if first run
             if self._state.get('first_run', True):
                 # set the config to _not_ first run hereafter
                 self._state['first_run'] = False
                 param['max_count'] = config.get('first_max_count', MAX_CONTAINERS)
                 self.save_progress("First time Ingestion detected.")
-                from_date = None
+                from_date = config.get("on_poll_playbook_alert_start_time")
             else:
                 param['max_count'] = config.get('max_count', MAX_CONTAINERS)
-                from_date = self._state.get("last_playbook_alerts_fetch_time")
+                from_date = self._state.get("last_playbook_alerts_fetch_time") or config.get("on_poll_playbook_alert_start_time")
 
         # Asset Settings in Asset Configuration allows a negative number
         if int(param['max_count']) <= 0:
@@ -872,7 +899,7 @@ class RecordedfutureConnector(BaseConnector):
                 for el in config.get("on_poll_playbook_alert_type", "").split(",")
                 if el.strip()
             ],
-            'priorities': [config["on_poll_playbook_alert_priority"]]
+            'priorities': [el.strip() for el in config["on_poll_playbook_alert_priority"].split(",")]
             if config.get("on_poll_playbook_alert_priority")
             else None,
         }
@@ -888,7 +915,6 @@ class RecordedfutureConnector(BaseConnector):
         if phantom.is_fail(my_ret_val):
             return action_result.get_status()
 
-        self._state['last_playbook_alerts_fetch_time'] = datetime.now().isoformat()
         return containers
 
     def _on_poll(self, param):
@@ -903,7 +929,9 @@ class RecordedfutureConnector(BaseConnector):
 
         containers = self._on_poll_playbook_alerts(param, config, action_result)
         for container in containers:
+            screenshots = container.pop("images", [])
             ret_val, msg, cid = self.save_container(container)
+            self._add_screenshots_to_container(cid, screenshots)
             if phantom.is_fail(ret_val):
                 self.save_progress("Error saving containers: {}".format(msg))
                 self.debug_print(
@@ -914,6 +942,8 @@ class RecordedfutureConnector(BaseConnector):
                 )
 
         action_result.set_status(phantom.APP_SUCCESS)
+        self._state['last_playbook_alerts_fetch_time'] = datetime.now().isoformat()
+
         if not config.get('on_poll_alert_ruleids'):
             return action_result.get_status()
 
@@ -1266,11 +1296,17 @@ class RecordedfutureConnector(BaseConnector):
         # the action for this param
         action_result = self.add_action_result(ActionResult(param))
         params = {
-            'categories': [UnicodeDammit(param['category']).unicode_markup]
+            'categories': [
+                category.strip()
+                for category in param['category'].split(",")
+            ]
             if 'category' in param
             else None,
-            'statuses': [UnicodeDammit(param['status']).unicode_markup]
+            'statuses': [RF_PLAYBOOK_STATUS_MAP.get(param['status'])]
             if 'status' in param
+            else None,
+            'priorities': [UnicodeDammit(param['priority']).unicode_markup]
+            if 'priority' in param
             else None,
             'limit': param.get('limit', 100),
             'from_date': UnicodeDammit(param.get('from_date', '')).unicode_markup,
@@ -1351,7 +1387,7 @@ class RecordedfutureConnector(BaseConnector):
 
         params = {
             'priority': UnicodeDammit(param.get('priority', '')).unicode_markup,
-            'status': UnicodeDammit(param.get('status', '')).unicode_markup,
+            'status': UnicodeDammit(RF_PLAYBOOK_STATUS_MAP.get(param.get('status'), '')).unicode_markup,
             'log_message': UnicodeDammit(param.get('log_message', '')).unicode_markup,
         }
         params = {key: value for key, value in params.items() if value}
