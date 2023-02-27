@@ -5613,6 +5613,10 @@
                 "alert_id": {
                     "description": "Playbook alert ID",
                     "data_type": "string",
+                    "contains": [
+                        "recordedfuture playbook alert id"
+                    ],
+                    "primary": true,
                     "required": true,
                     "order": 0
                 },
@@ -5676,7 +5680,11 @@
                 "alert_id": {
                     "description": "Playbook alert ID",
                     "data_type": "string",
-                    "required": true
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "recordedfuture playbook alert id"
+                    ]
                 }
             },
             "output": [
