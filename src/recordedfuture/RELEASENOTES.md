@@ -1,5 +1,14 @@
 # RELEASE NOTES
 
+## VERSION 4.3.0
+
+This version has new commands that helps user do the threat hunting.
+New commands:
+ * Links search - find links data in Recorded Future dataset.
+ * Detection rule search - download detection rules (yara, sigma, snort) into the system for provided entity.
+ * Threat actor intelligence - get intelligence data for threat actor.
+ * Threat map - get a threat map from Recorded Future.
+
 ## VERSION 4.1.0
 
 This version fixes the error that occurs when use scheduled pulling of events.

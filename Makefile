@@ -1,4 +1,4 @@
-RELEASE := 4.1.0
+RELEASE := 4.3.0
 BUILDID := $(if $(SVN_REVISION),$(SVN_REVISION),$(shell git rev-list --count HEAD))
 BUILD_DIR := pkg_build
 SRC_DIR := src/recordedfuture
@@ -22,7 +22,12 @@ RESULT_FILES := reputation_results.html \
 	playbook_alert_search_results.html \
 	playbook_alert_update_results.html \
 	playbook_alert_details_results.html \
-	entity_search_results.html
+	entity_search_results.html \
+	links_search_results.html \
+	detection_rule_search_results.html \
+	threat_actor_intelligence_results.html \
+	threat_map_results.html \
+	collective_insights_submission_results.html
 
 STYLESHEET := recordedfuture_style.css
 RF_SRC := $(addprefix $(SRC_DIR)/,$(RESULT_FILES))

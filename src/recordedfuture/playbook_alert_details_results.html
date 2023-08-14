@@ -197,7 +197,7 @@ and will be merged during compilation:
             {% endif %}
           {% endfor %}
         </div>
-      {% else %}
+      {% elif result.data.category == "cyber_vulnerability" %}
         <h3 class="rf-playbook-alert-panel-title">Vulnerability</h3>
         <div class="rf-alert-panel">
           <div class="rf-playbook-alert-data-row" style="margin-bottom: 10px">
@@ -262,6 +262,59 @@ and will be merged during compilation:
           {% for insikt_note in result.data.panel_evidence_summary.insikt_notes %}
             <h4>{{ insikt_note.title }}</h4>
             <p>{{ insikt_note.fragment }}</p>
+          {% endfor %}
+        </div>
+      {% elif result.data.category == "code_repo_leakage" %}
+        <h3 class="rf-playbook-alert-panel-title">Code repo leakage</h3>
+        <div class="rf-alert-panel">
+          <div class="rf-playbook-alert-data-row" style="margin-bottom: 10px">
+            <div class="rf-playbook-alert-data-row-title">Subject</div>
+            <div class="rf-playbook-alert-data-row" style="gap: 5px; margin: 0">
+              <h5>{{ result.data.panel_status.entity_name }}</h5>
+                  <div class="rf-circle rf-criticality-level-{{result.data.panel_status.entity_criticality}}"></div>
+              <div>{{ result.data.panel_status.risk_score }}</div>
+            </div>
+          </div>
+          <div class="rf-playbook-alert-data-row" style="align-items: flex-start">
+            <div class="rf-playbook-alert-data-row-title">Targets</div>
+            <div style="display: block;">
+              {% for target in result.data.panel_status.targets %}
+                <div style="margin-bottom: 5px;">{{ target.name }}</div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="rf-playbook-alert-data-row">
+            <div class="rf-playbook-alert-data-row-title">Status</div>
+            <div>{{ result.data.panel_status.status }}</div>
+          </div>
+          <div class="rf-playbook-alert-data-row">
+            <div class="rf-playbook-alert-data-row-title">Priority</div>
+            <div class="rf-playbook-alert-data-row" style="gap: 5px; margin: 0">
+              <div class="rf-circle rf-priority-level-{{result.data.panel_status.priority}}"></div>
+              <div>{{ result.data.panel_status.priority }}</div>
+            </div>
+          </div>
+          <div class="rf-playbook-alert-data-row">
+            <div class="rf-playbook-alert-data-row-title">Created</div>
+            <div>{{ result.data.panel_status.created }}</div>
+          </div>
+        </div>
+        <h3 class="rf-playbook-alert-panel-title">Evidence summary</h3>
+        <div class="rf-alert-panel">
+          <h5 style="margin-bottom: 10px">{{ result.data.panel_evidence_summary.repository.id }}</h5>
+          {% for evidence_data in result.data.panel_evidence_summary.evidence %}
+          <div class="rf-alert-panel">
+            {% for data in evidence_data.assessments %}
+              <div class="rf-playbook-alert-data-row" style="gap: 5px; margin: 0">
+                <div class="rf-chip-box rf-playbook-alert-data-row" style="gap: 5px; margin: 0">{{ data.title }}</div>
+                <div>{{ data.value }}</div>
+              </div>
+            {% endfor %}
+            <div style="margin-top: 10px" class="rf-playbook-alert-data-row-title">URL</div>
+            <div>{{ evidence_data.url }}</div>
+            <div style="margin-top: 10px" class="rf-playbook-alert-data-row-title">Content</div>
+            <div>{{ evidence_data.content }}</div>
+          </div>
           {% endfor %}
         </div>
       {% endif %}
