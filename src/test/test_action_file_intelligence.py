@@ -10,7 +10,7 @@ requests.packages.urllib3.disable_warnings()
 # Logger
 LOGGER = logging.getLogger(__name__)
 
-PBOOK = 'recorded_future_intelligence_test'
+PBOOK = "recorded_future_intelligence_test"
 
 
 class RfDomainIntelligenceTests(RfTests):
@@ -24,23 +24,23 @@ class RfDomainIntelligenceTests(RfTests):
         """Test behavior when a file is supplied."""
         # Create container and artifact.
         container_id = self._create_event_and_artifact(
-            'Test Event file intelligence',
-            fileHash=ioc)
+            "Test Event file intelligence", fileHash=ioc
+        )
 
         # Fetch the result of the automatic run.
         ares = self._poll_for_success(self._action_result, container_id)
 
         # Check correct risk score.
-        self.assertCorrectIntelligenceRiskScore(ares, target_risk_score,
-                                    'result: %s' % ares)
+        self.assertCorrectIntelligenceRiskScore(
+            ares, target_risk_score, "result: %s" % ares
+        )
 
         # Check that we have metrics data
         self.assertMetrics(ares)
 
     def test_file_intelligence(self):
         """Test behavior when a file is supplied."""
-        targets = self.high_risk_iocs_by_category('hash', 5, fields=['entity',
-                                                                     'risk'])
+        targets = self.high_risk_iocs_by_category("hash", 5, fields=["entity", "risk"])
 
         # Call the test for each target
         for ioc, target_risk_score in targets:
@@ -51,13 +51,13 @@ class RfDomainIntelligenceTests(RfTests):
 
         testdata = {
             # v2.0> md5 Makefile
-            'ioc': 'a776826e08aba01a134d78701cf0969a'
+            "ioc": "a776826e08aba01a134d78701cf0969a"
         }
 
         # Create container and artifact.
         container_id = self._create_event_and_artifact(
-            'Test Event file Intelligence - not existing',
-            fileHash=testdata['ioc'])
+            "Test Event file Intelligence - not existing", fileHash=testdata["ioc"]
+        )
 
         # Fetch the result of the automatic run.
         ares = self._poll_for_success(self._action_result, container_id)
@@ -65,14 +65,14 @@ class RfDomainIntelligenceTests(RfTests):
         LOGGER.debug("ares: %s", ares)
 
         # ConnectAPI return 404 on these, but we return success with an empty list
-        self.assertEqual(ares['data'][0]['status'], 'success')
+        self.assertEqual(ares["data"][0]["status"], "success")
 
         # Assert we get success and sets the response as expected
-        result_data = ares['data'][0]['result_data']
+        result_data = ares["data"][0]["result_data"]
         for rd in result_data:
             # Assert success
-            self.assertEqual(rd['status'], 'success')
+            self.assertEqual(rd["status"], "success")
             # Assert message is as should
-            self.assertEqual(rd['message'], testdata_404_intelligence_file['message'])
+            self.assertEqual(rd["message"], testdata_404_intelligence_file["message"])
             # Assert data property
-            self.assertEqual(rd['data'], testdata_404_intelligence_file['data'])
+            self.assertEqual(rd["data"], testdata_404_intelligence_file["data"])

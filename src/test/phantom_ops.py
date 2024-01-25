@@ -11,7 +11,7 @@ def ph_artifact(**kwargs):
         # "container_id": 100,
         # "data":{},
         # "end_time":"2014-10-19T14:45:51.100Z",
-        "label":"event",
+        "label": "event",
         "run_automation": True,
         # "severity":"high",
         # "source_data_identifier":"4",
@@ -19,12 +19,12 @@ def ph_artifact(**kwargs):
         # "tags": ["tag1", "tag2"],
         # "type":"network"
     }
-    artifact['cef'] = kwargs
+    artifact["cef"] = kwargs
 
     return artifact
 
 
-def ph_container(event_name="Test event", artifacts=[], tag='test'):
+def ph_container(event_name="Test event", artifacts=[], tag="test"):
     """Return a Phantom container with the supplied fields."""
     return {
         # "asset_id": 12,
@@ -43,5 +43,5 @@ def ph_container(event_name="Test event", artifacts=[], tag='test'):
         # "status": "new",
         # "start_time": "2015-03-21T19:28:13.759Z",
         # "open_time": "2015-03-21T19:29:00.141Z",
-        "tags": [tag]
+        "tags": [tag],
     }

@@ -10,7 +10,7 @@ requests.packages.urllib3.disable_warnings()
 # Logger
 LOGGER = logging.getLogger(__name__)
 
-PBOOK = 'recorded_future_reputation_test'
+PBOOK = "recorded_future_reputation_test"
 
 
 class RfDomainReputationTests(RfTests):
@@ -24,8 +24,8 @@ class RfDomainReputationTests(RfTests):
         """Test behavior when a file is supplied."""
         # Create container and artifact.
         container_id = self._create_event_and_artifact(
-            'Test Event file reputation',
-            fileHash=ioc)
+            "Test Event file reputation", fileHash=ioc
+        )
 
         # Fetch the result of the automatic run.
         ares = self._poll_for_success(self._action_result, container_id)
@@ -36,8 +36,7 @@ class RfDomainReputationTests(RfTests):
     def test_file_reputation(self):
         """Test behavior when a file is supplied."""
 
-        targets = self.high_risk_iocs_by_category('hash', 5, fields=['entity',
-                                                                      'risk'])
+        targets = self.high_risk_iocs_by_category("hash", 5, fields=["entity", "risk"])
 
         # Call the test for each target
         for ioc, target_risk_score in targets:
@@ -48,13 +47,13 @@ class RfDomainReputationTests(RfTests):
 
         testdata = {
             # v2.0> md5 Makefile
-            'ioc': 'a776826e08aba01a134d78701cf0969a'
+            "ioc": "a776826e08aba01a134d78701cf0969a"
         }
 
         # Create container and artifact.
         container_id = self._create_event_and_artifact(
-            'Test Event file reputation - not existing',
-            fileHash=testdata['ioc'])
+            "Test Event file reputation - not existing", fileHash=testdata["ioc"]
+        )
 
         # Fetch the result of the automatic run.
         ares = self._poll_for_success(self._action_result, container_id)
@@ -62,16 +61,15 @@ class RfDomainReputationTests(RfTests):
         LOGGER.debug("ares: %s", ares)
 
         # ConnectAPI return 404 on these, but we return success with an empty list
-        self.assertEqual(ares['data'][0]['status'], 'success')
+        self.assertEqual(ares["data"][0]["status"], "success")
 
         # Assert we get success and sets the response as expected
-        response, message = nf.testdata_reputation_na(
-            testdata['ioc'], 'hash')
-        result_data = ares['data'][0]['result_data']
+        response, message = nf.testdata_reputation_na(testdata["ioc"], "hash")
+        result_data = ares["data"][0]["result_data"]
         for rd in result_data:
             # Assert success
-            self.assertEqual(rd['status'], 'success')
+            self.assertEqual(rd["status"], "success")
             # Assert message is as should
-            self.assertRegexpMatches(rd['message'], message)
+            self.assertRegexpMatches(rd["message"], message)
             # Assert data
-            self.assertEqual(rd['data'], response)
+            self.assertEqual(rd["data"], response)

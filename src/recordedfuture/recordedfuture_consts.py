@@ -20,8 +20,8 @@
 # and limitations under the License.
 
 # Define your constants here
-version = '%RELEASE%'
-buildid = '%BUILDID%'
+version = "%RELEASE%"
+buildid = "%BUILDID%"
 
 # timeout for our http requests to bfi_phantom
 timeout = 63
@@ -33,56 +33,56 @@ MAX_CONTAINERS = 100
 # (path_info template, fields, quote parameter)
 
 INTELLIGENCE_MAP = {
-    'ip': (
-        '/ip/%s',
+    "ip": (
+        "/ip/%s",
         [
-            'entity',
-            'risk',
-            'timestamps',
+            "entity",
+            "risk",
+            "timestamps",
             "threatLists",
             "intelCard",
             "metrics",
             "location",
             "relatedEntities",
         ],
-        'ip',
+        "ip",
         False,
     ),
-    'domain': (
-        '/domain/idn:%s',
+    "domain": (
+        "/domain/idn:%s",
         [
-            'entity',
-            'risk',
-            'timestamps',
+            "entity",
+            "risk",
+            "timestamps",
             "threatLists",
             "intelCard",
             "metrics",
             "relatedEntities",
         ],
-        'domain',
+        "domain",
         False,
     ),
-    'file': (
-        '/hash/%s',
+    "file": (
+        "/hash/%s",
         [
-            'entity',
-            'risk',
-            'timestamps',
+            "entity",
+            "risk",
+            "timestamps",
             "threatLists",
             "intelCard",
             "metrics",
             "hashAlgorithm",
             "relatedEntities",
         ],
-        'hash',
+        "hash",
         False,
     ),
-    'vulnerability': (
-        '/vulnerability/%s',
+    "vulnerability": (
+        "/vulnerability/%s",
         [
-            'entity',
-            'risk',
-            'timestamps',
+            "entity",
+            "risk",
+            "timestamps",
             "threatLists",
             "intelCard",
             "metrics",
@@ -90,13 +90,13 @@ INTELLIGENCE_MAP = {
             "nvdDescription",
             "relatedEntities",
         ],
-        'vulnerability',
+        "vulnerability",
         False,
     ),
-    'url': (
-        '/url/%s',
-        ['entity', 'risk', 'timestamps', "metrics", "relatedEntities"],
-        'url',
+    "url": (
+        "/url/%s",
+        ["entity", "risk", "timestamps", "metrics", "relatedEntities"],
+        "url",
         True,
     ),
 }
