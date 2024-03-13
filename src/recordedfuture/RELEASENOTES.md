@@ -8,6 +8,7 @@ New commands:
  * Detection rule search - download detection rules (yara, sigma, snort) into the system for provided entity.
  * Threat actor intelligence - get intelligence data for threat actor.
  * Threat map - get a threat map from Recorded Future.
+ * 
 
 ## VERSION 4.1.0
 

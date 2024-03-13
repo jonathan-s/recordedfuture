@@ -56,7 +56,7 @@ from phantom.action_result import ActionResult
 
 # noinspection PyUnresolvedReferences
 from phantom.base_connector import BaseConnector
-
+from phantom_common import paths
 # Usage of the consts file is recommended
 from recordedfuture_consts import *
 
@@ -866,9 +866,11 @@ class RecordedfutureConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _write_file_to_vault(self, container, file_data, file_name):
+        if hasattr(vault.Vault, "get_vault_tmp_dir"):
+            file_path = os.path.join(vault.Vault.get_vault_tmp_dir(), file_name)
+        else:
+            file_path = os.path.join(os.path.join(paths.PHANTOM_VAULT, "/tmp"), file_name)
 
-        path = vault.Vault.get_vault_tmp_dir()
-        file_path = os.path.join(path, file_name)
         with open(file_path, "wb") as file:
             file.write(file_data)
             _, message, _ = vault.vault_add(
@@ -924,11 +926,15 @@ class RecordedfutureConnector(BaseConnector):
             for el in config.get("on_poll_playbook_alert_type", "").split(",")
             if el.strip()
         ]
-        params["priorities"] = (
-            [el.strip() for el in config["on_poll_playbook_alert_priority"].split(",")]
-            if config.get("on_poll_playbook_alert_priority")
-            else None
-        )
+        params["statuses"] = [
+            el.strip()
+            for el in config.get("on_poll_playbook_alert_status", "").split(",")
+            if el.strip()
+        ]
+        params["priorities"] = [
+            el.strip()
+            for el in config["on_poll_playbook_alert_priority"].split(",")
+        ] if config.get("on_poll_playbook_alert_priority") else None
 
         # Make the rest call
         my_ret_val, containers = self._make_rest_call(
@@ -1062,6 +1068,11 @@ class RecordedfutureConnector(BaseConnector):
             "severity": config.get("on_poll_alert_severity"),
             "limit": param.get("max_count", 100),
         }
+        params['status'] = [
+            el.strip()
+            for el in config.get("on_poll_alert_status", "").split(",")
+            if el.strip()
+        ]
 
         # Make the rest call
         my_ret_val, containers = self._make_rest_call(
