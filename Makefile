@@ -1,4 +1,4 @@
-RELEASE := 4.3.0
+RELEASE := 4.3.2
 BUILDID := $(if $(SVN_REVISION),$(SVN_REVISION),$(shell git rev-list --count HEAD))
 BUILD_DIR := pkg_build
 SRC_DIR := src/recordedfuture
