@@ -885,13 +885,15 @@ class RecordedfutureConnector(BaseConnector):
     def _on_poll_playbook_alerts(self, param, config, action_result):
         """Polling for triggered playbook alerts"""
         params = {}
+        # Return early if no playbook alert categories are specified.
+        if not config.get("on_poll_playbook_alert_type"):
+            self.save_progress("Need to specify Playbook Alert Category for polling")
+            return []
 
         if self.is_poll_now():
             param["max_count"] = param.get("container_count", MAX_CONTAINERS)
             params["from_date"] = None
         else:
-            if not config.get("on_poll_playbook_alert_type"):
-                return []
             # Different number of max containers if first run
             if self._state.get("first_run", True):
                 # set the config to _not_ first run hereafter
