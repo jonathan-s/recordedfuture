@@ -5,32 +5,32 @@ SRC_DIR := src/recordedfuture
 PACKAGE := recordedfuture-$(RELEASE).tgz
 RFUSERARG := $(if ${RFLDAP},-l ${RFLDAP},)
 SCPHOST := $(if ${RFLDAP},${RFLDAP}@${PH},${PH})
-RESULT_FILES := reputation_results.html \
-	intelligence_results.html \
-	threat_assessment_results.html \
-	contexts_results.html \
-	alert_rule_search_results.html \
-	alert_search_results.html \
-	alert_lookup_results.html \
-	alert_update_results.html \
-	list_search_results.html \
-	list_create_results.html \
-	list_details_results.html \
-	list_status_results.html \
-	list_entities_results.html \
-	list_entities_management_results.html \
-	playbook_alert_search_results.html \
-	playbook_alert_update_results.html \
-	playbook_alert_details_results.html \
-	entity_search_results.html \
-	links_search_results.html \
-	detection_rule_search_results.html \
-	threat_actor_intelligence_results.html \
-	threat_map_results.html \
-	collective_insights_submission_results.html
+RESULT_FILES := views/reputation_results.html \
+	views/intelligence_results.html \
+	views/threat_assessment_results.html \
+	views/contexts_results.html \
+	views/alert_rule_search_results.html \
+	views/alert_search_results.html \
+	views/alert_lookup_results.html \
+	views/alert_update_results.html \
+	views/list_search_results.html \
+	views/list_create_results.html \
+	views/list_details_results.html \
+	views/list_status_results.html \
+	views/list_entities_results.html \
+	views/list_entities_management_results.html \
+	views/playbook_alert_search_results.html \
+	views/playbook_alert_update_results.html \
+	views/playbook_alert_details_results.html \
+	views/entity_search_results.html \
+	views/links_search_results.html \
+	views/detection_rule_search_results.html \
+	views/threat_actor_intelligence_results.html \
+	views/threat_map_results.html \
+	views/collective_insights_submission_results.html
 
 STYLESHEET := recordedfuture_style.css
-RF_SRC := $(addprefix $(SRC_DIR)/,$(RESULT_FILES))
+RF_SRC := $(addprefix $(SRC_DIR)/views,$(RESULT_FILES))
 RF_DEST := $(addprefix $(BUILD_DIR)/,$(RESULT_FILES))
 PH_PORT:= 22
 LOCAL_RSYNC := rsync

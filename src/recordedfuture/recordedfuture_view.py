@@ -210,7 +210,7 @@ def intelligence_results(provides, all_app_runs, context):
                 continue
             results.append(formatted)
 
-    return "intelligence_results.html"
+    return "views/intelligence_results.html"
 
 
 def reputation_results(provides, all_app_runs, context):
@@ -222,7 +222,7 @@ def reputation_results(provides, all_app_runs, context):
                 continue
             results.append(formatted)
 
-    return "reputation_results.html"
+    return "views/reputation_results.html"
 
 
 def contexts_results(provides, all_app_runs, context):
@@ -234,7 +234,7 @@ def contexts_results(provides, all_app_runs, context):
                 continue
             results.append(formatted)
 
-    return "contexts_results.html"
+    return "views/contexts_results.html"
 
 
 def format_alert_result(result):
@@ -252,7 +252,7 @@ def alert_lookup_results(provides, all_app_runs, context):
                 continue
             results.append(formatted)
 
-    return "alert_lookup_results.html"
+    return "views/alert_lookup_results.html"
 
 
 def alert_update_results(provides, all_app_runs, context):
@@ -266,7 +266,7 @@ def alert_update_results(provides, all_app_runs, context):
                 continue
             results.append(formatted)
 
-    return "alert_update_results.html"
+    return "views/alert_update_results.html"
 
 
 def alert_search_results(provides, all_app_runs, context):
@@ -280,7 +280,7 @@ def alert_search_results(provides, all_app_runs, context):
                 continue
             results.append(formatted)
 
-    return "alert_search_results.html"
+    return "views/alert_search_results.html"
 
 
 def alert_rule_search_results(provides, all_app_runs, context):
@@ -294,7 +294,7 @@ def alert_rule_search_results(provides, all_app_runs, context):
                 continue
             results.append(formatted)
 
-    return "alert_rule_search_results.html"
+    return "views/alert_rule_search_results.html"
 
 
 def format_threat_assessment_result(result, all_data=False):
@@ -338,7 +338,7 @@ def threat_assessment_results(provides, all_app_runs, context):
                 continue
             results.append(formatted)
 
-    return "threat_assessment_results.html"
+    return "views/threat_assessment_results.html"
 
 
 def list_search_results(provides, all_app_runs, context):
@@ -351,7 +351,7 @@ def list_search_results(provides, all_app_runs, context):
                 result_data = result_data[0]
             results.append({"param": result.get_param(), "data": result_data})
 
-    return "list_search_results.html"
+    return "views/list_search_results.html"
 
 
 def list_create_results(provides, all_app_runs, context):
@@ -364,7 +364,7 @@ def list_create_results(provides, all_app_runs, context):
                 result_data = result_data[0]
             results.append({"param": result.get_param(), "data": result_data})
 
-    return "list_create_results.html"
+    return "views/list_create_results.html"
 
 
 def list_details_results(provides, all_app_runs, context):
@@ -380,7 +380,7 @@ def list_details_results(provides, all_app_runs, context):
 
             results.append({"param": result.get_param(), "data": result_data})
 
-    return "list_details_results.html"
+    return "views/list_details_results.html"
 
 
 def list_status_results(provides, all_app_runs, context):
@@ -396,7 +396,7 @@ def list_status_results(provides, all_app_runs, context):
                 )
             results.append({"param": result.get_param(), "data": result_data})
 
-    return "list_status_results.html"
+    return "views/list_status_results.html"
 
 
 def list_entities_results(provides, all_app_runs, context):
@@ -414,7 +414,7 @@ def list_entities_results(provides, all_app_runs, context):
                     )
             results.append({"param": result.get_param(), "data": result_data})
 
-    return "list_entities_results.html"
+    return "views/list_entities_results.html"
 
 
 def list_entities_management_results(provides, all_app_runs, context):
@@ -430,7 +430,7 @@ def list_entities_management_results(provides, all_app_runs, context):
                 )
             results.append({"param": result.get_param(), "data": result_data})
 
-    return "list_entities_management_results.html"
+    return "views/list_entities_management_results.html"
 
 
 def playbook_alert_search_results(provides, all_app_runs, context):
@@ -459,7 +459,7 @@ def playbook_alert_search_results(provides, all_app_runs, context):
 
             results.append({"param": result.get_param(), "data": result_data})
 
-    return "playbook_alert_search_results.html"
+    return "views/playbook_alert_search_results.html"
 
 
 def playbook_alert_update_results(provides, all_app_runs, context):
@@ -472,7 +472,7 @@ def playbook_alert_update_results(provides, all_app_runs, context):
                 result_data = result_data[0]
             results.append({"param": result.get_param(), "data": result_data})
 
-    return "playbook_alert_update_results.html"
+    return "views/playbook_alert_update_results.html"
 
 
 def playbook_alert_details_results(provides, all_app_runs, context):
@@ -482,7 +482,7 @@ def playbook_alert_details_results(provides, all_app_runs, context):
         for result in action_results:
             results.append(format_domain_abuse_details_result(result))
 
-    return "playbook_alert_details_results.html"
+    return "views/playbook_alert_details_results.html"
 
 
 def entity_search_results(provides, all_app_runs, context):
@@ -496,7 +496,7 @@ def entity_search_results(provides, all_app_runs, context):
                 result_data = result_data[0]
             results.append({"param": result.get_param(), "data": result_data})
 
-    return "entity_search_results.html"
+    return "views/entity_search_results.html"
 
 
 def links_search_results(provides, all_app_runs, context):
@@ -508,7 +508,7 @@ def links_search_results(provides, all_app_runs, context):
             if result_data:
                 result_data = result_data[0]
             results.append({"param": result.get_param(), "data": result_data})
-    return "links_search_results.html"
+    return "views/links_search_results.html"
 
 
 def detection_rule_search_results(provides, all_app_runs, context):
@@ -520,7 +520,7 @@ def detection_rule_search_results(provides, all_app_runs, context):
             if result_data:
                 result_data = result_data[0]
             results.append({"param": result.get_param(), "data": result_data})
-    return "detection_rule_search_results.html"
+    return "views/detection_rule_search_results.html"
 
 
 def threat_actor_intelligence_results(provides, all_app_runs, context):
@@ -536,7 +536,7 @@ def threat_actor_intelligence_results(provides, all_app_runs, context):
                     for category in result_data.get("categories", [])
                 ]
             results.append({"param": result.get_param(), "data": result_data})
-    return "threat_actor_intelligence_results.html"
+    return "views/threat_actor_intelligence_results.html"
 
 
 def threat_map_results(provides, all_app_runs, context):
