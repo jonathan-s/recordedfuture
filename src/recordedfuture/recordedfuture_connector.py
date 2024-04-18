@@ -863,7 +863,8 @@ class RecordedfutureConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _write_file_to_vault(self, container, file_data, file_name):
-        file_path = os.path.join("/opt/splunk-soar/vault/tmp", file_name)
+        path = vault.get_vault_tmp_dir()
+        file_path = os.path.join(path, file_name)
         with open(file_path, "wb") as file:
             file.write(file_data)
             _, message, _ = vault.vault_add(
