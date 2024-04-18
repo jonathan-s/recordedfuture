@@ -1,3 +1,0 @@
-requests
-jsonpath_rw
-future
