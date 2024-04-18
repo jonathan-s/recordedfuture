@@ -994,12 +994,14 @@ class RecordedfutureConnector(BaseConnector):
             if phantom.is_fail(my_ret_val):
                 return action_result.get_status()
 
-        self._state["start_time"] = time.time()
-
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _on_poll_alerts(self, param, config, action_result):
         """Polling for triggered alerts given a list of rule IDs."""
+        start_time = time.time()
+        rollback_start_time = start_time
+        if "start_time" in self._state:
+            rollback_start_time = self._state["start_time"]
 
         # obtain the list of rule ids to use to obtain alerts
         list_of_rules = config.get("on_poll_alert_ruleids")
@@ -1016,6 +1018,7 @@ class RecordedfutureConnector(BaseConnector):
             if self._state.get("first_run", True):
                 # set the config to _not_ first run hereafter
                 self._state["first_run"] = False
+                self._state["start_time"] = start_time
                 param["max_count"] = config.get("first_max_count", MAX_CONTAINERS)
                 self.save_progress("First time Ingestion detected.")
                 timeframe = ""
@@ -1023,8 +1026,9 @@ class RecordedfutureConnector(BaseConnector):
                 param["max_count"] = config.get("max_count", MAX_CONTAINERS)
                 # calculate time since last fetch
                 interval = (
-                    ceil((time.time() - self._state.get("start_time")) / 3600) + 3
+                    ceil((start_time - self._state.get("start_time", start_time)) / 3600) + 3
                 )
+                self._state["start_time"] = start_time
                 timeframe = f"-{interval}h to now"
 
         # Asset Settings in Asset Configuration allows a negative number
@@ -1048,6 +1052,10 @@ class RecordedfutureConnector(BaseConnector):
         )
         # Something went wrong
         if phantom.is_fail(my_ret_val):
+            # make sure to revert to the old start time,
+            # so that next iteration will try again with a longer interval.
+            self._state["start_time"] = rollback_start_time
+
             return action_result.get_status()
 
         # sort the containers to get the oldest first
