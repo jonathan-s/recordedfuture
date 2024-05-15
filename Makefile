@@ -137,6 +137,9 @@ $(BUILD_DIR):
 ##########################################
 package: $(PACKAGE)
 
+package_tar: clean build
+	tar cvfz $(PACKAGE).tar.gz pkg_build
+
 $(PACKAGE): build
 	if [ "x$(PH)" = "x" ]; then \
 		echo Environment variable PH must contain the hostname of the phantom server.;\
@@ -157,6 +160,7 @@ $(PACKAGE): build
 clean:
 	rm -rf $(BUILD_DIR)
 	rm -f $(PACKAGE)
+	rm -f $(PACKAGE).tar.gz
 
 setup_ssh:
 	@if [ "x$(PH)" = "x" ]; then \
@@ -173,3 +177,5 @@ setup_docker:
 	docker exec -it rf_phantom chmod go= /home/phantom/.ssh
 	docker cp ~/.ssh/id_rsa.pub rf_phantom:/home/phantom/.ssh/authorized_keys
 	docker exec -it rf_phantom chown -R phantom:phantom /home/phantom/.ssh
+
+
