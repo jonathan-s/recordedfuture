@@ -138,7 +138,7 @@ $(BUILD_DIR):
 package: $(PACKAGE)
 
 package_tar: clean build
-	tar cvfz $(PACKAGE).tar.gz pkg_build
+	tar cvfz $(PACKAGE) pkg_build
 
 $(PACKAGE): build
 	if [ "x$(PH)" = "x" ]; then \
@@ -160,7 +160,6 @@ $(PACKAGE): build
 clean:
 	rm -rf $(BUILD_DIR)
 	rm -f $(PACKAGE)
-	rm -f $(PACKAGE).tar.gz
 
 setup_ssh:
 	@if [ "x$(PH)" = "x" ]; then \
